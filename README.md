@@ -2,7 +2,7 @@
 ### Auto Number Plate Recognition for EU countries
 <br>
 
-**🦋 Available Countries:**
+**🦋 Available Countries:** (We are adding more contries.)
 ```
 🇦🇱 Albania                  🇨🇿 Czechia
 🇦🇩 Andorra                  🇩🇰 Denmark
@@ -31,14 +31,15 @@ char_list = [
 <br>
 
 ### 🦋 인식 가능 번호판 종류
-**다음과 같은 대표적인 6가지 종류등의 번호판 인식 가능합니다.**
+**다음과 같은 대표적인 6가지 종류등의 번호판 인식 가능합니다.** (특수, 오토바이 번호판을 추가 중입니다.)
 
-![Image](./images/Screenshot_2021-05-10_at_21.17.09.png)
-![Image](./images/Screenshot_2021-05-10_at_21.16.47.png)
-![Image](./images/Screenshot_2021-05-10_at_21.16.29.png)
-![Image](./images/Screenshot_2021-05-10_at_21.17.01.png)
-![Image](./images/Screenshot_2021-05-10_at_21.16.54.png)
-![Image](./images/Screenshot_2021-05-10_at_21.16.39.png)
+<img src="./md_images/Screenshot_2021-05-10_at_21.17.09.png" width="200">
+<img src="./md_images/Screenshot_2021-05-10_at_21.16.47.png" width="200">
+<img src="./md_images/Screenshot_2021-05-10_at_21.16.29.png" width="200">
+<img src="./md_images/Screenshot_2021-05-10_at_21.17.01.png" width="200">
+<img src="./md_images/Screenshot_2021-05-10_at_21.16.54.png" width="200">
+<img src="./md_images/Screenshot_2021-05-10_at_21.16.39.png" width="200">
+
 
 ### **인식 가능 문자**
 
