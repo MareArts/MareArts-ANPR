@@ -1,4 +1,4 @@
-# ANPR EU (European Union)
+# 🇪🇺 ANPR EU (European Union)
 ### Auto Number Plate Recognition for EU countries
 <br>
 
@@ -26,19 +26,19 @@ char_list = [
 ```
 <br>
 
-# ANPR Korea
+# 🇰🇷 ANPR Korea
 ### 한국 자동차 번호판 인식 솔루션
 <br>
 
 ### 🦋 인식 가능 번호판 종류
 **다음과 같은 대표적인 6가지 종류등의 번호판 인식 가능합니다.** (특수, 오토바이 번호판을 추가 중입니다.)
 
-<img src="./md_images/Screenshot_2021-05-10_at_21.17.09.png" width="200">
-<img src="./md_images/Screenshot_2021-05-10_at_21.16.47.png" width="200">
-<img src="./md_images/Screenshot_2021-05-10_at_21.16.29.png" width="200">
-<img src="./md_images/Screenshot_2021-05-10_at_21.17.01.png" width="200">
-<img src="./md_images/Screenshot_2021-05-10_at_21.16.54.png" width="200">
-<img src="./md_images/Screenshot_2021-05-10_at_21.16.39.png" width="200">
+<img src="./md_images/Screenshot_2021-05-10_at_21.17.09.png" width="100">
+<img src="./md_images/Screenshot_2021-05-10_at_21.16.47.png" width="100">
+<img src="./md_images/Screenshot_2021-05-10_at_21.16.29.png" width="100">
+<img src="./md_images/Screenshot_2021-05-10_at_21.17.01.png" width="100">
+<img src="./md_images/Screenshot_2021-05-10_at_21.16.54.png" width="100">
+<img src="./md_images/Screenshot_2021-05-10_at_21.16.39.png" width="100">
 
 
 ### **인식 가능 문자**
