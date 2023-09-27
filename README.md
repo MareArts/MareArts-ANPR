@@ -121,4 +121,13 @@ ex_box_display.py
 ---
 <br>
 
-🙇🏻‍♂️ **Thank you! We look forward to improving performance with your valuable feedback and data.**
+
+<a href=https://www.marearts.com/Automatic-Number-Plate-Recognition-74c24beadd6345fb8d2c6cb38d6fff63 >
+More detail for ANPR click here 😀
+ </a>
+<br>
+
+🙇🏻‍♂️ **Thank you!**
+<br>
+
+
