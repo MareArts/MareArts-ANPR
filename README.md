@@ -123,7 +123,7 @@ python ./eu_api_request.py
 ```
 
 ## 🪪 License Key
-- **For private keys,** [contact us.](mailto:hello@marearts.com)
+- **For private keys,-> https://study.marearts.com/p/anpr-lpr-solution.html
 - **Public key limits:** 1000 requests per day.
 ```yaml
 # Public keys
