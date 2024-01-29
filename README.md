@@ -75,7 +75,7 @@ Check the license plate recognition results in these [YouTube videos](https://ww
 
 ## 🧑🏻‍💻 Using SDK
 ### 🔬 SDK Usage
-- **Use curl or Python examples provided for API calls.**
+- **Use pip install and use anpr sdk
 ```python
 #pip install marearts-anpr
 from marearts_anpr import MareArtsAnpr
