@@ -73,7 +73,7 @@ Check the license plate recognition results in these [YouTube videos](https://ww
 <br>
 <br>
 
-## 📝 Using SDK
+## 🧑🏻‍💻 Using SDK
 ### 🔬 SDK Usage
 - **Use curl or Python examples provided for API calls.**
 ```python
@@ -103,13 +103,7 @@ result = predictor.predict_from_cv2(img)
 python ./kr_api_request.oy
 python ./eu_api_request.py
 ```
-- **For private keys,** [contact us.](mailto:hello@marearts.com)
-- **Public key limits:** 1000 requests per day.
-```yaml
-# Public keys
-user-id : marearts@public
-x-api-key : J4K9L2Wory34@G7T1Y8rt-PP83uSSvkV3Z6ioSTR!
-```
+
 ### 🔬 Returns
 - **results:** Contains OCR text, probabilities, and detection locations.
 - **Processing Speeds:** Provided for license plate detection and OCR.
@@ -127,6 +121,16 @@ x-api-key : J4K9L2Wory34@G7T1Y8rt-PP83uSSvkV3Z6ioSTR!
 }
 #usage, day_max are only for public key license
 ```
+
+## 🪪 License Key
+- **For private keys,** [contact us.](mailto:hello@marearts.com)
+- **Public key limits:** 1000 requests per day.
+```yaml
+# Public keys
+user-id : marearts@public
+x-api-key : J4K9L2Wory34@G7T1Y8rt-PP83uSSvkV3Z6ioSTR!
+```
+
 ---
 
 ## ETC
