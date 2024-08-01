@@ -1,49 +1,30 @@
-# 🇪🇺 ANPR EU (European Union)
-### Auto Number Plate Recognition for EU countries
-<br>
+# MareArts ANPR SDK
 
-**🦋 Available Countries:** (We are adding more contries.)
-```
-🇦🇱 Albania                  🇨🇿 Czechia
-🇦🇩 Andorra                  🇩🇰 Denmark
-🇦🇹 Austria                  🇫🇮 Finland
-🇧🇪 Belgium                  🇫🇷 France
-🇧🇦 Bosnia and Herzegovina   🇩🇪 Germany
-🇧🇬 Bulgaria                 🇬🇷 Greece
-🇭🇷 Croatia                  🇭🇺 Hungary
-🇨🇾 Cyprus                   🇮🇪 Ireland
-```
-<br>
+### 🇪🇺 ANPR EU (European Union)
+Auto Number Plate Recognition for EU countries
 
-**🦋 Recognisable characters:**
+🦋 **Available Countries:** (We are adding more countries.)
+``` 
+🇦🇱 Albania  🇨🇿 Czechia  🇦🇩 Andorra  🇩🇰 Denmark  🇦🇹 Austria  🇫🇮 Finland
+🇧🇪 Belgium  🇫🇷 France   🇧🇦 Bosnia and Herzegovina  
+🇩🇪 Germany  🇧🇬 Bulgaria 🇬🇷 Greece   🇭🇷 Croatia  🇭🇺 Hungary  🇨🇾 Cyprus   🇮🇪 Ireland
+```
+
+🦋 **Recognisable Characters:**
 ```python
 char_list = [
     "-", ".", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
     "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
-    "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "d", "i", "m", "o",
-    "Ö", "Ü", "Ć", "Č", "Đ", "Š", "Ž", "П"
+    "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "d", "i", 
+    "m", "o", "Ö", "Ü", "Ć", "Č", "Đ", "Š", "Ž", "П"
 ]
 ```
-<br>
 
-# 🇰🇷 ANPR Korea
-### 한국 자동차 번호판 인식 솔루션
-<br>
+### 🇰🇷 ANPR Korea
+한국 자동차 번호판 인식 솔루션
 
-### 🦋 인식 가능 번호판 종류
-**다음과 같은 대표적인 6가지 종류등의 번호판 인식 가능합니다.** (특수, 오토바이 번호판을 추가 중입니다.)
-
-<img src="./md_images/Screenshot_2021-05-10_at_21.17.09.png" width="100">
-<img src="./md_images/Screenshot_2021-05-10_at_21.16.47.png" width="100">
-<img src="./md_images/Screenshot_2021-05-10_at_21.16.29.png" width="100">
-<img src="./md_images/Screenshot_2021-05-10_at_21.17.01.png" width="100">
-<img src="./md_images/Screenshot_2021-05-10_at_21.16.54.png" width="100">
-<img src="./md_images/Screenshot_2021-05-10_at_21.16.39.png" width="100">
-
-
-### **인식 가능 문자**
-
-```yaml
+**인식 가능 문자:**
+```python
 char_list = [
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
     '가', '강', '거', '경', '고', '광', '구', '기',
@@ -59,96 +40,169 @@ char_list = [
     '하', '허', '호'
 ]
 ```
-<br>
 
-## 🤖 Live Test
-- [**MareArts 🎬 Live**](http://live.marearts.com/)
-- 📧 [Email us](mailto:hello@marearts.com) for further information.
-- **Performance can be improved with your usage data. 🙇🏻‍♂️**
-<br>
-<br>
+## Installation
 
-## 📺 ANPR Result Videos
-Check the license plate recognition results in these [YouTube videos](https://www.youtube.com/playlist?list=PLvX6vpRszMkxJBJf4EjQ5VCnmkjfE59-J).
-<br>
-<br>
+To install the MareArts ANPR package, use the following pip command:
 
-## 🧑🏻‍💻 Using SDK
-### 🔬 SDK Usage
-- **Use pip install and use anpr sdk
-```python
-#pip install marearts-anpr
-from marearts_anpr import MareArtsAnpr
-
-#nation is "eu" or "kr"
-predictor = MareArtsAnpr(nation=nation, id=user_id, key=license_key, display_license_info=True)
-
-#prediction by image path
-result = predictor.predict_from_path(img_path)
-
-#prediction by opencv image
-result = predictor.predict_from_cv2(img)
-```
-
-## 📝 Using API
-### 🔬 API Usage
-- **Use curl or Python examples provided for API calls.**
-```python
-#shell script
-./kr_curl_request.sh
-./eu_curl_request.sh
-```
-```python
-#python code
-python ./kr_api_request.oy
-python ./eu_api_request.py
-```
-
-### 🔬 Returns
-- **results:** Contains OCR text, probabilities, and detection locations.
-- **Processing Speeds:** Provided for license plate detection and OCR.
-- **Usage:** Current day’s usage and maximum usage for public key license.
-
-```python
-# Example 1 JSON
-{
-    "results": [{
-        "ocr": "KU17ZY", "ocr_conf": 99,
-        "ltrb": [619, 327, 775, 393], "ltrb_conf": 93
-    }],
-    "ltrb_proc_sec": 0.14, "ocr_proc_sec": 0.34,
-    "usage": "1", "day_max": "10000"
-}
-#usage, day_max are only for public key license
+```bash
+pip install marearts-anpr
 ```
 
 ## 🪪 License Key
-- **For private keys,-> https://study.marearts.com/p/anpr-lpr-solution.html
-- **Public key limits:** 1000 requests per day.
-```yaml
-# Public keys
-user-id : marearts@public
-x-api-key : J4K9L2Wory34@G7T1Y8rt-PP83uSSvkV3Z6ioSTR!
-```
 
----
+**For private keys,** please visit [MareArts ANPR Solution](https://study.marearts.com/p/anpr-lpr-solution.html).
+For inquiries about private keys, contact us at [hello@marearts.com](mailto:hello@marearts.com).
 
-## ETC
+## 🤖 Live Test
+[MareArts 🎬 Live](http://live.marearts.com)
+
+## 📺 ANPR Result Videos
+[Check here](https://www.youtube.com/playlist?list=PLvX6vpRszMkxJBJf4EjQ5VCnmkjfE59-J) to see the license plate recognition results in YouTube videos.
+
+## 📝 Using SDK
+
+### 🔬 SDK Usage
+Here's an example of how to use the updated SDK:
+
 ```python
-# box display code with label
-ex_box_display.py
+# pip install marearts-anpr
+import cv2
+from PIL import Image
+from marearts_anpr import ma_anpr_detector
+from marearts_anpr import ma_anpr_ocr
+from marearts_anpr import marearts_anpr_from_pil
+from marearts_anpr import marearts_anpr_from_image_file
+from marearts_anpr import marearts_anpr_from_cv2
+
+if __name__ == '__main__':
+    
+    #################################
+    ## Initiate MareArts ANPR
+    print("EU ANPR")
+    user_name = "your_email"
+    serial_key = "your_serial_key"
+    detector_model_version = "middle" # Options: not yet
+    ocr_model_version = "eu" # Options: "kr"
+
+    # MareArts ANPR Detector Inference
+    anpr_d = ma_anpr_detector(detector_model_version, user_name, serial_key, conf_thres=0.3, iou_thres=0.5)
+    # MareArts ANPR OCR Inference
+    anpr_r = ma_anpr_ocr(ocr_model_version, user_name, serial_key)
+    #################################
+
+    #################################
+    # Routine Task 1 - Predict from File
+    image_path = './sample_images/eu_test1.jpg'
+    output = marearts_anpr_from_image_file(anpr_d, anpr_r, image_path)
+    print(output)
+
+    # Routine Task 2 - Predict from cv2
+    img = cv2.imread(image_path)
+    output = marearts_anpr_from_cv2(anpr_d, anpr_r, img)
+    print(output)
+
+    # Routine Task 3 - Predict from Pillow
+    pil_img = Image.open(image_path)
+    output = marearts_anpr_from_pil(anpr_d, anpr_r, pil_img)
+    print(output)
+    #################################
+
+
+    #################################
+    ## Initiate MareArts ANPR for Korea
+    print("ANPR Korean")
+    # user_name, serial_key are already defined
+    # anpr_d is also already initiated before
+    ocr_model_version = "kr"
+    # MareArts ANPR OCR Inference
+    anpr_r = ma_anpr_ocr(ocr_model_version, user_name, serial_key)
+
+    #################################
+    # Routine Task 1 - Predict from File
+    image_path = './sample_images/kr_test2.jpg'
+    output = marearts_anpr_from_image_file(anpr_d, anpr_r, image_path)
+    print(output)
+
+    # Routine Task 2 - Predict from cv2
+    img = cv2.imread(image_path)
+    output = marearts_anpr_from_cv2(anpr_d, anpr_r, img)
+    print(output)
+
+    # Routine Task 3 - Predict from Pillow
+    pil_img = Image.open(image_path)
+    output = marearts_anpr_from_pil(anpr_d, anpr_r, pil_img)
+    print(output)
+    #################################
 ```
 
----
-<br>
+### 🔬 Returns
+The output from the ANPR will be similar to:
+
+```json
+{
+    'results': [
+        {'ocr': 'SL593LM', 'ocr_conf': 99, 'ltrb': [819, 628, 1085, 694], 'ltrb_conf': 90}
+        ], 
+    'ltrb_proc_sec': 0.22, 'ocr_proc_sec': 0.15
+}
+```
+```json
+{
+    'results': [
+        {'ocr': '123가4568', 'ocr_conf': 99, 'ltrb': [181, 48, 789, 186], 'ltrb_conf': 83}, 
+        {'ocr': '123가4568', 'ocr_conf': 99, 'ltrb': [154, 413, 774, 557], 'ltrb_conf': 82}, 
+        {'ocr': '123가4568', 'ocr_conf': 99, 'ltrb': [154, 601, 763, 746], 'ltrb_conf': 80}, 
+        {'ocr': '123가4568', 'ocr_conf': 99, 'ltrb': [156, 217, 773, 369], 'ltrb_conf': 80}
+        ],
+    'ltrb_proc_sec': 0.23, 'ocr_proc_sec': 0.6
+}
+```
+
+- **Results:** Contains OCR text, probabilities, and detection coordinate(left, top, right, bottom).
+- **Processing Speeds:** Provided for license plate detection and OCR.
+
+## API for testing
+
+### This is for testing purposes
+**API key limits:** 1000 requests per day. <br>
+**User ID:** `marearts@public` <br>
+**X-API-Key:** `J4K9L2Wory34@G7T1Y8rt-PP83uSSvkV3Z6ioSTR!`
+
+### API Call for EU
+
+To make an API call for EU ANPR, use the following command:
+
+```bash
+#!bin/bash
+curl -X POST https://we303v9ck8.execute-api.eu-west-1.amazonaws.com/Prod/marearts_anpr_eu \
+     -H "Content-Type: image/jpeg" \
+     -H "x-api-key: your-api-key" \
+     -H "user-id: your-user-id" \
+     --data-binary "@./path/upload.jpg"
+```
+
+### API Call for Korea
+
+To make an API call for Korean ANPR, use the following command:
+
+```bash
+#!bin/bash
+curl -X POST https://we303v9ck8.execute-api.eu-west-1.amazonaws.com/Prod/marearts_anpr \
+     -H "Content-Type: image/jpeg" \
+     -H "x-api-key: your-api-key" \
+     -H "user-id: your-user-id" \
+     --data-binary "@./path/upload.jpg"
+```
 
 
-<a href=https://www.marearts.com/Automatic-Number-Plate-Recognition-74c24beadd6345fb8d2c6cb38d6fff63 >
-More detail for MareArts ANPR click here 😀
- </a>
-<br>
 
-🙇🏻‍♂️ **Thank you!**
-<br>
+## More Detail
+email : hello@marearts.com <br>
+home page : https://marearts.com <br>
+blog : http://study.marearts.com <br>
+paypal : https://study.marearts.com/p/anpr-lpr-solution.html <br>
+live test : http://live.marearts.com
 
 
+🙇🏻‍♂️ Thank you!
