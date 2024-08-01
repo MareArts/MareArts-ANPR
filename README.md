@@ -139,7 +139,7 @@ if __name__ == '__main__':
 ### 🔬 Returns
 The output from the ANPR will be similar to:
 
-```json
+```python
 {
     'results': [
         {'ocr': 'SL593LM', 'ocr_conf': 99, 'ltrb': [819, 628, 1085, 694], 'ltrb_conf': 90}
@@ -147,7 +147,7 @@ The output from the ANPR will be similar to:
     'ltrb_proc_sec': 0.22, 'ocr_proc_sec': 0.15
 }
 ```
-```json
+```python
 {
     'results': [
         {'ocr': '123가4568', 'ocr_conf': 99, 'ltrb': [181, 48, 789, 186], 'ltrb_conf': 83}, 
