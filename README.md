@@ -144,7 +144,8 @@ The output from the ANPR will be similar to:
     'results': [
         {'ocr': 'SL593LM', 'ocr_conf': 99, 'ltrb': [819, 628, 1085, 694], 'ltrb_conf': 90}
         ], 
-    'ltrb_proc_sec': 0.22, 'ocr_proc_sec': 0.15
+    'ltrb_proc_sec': 0.22,
+    'ocr_proc_sec': 0.15
 }
 ```
 ```python
@@ -155,7 +156,8 @@ The output from the ANPR will be similar to:
         {'ocr': '123가4568', 'ocr_conf': 99, 'ltrb': [154, 601, 763, 746], 'ltrb_conf': 80}, 
         {'ocr': '123가4568', 'ocr_conf': 99, 'ltrb': [156, 217, 773, 369], 'ltrb_conf': 80}
         ],
-    'ltrb_proc_sec': 0.23, 'ocr_proc_sec': 0.6
+    'ltrb_proc_sec': 0.23,
+    'ocr_proc_sec': 0.6
 }
 ```
 
