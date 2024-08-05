@@ -179,8 +179,8 @@ To make an API call for EU ANPR, use the following command:
 #!bin/bash
 curl -X POST https://we303v9ck8.execute-api.eu-west-1.amazonaws.com/Prod/marearts_anpr_eu \
      -H "Content-Type: image/jpeg" \
-     -H "x-api-key: your-api-key" \
-     -H "user-id: your-user-id" \
+     -H "x-api-key: api-key" \
+     -H "user-id: user-id" \
      --data-binary "@./path/upload.jpg"
 ```
 
@@ -192,8 +192,8 @@ To make an API call for Korean ANPR, use the following command:
 #!bin/bash
 curl -X POST https://we303v9ck8.execute-api.eu-west-1.amazonaws.com/Prod/marearts_anpr \
      -H "Content-Type: image/jpeg" \
-     -H "x-api-key: your-api-key" \
-     -H "user-id: your-user-id" \
+     -H "x-api-key: api-key" \
+     -H "user-id: user-id" \
      --data-binary "@./path/upload.jpg"
 ```
 
