@@ -140,6 +140,7 @@ if __name__ == '__main__':
     print(output)
     #################################
 ```
+##### Please refer to the **advanced.py** code in the **./example_code**  folder. This file demonstrates how to implement the ma_anpr_detector and ma_anpr_ocr separately.
 
 <br><br>
 ### 🔬 Returns
@@ -210,7 +211,7 @@ curl -X POST https://we303v9ck8.execute-api.eu-west-1.amazonaws.com/Prod/mareart
 email : hello@marearts.com <br>
 home page : https://marearts.com <br>
 blog : http://study.marearts.com <br>
-paypal : https://study.marearts.com/p/anpr-lpr-solution.html <br>
+subscription : https://study.marearts.com/p/anpr-lpr-solution.html <br>
 live test : http://live.marearts.com
 
 <br><br>
