@@ -140,7 +140,7 @@ if __name__ == '__main__':
     print(output)
     #################################
 ```
-##### Please refer to the **advanced.py** code in the **./example_code**  folder. This file demonstrates how to implement the ma_anpr_detector and ma_anpr_ocr separately.
+Please refer to the **advanced.py** code in the **./example_code**  folder. This file demonstrates how to implement the ma_anpr_detector and ma_anpr_ocr separately.
 
 <br><br>
 ### 🔬 Returns
