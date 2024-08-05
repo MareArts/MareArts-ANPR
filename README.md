@@ -1,5 +1,6 @@
 # MareArts ANPR SDK
 
+
 ### 🇪🇺 ANPR EU (European Union)
 Auto Number Plate Recognition for EU countries
 
@@ -19,7 +20,7 @@ char_list = [
     "m", "o", "Ö", "Ü", "Ć", "Č", "Đ", "Š", "Ž", "П"
 ]
 ```
-
+<br><br>
 ### 🇰🇷 ANPR Korea
 한국 자동차 번호판 인식 솔루션
 
@@ -40,7 +41,7 @@ char_list = [
     '하', '허', '호'
 ]
 ```
-
+<br><br>
 ## Installation
 
 To install the MareArts ANPR package, use the following pip command:
@@ -49,19 +50,23 @@ To install the MareArts ANPR package, use the following pip command:
 pip install marearts-anpr
 ```
 
+<br><br>
 ## 🪪 License Key
 
 **For private keys,** please visit [MareArts ANPR Solution](https://study.marearts.com/p/anpr-lpr-solution.html).
 For inquiries about private keys, contact us at [hello@marearts.com](mailto:hello@marearts.com).
-<br>
+
+<br><br>
 ## 🤖 Live Test
 [MareArts 🎬 Live](http://live.marearts.com)
-<br>
+
+<br><br>
 ## 📺 ANPR Result Videos
 [Check here](https://www.youtube.com/playlist?list=PLvX6vpRszMkxJBJf4EjQ5VCnmkjfE59-J) to see the license plate recognition results in YouTube videos.
-<br>
-## 📝 Using SDK
 
+
+<br><br>
+## 📝 Using SDK
 ### 🔬 SDK Usage
 Here's an example of how to use the updated SDK:
 
@@ -136,6 +141,7 @@ if __name__ == '__main__':
     #################################
 ```
 
+<br><br>
 ### 🔬 Returns
 The output from the ANPR will be similar to:
 
@@ -164,6 +170,7 @@ The output from the ANPR will be similar to:
 - **Results:** Contains OCR text, probabilities, and detection coordinate(left, top, right, bottom).
 - **Processing Speeds:** Provided for license plate detection and OCR.
 
+<br><br>
 ## API for testing
 
 ### This is for testing purposes
@@ -198,7 +205,7 @@ curl -X POST https://we303v9ck8.execute-api.eu-west-1.amazonaws.com/Prod/mareart
 ```
 
 
-
+<br><br>
 ## More Detail
 email : hello@marearts.com <br>
 home page : https://marearts.com <br>
@@ -206,5 +213,5 @@ blog : http://study.marearts.com <br>
 paypal : https://study.marearts.com/p/anpr-lpr-solution.html <br>
 live test : http://live.marearts.com
 
-
+<br><br>
 🙇🏻‍♂️ Thank you!
