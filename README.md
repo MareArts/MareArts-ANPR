@@ -42,7 +42,7 @@ char_list = [
 ]
 ```
 <br><br>
-## Installation
+## 🔩 Installation
 
 To install the MareArts ANPR package, use the following pip command:
 
@@ -172,7 +172,7 @@ The output from the ANPR will be similar to:
 - **Processing Speeds:** Provided for license plate detection and OCR.
 
 <br><br>
-## API for testing
+## 🧪 API for testing
 
 ### This is for testing purposes
 **API key limits:** 1000 requests per day. <br>
@@ -206,7 +206,7 @@ curl -X POST https://we303v9ck8.execute-api.eu-west-1.amazonaws.com/Prod/mareart
 ```
 
 <br><br>
-## Create MareArts ANPR API Docker
+## ⚓️ Create MareArts ANPR API Docker
 Please refer to **./API_docker_example**  folder. 
 ```bash
 API_docker_example
@@ -222,7 +222,7 @@ API_docker_example
 
 
 <br><br>
-## More Detail
+## 😎 More Detail
 email : hello@marearts.com <br>
 home page : https://marearts.com <br>
 blog : http://study.marearts.com <br>
