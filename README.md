@@ -205,6 +205,21 @@ curl -X POST https://we303v9ck8.execute-api.eu-west-1.amazonaws.com/Prod/mareart
      --data-binary "@./path/upload.jpg"
 ```
 
+<br><br>
+## Create MareArts ANPR API Docker
+Please refer to **./API_docker_example**  folder. 
+```bash
+API_docker_example
+│
+├── api_call.sh           # Shell script to make API calls to the MareArts ANPR application.
+├── app.py                # Python script containing the MareArts ANPR application.
+├── build_image.sh        # Shell script to build the Docker image from the Dockerfile.
+├── Dockerfile            # Dockerfile containing instructions for building the Docker image.
+├── request.py            # Python script to send requests to the MareArts ANPR API server.
+├── requirements.txt      # Contains a list of Python packages that the app requires.
+└── run_container.sh      # Shell script to run the Docker container from the built image.
+```
+
 
 <br><br>
 ## More Detail
