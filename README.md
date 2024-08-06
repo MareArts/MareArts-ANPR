@@ -65,7 +65,7 @@ For inquiries about private keys, contact us at [hello@marearts.com](mailto:hell
 [Check here](https://www.youtube.com/playlist?list=PLvX6vpRszMkxJBJf4EjQ5VCnmkjfE59-J) to see the license plate recognition results in YouTube videos.
 
 <br><br>
-## Model Version
+## 🚂 Model Version
 ### ANPR Detector Model Version
 | Model       | File Size | Accuracy | Speed |
 |-------------|-----------|----------|-------|
