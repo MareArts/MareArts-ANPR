@@ -67,19 +67,19 @@ For inquiries about private keys, contact us at [hello@marearts.com](mailto:hell
 <br><br>
 ## 🚂 Model Version
 ### ANPR Detector Model Version
-| Model       | File Size | Accuracy | Speed |
-|-------------|-----------|----------|-------|
-| eu          |     -      |     -     |    -   |
-| kr          |     -     |    -      |    -   |
+| Model       | File Size | Precision | Recall |   Speed   |
+|-------------|-----------|-----------|--------|-----------|
+| middle      | 103mb     |    legacy | legacy | 0.23 sec   |
+| v10_small   | 29mb      |   0.9713  | 0.9669 | 0.0623 sec |
+| v10_middle  | 61mb      |   0.9731  | 0.9617 | 0.1262 sec |
+| v10_large   | not yet   | not yet    | not yet |
 
 
 ### ANPR OCR Model Version
 | Model       | File Size | Accuracy | Speed |
 |-------------|-----------|----------|-------|
-| middle      |    -       |    -      |   -    |
-| v10_small   | not yet   | not yet    | not yet |
-| v10_middle  | not yet   | not yet    | not yet |
-| v10_large   | not yet   | not yet    | not yet |
+| eu          |     -      |     -     |    -   |
+| kr          |     -     |    -      |    -   |
 
 
 <br><br>
@@ -104,8 +104,8 @@ if __name__ == '__main__':
     print("EU ANPR")
     user_name = "your_email"
     serial_key = "your_serial_key"
-    detector_model_version = "middle" # Options: not yet
-    ocr_model_version = "eu" # Options: "kr"
+    detector_model_version = "middle" # Options: middle, v10_small, v10_middle
+    ocr_model_version = "eu" # Options: eu, kr
 
     # MareArts ANPR Detector Inference
     anpr_d = ma_anpr_detector(detector_model_version, user_name, serial_key, conf_thres=0.3, iou_thres=0.5)
