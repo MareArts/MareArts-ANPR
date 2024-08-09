@@ -72,8 +72,8 @@ For inquiries about private keys, contact us at [hello@marearts.com](mailto:hell
 | middle      | 103mb     |    legacy | legacy | 0.23 sec   |
 | v10_small   | 29mb      |   0.9713  | 0.9669 | 0.0623 sec |
 | v10_middle  | 61mb      |   0.9731  | 0.9617 | 0.1262 sec |
-| v10_large   | not yet   | not yet    | not yet |
-
+| v10_large   | 93mb      |   0.9735  | 0.9687 | 0.1764 sec |
+* speed test is based on i7-9800X 3.8GHz
 
 ### ANPR OCR Model Version
 | Model       | File Size | Accuracy | Speed |
@@ -104,7 +104,7 @@ if __name__ == '__main__':
     print("EU ANPR")
     user_name = "your_email"
     serial_key = "your_serial_key"
-    detector_model_version = "middle" # Options: middle, v10_small, v10_middle
+    detector_model_version = "middle" # Options: middle, v10_small, v10_middle, v10_large
     ocr_model_version = "eu" # Options: eu, kr
 
     # MareArts ANPR Detector Inference
