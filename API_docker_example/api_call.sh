@@ -2,18 +2,22 @@
 
 # Set variables for API request
 API_KEY="your_secret_api_key"
-USER_NAME="your_email"
-SERIAL_KEY="your_secretkey"
+USER_NAME="user_id"
+SERIAL_KEY="serial_key"
 DETECTION_MODEL="middle"
 OCR_MODEL="eu"
-IMAGE_PATH="../sample_images/eu-a.jpg"  # Ensure this is the correct path to your image
-IMAGE_PATH="../sample_images/none.png"  # Ensure this is the correct path to your image
+IMAGE_PATH="../sample_images/eu-a.jpg"
+# IMAGE_PATH="../sample_images/none.png"
+
+# URL encode the SERIAL_KEY
+ENCODED_SERIAL_KEY=$(printf %s "$SERIAL_KEY" | jq -sRr @uri)
 
 # Send the POST request using curl
 curl -X POST "http://localhost:8000/process_image" \
      -H "X-API-Key: ${API_KEY}" \
-     -F "user_name=${USER_NAME}" \
-     -F "serial_key=${SERIAL_KEY}" \
+     -u "${USER_NAME}:${ENCODED_SERIAL_KEY}" \
      -F "detection_model_version=${DETECTION_MODEL}" \
      -F "ocr_model_version=${OCR_MODEL}" \
      -F "image=@${IMAGE_PATH}"
+
+echo # Add a newline for better readability of the output
