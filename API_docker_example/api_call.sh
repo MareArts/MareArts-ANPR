@@ -9,8 +9,6 @@ OCR_MODEL="eu"
 IMAGE_PATH="../sample_images/eu-a.jpg"
 # IMAGE_PATH="../sample_images/none.png"
 
-# URL encode the SERIAL_KEY
-ENCODED_SERIAL_KEY=$(printf %s "$SERIAL_KEY" | jq -sRr @uri)
 
 # Send the POST request using curl
 curl -X POST "http://localhost:8000/process_image" \

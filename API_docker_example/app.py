@@ -4,6 +4,7 @@ from pydantic import BaseModel
 import cv2
 import numpy as np
 from PIL import Image
+from importlib.metadata import version, PackageNotFoundError
 from marearts_anpr import ma_anpr_detector, ma_anpr_ocr, marearts_anpr_from_pil
 
 
@@ -11,6 +12,16 @@ from marearts_anpr import ma_anpr_detector, ma_anpr_ocr, marearts_anpr_from_pil
 
 app = FastAPI()
 security = HTTPBasic()
+
+try:
+    marearts_anpr_version = version("marearts_anpr")
+except PackageNotFoundError:
+    marearts_anpr_version = "Package not found"
+except Exception as e:
+    marearts_anpr_version = f"Error retrieving version: {str(e)}"
+
+def get_current_credentials(credentials: HTTPBasicCredentials = Depends(security)):
+    return credentials
 
 
 # Security setup
@@ -88,6 +99,13 @@ async def process_image(
     return {
         'results': results,
         # Remove ltrb_proc_sec and ocr_proc_sec if not needed
+    }
+
+@app.get("/health")
+async def health_check():
+    return {
+        "status": "healthy",
+        "marearts_anpr_version": marearts_anpr_version
     }
 
 if __name__ == "__main__":
