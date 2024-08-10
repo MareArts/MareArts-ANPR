@@ -1,14 +1,17 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException, Depends, Form
-from fastapi.security import APIKeyHeader
+from fastapi.security import APIKeyHeader, HTTPBasic, HTTPBasicCredentials
 from pydantic import BaseModel
 import cv2
 import numpy as np
 from PIL import Image
-import time
 from marearts_anpr import ma_anpr_detector, ma_anpr_ocr, marearts_anpr_from_pil
 
 
+
+
 app = FastAPI()
+security = HTTPBasic()
+
 
 # Security setup
 API_KEY_NAME = "X-API-Key"
@@ -18,10 +21,12 @@ api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
 anpr_d = None
 anpr_r = None
 
+def get_current_credentials(credentials: HTTPBasicCredentials = Depends(security)):
+    return credentials
+
+
 # Define a Pydantic model for input data
 class ANPRInput(BaseModel):
-    user_name: str
-    serial_key: str
     detection_model_version: str
     ocr_model_version: str
 
@@ -30,6 +35,10 @@ async def get_api_key(api_key_header: str = Depends(api_key_header)):
     if api_key_header == "your_secret_api_key":
         return api_key_header
     raise HTTPException(status_code=403, detail="Could not validate credentials")
+
+# Dependency to get current credentials
+def get_current_credentials(credentials: HTTPBasicCredentials = Depends(security)):
+    return credentials
 
 # Function to initialize ANPR models
 def initialize_anpr(user_name, serial_key, detection_model_version, ocr_model_version):
@@ -41,13 +50,17 @@ def initialize_anpr(user_name, serial_key, detection_model_version, ocr_model_ve
 # Endpoint to process an image and perform ANPR
 @app.post("/process_image")
 async def process_image(
-    user_name: str = Form(...),
-    serial_key: str = Form(...),
+    # user_name: str = Form(...),
+    # serial_key: str = Form(...),
     detection_model_version: str = Form(...),
     ocr_model_version: str = Form(...),
     image: UploadFile = File(...),
-    api_key: str = Depends(get_api_key)
+    api_key: str = Depends(get_api_key),
+    credentials: HTTPBasicCredentials = Depends(get_current_credentials)
 ):
+    user_name = credentials.username  
+    serial_key = credentials.password  
+
     # Initialize ANPR models if not already done
     initialize_anpr(user_name, serial_key, detection_model_version, ocr_model_version)
     
