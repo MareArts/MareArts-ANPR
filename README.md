@@ -196,31 +196,26 @@ The output from the ANPR will be similar to:
 **User ID:** `marearts@public` <br>
 **X-API-Key:** `J4K9L2Wory34@G7T1Y8rt-PP83uSSvkV3Z6ioSTR!`
 
-### API Call for EU
+### API Call 
 
-To make an API call for EU ANPR, use the following command:
-
-```bash
-#!bin/bash
-curl -X POST https://we303v9ck8.execute-api.eu-west-1.amazonaws.com/Prod/marearts_anpr_eu \
-     -H "Content-Type: image/jpeg" \
-     -H "x-api-key: api-key" \
-     -H "user-id: user-id" \
-     --data-binary "@./path/upload.jpg"
-```
-
-### API Call for Korea
-
-To make an API call for Korean ANPR, use the following command:
+To make an API call for ANPR, use the following command: <br>
+**Content-Type** : image/jpeg<br>
+**x-api-key**: api_key<br>
+**user-id**: user-id<br>
+**detector_model_version**: Specifies which version of the detector model to use. Refer to version table<br>
+**ocr_model_version**: Specifies which version of the OCR model to use. Refer to version table<br>
 
 ```bash
 #!bin/bash
 curl -X POST https://we303v9ck8.execute-api.eu-west-1.amazonaws.com/Prod/marearts_anpr \
      -H "Content-Type: image/jpeg" \
-     -H "x-api-key: api-key" \
+     -H "x-api-key: api_key" \
      -H "user-id: user-id" \
-     --data-binary "@./path/upload.jpg"
+     -H "detector_model_version: detector_version" \
+     -H "ocr_model_version: ocr_version" \
+     --data-binary "@./a.jpg"
 ```
+
 
 <br><br>
 ## ⚓️ Create MareArts ANPR API Docker
