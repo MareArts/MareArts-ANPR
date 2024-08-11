@@ -32,6 +32,10 @@ api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
 anpr_d = None
 anpr_r = None
 
+# Function to initialize ANPR models
+current_detection_version = None
+current_ocr_version = None
+
 def get_current_credentials(credentials: HTTPBasicCredentials = Depends(security)):
     return credentials
 
@@ -51,12 +55,21 @@ async def get_api_key(api_key_header: str = Depends(api_key_header)):
 def get_current_credentials(credentials: HTTPBasicCredentials = Depends(security)):
     return credentials
 
-# Function to initialize ANPR models
+
 def initialize_anpr(user_name, serial_key, detection_model_version, ocr_model_version):
-    global anpr_d, anpr_r
-    if anpr_d is None or anpr_r is None:
+    global anpr_d, anpr_r, current_detection_version, current_ocr_version
+    
+    # Check if models need to be initialized or reinitialized
+    if (anpr_d is None or anpr_r is None or 
+        detection_model_version != current_detection_version or 
+        ocr_model_version != current_ocr_version):
+
         anpr_d = ma_anpr_detector(detection_model_version, user_name, serial_key, conf_thres=0.3, iou_thres=0.5)
         anpr_r = ma_anpr_ocr(ocr_model_version, user_name, serial_key)
+        
+        # Update current versions
+        current_detection_version = detection_model_version
+        current_ocr_version = ocr_model_version
 
 # Endpoint to process an image and perform ANPR
 @app.post("/process_image")
@@ -98,7 +111,8 @@ async def process_image(
     # Return the formatted result without processing time calculations
     return {
         'results': results,
-        # Remove ltrb_proc_sec and ocr_proc_sec if not needed
+        'ltrb_proc_sec' : output['ltrb_proc_sec'],
+        'ocr_proc_sec' : output['ocr_proc_sec']
     }
 
 @app.get("/health")
