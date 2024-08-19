@@ -49,6 +49,10 @@ To install the MareArts ANPR package, use the following pip command:
 ```bash
 pip install marearts-anpr
 ```
+If you want to use CUDA version inference, please install the following additional packages:
+```bash
+pip install onnxruntime-gpu==1.18.1
+```
 
 <br><br>
 ## 🪪 License Key
