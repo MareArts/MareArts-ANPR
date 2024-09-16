@@ -80,10 +80,11 @@ For inquiries about private keys, contact us at [hello@marearts.com](mailto:hell
 * speed test is based on i7-9800X 3.8GHz
 
 ### ANPR OCR Model Version
-| Model       | File Size | Accuracy | Speed |
-|-------------|-----------|----------|-------|
-| eu          |     -      |     -     |    -   |
-| kr          |     -     |    -      |    -   |
+| Model       | File Size | Accuracy | Recall | F1 |
+|-------------|-----------|----------|-------|-----|
+| eu          |     -     |     -    |    -  | -   |
+| kr          |     -     |    -     |    -  | -   |
+| univ        |  ~100mb   |    09330 |    0.9615 | 0.9668   |
 
 
 <br><br>
