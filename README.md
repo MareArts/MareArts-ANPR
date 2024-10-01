@@ -71,13 +71,18 @@ For inquiries about private keys, contact us at [hello@marearts.com](mailto:hell
 <br><br>
 ## 🚂 Model Version
 ### ANPR Detector Model Version
-| Model       | File Size | Precision | Recall |   Speed   |
-|-------------|-----------|-----------|--------|-----------|
-| middle      | 103mb     |    legacy | legacy | 0.23 sec   |
-| v10_small   | 29mb      |   0.9713  | 0.9669 | 0.0623 sec |
-| v10_middle  | 61mb      |   0.9731  | 0.9617 | 0.1262 sec |
-| v10_large   | 93mb      |   0.9735  | 0.9687 | 0.1764 sec |
+| Model Name      | File Size | Precision | Recall | F1       |    Speed   |
+|-------------|-----------|-----------|--------|----------|------------|
+| middle      | 103mb     |    legacy | legacy |  -       | 0.23 sec   |
+| v10_small   | 29mb      |   0.9713  | 0.9669 |  -       | 0.0623 sec |
+| v10_middle  | 61mb      |   0.9731  | 0.9617 |  -       | 0.1262 sec |
+| v10_large   | 93mb      |   0.9735  | 0.9687 |  -       | 0.1764 sec |
+| v11_samll   | 28mb      |   0.9510  | 0.9817 |  0.9584  | 0.0119 sec |
+| v11_middle  | 58mb      |   0.9502  | 0.9817 |  0.9577  | 0.0149 sec |
+| v11_large   | 93mb      |   0.9534  | 0.9858 |  0.9619  | 0.0176 sec |
+
 * speed test is based on i7-9800X 3.8GHz
+* Use model name in detector code
 
 ### ANPR OCR Model Version
 | Model       | File Size | Accuracy | Recall | F1 |
@@ -85,7 +90,7 @@ For inquiries about private keys, contact us at [hello@marearts.com](mailto:hell
 | eu          |     -     |     -    |    -  | -   |
 | kr          |     -     |    -     |    -  | -   |
 | univ        |  ~100mb   |    09330 |    0.9615 | 0.9668   |
-
+* Use model name in OCR code
 
 <br><br>
 ## 📝 Using SDK
