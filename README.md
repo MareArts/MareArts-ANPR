@@ -6,9 +6,12 @@ Auto Number Plate Recognition for EU countries
 
 🦋 **Available Countries:** (We are adding more countries.)
 ``` 
+EU :
 🇦🇱 Albania  🇨🇿 Czechia  🇦🇩 Andorra  🇩🇰 Denmark  🇦🇹 Austria  🇫🇮 Finland
 🇧🇪 Belgium  🇫🇷 France   🇧🇦 Bosnia and Herzegovina  
 🇩🇪 Germany  🇧🇬 Bulgaria 🇬🇷 Greece   🇭🇷 Croatia  🇭🇺 Hungary  🇨🇾 Cyprus   🇮🇪 Ireland
+EU Plus : 
+🇮🇩 Indonesia
 ```
 
 🦋 **Recognisable Characters:**
@@ -86,11 +89,12 @@ For inquiries about private keys, contact us at [hello@marearts.com](mailto:hell
 * Use model name in detector code
 
 ### ANPR OCR Model Version
-| Model       | File Size | Accuracy | Recall | F1 |
-|-------------|-----------|----------|-------|-----|
-| eu          |     -     |     -    |    -  | -   |
-| kr          |     -     |    -     |    -  | -   |
-| univ        |  ~100mb   |    09330 |    0.9615 | 0.9668   |
+| Model       | File Size | Accuracy | Recall  | F1     |
+|-------------|-----------|----------|---------|--------|
+| eu          |  ~100mb   | 0.9346   | 0.9346  | 0.9392 |
+| euplus      |  ~100mb   | 0.9554   | 0.9554  | 0.9580 |
+| kr          |  ~100mb   | 0.9824   | 0.9824  | 0.9873 |
+| univ        |  ~100mb   | 0.9626   | 0.9626  | 0.9630 |
 * Use model name in OCR code
 
 <br><br>
