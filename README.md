@@ -2,7 +2,7 @@
 *Latest Version : 3.1.2
 
 ### 🇪🇺🏳️‍🌈 ANPR EU and Plus
-Auto Number Plate Recognition for EU countries
+Auto Number Plate Recognition for European Union and Plus countries
 
 🦋 **Available Countries:** (We are adding more countries.)
 ``` 
@@ -10,7 +10,7 @@ EU :
 🇦🇱 Albania  🇨🇿 Czechia  🇦🇩 Andorra  🇩🇰 Denmark  🇦🇹 Austria  🇫🇮 Finland
 🇧🇪 Belgium  🇫🇷 France   🇧🇦 Bosnia and Herzegovina  
 🇩🇪 Germany  🇧🇬 Bulgaria 🇬🇷 Greece   🇭🇷 Croatia  🇭🇺 Hungary  🇨🇾 Cyprus   🇮🇪 Ireland
-EU Plus : 
+Plus : 
 🇮🇩 Indonesia
 ```
 
