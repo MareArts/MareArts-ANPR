@@ -1,5 +1,5 @@
 # MareArts ANPR SDK
-
+*Latest Version : 3.1.2
 
 ### 🇪🇺🏳️‍🌈 ANPR EU and Plus
 Auto Number Plate Recognition for EU countries
