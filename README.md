@@ -7,10 +7,13 @@ Auto Number Plate Recognition for European Union and Plus countries
 🦋 **Available Countries:** (We are adding more countries.)
 ``` 
 EU :
-🇦🇱 Albania  🇨🇿 Czechia  🇦🇩 Andorra  🇩🇰 Denmark  🇦🇹 Austria  🇫🇮 Finland
-🇧🇪 Belgium  🇫🇷 France   🇧🇦 Bosnia and Herzegovina  
-🇩🇪 Germany  🇧🇬 Bulgaria 🇬🇷 Greece   🇭🇷 Croatia  🇭🇺 Hungary  🇨🇾 Cyprus   🇮🇪 Ireland
-Plus : 
+🇦🇱 Albania 🇦🇩 Andorra 🇦🇹 Austria 🇧🇪 Belgium 🇧🇦 Bosnia and Herzegovina 
+🇧🇬 Bulgaria 🇭🇷 Croatia 🇨🇾 Cyprus 🇨🇿 Czechia 🇩🇰 Denmark 🇫🇮 Finland 
+🇫🇷 France 🇩🇪 Germany 🇬🇷 Greece 🇭🇺 Hungary 🇮🇪 Ireland 🇮🇹 Italy 🇱🇮 Liechtenstein 
+🇱🇺 Luxembourg 🇲🇹 Malta 🇲🇨 Monaco 🇲🇪 Montenegro 🇳🇱 Netherlands 🇲🇰 North Macedonia 
+🇳🇴 Norway 🇵🇱 Poland 🇵🇹 Portugal 🇷🇴 Romania 🇸🇲 San Marino 🇷🇸 Serbia 
+🇸🇰 Slovakia 🇸🇮 Slovenia 🇪🇸 Spain 🇸🇪 Sweden 🇨🇭 Switzerland 🇬🇧 United Kingdom 
+Plus:
 🇮🇩 Indonesia
 ```
 
