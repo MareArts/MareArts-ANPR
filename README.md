@@ -1,7 +1,7 @@
 # MareArts ANPR SDK
 
 
-### 🇪🇺 ANPR EU (European Union)
+### 🇪🇺🏳️‍🌈 ANPR EU and Plus
 Auto Number Plate Recognition for EU countries
 
 🦋 **Available Countries:** (We are adding more countries.)
