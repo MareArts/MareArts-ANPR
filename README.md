@@ -1,5 +1,5 @@
 # MareArts ANPR SDK
-*Latest Version : 3.1.2
+*Latest Version : 3.1.3
 
 ### 🇪🇺🏳️‍🌈 ANPR EU and Plus
 Auto Number Plate Recognition for European Union and Plus countries
@@ -47,6 +47,11 @@ char_list = [
     '하', '허', '호'
 ]
 ```
+
+<br><br>
+### 🪐 Universal 
+An integrated model for recognizing license plates from all the countries we support.
+
 <br><br>
 ## 🔩 Installation
 
@@ -98,6 +103,10 @@ For inquiries about private keys, contact us at [hello@marearts.com](mailto:hell
 | euplus      |  ~100mb   | 0.9554   | 0.9554  | 0.9580 |
 | kr          |  ~100mb   | 0.9824   | 0.9824  | 0.9873 |
 | univ        |  ~100mb   | 0.9626   | 0.9626  | 0.9630 |
+| v11_eu          |  ~100mb   | 0.9919   | 0.9919  | 0.9919 |
+| v11_euplus      |  ~100mb   | 0.9853   | 0.9853  | 0.9853 |
+| v11_kr          |  ~100mb   | 0.9967   | 0.9967  | 0.9967 |
+| v11_univ        |  ~100mb   | 0.9953   | 0.9953  | 0.9953 |
 * Use model name in OCR code
 
 <br><br>
