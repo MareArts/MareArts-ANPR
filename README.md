@@ -1,5 +1,5 @@
 # MareArts ANPR SDK
-*Latest Version : 3.1.3
+*Latest Version : 3.1.4
 
 ### 🇪🇺🏳️‍🌈 ANPR EU and Plus
 Auto Number Plate Recognition for European Union and Plus countries
@@ -84,7 +84,7 @@ For inquiries about private keys, contact us at [hello@marearts.com](mailto:hell
 ### ANPR Detector Model Version
 | Model Name      | File Size | Precision | Recall | F1       |    Speed   |
 |-------------|-----------|-----------|--------|----------|------------|
-| middle      | 103mb     |    legacy | legacy |  -       | 0.23 sec   |
+| ~~middle~~      | ~~103mb~~     |    ~~legacy~~ | ~~legacy~~ |  -       | ~~0.23 sec~~   |
 | v10_small   | 29mb      |   0.9713  | 0.9669 |  -       | 0.0623 sec |
 | v10_middle  | 61mb      |   0.9731  | 0.9617 |  -       | 0.1262 sec |
 | v10_large   | 93mb      |   0.9735  | 0.9687 |  -       | 0.1764 sec |
@@ -112,6 +112,9 @@ For inquiries about private keys, contact us at [hello@marearts.com](mailto:hell
 <br><br>
 ## 📝 Using SDK
 ### 🔬 SDK Usage
+Try our interactive demo: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/17jRj1xGOGQdLM5MhAMJEBeM5i8cuD4nP?usp=sharing)
+
+
 Here's an example of how to use the updated SDK:
 
 ```python
