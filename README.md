@@ -1,5 +1,5 @@
 # MareArts ANPR SDK
-*Latest Version : 3.1.4
+*Latest Version : 3.1.5
 
 ### 🇪🇺🏳️‍🌈 ANPR EU and Plus
 Auto Number Plate Recognition for European Union and Plus countries
@@ -82,19 +82,34 @@ For inquiries about private keys, contact us at [hello@marearts.com](mailto:hell
 <br><br>
 ## 🚂 Model Version
 ### ANPR Detector Model Version
-| Model Name      | File Size | Precision | Recall | F1       |    Speed   |
-|-------------|-----------|-----------|--------|----------|------------|
-| ~~middle~~      | ~~103mb~~     |    ~~legacy~~ | ~~legacy~~ |  -       | ~~0.23 sec~~   |
-| v10_small   | 29mb      |   0.9713  | 0.9669 |  -       | 0.0623 sec |
-| v10_middle  | 61mb      |   0.9731  | 0.9617 |  -       | 0.1262 sec |
-| v10_large   | 93mb      |   0.9735  | 0.9687 |  -       | 0.1764 sec |
-| v11_samll   | 28mb      |   0.9510  | 0.9817 |  0.9584  | 0.0119 sec |
-| v11_middle  | 58mb      |   0.9502  | 0.9817 |  0.9577  | 0.0149 sec |
-| v11_large   | 93mb      |   0.9534  | 0.9858 |  0.9619  | 0.0176 sec |
+
+| Model | File Size | Precision | Recall | F1 Score | Avg Detection Time (s) |
+|------------|-----------|-----------|---------|----------|------------------------|
+| v10_small | 38MB | 0.9852 | 0.9694 | 0.9716 | 0.0468 |
+| v10_middle | 79MB | 0.9836 | 0.9680 | 0.9701 | 0.0992 |
+| v10_large | 125MB | 0.9858 | 0.9709 | 0.9731 | 0.2307 |
+| v11_small | 38MB | 0.9791 | 0.9849 | 0.9779 | 0.0492 |
+| v11_middle | 79MB | 0.9799 | 0.9866 | 0.9793 | 0.0938 |
+| v11_large | 125MB | 0.9824 | 0.9892 | 0.9823 | 0.1561 |
+| v13_nano | 14MB | 0.9657 | 0.9826 | 0.9676 | 0.0356 | 
+| v13_small | 49MB | 0.9632 | 0.9920 | 0.9715 | 0.0657 | 
+| v13_middle | 103MB | 0.9634 | 0.9940 | 0.9725 | 0.1629 |
+| v13_large | 129MB | 0.9642 | 0.9936 | 0.9729 | 0.2053 |
+
+### Recommendations
+
+* 🎯 **Best Precision**: v10_large (0.9858)
+* 📈 **Best Recall**: v13_middle (0.9940)
+* 🥇 **Best F1 Score**: v11_large (0.9823)
+* ⚡ **Fastest Model**: v13_nano (0.0356s)
+
+### Notes
+* Speed test is based on i7-9800X 3.8GHz
+* Last Update: 2025-03-31 15:26:43
+* Please use the latest version of marearts-anpr
+* **Use model name in detector code**
 
 
-* speed test is based on i7-9800X 3.8GHz
-* Use model name in detector code
 
 ### ANPR OCR Model Version
 | Model       | File Size | Accuracy | Recall  | F1     |
