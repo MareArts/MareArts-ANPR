@@ -137,18 +137,18 @@ For inquiries about private keys, contact us at [hello@marearts.com](mailto:hell
 ### ANPR OCR Model Version
 | Model | Region | Size | Accuracy | Character Accuracy | Mean Confidence | Processing Time (s) | Recommendation |
 |-------|---------|------|----------|-------------------|-----------------|---------------------|----------------|
-| eu | European Union | 293MB | 1.0000 | 1.0000 | 96.9071 | 0.0808 | 🎯 |
-| euplus | European Union Plus | 146MB | 0.9432 | 0.9876 | 94.0371 | 0.0841 | |
-| kr | South Korea | 146MB | 0.9822 | 0.9967 | 97.4243 | 0.0861 | |
+| eu | EU | 293MB | 1.0000 | 1.0000 | 96.9071 | 0.0808 | 🎯 |
+| euplus | EU Plus | 146MB | 0.9432 | 0.9876 | 94.0371 | 0.0841 | |
+| kr | Korea | 146MB | 0.9822 | 0.9967 | 97.4243 | 0.0861 | |
 | univ | Universal | 146MB | 0.9348 | 0.9877 | 94.4448 | 0.0862 | |
-| v11_eu | European Union | 293MB | 0.9900 | 0.9980 | 97.9573 | 0.0830 | 🔍 |
-| v11_euplus | European Union Plus | 146MB | 0.9822 | 0.9965 | 97.6391 | 0.0823 | 🎯 |
-| v11_kr | South Korea | 146MB | 0.9938 | 0.9991 | 98.5033 | 0.0852 | 🎯 |
+| v11_eu | EU | 293MB | 0.9900 | 0.9980 | 97.9573 | 0.0830 | 🔍 |
+| v11_euplus | EU Plus | 146MB | 0.9822 | 0.9965 | 97.6391 | 0.0823 | 🎯 |
+| v11_kr | Korea | 146MB | 0.9938 | 0.9991 | 98.5033 | 0.0852 | 🎯 |
 | v11_univ | Universal | 146MB | 0.9600 | 0.9941 | 97.7669 | 0.0845 | ⚡ |
-| v13_eu | European Union | 295MB | 0.9504 | 0.9860 | 97.4215 | 0.0822 | |
-| v13_kr | South Korea | 147MB | 0.9721 | 0.9951 | 97.0080 | 0.0855 | |
+| v13_eu | EU | 295MB | 0.9504 | 0.9860 | 97.4215 | 0.0822 | |
+| v13_kr | Korea | 147MB | 0.9721 | 0.9951 | 97.0080 | 0.0855 | |
 | v13_cn | China | 147MB | 0.9657 | 0.9932 | 97.7589 | 0.0858 | 🎯 |
-| v13_euplus | European Union Plus | 147MB | 0.9617 | 0.9901 | 97.6953 | 0.0822 | ⚡ |
+| v13_euplus | EU Plus | 147MB | 0.9617 | 0.9901 | 97.6953 | 0.0822 | ⚡ |
 | v13_univ | Universal | 147MB | 0.9829 | 0.9963 | 98.6056 | 0.0846 | 🎯 |
 
 ### Recommendation Icons
