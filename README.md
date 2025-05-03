@@ -85,7 +85,8 @@ pip install marearts-anpr
 ```
 If you want to use CUDA version inference, please install the following additional packages:
 ```bash
-pip install onnxruntime-gpu==1.18.1
+pip uninstall onnxruntime
+pip install onnxruntime-gpu
 ```
 
 <br><br>
@@ -166,7 +167,7 @@ For inquiries about private keys, contact us at [hello@marearts.com](mailto:hell
 <br><br>
 ## 📝 Using SDK
 ### 🔬 SDK Usage
-Try our interactive demo: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/17jRj1xGOGQdLM5MhAMJEBeM5i8cuD4nP?usp=sharing)
+Try our interactive demo: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1zZlueTZ1Le73yOQ3mdJFONxcebKyCgr-?usp=sharing)
 
 
 Here's an example of how to use the updated SDK:
