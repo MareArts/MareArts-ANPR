@@ -318,7 +318,7 @@ API_docker_example
 ```
 
 <br><br>
-## example_code
+## ⚙️ example_code
 
 **bg_subtraction.py** - Motion detection with OpenCV
 - Detects moving objects in video
