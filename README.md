@@ -317,6 +317,20 @@ API_docker_example
 └── run_container.sh      # Shell script to run the Docker container from the built image.
 ```
 
+<br><br>
+## example_code
+
+**bg_subtraction.py** - Motion detection with OpenCV
+- Detects moving objects in video
+- Adjustable sensitivity and object size
+
+**basic.py** - Easy license plate recognition
+- Uses MareArts ANPR SDK with simple implementation
+
+**advance.py** - Advanced license plate recognition
+- Direct control of detection and OCR steps
+- Run detection and OCR separately for better control
+
 
 <br><br>
 ## 😎 More Detail
