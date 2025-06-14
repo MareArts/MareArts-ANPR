@@ -3,3 +3,5 @@ marearts_anpr_data/
 .DS_Store
 *leon*
 memo.txt
+/research
+**/research/**
