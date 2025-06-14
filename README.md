@@ -1,6 +1,23 @@
 # MareArts ANPR SDK
 *Latest Version : 3.1.5
 
+## 📑 Table of Contents
+- [🇪🇺🏳️‍🌈 ANPR EU and Plus](#-anpr-eu-and-plus)
+- [🇰🇷 ANPR Korea](#-anpr-korea)
+- [🇨🇳 ANPR China](#-anpr-china)
+- [🪐 Universal](#-universal)
+- [🔩 Installation](#-installation)
+- [🪪 License Key](#-license-key)
+- [🤖 Live Test](#-live-test)
+- [📺 ANPR Result Videos](#-anpr-result-videos)
+- [🚂 Model Version](#-model-version)
+- [📝 Using SDK](#-using-sdk)
+- [🧪 API for testing](#-api-for-testing)
+- [⚓️ Create MareArts ANPR API Docker](#️-create-marearts-anpr-api-docker)
+- [⚙️ example_code](#️-example_code)
+- [📋 Software Licensing FAQ](#-software-licensing-faq)
+- [😎 More Detail](#-more-detail)
+
 ### 🇪🇺🏳️‍🌈 ANPR EU and Plus
 Auto Number Plate Recognition for European Union and Plus countries
 
@@ -339,6 +356,50 @@ home page : https://marearts.com <br>
 blog : http://study.marearts.com <br>
 subscription : https://study.marearts.com/p/anpr-lpr-solution.html <br>
 live test : http://live.marearts.com
+
+<br><br>
+## 📋 Software Licensing FAQ
+
+### General Questions
+
+#### Q: Do I need an internet connection to use the software?
+**A:** No, the software works fully offline once set up. You only need an internet connection for:
+- Initial model download during setup
+- Checking for and downloading model updates (automatic when available)
+- Without internet, the SDK will use your existing downloaded model
+
+#### Q: Can I use my license on multiple computers?
+**A:** Yes! All licenses have no limits on the number of computers. You can use them on multiple computers simultaneously.
+
+### License Types & Renewal
+
+#### Q: What types of licenses are available?
+**A:** We offer three license types:
+- Monthly licenses
+- Yearly licenses  
+- Lifetime licenses
+
+#### Q: How does license renewal work?
+**A:** 
+- **Monthly and Yearly licenses:** Must be renewed before expiration. We'll send new keys before your license expires, giving you time to update and avoid any service interruption. Each license includes approximately 10 extra days as a buffer.
+- **Lifetime licenses:** No expiration date - use indefinitely without any renewal needed.
+
+#### Q: When will I receive my renewal key?
+**A:** New license keys are sent before your current license expires, ensuring you have adequate time to update without any service interruption.
+
+### Service Continuity
+
+#### Q: What happens if your service discontinues?
+**A:** We're committed to our users. If our service ever discontinues, we will either:
+- Open-source the code, or
+- Provide lifetime licenses to all active users
+
+This ensures you'll always have access to the software you've invested in.
+
+### Technical Support
+
+#### Q: How can I get help with setup or licensing issues?
+**A:** Feel free to contact our support team with any questions about setup, licensing, or technical issues. We're here to help ensure a smooth experience with our software.
 
 <br><br>
 🙇🏻‍♂️ Thank you!

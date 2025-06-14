@@ -5,3 +5,6 @@ marearts_anpr_data/
 memo.txt
 /research
 **/research/**
+
+# Claude Code files
+CLAUDE.md
