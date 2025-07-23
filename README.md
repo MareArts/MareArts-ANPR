@@ -1,5 +1,41 @@
 # MareArts ANPR SDK
-*Latest Version : 3.1.5
+
+[![PyPI version](https://badge.fury.io/py/marearts-anpr.svg)](https://badge.fury.io/py/marearts-anpr)
+[![Python versions](https://img.shields.io/pypi/pyversions/marearts-anpr.svg)](https://pypi.org/project/marearts-anpr/)
+[![Downloads](https://pepy.tech/badge/marearts-anpr)](https://pepy.tech/project/marearts-anpr)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub stars](https://img.shields.io/github/stars/marearts/marearts-anpr.svg)](https://github.com/marearts/marearts-anpr/stargazers)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen.svg)](http://live.marearts.com)
+
+*Latest Version: 0.0.631.2324*
+
+Automatic Number Plate Recognition (ANPR) SDK supporting **European Union**, **Korea**, **China**, and **Universal** license plates with high accuracy and fast processing.
+
+## ✨ Key Features
+
+- 🚗 **Multi-Region Support**: EU, Korea, China, and Universal license plates
+- ⚡ **High Performance**: Optimized C++ core with Python bindings
+- 🎯 **High Accuracy**: Up to 99.4% accuracy with latest models
+- 🔧 **Easy Integration**: Simple Python API with comprehensive examples
+- 🐳 **Docker Ready**: Complete Docker deployment examples
+- 🌐 **API Server**: REST API examples for production deployment
+- 📱 **Multiple Formats**: Support for CV2, PIL, and file inputs
+
+## 📁 Repository Structure
+
+This repository contains customer examples, documentation, and usage guides for the MareArts ANPR SDK.
+
+### Directory Structure
+```
+marearts-anpr/
+├── API_docker_example/     # Docker API server example
+├── example_code/           # Basic and advanced usage examples  
+├── sample_images/          # Test images for different regions
+├── md_images/              # Documentation screenshots
+├── etc/                    # Additional resources (fonts, utilities)
+└── README.md               # This documentation
+```
+
 
 ### 🇪🇺🏳️‍🌈 ANPR EU and Plus
 Auto Number Plate Recognition for European Union and Plus countries
@@ -78,22 +114,52 @@ An integrated model for recognizing license plates from all the countries we sup
 <br><br>
 ## 🔩 Installation
 
-To install the MareArts ANPR package, use the following pip command:
+### Basic Installation
 
 ```bash
 pip install marearts-anpr
 ```
-If you want to use CUDA version inference, please install the following additional packages:
+
+### CUDA Support (Optional)
+
+For GPU acceleration, install CUDA version:
+
 ```bash
 pip uninstall onnxruntime
 pip install onnxruntime-gpu
 ```
+
+### System Requirements
+
+- **Python**: 3.9, 3.10, 3.11, or 3.12
+- **Operating System**: Linux (x86_64, ARM64), macOS, Windows
+- **Memory**: Minimum 4GB RAM
+- **Storage**: ~500MB for model files
 
 <br><br>
 ## 🪪 License Key
 
 **For private keys,** please visit [MareArts ANPR Solution](https://study.marearts.com/p/anpr-lpr-solution.html).
 For inquiries about private keys, contact us at [hello@marearts.com](mailto:hello@marearts.com).
+
+<br><br>
+## 🚀 Quick Start
+
+```python
+# pip install marearts-anpr
+from marearts_anpr import marearts_anpr_from_image_file
+from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
+
+# Initialize
+user_name = "your_email"
+serial_key = "your_serial_key"
+detector = ma_anpr_detector("v11_middle", user_name, serial_key)
+ocr = ma_anpr_ocr("v11_euplus", user_name, serial_key)
+
+# Process image
+result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
+print(result)
+```
 
 <br><br>
 ## 🤖 Live Test
@@ -319,12 +385,72 @@ API_docker_example
 
 
 <br><br>
-## 😎 More Detail
-email : hello@marearts.com <br>
-home page : https://marearts.com <br>
-blog : http://study.marearts.com <br>
-subscription : https://study.marearts.com/p/anpr-lpr-solution.html <br>
-live test : http://live.marearts.com
+## ❓ Frequently Asked Questions (FAQ)
+
+### 🛠️ Technical Questions
+
+#### Q: Do I need an internet connection to use the software?
+**A:** No, the software works offline after initial setup. Internet is only needed for:
+- Initial model download
+- Checking/downloading model updates
+- Without internet, SDK uses existing downloaded model
+
+### 📋 Licensing & Usage
+
+#### Q: What types of licenses are available?
+**A:** Three license types are available:
+- **Monthly licenses** - Need renewal every month
+- **Yearly licenses** - Need renewal every year  
+- **Lifetime licenses** - No expiration, use indefinitely
+
+#### Q: Can I use my license on multiple computers?
+**A:** Yes! All licenses have no limits on the number of computers. You can use them on multiple computers simultaneously.
+
+#### Q: How does license renewal work?
+**A:** 
+- **Monthly/Yearly licenses**: Must be renewed before expiration
+- **Lifetime licenses**: No expiration, use indefinitely
+
+### 💳 Billing & Refunds
+
+#### Q: What is your refund policy?
+**A:** Refunds are only available when a license key has not been issued. However, subscription cancellation is possible at any time.
+
+#### Q: Can I cancel my subscription anytime?
+**A:** Yes, you can cancel your subscription at any time, though refunds are only available if the license key hasn't been issued yet.
+
+### 🔒 Service Continuity
+
+#### Q: What happens if the service discontinues?
+**A:** We commit to either:
+- Open-sourcing the code, or
+- Providing lifetime licenses to active users
+
+### 📞 Support
+
+#### Q: How can I get help?
+**A:** Contact our support team at [hello@marearts.com](mailto:hello@marearts.com) for setup, licensing, or technical issues.
 
 <br><br>
-🙇🏻‍♂️ Thank you!
+## 📞 Support & Resources
+
+| Resource | Link |
+|----------|------|
+| 📧 **Contact** | [hello@marearts.com](mailto:hello@marearts.com) |
+| 🏠 **Homepage** | [https://marearts.com](https://marearts.com) |
+| 📚 **Blog** | [http://study.marearts.com](http://study.marearts.com) |
+| 💳 **Subscription** | [ANPR Solution](https://study.marearts.com/p/anpr-lpr-solution.html) |
+| 🎮 **Live Demo** | [http://live.marearts.com](http://live.marearts.com) |
+| 📺 **Video Examples** | [YouTube Playlist](https://www.youtube.com/playlist?list=PLvX6vpRszMkxJBJf4EjQ5VCnmkjfE59-J) |
+| 🧪 **Colab Demo** | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1zZlueTZ1Le73yOQ3mdJFONxcebKyCgr-?usp=sharing) |
+
+
+---
+
+<div align="center">
+
+**Made with ❤️ by [MareArts](https://marearts.com)**
+
+🙇🏻‍♂️ Thank you for using MareArts ANPR!
+
+</div>
