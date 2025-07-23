@@ -477,11 +477,10 @@ API_docker_example
 
 ## 📜 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This software is proprietary and protected by copyright. Use requires a valid license key from MareArts.
 
-## 🤝 Contributing
+© 2024 MareArts. All rights reserved.
 
-We welcome contributions! Please feel free to submit a Pull Request.
 
 ---
 
