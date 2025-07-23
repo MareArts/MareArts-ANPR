@@ -37,6 +37,23 @@ marearts-anpr/
 ```
 
 
+## 📑 Table of Contents
+- [🇪🇺🏳️‍🌈 ANPR EU and Plus](#-anpr-eu-and-plus)
+- [🇰🇷 ANPR Korea](#-anpr-korea)
+- [🇨🇳 ANPR China](#-anpr-china)
+- [🪐 Universal](#-universal)
+- [🔩 Installation](#-installation)
+- [🪪 License Key](#-license-key)
+- [🤖 Live Test](#-live-test)
+- [📺 ANPR Result Videos](#-anpr-result-videos)
+- [🚂 Model Version](#-model-version)
+- [📝 Using SDK](#-using-sdk)
+- [🧪 API for testing](#-api-for-testing)
+- [⚓️ Create MareArts ANPR API Docker](#️-create-marearts-anpr-api-docker)
+- [⚙️ example_code](#️-example_code)
+- [📋 Software Licensing FAQ](#-software-licensing-faq)
+- [😎 More Detail](#-more-detail)
+
 ### 🇪🇺🏳️‍🌈 ANPR EU and Plus
 Auto Number Plate Recognition for European Union and Plus countries
 
@@ -383,6 +400,20 @@ API_docker_example
 └── run_container.sh      # Shell script to run the Docker container from the built image.
 ```
 
+<br><br>
+## ⚙️ example_code
+
+**bg_subtraction.py** - Motion detection with OpenCV
+- Detects moving objects in video
+- Adjustable sensitivity and object size
+
+**basic.py** - Easy license plate recognition
+- Uses MareArts ANPR SDK with simple implementation
+
+**advance.py** - Advanced license plate recognition
+- Direct control of detection and OCR steps
+- Run detection and OCR separately for better control
+
 
 <br><br>
 ## ❓ Frequently Asked Questions (FAQ)
@@ -444,6 +475,13 @@ API_docker_example
 | 📺 **Video Examples** | [YouTube Playlist](https://www.youtube.com/playlist?list=PLvX6vpRszMkxJBJf4EjQ5VCnmkjfE59-J) |
 | 🧪 **Colab Demo** | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1zZlueTZ1Le73yOQ3mdJFONxcebKyCgr-?usp=sharing) |
 
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
+
+We welcome contributions! Please feel free to submit a Pull Request.
 
 ---
 
