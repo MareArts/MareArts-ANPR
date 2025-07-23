@@ -3,11 +3,10 @@
 [![PyPI version](https://badge.fury.io/py/marearts-anpr.svg)](https://badge.fury.io/py/marearts-anpr)
 [![Python versions](https://img.shields.io/pypi/pyversions/marearts-anpr.svg)](https://pypi.org/project/marearts-anpr/)
 [![Downloads](https://pepy.tech/badge/marearts-anpr)](https://pepy.tech/project/marearts-anpr)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](https://study.marearts.com/p/anpr-lpr-solution.html)
 [![GitHub stars](https://img.shields.io/github/stars/marearts/marearts-anpr.svg)](https://github.com/marearts/marearts-anpr/stargazers)
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen.svg)](http://live.marearts.com)
 
-*Latest Version: 0.0.631.2324*
 
 Automatic Number Plate Recognition (ANPR) SDK supporting **European Union**, **Korea**, **China**, and **Universal** license plates with high accuracy and fast processing.
 
