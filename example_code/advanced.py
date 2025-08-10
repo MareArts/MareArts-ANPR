@@ -1,8 +1,8 @@
 # pip install marearts-anpr
 import cv2
 from PIL import Image
-from marearts_anpr import ma_anpr_detector
-from marearts_anpr import ma_anpr_ocr
+from marearts_anpr_so import ma_anpr_detector
+from marearts_anpr_so import ma_anpr_ocr
 import time 
 
 if __name__ == '__main__':
@@ -10,8 +10,17 @@ if __name__ == '__main__':
     #################################
     ## Initiate MareArts ANPR
     print("EU ANPR")
+    
+    # Initialize with your credentials
     user_name = "your_email"
     serial_key = "your_serial_key"
+    
+    # Optional: Load from environment variables if set
+    # export MAREARTS_ANPR_USERNAME="your-email@domain.com"
+    # export MAREARTS_ANPR_SERIAL_KEY="your-serial-key"
+    # import os
+    # user_name = os.getenv("MAREARTS_ANPR_USERNAME", user_name)
+    # serial_key = os.getenv("MAREARTS_ANPR_SERIAL_KEY", serial_key)
 
     # Options: middle, v10_small, v10_middle, more detail refer to version table
     detector_model_version = "middle" 

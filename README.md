@@ -8,17 +8,20 @@
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen.svg)](http://live.marearts.com)
 
 
-Automatic Number Plate Recognition (ANPR) SDK supporting **European Union**, **Korea**, **China**, and **Universal** license plates with high accuracy and fast processing.
+**Enterprise-grade** Automatic Number Plate Recognition (ANPR) SDK supporting **European Union**, **Korea**, **China**, and **Universal** license plates with **99%+ accuracy** and **GPU acceleration**.
 
 ## ✨ Key Features
 
 - 🚗 **Multi-Region Support**: EU, Korea, China, and Universal license plates
-- ⚡ **High Performance**: Optimized C++ core with Python bindings
+- ⚡ **High Performance**: Optimized C++ core with Python bindings + GPU acceleration
 - 🎯 **High Accuracy**: Up to 99.4% accuracy with latest models
+- 🛡️ **Enterprise Security**: Military-grade protection with license validation
+- 🚀 **GPU Acceleration**: Significantly faster processing with CUDA/DirectML support
 - 🔧 **Easy Integration**: Simple Python API with comprehensive examples
 - 🐳 **Docker Ready**: Complete Docker deployment examples
 - 🌐 **API Server**: REST API examples for production deployment
 - 📱 **Multiple Formats**: Support for CV2, PIL, and file inputs
+- 🌍 **Multi-Platform**: Linux, Windows, macOS with smart provider detection
 
 ## 📁 Repository Structure
 
@@ -37,10 +40,7 @@ marearts-anpr/
 
 
 ## 📑 Table of Contents
-- [🇪🇺🏳️‍🌈 ANPR EU and Plus](#-anpr-eu-and-plus)
-- [🇰🇷 ANPR Korea](#-anpr-korea)
-- [🇨🇳 ANPR China](#-anpr-china)
-- [🪐 Universal](#-universal)
+- [🌍 Regional Support](#-regional-support)
 - [🔩 Installation](#-installation)
 - [🪪 License Key](#-license-key)
 - [🤖 Live Test](#-live-test)
@@ -53,104 +53,107 @@ marearts-anpr/
 - [📋 Software Licensing FAQ](#-software-licensing-faq)
 - [😎 More Detail](#-more-detail)
 
-### 🇪🇺🏳️‍🌈 ANPR EU and Plus
-Auto Number Plate Recognition for European Union and Plus countries
+## 🌍 Regional Support
 
-🦋 **Available Countries:** (We are adding more countries.)
-``` 
-EU :
-🇦🇱 Albania 🇦🇩 Andorra 🇦🇹 Austria 🇧🇪 Belgium 🇧🇦 Bosnia and Herzegovina 
-🇧🇬 Bulgaria 🇭🇷 Croatia 🇨🇾 Cyprus 🇨🇿 Czechia 🇩🇰 Denmark 🇫🇮 Finland 
-🇫🇷 France 🇩🇪 Germany 🇬🇷 Greece 🇭🇺 Hungary 🇮🇪 Ireland 🇮🇹 Italy 🇱🇮 Liechtenstein 
-🇱🇺 Luxembourg 🇲🇹 Malta 🇲🇨 Monaco 🇲🇪 Montenegro 🇳🇱 Netherlands 🇲🇰 North Macedonia 
-🇳🇴 Norway 🇵🇱 Poland 🇵🇹 Portugal 🇷🇴 Romania 🇸🇲 San Marino 🇷🇸 Serbia 
-🇸🇰 Slovakia 🇸🇮 Slovenia 🇪🇸 Spain 🇸🇪 Sweden 🇨🇭 Switzerland 🇬🇧 United Kingdom 
-Plus:
-🇮🇩 Indonesia
-```
+MareArts ANPR provides comprehensive license plate recognition across multiple regions with specialized models optimized for each area.
 
-🦋 **Recognisable Characters:**
+### 🇪🇺 European Union & Plus Countries
+
+**Supported Countries:**
+
+| A-F | G-P | R-Z | Plus |
+|-----|-----|-----|------|
+| 🇦🇱 Albania | 🇩🇪 Germany | 🇷🇴 Romania | 🇮🇩 Indonesia |
+| 🇦🇩 Andorra | 🇬🇷 Greece | 🇸🇲 San Marino | |
+| 🇦🇹 Austria | 🇭🇺 Hungary | 🇷🇸 Serbia | |
+| 🇧🇪 Belgium | 🇮🇪 Ireland | 🇸🇰 Slovakia | |
+| 🇧🇦 Bosnia and Herzegovina | 🇮🇹 Italy | 🇸🇮 Slovenia | |
+| 🇧🇬 Bulgaria | 🇱🇮 Liechtenstein | 🇪🇸 Spain | |
+| 🇭🇷 Croatia | 🇱🇺 Luxembourg | 🇸🇪 Sweden | |
+| 🇨🇾 Cyprus | 🇲🇹 Malta | 🇨🇭 Switzerland | |
+| 🇨🇿 Czechia | 🇲🇨 Monaco | 🇬🇧 United Kingdom | |
+| 🇩🇰 Denmark | 🇲🇪 Montenegro | | |
+| 🇫🇮 Finland | 🇳🇱 Netherlands | | |
+| 🇫🇷 France | 🇲🇰 North Macedonia | | |
+| | 🇳🇴 Norway | | |
+| | 🇵🇱 Poland | | |
+| | 🇵🇹 Portugal | | |
+
+**Character Support (50 characters):**
 ```python
-char_list = [
-    "-", ".", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
-    "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "d", "i", 
-    "m", "o", "Ö", "Ü", "Ć", "Č", "Đ", "Š", "Ž", "П"
-]
+["-", ".", "0-9", "A-Z", "a", "d", "i", "m", "o", "Ö", "Ü", "Ć", "Č", "Đ", "Š", "Ž", "П"]
 ```
-<br><br>
-### 🇰🇷 ANPR Korea
+
+### 🇰🇷 Korea Support
 한국 자동차 번호판 인식 솔루션
 
-**인식 가능 문자:**
+**Character Support (71 characters):**
 ```python
-char_list = [
- '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
- '가', '강', '거', '견', '경', '고', '곡', '공', '광', '교', '구', '국', '군', '금', '급', '기',
- '나', '남', '너', '노', '녹', '논', '누',
- '다', '단', '대', '더', '도', '동', '두',
+['0-9', '가', '강', '거', '견', '경', '고', '곡', '공', '광', '교', '구', '국', '군', '금', '급', '기',
+ '나', '남', '너', '노', '녹', '논', '누', '다', '단', '대', '더', '도', '동', '두',
  '라', '러', '렬', '령', '례', '로', '루', '륜', '률', '린', '림', '립',
- '마', '머', '면', '명', '모', '목', '무', '문',
- '바', '배', '백', '버', '병', '보', '봉', '부', '북', '빙',
+ '마', '머', '면', '명', '모', '목', '무', '문', '바', '배', '백', '버', '병', '보', '봉', '부', '북', '빙',
  '사', '산', '삼', '상', '서', '성', '세', '소', '수', '순', '신',
  '아', '안', '양', '어', '역', '연', '영', '예', '오', '완', '왕', '외', '용', '우', '운', '울', '원', '월', '위', '유', '육', '은', '이', '익', '인', '일', '임',
  '자', '작', '장', '재', '저', '적', '전', '정', '제', '조', '종', '주', '진',
- '차', '창', '채', '천', '철', '청', '초', '춘', '출', '충',
- '태', '택', '토', '통', '특',
- '파', '팔', '평', '포', '표',
- '하', '학', '한', '함', '합', '해', '행', '허', '헌', '협', '형', '호', '홍',
- '화', '황', '흑', '흥'
-]
+ '차', '창', '채', '천', '철', '청', '초', '춘', '출', '충', '태', '택', '토', '통', '특',
+ '파', '팔', '평', '포', '표', '하', '학', '한', '함', '합', '해', '행', '허', '헌', '협', '형', '호', '홍',
+ '화', '황', '흑', '흥']
 ```
 
-<br><br>
-### 🇨🇳 ANPR China
+### 🇨🇳 China Support
 中国车牌识别解决方案
 
-**可识别字符:**
+**Character Support:**
 ```python
-char_list = [
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 
-    'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 
-    'U', 'V', 'W', 'X', 'Y', 'Z',
-    '·',
-    '云', '京', '冀', '吉', '宁', '川', '挂', '新', '晋', '桂',
-    '沪', '津', '浙', '渝', '港', '湘', '澳', '琼', '甘', '皖',
-    '粤', '苏', '蒙', '藏', '豫', '贵', '赣', '辽', '鄂', '闽',
-    '陕', '青', '鲁', '黑'
-]
+['0-9', 'A-Z', '·', '云', '京', '冀', '吉', '宁', '川', '挂', '新', '晋', '桂',
+ '沪', '津', '浙', '渝', '港', '湘', '澳', '琼', '甘', '皖',
+ '粤', '苏', '蒙', '藏', '豫', '贵', '赣', '辽', '鄂', '闽', '陕', '青', '鲁', '黑']
 ```
 
-
-<br><br>
-### 🪐 Universal 
-An integrated model for recognizing license plates from all the countries we support.
+### 🪐 Universal Model
+An integrated model for recognizing license plates from all supported regions with automatic region detection.
 
 <br><br>
 ## 🔩 Installation
 
-### Basic Installation
-
+### 💻 CPU Installation (Universal)
 ```bash
+# Lightweight installation for all platforms
 pip install marearts-anpr
 ```
 
-### CUDA Support (Optional)
-
-For GPU acceleration, install CUDA version:
-
+### 🚀 GPU Installation (Recommended for Production)
 ```bash
-pip uninstall onnxruntime
-pip install onnxruntime-gpu
+# NVIDIA CUDA GPU (Linux/Windows) - Significantly faster
+pip install marearts-anpr[gpu]
+
+# Windows GPU (AMD/Intel/NVIDIA) - Faster processing  
+pip install marearts-anpr[directml]
+
+# All GPU support (maximum compatibility)
+pip install marearts-anpr[all-gpu]
+
+# Development dependencies
+pip install marearts-anpr[dev]
 ```
+
+### 📊 GPU Acceleration
+The SDK features smart provider detection that automatically uses the best available hardware. GPU acceleration provides significant performance improvements over CPU processing.
+
+### Installation Recommendations
+- **Production High-Throughput**: `pip install marearts-anpr[gpu]` - Best for NVIDIA GPU systems
+- **Windows Development**: `pip install marearts-anpr[directml]` - Works with any GPU (AMD/Intel/NVIDIA)
+- **CPU/Cloud Deployment**: `pip install marearts-anpr` - Lightweight, no GPU dependencies
+- **Maximum Compatibility**: `pip install marearts-anpr[all-gpu]` - Includes all GPU support options
 
 ### System Requirements
 
 - **Python**: 3.9, 3.10, 3.11, or 3.12
 - **Operating System**: Linux (x86_64, ARM64), macOS, Windows
-- **Memory**: Minimum 4GB RAM
+- **Memory**: Minimum 4GB RAM (8GB recommended for GPU)
 - **Storage**: ~500MB for model files
+- **GPU** (optional): NVIDIA CUDA or DirectML compatible
 
 <br><br>
 ## 🪪 License Key
@@ -161,20 +164,55 @@ For inquiries about private keys, contact us at [hello@marearts.com](mailto:hell
 <br><br>
 ## 🚀 Quick Start
 
+### Environment Setup (Required)
+```bash
+# Set license credentials (recommended)
+export MAREARTS_ANPR_USERNAME="your-email@domain.com"
+export MAREARTS_ANPR_SERIAL_KEY="your-serial-key"
+```
+
+### Basic Usage
 ```python
-# pip install marearts-anpr
+# pip install marearts-anpr[gpu]  # For best performance
 from marearts_anpr import marearts_anpr_from_image_file
 from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
 
-# Initialize
+# Initialize with your credentials
 user_name = "your_email"
 serial_key = "your_serial_key"
-detector = ma_anpr_detector("v11_middle", user_name, serial_key)
-ocr = ma_anpr_ocr("v11_euplus", user_name, serial_key)
+
+# Optional: Load from environment variables if set
+# export MAREARTS_ANPR_USERNAME="your-email@domain.com"
+# export MAREARTS_ANPR_SERIAL_KEY="your-serial-key"
+# import os
+# user_name = os.getenv("MAREARTS_ANPR_USERNAME", user_name)
+# serial_key = os.getenv("MAREARTS_ANPR_SERIAL_KEY", serial_key)
+
+detector = ma_anpr_detector("v13_middle", user_name, serial_key)
+ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
 
 # Process image
 result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
 print(result)
+# Expected: {'results': [{'ocr': 'ABC123', 'ocr_conf': 99, ...}], 'ltrb_proc_sec': 0.08, 'ocr_proc_sec': 0.05}
+```
+
+### CLI Usage
+```bash
+# Direct image processing
+ma-anpr image.jpg
+
+# Test without credentials (1000 requests/day)
+ma-anpr test-api image.jpg
+
+# Validate license
+ma-anpr validate
+
+# List available models
+ma-anpr models
+
+# GPU information
+ma-anpr gpu-info
 ```
 
 <br><br>
@@ -247,6 +285,32 @@ print(result)
 * **Use model name in ocr code**
 
 <br><br>
+## 🛡️ Enterprise Security
+
+### Security Features
+- 🔒 **License Protection**: Military-grade license validation system
+- 🚫 **Direct Access Prevention**: Low-level classes protected from bypass attempts
+- 🔐 **Environment Variables**: Secure credential management (no config files)
+- ⚠️ **Generic Error Messages**: No sensitive information leakage to potential attackers
+- 🔄 **Dynamic Validation**: Periodic license state verification
+
+### Credential Management
+```bash
+# Secure environment variable setup (recommended)
+export MAREARTS_ANPR_USERNAME="your-email@domain.com"  
+export MAREARTS_ANPR_SERIAL_KEY="your-serial-key"
+
+# Validate credentials
+ma-anpr validate
+```
+
+### Security Best Practices
+- ✅ Use environment variables for credentials
+- ✅ Never hardcode license keys in source code
+- ✅ Validate license before production deployment
+- ✅ Monitor for licensing compliance
+
+<br><br>
 ## 📝 Using SDK
 ### 🔬 SDK Usage
 Try our interactive demo: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1zZlueTZ1Le73yOQ3mdJFONxcebKyCgr-?usp=sharing)
@@ -269,14 +333,24 @@ if __name__ == '__main__':
     #################################
     ## Initiate MareArts ANPR
     print("EU ANPR")
+    
+    # Initialize with your credentials
     user_name = "your_email"
     serial_key = "your_serial_key"
-    detector_model_version = "v11_middle" # Options: refer to detector model table
-    ocr_model_version = "v11_euplus" # Options: refer to ocr model table
+    
+    # Optional: Load from environment variables if set
+    # export MAREARTS_ANPR_USERNAME="your-email@domain.com"
+    # export MAREARTS_ANPR_SERIAL_KEY="your-serial-key"
+    # import os
+    # user_name = os.getenv("MAREARTS_ANPR_USERNAME", user_name)
+    # serial_key = os.getenv("MAREARTS_ANPR_SERIAL_KEY", serial_key)
+    
+    detector_model_version = "v13_middle" # Latest v13 series recommended
+    ocr_model_version = "v13_euplus" # Latest v13 series recommended
 
-    # MareArts ANPR Detector Inference
+    # MareArts ANPR Detector Inference (with GPU acceleration)
     anpr_d = ma_anpr_detector(detector_model_version, user_name, serial_key, conf_thres=0.3, iou_thres=0.5)
-    # MareArts ANPR OCR Inference
+    # MareArts ANPR OCR Inference (with GPU acceleration)
     anpr_r = ma_anpr_ocr(ocr_model_version, user_name, serial_key)
     #################################
 
@@ -301,10 +375,10 @@ if __name__ == '__main__':
     #################################
     ## Initiate MareArts ANPR for Korea
     print("ANPR Korean")
-    # user_name, serial_key are already defined
+    # user_name, serial_key are already defined (or loaded from environment)
     # anpr_d is also already initiated before
-    ocr_model_version = "v11_kr"
-    # MareArts ANPR OCR Inference
+    ocr_model_version = "v13_kr" # Latest v13 series recommended
+    # MareArts ANPR OCR Inference (with GPU acceleration)
     anpr_r = ma_anpr_ocr(ocr_model_version, user_name, serial_key)
 
     #################################
@@ -356,32 +430,49 @@ The output from the ANPR will be similar to:
 - **Processing Speeds:** Provided for license plate detection and OCR.
 
 <br><br>
-## 🧪 API for testing
+## 🧪 API for Testing
 
-### This is for testing purposes
-**API key limits:** 1000 requests per day. <br>
-**User ID:** `marearts@public` <br>
-**X-API-Key:** `J4K9L2Wory34@G7T1Y8rt-PP83uSSvkV3Z6ioSTR!`
+**Daily limit:** 1000 requests
 
-### API Call 
-
-To make an API call for ANPR, use the following command: <br>
-**Content-Type** : image/jpeg<br>
-**x-api-key**: api_key<br>
-**user-id**: user-id<br>
-**detector_model_version**: Specifies which version of the detector model to use. Refer to version table<br>
-**ocr_model_version**: Specifies which version of the OCR model to use. Refer to version table<br>
+### Quick Test via CLI (Recommended)
 
 ```bash
-#!bin/bash
+# Test with an image using default models
+ma-anpr test-api image.jpg
+
+# Specify custom models
+ma-anpr test-api image.jpg --detector v13_small --ocr v13_kr
+
+# Process multiple images
+ma-anpr test-api *.jpg
+
+# List available models
+ma-anpr test-api --list-models
+
+# Save results to JSON
+ma-anpr test-api image.jpg --json results.json
+```
+
+### Direct API Call (Advanced)
+
+<details>
+<summary>Click to see API details</summary>
+
+**Test Credentials:**
+- **User ID:** `marearts@public`
+- **API Key:** `J4K9L2Wory34@G7T1Y8rt-PP83uSSvkV3Z6ioSTR!`
+
+```bash
 curl -X POST https://we303v9ck8.execute-api.eu-west-1.amazonaws.com/Prod/marearts_anpr \
      -H "Content-Type: image/jpeg" \
-     -H "x-api-key: api_key" \
-     -H "user-id: user-id" \
-     -H "detector_model_version: detector_version" \
-     -H "ocr_model_version: ocr_version" \
-     --data-binary "@./a.jpg"
+     -H "x-api-key: J4K9L2Wory34@G7T1Y8rt-PP83uSSvkV3Z6ioSTR!" \
+     -H "user-id: marearts@public" \
+     -H "detector_model_version: v13_middle" \
+     -H "ocr_model_version: v13_euplus" \
+     --data-binary "@./image.jpg"
 ```
+
+</details>
 
 
 <br><br>
@@ -424,6 +515,28 @@ API_docker_example
 - Initial model download
 - Checking/downloading model updates
 - Without internet, SDK uses existing downloaded model
+
+#### Q: What's new in the latest version?
+**A:** Major enterprise improvements:
+- 🛡️ **Enterprise Security**: Military-grade license protection
+- 🚀 **GPU Acceleration**: Significantly faster with smart provider detection  
+- 🔐 **Environment Variables**: Secure credential management
+- 💻 **CLI Interface**: `ma-anpr` command-line tool
+- 🌍 **Multi-Platform**: Professional installation variants
+
+#### Q: How do I get GPU acceleration?
+**A:** Install the appropriate GPU variant:
+- **NVIDIA GPU**: `pip install marearts-anpr[gpu]` (Best performance)
+- **Windows GPU**: `pip install marearts-anpr[directml]` (Good performance)
+- **All GPUs**: `pip install marearts-anpr[all-gpu]`
+
+#### Q: How do I set up credentials securely?
+**A:** Use environment variables:
+```bash
+export MAREARTS_ANPR_USERNAME="your-email@domain.com"
+export MAREARTS_ANPR_SERIAL_KEY="your-serial-key"
+ma-anpr validate  # Test credentials
+```
 
 ### 📋 Licensing & Usage
 

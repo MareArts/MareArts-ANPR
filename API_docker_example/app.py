@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 from PIL import Image
 from importlib.metadata import version, PackageNotFoundError
-from marearts_anpr import ma_anpr_detector, ma_anpr_ocr, marearts_anpr_from_pil
+from marearts_anpr_so import ma_anpr_detector, ma_anpr_ocr, marearts_anpr_from_pil
 
 
 
