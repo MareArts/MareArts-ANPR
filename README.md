@@ -84,12 +84,13 @@ ma-anpr validate
 
 ## MareArts Ecosystem
 
-Explore our AI toolkit on PyPI:
+Explore our AI toolkit:
 
-- **[marearts-anpr](https://pypi.org/project/marearts-anpr/)** - Automatic Number Plate Recognition (this package)
-- **[marearts-road-objects](https://pypi.org/project/marearts-road-objects/)** - Road object detection for persons, vehicles, and 2-wheelers
-- **[marearts-crystal](https://pypi.org/project/marearts-crystal/)** - Encryption and decryption toolkit
-- **[marearts-xcolor](https://pypi.org/project/marearts-xcolor/)** - Color extraction and similarity analysis
+- **marearts-anpr** - Automatic Number Plate Recognition ([GitHub](https://github.com/MareArts/MareArts-ANPR))
+- **marearts-road-objects** - Road object detection for persons, vehicles, and 2-wheelers ([GitHub](https://github.com/MareArts/MareArts-Road-Objects))
+- **marearts-xcolor** - Color extraction and similarity analysis ([GitHub](https://github.com/MareArts/MareArts-Xcolor))
+- **marearts-mast** - Real-time panoramic stitching ([GitHub](https://github.com/MareArts/MareArts-MAST))
+- **marearts-crystal** - Encryption and decryption toolkit ([PyPI](https://pypi.org/project/marearts-crystal/))
 
 ## Support & Resources
 
