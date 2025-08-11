@@ -64,24 +64,24 @@ The SDK automatically detects and uses available hardware:
 | DirectML (Windows) | Moderate speedup | Windows development |
 | CPU Only | Baseline | General usage |
 
-## Environment Setup
+## License Setup (Optional)
 
-### License Credentials
+You can set credentials in three ways:
 
-Set your license credentials as environment variables:
-
+1. **Environment variables** (recommended for security):
 ```bash
-# Linux/macOS
 export MAREARTS_ANPR_USERNAME="your-email@domain.com"
 export MAREARTS_ANPR_SERIAL_KEY="your-serial-key"
+```
 
-# Windows (Command Prompt)
-set MAREARTS_ANPR_USERNAME=your-email@domain.com
-set MAREARTS_ANPR_SERIAL_KEY=your-serial-key
+2. **CLI configuration**:
+```bash
+ma-anpr config
+```
 
-# Windows (PowerShell)
-$env:MAREARTS_ANPR_USERNAME="your-email@domain.com"
-$env:MAREARTS_ANPR_SERIAL_KEY="your-serial-key"
+3. **Direct in code**:
+```python
+detector = ma_anpr_detector("v13_middle", "your-email", "your-key")
 ```
 
 ### Verify Installation
@@ -89,8 +89,8 @@ $env:MAREARTS_ANPR_SERIAL_KEY="your-serial-key"
 After installation, verify everything is working:
 
 ```bash
-# Check installation
-python -c "import marearts_anpr; print(marearts_anpr.__version__)"
+# Check version
+ma-anpr --version
 
 # Validate license
 ma-anpr validate

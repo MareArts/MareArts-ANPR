@@ -69,7 +69,7 @@ ma-anpr validate
 - 🚀 [Model Versions](docs/models.md) - Available models and benchmarks
 - 🌍 [Regional Support](docs/regional-support.md) - Supported countries and characters
 - 🐳 [Docker Deployment](docs/docker.md) - Container setup and API server
-- 🧪 [API Testing](docs/api-testing.md) - Test API documentation
+- 🧪 [Try ANPR](docs/api-testing.md) - Test our ANPR without license
 - ❓ [FAQ](docs/faq.md) - Frequently asked questions
 
 ## Performance

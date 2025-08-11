@@ -40,7 +40,3 @@ This ensures you'll always have access to the software you've invested in.
 
 ### Q: How can I get help with setup or licensing issues?
 **A:** Contact our support team at [hello@marearts.com](mailto:hello@marearts.com) with any questions about setup, licensing, or technical issues.
-
-For more information:
-- **Purchase**: [ANPR Solution](https://study.marearts.com/p/anpr-lpr-solution.html)  
-- **Demo**: [http://live.marearts.com](http://live.marearts.com)
