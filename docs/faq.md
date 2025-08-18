@@ -36,6 +36,20 @@
 
 This ensures you'll always have access to the software you've invested in.
 
+## Refund Policy
+
+### Q: What is your refund policy?
+**A:** We offer a full refund guarantee with the following conditions:
+- **Before serial key delivery:** Full refund available if requested before your serial key is sent to your email
+- **After serial key delivery:** Refunds cannot be processed once the serial key has been issued and sent to your email
+- **Why this policy?** Serial keys work completely offline and cannot be remotely deactivated once issued, making it impossible to revoke access after delivery
+
+### Q: How can I test before purchasing?
+**A:** We strongly encourage testing before purchase:
+- Use our **free test API** to evaluate the software capabilities
+- Try our **live test website** to see the software in action
+- These testing options ensure the software meets your needs before committing to a purchase
+
 ## Technical Support
 
 ### Q: How can I get help with setup or licensing issues?
