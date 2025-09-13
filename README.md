@@ -34,6 +34,8 @@ pip install marearts-anpr[tensorrt]   # NVIDIA TensorRT (Linux only)
 
 ### Basic Usage
 
+💡 **Model names**: Use the model names from the performance tables below (e.g., `v13_middle`, `v14_small_640p_fp16`)
+
 #### Python SDK Usage
 ```python
 from marearts_anpr import marearts_anpr_from_image_file
@@ -43,7 +45,7 @@ from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
 # export MAREARTS_ANPR_USERNAME="your-email@domain.com"
 # export MAREARTS_ANPR_SERIAL_KEY="your-serial-key"
 
-# Initialize
+# Initialize (model names from performance tables)
 detector = ma_anpr_detector("v13_middle", user_name, serial_key)
 ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
 
@@ -60,9 +62,9 @@ from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr
 # V2 license includes signature for V14 models
 # export MAREARTS_ANPR_SIGNATURE="your-signature"
 
-# Initialize V14 detector
+# Initialize V14 detector (model name from tables)
 detector = ma_anpr_detector_v14(
-    "v14_small_640p_fp16",  # V14 model
+    "v14_small_640p_fp16",  # From V14 performance table
     user_name,
     serial_key,  # V2 license
     signature,   # Provided with your license
