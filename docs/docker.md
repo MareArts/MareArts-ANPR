@@ -115,4 +115,3 @@ curl -X POST http://localhost:8000/process_image \
 - Models are downloaded on first use
 - Credentials passed via Basic Auth for security
 - V14 models require V2 (Current) license with signature
-- Auto-update feature checks for marearts-anpr updates on health checks
