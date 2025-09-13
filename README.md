@@ -113,7 +113,7 @@ The latest V14 models with enhanced performance:
 *Benchmarked on: Intel i7-9800X @ 3.8GHz | NVIDIA RTX 4090 | Ubuntu Linux*
 
 ### V14 Models Performance
-| Model | F1 Score | Speed CUDA | Speed CPU | Notes |
+| Model Name | F1 Score | Speed CUDA | Speed CPU | Notes |
 |-------|----------|------------|-----------|-------|
 | v14_small_320p_fp32 | 95.62% | 9.9ms (101 FPS) | 37ms (27 FPS) | Standard model |
 | v14_small_320p_trt_fp16 | 96.18% | 7.9ms (127 FPS) | - | ⚡ Fastest (TensorRT) |
@@ -121,8 +121,10 @@ The latest V14 models with enhanced performance:
 
 📊 [View complete benchmarks and all models](docs/models.md)
 
+*Use these model names directly in `ma_anpr_detector_v14()` function*
+
 ### V13 Models Performance
-| Model | Precision | Recall | F1 Score | Speed CUDA (ms) |
+| Model Name | Precision | Recall | F1 Score | Speed CUDA (ms) |
 |-------|-----------|---------|----------|-----------------|
 | v13_nano (Detector) | 95.3% | 96.5% | 0.951 | 7.0 |
 | v13_small (Detector) | 95.7% | 97.9% | 0.961 | 7.4 |
@@ -132,6 +134,8 @@ The latest V14 models with enhanced performance:
 | v13_kr (OCR) | 97.2% | - | 0.995 | 85 |
 | v13_cn (OCR) | 96.6% | - | 0.993 | 86 |
 | v13_univ (OCR) | 98.3% | - | 0.996 | 85 |
+
+*Use these model names in `ma_anpr_detector()` for detectors and `ma_anpr_ocr()` for OCR*
 
 ## MareArts Ecosystem
 
