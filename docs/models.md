@@ -11,18 +11,22 @@ The V14 series introduces advanced detection with digital signature authenticati
 #### V14 Models - Performance Metrics
 | Model | Size | Resolution | Precision | Recall | F1 Score | mAP | Speed CUDA | Speed CPU |
 |-------|------|------------|-----------|---------|----------|------|------------|-----------|
-| **v14_small_320p_fp32** | 135MB | 320p | 0.9593 | 0.9702 | 0.9563 | 0.9367 | 15.9ms | 64.7ms |
-| **v14_small_320p_fp16** | 68MB | 320p | 0.9593 | 0.9702 | 0.9563 | 0.9367 | 15.9ms | 64.7ms |
-| **v14_small_640p_fp32** | 136MB | 640p | 0.9499 | 0.9840 | 0.9581 | 0.9389 | 22.3ms | 182.2ms |
-| **v14_small_640p_fp16** | 68MB | 640p | 0.9499 | 0.9840 | 0.9581 | 0.9389 | 22.3ms | 182.2ms |
+| **v14_small_320p_fp32** | 135MB | 320p | 0.9593 | 0.9702 | 0.9562 | 0.9366 | 9.9ms (101 FPS) | 37ms (27 FPS) |
+| **v14_small_320p_fp16** | 68MB | 320p | 0.9593 | 0.9702 | 0.9562 | 0.9366 | 15.9ms (63 FPS) | 64.7ms (15 FPS) |
+| **v14_small_640p_fp32** | 136MB | 640p | 0.9497 | 0.9840 | 0.9580 | 0.9387 | 12.7ms (79 FPS) | 102.8ms (10 FPS) |
+| **v14_small_640p_fp16** | 68MB | 640p | 0.9499 | 0.9840 | 0.9581 | 0.9389 | 22.3ms (45 FPS) | 182.2ms (5 FPS) |
 
 #### TensorRT Optimized V14 Models (NVIDIA GPUs Only)
-| Model | Size | Format | Resolution | Speed (ms) | Notes |
-|-------|------|--------|------------|------------|--------|
-| **v14_small_320p_trt_fp16** | 74MB | TRT FP16 | 320p | ~20-30 | Fast inference |
-| **v14_small_320p_trt_fp8** | 208MB | TRT FP8 | 320p | ~15-25 | ⚡ Fastest |
-| **v14_small_640p_trt_fp16** | 76MB | TRT FP16 | 640p | ~40-60 | 🎯 Recommended |
-| **v14_small_640p_trt_fp8** | 210MB | TRT FP8 | 640p | ~35-50 | Best speed |
+| Model | Size | Format | Resolution | Speed (ms) | F1 Score | mAP | Notes |
+|-------|------|--------|------------|------------|----------|-----|---------|
+| **v14_small_320p_trt_fp16** | 74MB | TRT FP16 | 320p | 7.9ms (127 FPS) | 0.9618 | 0.9437 | Fast inference |
+| **v14_small_320p_trt_fp32** | 135MB | TRT FP32 | 320p | 8.8ms (114 FPS) | 0.9618 | 0.9437 | Standard precision |
+| **v14_small_320p_trt_fp8** | 208MB | TRT FP8 | 320p | 8.7ms (115 FPS) | 0.9618 | 0.9437 | ⚡ Fastest |
+| **v14_small_320p_trt_bf16** | 74MB | TRT BF16 | 320p | 8.6ms (116 FPS) | 0.9618 | 0.9437 | Brain float precision |
+| **v14_small_640p_trt_fp16** | 76MB | TRT FP16 | 640p | 12.1ms (83 FPS) | 0.9607 | 0.9419 | 🎯 Recommended |
+| **v14_small_640p_trt_fp32** | 163MB | TRT FP32 | 640p | 12.7ms (79 FPS) | 0.9607 | 0.9418 | Standard precision |
+| **v14_small_640p_trt_fp8** | 163MB | TRT FP8 | 640p | 13.9ms (72 FPS) | 0.9607 | 0.9418 | RTX 40 only |
+| **v14_small_640p_trt_bf16** | 154MB | TRT BF16 | 640p | 12.5ms (80 FPS) | 0.9615 | 0.9433 | Best accuracy |
 
 *Note: V14 middle and large models coming soon!*
 

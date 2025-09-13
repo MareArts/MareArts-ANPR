@@ -120,11 +120,20 @@ The latest V14 models introduce enhanced features:
 *Benchmarked on: Intel i7-9800X @ 3.8GHz | NVIDIA RTX 4090 | Ubuntu Linux*
 
 ### V14 Models (V2 License Required)
-| Model | Precision | Recall | F1 Score | Speed CUDA (ms) | Speed CPU (ms) | Notes |
-|-------|-----------|---------|----------|-----------------|----------------|--------|
-| v14_small_320p_fp16 | 95.93% | 97.02% | 95.63% | 15.9 | 64.7 | Edge devices |
-| v14_small_640p_fp16 | 94.99% | 98.40% | 95.81% | 22.3 | 182.2 | 🎯 Recommended |
-| v14_small_320p_trt_fp8 | 95.93% | 97.02% | 95.63% | ~8-12 | - | ⚡ Fastest |
+| Model | Precision | Recall | F1 Score | mAP | Speed CUDA (ms) | Speed CPU (ms) | Notes |
+|-------|-----------|---------|----------|-----|-----------------|----------------|--------|
+| v14_small_320p_fp32 | 95.92% | 97.01% | 95.62% | 93.66% | 9.9ms (101 FPS) | 37ms (27 FPS) | Standard precision |
+| v14_small_320p_fp16 | 95.92% | 97.00% | 95.62% | 93.66% | 15.9ms (63 FPS)* | 64.7ms (15 FPS) | *CUDA not optimized for FP16 |
+| v14_small_640p_fp32 | 94.97% | 98.40% | 95.80% | 93.87% | 12.7ms (79 FPS) | 102.8ms (10 FPS) | High detail |
+| v14_small_640p_fp16 | 94.99% | 98.40% | 95.81% | 93.89% | 22.3ms (45 FPS)* | 182.2ms (5 FPS) | *Use TensorRT for FP16 |
+| v14_small_320p_trt_fp16 | 95.85% | 98.11% | 96.18% | 94.37% | 7.9ms (127 FPS) | - | ⚡ Fastest |
+| v14_small_320p_trt_fp32 | 95.85% | 98.12% | 96.18% | 94.37% | 8.8ms (114 FPS) | - | TensorRT FP32 |
+| v14_small_320p_trt_fp8 | 95.85% | 98.12% | 96.18% | 94.37% | 8.7ms (115 FPS) | - | RTX 40 only |
+| v14_small_320p_trt_bf16 | 95.86% | 97.97% | 96.11% | 94.28% | 8.6ms (116 FPS) | - | TensorRT BF16 |
+| v14_small_640p_trt_fp16 | 94.81% | 99.18% | 96.07% | 94.19% | 12.1ms (83 FPS) | - | 🎯 Recommended |
+| v14_small_640p_trt_fp32 | 94.81% | 99.18% | 96.07% | 94.18% | 12.7ms (79 FPS) | - | TensorRT FP32 |
+| v14_small_640p_trt_fp8 | 94.81% | 99.18% | 96.07% | 94.18% | 13.9ms (72 FPS) | - | RTX 40 only |
+| v14_small_640p_trt_bf16 | 95.24% | 98.84% | 96.15% | 94.33% | 12.5ms (80 FPS) | - | Best accuracy |
 
 ### V13 Models (All Licenses)
 | Model | Precision | Recall | F1 Score | Speed CUDA (ms) |
