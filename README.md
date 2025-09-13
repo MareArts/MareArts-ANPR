@@ -13,7 +13,6 @@ Automatic Number Plate Recognition (ANPR) SDK for multiple regions with GPU acce
 - 🚗 **Multi-Region Support**: EU, Korea, China, and Universal license plates
 - ⚡ **Performance**: Optimized C++ core with GPU acceleration support
 - 🎯 **Accuracy**: Trained detection and OCR models for various regions
-- 🆕 **V14 Models**: Latest generation with enhanced security and multi-backend support
 - 🔧 **Integration**: Python API and command-line tools
 - 🐳 **Deployment**: Docker support and API server examples
 
@@ -26,8 +25,9 @@ Automatic Number Plate Recognition (ANPR) SDK for multiple regions with GPU acce
 pip install marearts-anpr
 
 # GPU Installation (for faster processing)
-pip install marearts-anpr[gpu]        # NVIDIA CUDA
-pip install marearts-anpr[directml]   # Windows GPU
+pip install marearts-anpr[gpu]        # NVIDIA CUDA (ONNX Runtime GPU)
+pip install marearts-anpr[directml]   # Windows GPU (DirectML)
+pip install marearts-anpr[tensorrt]   # NVIDIA TensorRT (Linux only)
 ```
 
 ### Basic Usage
@@ -99,6 +99,40 @@ The latest V14 models introduce enhanced features:
 - V2 License key (starts with `MAEV2:`)
 - Digital signature (16 hex characters)
 - Backend-specific dependencies (CUDA, TensorRT, etc.)
+
+### TensorRT Installation
+
+For maximum performance with TensorRT backend:
+
+```bash
+# Install with TensorRT support
+pip install marearts-anpr[tensorrt]
+
+# Manual TensorRT setup (if needed)
+# 1. Install CUDA Toolkit (11.8 or 12.x)
+# 2. Install TensorRT (8.6+ recommended)
+# 3. Install PyCUDA
+pip install tensorrt pycuda nvidia-cuda-runtime-cu12
+```
+
+#### Using TensorRT Backend
+
+```python
+# V14 models with TensorRT acceleration
+detector = ma_anpr_detector_v14(
+    "v14_small_640p_trt_fp16",  # TRT optimized model
+    user_name,
+    serial_key,
+    signature,
+    backend="tensorrt"  # Use TensorRT backend
+)
+```
+
+TensorRT models provide:
+- **Up to 4x faster inference** compared to ONNX Runtime
+- **FP16/FP8 precision** support for modern GPUs
+- **Optimized for batch processing**
+- **Lower latency** for real-time applications
 
 ### Available V14 Models
 - **Standard**: `v14_small_320p_fp32`, `v14_small_320p_fp16`, `v14_small_640p_fp32`, `v14_small_640p_fp16`
