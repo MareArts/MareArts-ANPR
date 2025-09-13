@@ -4,7 +4,7 @@
 
 Detection models locate license plates in images.
 
-### V14 Models (V2 License Required)
+### V14 Models (V2 Current License Only)
 
 The V14 series introduces advanced detection with digital signature authentication and multiple inference backends.
 
@@ -30,7 +30,7 @@ The V14 series introduces advanced detection with digital signature authenticati
 
 *Note: V14 middle and large models coming soon!*
 
-### V13 & Legacy Models (V1/V2 License)
+### V13 & Legacy Models (V1 Legacy / V2 Current License)
 
 | Model | Size | Precision | Recall | F1 Score | Speed CUDA (ms) | Recommendation |
 |-------|------|-----------|---------|----------|-----------------|----------------|
@@ -85,7 +85,7 @@ OCR models read text from detected license plates.
 
 ## Usage Examples
 
-### V14 Configuration (V2 License Required)
+### V14 Configuration (V2 Current License Only)
 
 ```python
 from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr
@@ -94,8 +94,8 @@ from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr
 detector = ma_anpr_detector_v14(
     "v14_small_640p_fp16",   # Model name
     user_name,                # Your username
-    serial_key,               # V2 serial key (MAEV2:...)
-    signature,                # 16-character hex signature
+    serial_key,               # V2 (Current) serial key
+    signature,                # Provided with V2 license
     backend="cuda"            # Backend: cpu, cuda, directml, tensorrt
 )
 
@@ -117,11 +117,11 @@ detector_cpu = ma_anpr_detector_v14(
     backend="cpu"
 )
 
-# OCR (same for V1 and V2 licenses)
+# OCR (same for V1 Legacy and V2 Current licenses)
 ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
 ```
 
-### Standard Configuration (V1/V2 License)
+### Standard Configuration (V1 Legacy / V2 Current License)
 
 ```python
 from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
@@ -139,12 +139,12 @@ ocr_univ = ma_anpr_ocr("v13_univ", user_name, serial_key)  # Universal
 ### Fast Processing Configuration
 
 ```python
-# For V2 license holders - fastest with V14
+# For V2 (Current) license holders - fastest with V14
 detector = ma_anpr_detector_v14(
     "v14_small_320p_trt_fp8", user_name, serial_key, signature, backend="tensorrt"
 )
 
-# For V1 license holders
+# For V1 (Legacy) license holders
 detector = ma_anpr_detector("v13_nano", user_name, serial_key)
 ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
 ```
@@ -152,12 +152,12 @@ ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
 ### Higher Accuracy Configuration
 
 ```python
-# For V2 license holders - best accuracy with V14
+# For V2 (Current) license holders - best accuracy with V14
 detector = ma_anpr_detector_v14(
     "v14_small_640p_fp32", user_name, serial_key, signature, backend="cuda"
 )
 
-# For V1 license holders
+# For V1 (Legacy) license holders
 detector = ma_anpr_detector("v11_large", user_name, serial_key)
 ocr = ma_anpr_ocr("v13_univ", user_name, serial_key)
 ```

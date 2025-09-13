@@ -22,8 +22,8 @@
 - Lifetime licenses
 
 **License Versions:**
-- **V1 License:** Access to V13 and legacy models
-- **V2 License:** Access to all models including V14 with digital signature authentication
+- **V1 (Legacy) License:** Access to V13 and standard models with multi-backend support
+- **V2 (Current) License:** Access to all models including V14, with digital signature
 
 ### Q: How does license renewal work?
 **A:** 
@@ -56,24 +56,24 @@ This ensures you'll always have access to the software you've invested in.
 - Try our **live test website** to see the software in action
 - These testing options ensure the software meets your needs before committing to a purchase
 
-## V14 Models & V2 License
+## V14 Models & V2 (Current) License
 
 ### Q: What are V14 models?
 **A:** V14 models are our latest generation detectors featuring:
-- Multiple backend support (CPU, CUDA, DirectML, TensorRT)
-- Digital signature tracking for enhanced security
+- Enhanced TensorRT optimization
 - Optimized precision options (FP32, FP16, FP8)
 - Better accuracy and performance
+- Requires V2 (Current) license with signature
 
-### Q: Can I use V14 models with a V1 license?
-**A:** No, V14 models require a V2 license with digital signature authentication. V1 license holders can use V13 and all legacy models.
+### Q: Can I use V14 models with a V1 (Legacy) license?
+**A:** No, V14 models require a V2 (Current) license with signature. V1 (Legacy) license holders can use V13 and all standard models with multi-backend support (CPU, CUDA, DirectML).
 
-### Q: How do I upgrade from V1 to V2 license?
-**A:** Contact [hello@marearts.com](mailto:hello@marearts.com) for upgrade options. V2 licenses include:
+### Q: How do I upgrade from V1 (Legacy) to V2 (Current) license?
+**A:** Contact [hello@marearts.com](mailto:hello@marearts.com) for upgrade options. V2 (Current) licenses include:
 - Access to all V14 models
-- Digital signature for enhanced security
-- Multi-backend inference support
-- All features of V1 license
+- Digital signature (provided with license)
+- All features of V1 (Legacy) license
+- Latest model updates
 
 ## Technical Support
 

@@ -18,11 +18,11 @@ user_name = os.getenv("MAREARTS_ANPR_USERNAME", "")
 serial_key = os.getenv("MAREARTS_ANPR_SERIAL_KEY", "")
 
 # Create detector and OCR instances
-# For V1 license:
+# For V1 (Legacy) or V2 (Current) license:
 detector = ma_anpr_detector("v13_middle", user_name, serial_key)
 ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
 
-# For V2 license with V14 models:
+# For V2 (Current) license with V14 models:
 # from marearts_anpr import ma_anpr_detector_v14
 # detector = ma_anpr_detector_v14("v14_small_640p_fp16", user_name, serial_key, signature, backend="cuda")
 # ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
@@ -57,7 +57,7 @@ result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
 from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
 import cv2
 
-# Initialize (V1/V2 with legacy models)
+# Initialize (V1 Legacy or V2 Current with standard models)
 detector = ma_anpr_detector("v13_middle", user_name, serial_key, 
                            conf_thres=0.3, iou_thres=0.5)
 ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
@@ -107,16 +107,16 @@ for r in results:
     print(f"{r['file']}: {len(r['plates'])} plates found in {r['processing_time']:.3f}s")
 ```
 
-### V14 Models Usage (V2 License Required)
+### V14 Models Usage (V2 Current License Only)
 
 ```python
 from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr
 from marearts_anpr import marearts_anpr_from_image_file
 
-# V2 license credentials with signature
+# V2 (Current) license credentials - you receive all when you purchase
 user_name = "your_email"
-serial_key = "MAEV2:your_encrypted_key"
-signature = "your_16_char_hex"  # Required for V14
+serial_key = "your_serial_key"
+signature = "your_signature"  # Provided with V2 license
 
 # Initialize V14 detector with backend selection
 detector_v14 = ma_anpr_detector_v14(
@@ -174,7 +174,7 @@ ma-anpr *.jpg
 # Specify models (V1/V2 with legacy models)
 ma-anpr image.jpg --detector-model v13_small --ocr-model v13_kr
 
-# V14 models (V2 license only)
+# V14 models (V2 Current license only)
 ma-anpr image.jpg --detector-model v14_middle_640p_fp16 --backend cuda
 
 # Save results to JSON
@@ -273,7 +273,7 @@ except Exception as e:
 1. **Use GPU acceleration** when available
 2. **Batch process** multiple images together
 3. **Choose appropriate models** based on your license and needs:
-   - **V2 License holders**: Use V14 models for best performance
+   - **V2 (Current) License holders**: Use V14 models for best performance
      - `v14_small_320p_trt_fp8` with TensorRT for maximum speed
      - `v14_middle_640p_fp16` with CUDA for balanced performance
      - `v14_large_640p_fp32` for maximum accuracy

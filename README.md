@@ -32,7 +32,7 @@ pip install marearts-anpr[tensorrt]   # NVIDIA TensorRT (Linux only)
 
 ### Basic Usage
 
-#### V1/V2 License (Legacy Models)
+#### V1 (Legacy) / V2 (Current) License
 ```python
 from marearts_anpr import marearts_anpr_from_image_file
 from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
@@ -51,7 +51,7 @@ print(result)
 # Output: {'results': [{'ocr': 'ABC123', 'ocr_conf': 99, ...}], ...}
 ```
 
-#### V2 License (Current - includes V14 Models)
+#### V2 (Current) License - V14 Models
 ```python
 from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr
 
@@ -169,7 +169,7 @@ TensorRT models provide:
 | v14_small_640p_trt_fp8 | 94.81% | 99.18% | 96.07% | 94.18% | 13.9ms (72 FPS) | - | RTX 40 only |
 | v14_small_640p_trt_bf16 | 95.24% | 98.84% | 96.15% | 94.33% | 12.5ms (80 FPS) | - | Best accuracy |
 
-### V13 Models (All Licenses)
+### V13 Models (V1 Legacy / V2 Current Licenses)
 | Model | Precision | Recall | F1 Score | Speed CUDA (ms) |
 |-------|-----------|---------|----------|-----------------|
 | v13_nano (Detector) | 95.3% | 96.5% | 0.951 | 7.0 |
