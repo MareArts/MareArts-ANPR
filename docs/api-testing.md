@@ -126,7 +126,7 @@ def test_with_retry(image_path, max_retries=3):
 
 ## Available Models on Test API
 
-The public test API supports V13 and legacy models only. V14 models require a V2 (Current) license.
+The public test API supports all models including V14 for testing purposes.
 
 ### Detector Models (Test API)
 - **v13 Series**: v13_nano, v13_small, v13_middle, v13_large
@@ -138,17 +138,11 @@ The public test API supports V13 and legacy models only. V14 models require a V2
 - **v11 Series**: v11_eu, v11_euplus, v11_kr, v11_cn, v11_univ
 - **Base Models**: eu, euplus, kr, cn, univ
 
-## V14 Models (V2 Current License Only)
+## V14 Models Testing
 
-V14 models are NOT available on the public test API. They require:
-- V2 (Current) license key
-- Digital signature (provided with V2 license)
-- Local processing with backend selection (CPU, CUDA, DirectML, TensorRT)
-
-To test V14 models, you need to:
-1. Purchase a V2 (Current) license
-2. Configure credentials with signature: `ma-anpr config`
-3. Run locally: `ma-anpr image.jpg --detector-model v14_small_640p_fp16 --backend cuda`
+V14 models can be tested through:
+- Public test API (limited requests)
+- Local processing with V2 license for unlimited use
 
 ## Limitations
 
@@ -156,19 +150,12 @@ To test V14 models, you need to:
 - 1000 requests per day
 - 10MB maximum image size
 - JPEG/PNG formats only
-- V13 and legacy models only (no V14)
+- All models available for testing
 
-**V1 (Legacy) License:**
+**Licensed Version (V1/V2):**
 - Unlimited local requests
-- V13 and legacy models
 - On-premise deployment
-
-**V2 (Current) License:**
-- Unlimited local requests
-- All models including V14
-- Multi-backend support (CPU/GPU)
-- Digital signature tracking for enhanced security
-- On-premise deployment
+- V2 license adds V14 model support
 
 ## Getting Started
 

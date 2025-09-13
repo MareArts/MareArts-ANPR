@@ -32,7 +32,7 @@ pip install marearts-anpr[tensorrt]   # NVIDIA TensorRT (Linux only)
 
 ### Basic Usage
 
-#### V1 (Legacy) / V2 (Current) License
+#### Python SDK Usage
 ```python
 from marearts_anpr import marearts_anpr_from_image_file
 from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
@@ -51,18 +51,18 @@ print(result)
 # Output: {'results': [{'ocr': 'ABC123', 'ocr_conf': 99, ...}], ...}
 ```
 
-#### V2 (Current) License - V14 Models
+#### V14 Models (V2 License)
 ```python
 from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr
 
-# V2 is the current license format (you receive all credentials when you purchase)
+# V2 license includes signature for V14 models
 # export MAREARTS_ANPR_SIGNATURE="your-signature"
 
 # Initialize V14 detector
 detector = ma_anpr_detector_v14(
     "v14_small_640p_fp16",  # V14 model
     user_name,
-    serial_key,  # Current V2 license
+    serial_key,  # V2 license
     signature,   # Provided with your license
     backend="cuda"  # cpu, cuda, directml, tensorrt
 )
@@ -95,8 +95,8 @@ The latest V14 models introduce enhanced features:
 - 🚀 **GPU Acceleration**: Up to 4x faster on NVIDIA GPUs
 
 ### Requirements
-- V2 License (provided when you purchase)
 - Python 3.9+ and pip
+- License key (V2 for V14 models)
 
 ### GPU Acceleration
 
@@ -126,7 +126,7 @@ For GPU setup details, see [Installation Guide](docs/installation.md)
 
 *Benchmarked on: Intel i7-9800X @ 3.8GHz | NVIDIA RTX 4090 | Ubuntu Linux*
 
-### V14 Models (Current V2 License)
+### V14 Models Performance
 | Model | F1 Score | Speed CUDA | Speed CPU | Notes |
 |-------|----------|------------|-----------|-------|
 | v14_small_320p_fp32 | 95.62% | 9.9ms (101 FPS) | 37ms (27 FPS) | Standard model |
@@ -135,7 +135,7 @@ For GPU setup details, see [Installation Guide](docs/installation.md)
 
 📊 [View complete benchmarks and all models](docs/models.md)
 
-### V13 Models (V1 Legacy / V2 Current Licenses)
+### V13 Models Performance
 | Model | Precision | Recall | F1 Score | Speed CUDA (ms) |
 |-------|-----------|---------|----------|-----------------|
 | v13_nano (Detector) | 95.3% | 96.5% | 0.951 | 7.0 |
