@@ -18,8 +18,14 @@ user_name = os.getenv("MAREARTS_ANPR_USERNAME", "")
 serial_key = os.getenv("MAREARTS_ANPR_SERIAL_KEY", "")
 
 # Create detector and OCR instances
+# For V1 license:
 detector = ma_anpr_detector("v13_middle", user_name, serial_key)
 ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
+
+# For V2 license with V14 models:
+# from marearts_anpr import ma_anpr_detector_v14
+# detector = ma_anpr_detector_v14("v14_small_640p_fp16", user_name, serial_key, signature, backend="cuda")
+# ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
 
 # Process image file
 result = marearts_anpr_from_image_file(detector, ocr, "path/to/image.jpg")
@@ -51,7 +57,7 @@ result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
 from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
 import cv2
 
-# Initialize
+# Initialize (V1/V2 with legacy models)
 detector = ma_anpr_detector("v13_middle", user_name, serial_key, 
                            conf_thres=0.3, iou_thres=0.5)
 ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
@@ -101,6 +107,37 @@ for r in results:
     print(f"{r['file']}: {len(r['plates'])} plates found in {r['processing_time']:.3f}s")
 ```
 
+### V14 Models Usage (V2 License Required)
+
+```python
+from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr
+from marearts_anpr import marearts_anpr_from_image_file
+
+# V2 license credentials with signature
+user_name = "your_email"
+serial_key = "MAEV2:your_encrypted_key"
+signature = "your_16_char_hex"  # Required for V14
+
+# Initialize V14 detector with backend selection
+detector_v14 = ma_anpr_detector_v14(
+    "v14_small_640p_fp16",  # V14 model name
+    user_name,
+    serial_key,
+    signature,
+    backend="cuda"  # Options: cpu, cuda, directml, tensorrt
+)
+
+# OCR remains the same
+ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
+
+# Process image - detector method name is 'detector' not 'predict'
+image = cv2.imread("test.jpg")
+plates = detector_v14.detector(image)  # Note: method is 'detector'
+
+# Or use the convenience function
+result = marearts_anpr_from_image_file(detector_v14, ocr, "test.jpg")
+```
+
 ### Multi-Region Support
 
 ```python
@@ -134,8 +171,11 @@ ma-anpr image.jpg
 # Process multiple images
 ma-anpr *.jpg
 
-# Specify models
-ma-anpr image.jpg --detector v13_small --ocr v13_kr
+# Specify models (V1/V2 with legacy models)
+ma-anpr image.jpg --detector-model v13_small --ocr-model v13_kr
+
+# V14 models (V2 license only)
+ma-anpr image.jpg --detector-model v14_middle_640p_fp16 --backend cuda
 
 # Save results to JSON
 ma-anpr image.jpg --json results.json
@@ -232,9 +272,19 @@ except Exception as e:
 
 1. **Use GPU acceleration** when available
 2. **Batch process** multiple images together
-3. **Choose appropriate models** based on your needs:
-   - `v13_nano` for speed
-   - `v13_middle` for balance
-   - `v13_large` for accuracy
+3. **Choose appropriate models** based on your license and needs:
+   - **V2 License holders**: Use V14 models for best performance
+     - `v14_small_320p_trt_fp8` with TensorRT for maximum speed
+     - `v14_middle_640p_fp16` with CUDA for balanced performance
+     - `v14_large_640p_fp32` for maximum accuracy
+   - **V1 License holders**: Use V13 models
+     - `v13_nano` for speed
+     - `v13_middle` for balance
+     - `v13_large` for accuracy
 4. **Reuse detector/OCR instances** instead of recreating them
 5. **Adjust confidence thresholds** to reduce false positives
+6. **For V14 models**, select appropriate backend:
+   - `tensorrt`: Fastest on NVIDIA GPUs
+   - `cuda`: Good performance on NVIDIA GPUs
+   - `directml`: For Windows with various GPU types
+   - `cpu`: Cross-platform compatibility

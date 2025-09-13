@@ -14,10 +14,16 @@
 ## License Types & Renewal
 
 ### Q: What types of licenses are available?
-**A:** We offer three license types:
+**A:** We offer three license types in two versions:
+
+**License Duration:**
 - Monthly licenses
 - Yearly licenses  
 - Lifetime licenses
+
+**License Versions:**
+- **V1 License:** Access to V13 and legacy models
+- **V2 License:** Access to all models including V14 with Crystal v2.4.0 support
 
 ### Q: How does license renewal work?
 **A:** 
@@ -49,6 +55,25 @@ This ensures you'll always have access to the software you've invested in.
 - Use our **free test API** to evaluate the software capabilities
 - Try our **live test website** to see the software in action
 - These testing options ensure the software meets your needs before committing to a purchase
+
+## V14 Models & V2 License
+
+### Q: What are V14 models?
+**A:** V14 models are our latest generation detectors featuring:
+- Multiple backend support (CPU, CUDA, DirectML, TensorRT)
+- Crystal v2.4.0 digital signature tracking
+- Optimized precision options (FP32, FP16, FP8)
+- Better accuracy and performance
+
+### Q: Can I use V14 models with a V1 license?
+**A:** No, V14 models require a V2 license with digital signature authentication. V1 license holders can use V13 and all legacy models.
+
+### Q: How do I upgrade from V1 to V2 license?
+**A:** Contact [hello@marearts.com](mailto:hello@marearts.com) for upgrade options. V2 licenses include:
+- Access to all V14 models
+- Digital signature for enhanced security
+- Multi-backend inference support
+- All features of V1 license
 
 ## Technical Support
 

@@ -4,6 +4,9 @@ from PIL import Image
 import io
 from requests.auth import HTTPBasicAuth
 
+# Example Python client for MareArts ANPR Docker API
+# Supports both V1 and V2 licenses
+
 url = "http://localhost:8000/process_image"
 
 # API Key in headers
@@ -11,15 +14,35 @@ headers = {
     "X-API-Key": "your_secret_api_key"
 }
 
-# Form data to be sent along with the file
-data = {
-    "detection_model_version": "middle",
-    "ocr_model_version": "eu"
-}
+# Example 1: V1 License configuration
+def test_v1_license():
+    print("Testing V1 License with V13 models...")
+    
+    data = {
+        "detection_model_version": "v13_middle",
+        "ocr_model_version": "v13_euplus"
+    }
+    
+    auth_values = HTTPBasicAuth('user@email.com', 'your_v1_serial_key')
+    return data, auth_values
 
-# HTTP Basic Authentication
-#user_id and serial_key
-auth_values = HTTPBasicAuth('user_id@abc.com', 'serial_key')
+# Example 2: V2 License configuration with V14 models
+def test_v2_license():
+    print("Testing V2 License with V14 models...")
+    
+    data = {
+        "detection_model_version": "v14_middle_640p_fp16",
+        "ocr_model_version": "v13_euplus",
+        "signature": "your_16_char_hex",  # Required for V14
+        "backend": "cuda"  # Options: cpu, cuda, directml, tensorrt
+    }
+    
+    auth_values = HTTPBasicAuth('user@email.com', 'MAEV2:your_encrypted_key')
+    return data, auth_values
+
+# Choose which license to test
+# data, auth_values = test_v1_license()
+data, auth_values = test_v2_license()
 
 # Open the image using PIL
 image_path = "../sample_images/eu-a.jpg"

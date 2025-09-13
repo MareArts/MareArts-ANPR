@@ -13,6 +13,7 @@ Automatic Number Plate Recognition (ANPR) SDK for multiple regions with GPU acce
 - 🚗 **Multi-Region Support**: EU, Korea, China, and Universal license plates
 - ⚡ **Performance**: Optimized C++ core with GPU acceleration support
 - 🎯 **Accuracy**: Trained detection and OCR models for various regions
+- 🆕 **V14 Models**: Latest generation with Crystal v2.4.0 and multi-backend support
 - 🔧 **Integration**: Python API and command-line tools
 - 🐳 **Deployment**: Docker support and API server examples
 
@@ -31,6 +32,7 @@ pip install marearts-anpr[directml]   # Windows GPU
 
 ### Basic Usage
 
+#### V1/V2 License (Legacy Models)
 ```python
 from marearts_anpr import marearts_anpr_from_image_file
 from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
@@ -49,6 +51,27 @@ print(result)
 # Output: {'results': [{'ocr': 'ABC123', 'ocr_conf': 99, ...}], ...}
 ```
 
+#### V2 License (V14 Models)
+```python
+from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr
+
+# V2 credentials with signature
+# export MAREARTS_ANPR_SIGNATURE="your-16-char-signature"
+
+# Initialize V14 detector
+detector = ma_anpr_detector_v14(
+    "v14_small_640p_fp16",  # V14 model
+    user_name, 
+    serial_key,  # MAEV2: format
+    signature,   # Required for V14
+    backend="cuda"  # cpu, cuda, directml, tensorrt
+)
+ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
+
+# Process image
+result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
+```
+
 ### CLI Usage
 
 ```bash
@@ -62,6 +85,26 @@ ma-anpr test-api image.jpg
 ma-anpr validate
 ```
 
+## V14 Models (NEW!)
+
+The latest V14 models introduce Crystal v2.4.0 support with enhanced features:
+
+### Features
+- 🔐 **Digital Signature Authentication**: Enhanced security with V2 licenses
+- 🎯 **Multi-Backend Support**: CPU, CUDA, DirectML, TensorRT
+- ⚡ **Optimized Inference**: FP32, FP16, and FP8 precision options
+- 🚀 **TensorRT Acceleration**: Up to 4x faster on NVIDIA GPUs
+
+### Requirements
+- V2 License key (starts with `MAEV2:`)
+- Digital signature (16 hex characters)
+- Backend-specific dependencies (CUDA, TensorRT, etc.)
+
+### Available V14 Models
+- **Standard**: `v14_small_320p_fp32`, `v14_small_320p_fp16`, `v14_small_640p_fp32`, `v14_small_640p_fp16`
+- **TensorRT**: `v14_small_320p_trt_fp8`, `v14_small_320p_trt_fp16`, `v14_small_640p_trt_fp8`, `v14_small_640p_trt_fp16`
+- **Coming Soon**: V14 middle and large models
+
 ## Documentation
 
 - 📦 [Installation Guide](docs/installation.md) - Detailed installation options and requirements
@@ -74,13 +117,26 @@ ma-anpr validate
 
 ## Performance
 
-| Model | Accuracy | F1 Score | Speed (ms) |
-|-------|----------|----------|------------|
-| v13_middle (Detector) | 96.3% | 0.973 | 163 |
-| v13_euplus (OCR) | 96.2% | 0.990 | 82 |
-| v13_kr (OCR) | 97.2% | 0.995 | 85 |
-| v13_cn (OCR) | 96.6% | 0.993 | 86 |
-| v13_univ (OCR) | 98.3% | 0.996 | 85 |
+*Benchmarked on: Intel i7-9800X @ 3.8GHz | NVIDIA RTX 4090 | Ubuntu Linux*
+
+### V14 Models (V2 License Required)
+| Model | Precision | Recall | F1 Score | Speed CUDA (ms) | Speed CPU (ms) | Notes |
+|-------|-----------|---------|----------|-----------------|----------------|--------|
+| v14_small_320p_fp16 | 95.93% | 97.02% | 95.63% | 15.9 | 64.7 | Edge devices |
+| v14_small_640p_fp16 | 94.99% | 98.40% | 95.81% | 22.3 | 182.2 | 🎯 Recommended |
+| v14_small_320p_trt_fp8 | 95.93% | 97.02% | 95.63% | ~8-12 | - | ⚡ Fastest |
+
+### V13 Models (All Licenses)
+| Model | Precision | Recall | F1 Score | Speed CUDA (ms) |
+|-------|-----------|---------|----------|-----------------|
+| v13_nano (Detector) | 95.3% | 96.5% | 0.951 | 7.0 |
+| v13_small (Detector) | 95.7% | 97.9% | 0.961 | 7.4 |
+| v13_middle (Detector) | 95.7% | 98.0% | 0.962 | 8.3 |
+| v13_large (Detector) | 95.9% | 98.1% | 0.964 | 9.5 |
+| v13_euplus (OCR) | 96.2% | - | 0.990 | 82 |
+| v13_kr (OCR) | 97.2% | - | 0.995 | 85 |
+| v13_cn (OCR) | 96.6% | - | 0.993 | 86 |
+| v13_univ (OCR) | 98.3% | - | 0.996 | 85 |
 
 ## MareArts Ecosystem
 

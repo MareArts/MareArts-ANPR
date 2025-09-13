@@ -1,11 +1,11 @@
 # pip install marearts-anpr
 import cv2
 from PIL import Image
-from marearts_anpr_so import ma_anpr_detector
-from marearts_anpr_so import ma_anpr_ocr
-from marearts_anpr_so import marearts_anpr_from_pil
-from marearts_anpr_so import marearts_anpr_from_image_file
-from marearts_anpr_so import marearts_anpr_from_cv2
+from marearts_anpr import ma_anpr_detector
+from marearts_anpr import ma_anpr_ocr
+from marearts_anpr import marearts_anpr_from_pil
+from marearts_anpr import marearts_anpr_from_image_file
+from marearts_anpr import marearts_anpr_from_cv2
 
 if __name__ == '__main__':
     
@@ -24,10 +24,12 @@ if __name__ == '__main__':
     # user_name = os.getenv("MAREARTS_ANPR_USERNAME", user_name)
     # serial_key = os.getenv("MAREARTS_ANPR_SERIAL_KEY", serial_key)
     
-    # Options: middle, v10_small, v10_middle, more detail refer to version table
-    detector_model_version = "middle" 
-    # Options: eu, kr, more detail refer to version table
-    ocr_model_version = "eu" 
+    # Detector options: v13_nano, v13_small, v13_middle, v13_large
+    # Legacy: v10_small, v10_middle, v10_large, v11_small, v11_middle, v11_large
+    detector_model_version = "v13_middle" 
+    # OCR options: v13_eu, v13_euplus, v13_kr, v13_cn, v13_univ
+    # Legacy: eu, kr, euplus, univ
+    ocr_model_version = "v13_euplus" 
     
 
     # MareArts ANPR Detector Inference
@@ -59,7 +61,7 @@ if __name__ == '__main__':
     print("ANPR Korean")
     # user_name, serial_key are already defined
     # anpr_d is also already initiated before
-    ocr_model_version = "kr"
+    ocr_model_version = "v13_kr"  # Korean OCR model
     # MareArts ANPR OCR Inference
     anpr_r = ma_anpr_ocr(ocr_model_version, user_name, serial_key)
 

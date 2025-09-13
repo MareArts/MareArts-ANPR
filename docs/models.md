@@ -4,20 +4,42 @@
 
 Detection models locate license plates in images.
 
-### Performance Metrics
+### V14 Models (V2 License Required)
 
-| Model | Size | Precision | Recall | F1 Score | Speed (ms) | Recommendation |
-|-------|------|-----------|---------|----------|------------|----------------|
-| **v13_nano** | 14MB | 0.9657 | 0.9826 | 0.9676 | 36 | ⚡ Fastest |
-| **v13_small** | 49MB | 0.9632 | 0.9920 | 0.9715 | 66 | |
-| **v13_middle** | 103MB | 0.9634 | 0.9940 | 0.9725 | 163 | 🎯 Best Balance |
-| **v13_large** | 129MB | 0.9642 | 0.9936 | 0.9729 | 205 | 📈 Best Recall |
-| v11_small | 38MB | 0.9791 | 0.9849 | 0.9779 | 49 | |
-| v11_middle | 79MB | 0.9799 | 0.9866 | 0.9793 | 94 | |
-| v11_large | 125MB | 0.9824 | 0.9892 | 0.9823 | 156 | 🥇 Best F1 |
-| v10_small | 38MB | 0.9852 | 0.9694 | 0.9716 | 47 | |
-| v10_middle | 79MB | 0.9836 | 0.9680 | 0.9701 | 99 | |
-| v10_large | 125MB | 0.9858 | 0.9709 | 0.9731 | 231 | 🎯 Best Precision |
+The V14 series introduces advanced detection with Crystal v2.4.0 support and multiple inference backends.
+
+#### V14 Models - Performance Metrics
+| Model | Size | Resolution | Precision | Recall | F1 Score | mAP | Speed CUDA | Speed CPU |
+|-------|------|------------|-----------|---------|----------|------|------------|-----------|
+| **v14_small_320p_fp32** | 135MB | 320p | 0.9593 | 0.9702 | 0.9563 | 0.9367 | 15.9ms | 64.7ms |
+| **v14_small_320p_fp16** | 68MB | 320p | 0.9593 | 0.9702 | 0.9563 | 0.9367 | 15.9ms | 64.7ms |
+| **v14_small_640p_fp32** | 136MB | 640p | 0.9499 | 0.9840 | 0.9581 | 0.9389 | 22.3ms | 182.2ms |
+| **v14_small_640p_fp16** | 68MB | 640p | 0.9499 | 0.9840 | 0.9581 | 0.9389 | 22.3ms | 182.2ms |
+
+#### TensorRT Optimized V14 Models (NVIDIA GPUs Only)
+| Model | Size | Format | Resolution | Speed (ms) | Notes |
+|-------|------|--------|------------|------------|--------|
+| **v14_small_320p_trt_fp16** | 74MB | TRT FP16 | 320p | ~20-30 | Fast inference |
+| **v14_small_320p_trt_fp8** | 208MB | TRT FP8 | 320p | ~15-25 | ⚡ Fastest |
+| **v14_small_640p_trt_fp16** | 76MB | TRT FP16 | 640p | ~40-60 | 🎯 Recommended |
+| **v14_small_640p_trt_fp8** | 210MB | TRT FP8 | 640p | ~35-50 | Best speed |
+
+*Note: V14 middle and large models coming soon!*
+
+### V13 & Legacy Models (V1/V2 License)
+
+| Model | Size | Precision | Recall | F1 Score | Speed CUDA (ms) | Recommendation |
+|-------|------|-----------|---------|----------|-----------------|----------------|
+| **v13_nano** | 14MB | 0.9531 | 0.9653 | 0.9513 | 7.0 | ⚡ Fastest |
+| **v13_small** | 49MB | 0.9565 | 0.9788 | 0.9608 | 7.4 | |
+| **v13_middle** | 103MB | 0.9572 | 0.9801 | 0.9619 | 8.3 | 🎯 Best Balance |
+| **v13_large** | 129MB | 0.9592 | 0.9808 | 0.9636 | 9.5 | 📈 Best v13 |
+| v11_small | 38MB | 0.9667 | 0.9620 | 0.9587 | 9.5 | |
+| v11_middle | 79MB | 0.9724 | 0.9701 | 0.9660 | 12.3 | |
+| v11_large | 125MB | 0.9740 | 0.9719 | 0.9680 | 14.8 | 🥇 Best v11 |
+| v10_small | 38MB | 0.9754 | 0.9518 | 0.9566 | 9.4 | |
+| v10_middle | 79MB | 0.9719 | 0.9492 | 0.9537 | 12.2 | |
+| v10_large | 125MB | 0.9733 | 0.9512 | 0.9559 | 14.8 | Best Precision |
 
 ### Detector Selection Guide
 
@@ -59,7 +81,43 @@ OCR models read text from detected license plates.
 
 ## Usage Examples
 
-### Standard Configuration
+### V14 Configuration (V2 License Required)
+
+```python
+from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr
+
+# V14 detector with CUDA backend (recommended for NVIDIA GPUs)
+detector = ma_anpr_detector_v14(
+    "v14_small_640p_fp16",   # Model name
+    user_name,                # Your username
+    serial_key,               # V2 serial key (MAEV2:...)
+    signature,                # 16-character hex signature
+    backend="cuda"            # Backend: cpu, cuda, directml, tensorrt
+)
+
+# TensorRT optimized for maximum speed (NVIDIA only)
+detector_trt = ma_anpr_detector_v14(
+    "v14_small_640p_trt_fp8",
+    user_name,
+    serial_key,
+    signature,
+    backend="tensorrt"
+)
+
+# CPU backend for cross-platform compatibility
+detector_cpu = ma_anpr_detector_v14(
+    "v14_small_320p_fp32",
+    user_name,
+    serial_key,
+    signature,
+    backend="cpu"
+)
+
+# OCR (same for V1 and V2 licenses)
+ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
+```
+
+### Standard Configuration (V1/V2 License)
 
 ```python
 from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
@@ -77,7 +135,12 @@ ocr_univ = ma_anpr_ocr("v13_univ", user_name, serial_key)  # Universal
 ### Fast Processing Configuration
 
 ```python
-# For faster processing
+# For V2 license holders - fastest with V14
+detector = ma_anpr_detector_v14(
+    "v14_small_320p_trt_fp8", user_name, serial_key, signature, backend="tensorrt"
+)
+
+# For V1 license holders
 detector = ma_anpr_detector("v13_nano", user_name, serial_key)
 ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
 ```
@@ -85,16 +148,38 @@ ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
 ### Higher Accuracy Configuration
 
 ```python
-# For higher accuracy
+# For V2 license holders - best accuracy with V14
+detector = ma_anpr_detector_v14(
+    "v14_small_640p_fp32", user_name, serial_key, signature, backend="cuda"
+)
+
+# For V1 license holders
 detector = ma_anpr_detector("v11_large", user_name, serial_key)
 ocr = ma_anpr_ocr("v13_univ", user_name, serial_key)
 ```
 
 ## Performance Notes
 
-- Speed measurements based on i7-9800X 3.8GHz CPU
-- GPU acceleration can provide faster processing
+### Test System Specifications
+- **CPU**: Intel Core i7-9800X @ 3.80GHz (8 cores, 16 threads)
+- **GPU**: NVIDIA GeForce RTX 4090 (24GB VRAM)
+- **CUDA**: Driver 535.261.03
+- **OS**: Ubuntu Linux
+- **RAM**: 64GB DDR4
+
+### Measurement Details
+- Speed measurements for V14 models tested on both NVIDIA GPU (CUDA) and Intel CPU
+- Speed measurements for V13/legacy models tested on NVIDIA GPU (CUDA)
+- CPU speeds typically 3-5x slower than CUDA for same model
 - First inference includes model loading time
 - Subsequent inferences are faster due to caching
 - Batch processing can improve throughput
+- TensorRT models require NVIDIA GPU with TensorRT installed
+
+### Performance Expectations
+- **RTX 4090**: Baseline performance as shown in tables
+- **RTX 3090/3080**: ~20-30% slower than RTX 4090
+- **RTX 2080/2070**: ~40-50% slower than RTX 4090
+- **GTX 1080/1070**: ~60-70% slower than RTX 4090
+- **CPU Only**: 3-5x slower than GPU, varies by CPU model
 

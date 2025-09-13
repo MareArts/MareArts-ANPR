@@ -26,13 +26,15 @@ The API will be available at `http://localhost:8000`
 Authentication: Basic Auth (username/password) + API Key
 
 Form data:
-- `detection_model_version`: Detection model (e.g., "v13_middle")
+- `detection_model_version`: Detection model (e.g., "v13_middle", "v14_small_640p_fp16" for V2 license)
 - `ocr_model_version`: OCR model (e.g., "v13_euplus")
+- `signature`: (Optional) V2 license signature for V14 models
+- `backend`: (Optional) Backend for V14 models: "cpu", "cuda", "directml", "tensorrt" (default: "cuda")
 - `image`: Image file (JPEG/PNG)
 
 Headers:
 - `X-API-Key`: your_secret_api_key
-- `Authorization`: Basic Auth with credentials
+- `Authorization`: Basic Auth with credentials (V1 or V2 serial key)
 
 ### Health Check
 **GET** `/health`
@@ -65,14 +67,27 @@ Based on Python 3.11 slim image with:
 - Docker BuildX (for multi-platform builds)
 - MareArts ANPR credentials
 
-## Example API Call
+## Example API Calls
 
+### V1 License (Legacy Models)
 ```bash
 curl -X POST http://localhost:8000/process_image \
   -H "X-API-Key: your_secret_api_key" \
-  -u "username:password" \
+  -u "username:v1_serial_key" \
   -F "detection_model_version=v13_middle" \
   -F "ocr_model_version=v13_euplus" \
+  -F "image=@test_image.jpg"
+```
+
+### V2 License (V14 Models)
+```bash
+curl -X POST http://localhost:8000/process_image \
+  -H "X-API-Key: your_secret_api_key" \
+  -u "username:MAEV2:encrypted_key" \
+  -F "detection_model_version=v14_small_640p_fp16" \
+  -F "ocr_model_version=v13_euplus" \
+  -F "signature=your_16_char_hex" \
+  -F "backend=cuda" \
   -F "image=@test_image.jpg"
 ```
 
@@ -99,3 +114,6 @@ curl -X POST http://localhost:8000/process_image \
 - Supports AMD64 architecture (ARM64 commented out)
 - Models are downloaded on first use
 - Credentials passed via Basic Auth for security
+- V14 models require V2 license with signature
+- Auto-update feature checks for marearts-anpr updates on health checks
+- Default backend for V14 is "cuda" in Docker deployment

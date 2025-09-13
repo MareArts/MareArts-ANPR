@@ -68,6 +68,7 @@ The SDK automatically detects and uses available hardware:
 
 You can set credentials in three ways:
 
+### V1 License Setup
 1. **Environment variables** (recommended for security):
 ```bash
 export MAREARTS_ANPR_USERNAME="your-email@domain.com"
@@ -82,6 +83,33 @@ ma-anpr config
 3. **Direct in code**:
 ```python
 detector = ma_anpr_detector("v13_middle", "your-email", "your-key")
+```
+
+### V2 License Setup (Required for V14 Models)
+V2 licenses require an additional signature parameter:
+
+1. **Environment variables**:
+```bash
+export MAREARTS_ANPR_USERNAME="your-email@domain.com"
+export MAREARTS_ANPR_SERIAL_KEY="MAEV2:your-encrypted-key"
+export MAREARTS_ANPR_SIGNATURE="your-16-char-signature"
+```
+
+2. **CLI configuration** (automatically detects V2 and prompts for signature):
+```bash
+ma-anpr config
+```
+
+3. **Direct in code**:
+```python
+# V14 detector requires signature
+detector = ma_anpr_detector_v14(
+    "v14_small_640p_fp16", 
+    "your-email", 
+    "MAEV2:your-key",
+    "your-signature",
+    backend="cuda"  # or "cpu", "directml", "tensorrt"
+)
 ```
 
 ### Verify Installation
