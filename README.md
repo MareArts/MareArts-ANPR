@@ -30,6 +30,8 @@ pip install marearts-anpr[directml]   # Windows GPU (DirectML)
 pip install marearts-anpr[tensorrt]   # NVIDIA TensorRT (Linux only)
 ```
 
+📦 [See Installation Guide](docs/installation.md) for detailed setup instructions
+
 ### Basic Usage
 
 #### Python SDK Usage
@@ -87,30 +89,12 @@ ma-anpr validate
 
 ## V14 Models (NEW!)
 
-The latest V14 models introduce enhanced features:
-
-### Features
+The latest V14 models with enhanced performance:
 - 🎯 **Multi-Backend Support**: CPU, CUDA, DirectML, TensorRT
 - ⚡ **Optimized Inference**: FP32, FP16, and FP8 precision options
-- 🚀 **GPU Acceleration**: Up to 4x faster on NVIDIA GPUs
+- 🚀 **Up to 4x faster** on NVIDIA GPUs
 
-### Requirements
-- Python 3.9+ and pip
-- License key (V2 for V14 models)
-
-### GPU Acceleration
-
-```bash
-# TensorRT for maximum performance (Linux, NVIDIA GPUs)
-pip install marearts-anpr[tensorrt]
-```
-
-For GPU setup details, see [Installation Guide](docs/installation.md)
-
-### Available V14 Models
-- **CPU/CUDA/DirectML**: `v14_small_320p_fp32`, `v14_small_640p_fp32` (and FP16 variants)
-- **TensorRT Optimized**: `v14_small_320p_trt_fp16`, `v14_small_640p_trt_fp16` (and other precisions)
-- See [Model Versions](docs/models.md) for complete list and detailed benchmarks
+🔧 [See all models and benchmarks](docs/models.md)
 
 ## Documentation
 
