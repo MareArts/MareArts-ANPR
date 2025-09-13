@@ -9,7 +9,7 @@ Detection models locate license plates in images.
 The V14 series introduces advanced detection with digital signature authentication and multiple inference backends.
 
 #### V14 Models - Performance Metrics
-| Model | Size | Resolution | Precision | Recall | F1 Score | mAP | Speed CUDA | Speed CPU |
+| Model Name | Size | Resolution | Precision | Recall | F1 Score | mAP | Speed CUDA | Speed CPU |
 |-------|------|------------|-----------|---------|----------|------|------------|-----------|
 | **v14_small_320p_fp32** | 135MB | 320p | 0.9593 | 0.9702 | 0.9562 | 0.9366 | 9.9ms (101 FPS) | 37ms (27 FPS) |
 | **v14_small_320p_fp16** | 68MB | 320p | 0.9593 | 0.9702 | 0.9562 | 0.9366 | 15.9ms (63 FPS) | 64.7ms (15 FPS) |
@@ -17,7 +17,7 @@ The V14 series introduces advanced detection with digital signature authenticati
 | **v14_small_640p_fp16** | 68MB | 640p | 0.9499 | 0.9840 | 0.9581 | 0.9389 | 22.3ms (45 FPS) | 182.2ms (5 FPS) |
 
 #### TensorRT Optimized V14 Models (NVIDIA GPUs Only)
-| Model | Size | Format | Resolution | Speed (ms) | F1 Score | mAP | Notes |
+| Model Name | Size | Format | Resolution | Speed (ms) | F1 Score | mAP | Notes |
 |-------|------|--------|------------|------------|----------|-----|---------|
 | **v14_small_320p_trt_fp16** | 74MB | TRT FP16 | 320p | 7.9ms (127 FPS) | 0.9618 | 0.9437 | Fast inference |
 | **v14_small_320p_trt_fp32** | 135MB | TRT FP32 | 320p | 8.8ms (114 FPS) | 0.9618 | 0.9437 | Standard precision |
@@ -30,9 +30,11 @@ The V14 series introduces advanced detection with digital signature authenticati
 
 *Note: V14 middle and large models coming soon!*
 
+*Use these model names directly in `ma_anpr_detector_v14()` function*
+
 ### V13 & Legacy Models (V1 / V2 License)
 
-| Model | Size | Precision | Recall | F1 Score | Speed CUDA (ms) | Recommendation |
+| Model Name | Size | Precision | Recall | F1 Score | Speed CUDA (ms) | Recommendation |
 |-------|------|-----------|---------|----------|-----------------|----------------|
 | **v13_nano** | 14MB | 0.9531 | 0.9653 | 0.9513 | 7.0 | ⚡ Fastest |
 | **v13_small** | 49MB | 0.9565 | 0.9788 | 0.9608 | 7.4 | |
@@ -44,6 +46,8 @@ The V14 series introduces advanced detection with digital signature authenticati
 | v10_small | 38MB | 0.9754 | 0.9518 | 0.9566 | 9.4 | |
 | v10_middle | 79MB | 0.9719 | 0.9492 | 0.9537 | 12.2 | |
 | v10_large | 125MB | 0.9733 | 0.9512 | 0.9559 | 14.8 | Best Precision |
+
+*Use these model names in `ma_anpr_detector()` function*
 
 ### Detector Selection Guide
 
@@ -64,7 +68,7 @@ OCR models read text from detected license plates.
 
 ### Regional Models
 
-| Model | Region | Size | Accuracy | Char Accuracy | Confidence | Speed (ms) | Status |
+| Model Name | Region | Size | Accuracy | Char Accuracy | Confidence | Speed (ms) | Status |
 |-------|--------|------|----------|---------------|------------|------------|--------|
 | **v13_euplus** | EU+ | 147MB | 0.9617 | 0.9901 | 97.70% | 82 | Recommended |
 | **v13_kr** | Korea | 147MB | 0.9721 | 0.9951 | 97.01% | 86 | Recommended |
@@ -74,6 +78,8 @@ OCR models read text from detected license plates.
 | v11_euplus | EU+ | 146MB | 0.9822 | 0.9965 | 97.64% | 82 | |
 | v11_kr | Korea | 146MB | 0.9938 | 0.9991 | 98.50% | 85 | 📝 Best Korean |
 | v11_univ | Universal | 146MB | 0.9600 | 0.9941 | 97.77% | 85 | |
+
+*Use these model names in `ma_anpr_ocr()` function*
 
 ### OCR Selection Guide
 
@@ -173,6 +179,5 @@ ocr = ma_anpr_ocr("v13_univ", user_name, serial_key)
 ### Performance Notes
 - Benchmarked on RTX 4090 + Intel i7-9800X
 - CPU speeds typically 3-5x slower than GPU
-- Older GPUs: RTX 3090 (~20-30% slower), RTX 2080 (~40-50% slower)
 - TensorRT models require NVIDIA GPU
 
