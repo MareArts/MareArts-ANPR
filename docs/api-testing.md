@@ -126,36 +126,30 @@ def test_with_retry(image_path, max_retries=3):
 
 ## Available Models on Test API
 
-The public test API supports all models including V14 for testing purposes.
+The public test API supports all models equally, including V14 models.
 
-### Detector Models (Test API)
-- **v13 Series**: v13_nano, v13_small, v13_middle, v13_large
-- **v11 Series**: v11_nano, v11_small, v11_middle, v11_large  
-- **v10 Series**: v10_nano, v10_small, v10_middle, v10_large, v10_xlarge
+### Detector Models
+- **V14 Series**: v14_small_320p_fp32, v14_small_640p_fp32, v14_small_320p_fp16, v14_small_640p_fp16
+- **V13 Series**: v13_nano, v13_small, v13_middle, v13_large
+- **V11 Series**: v11_nano, v11_small, v11_middle, v11_large
+- **V10 Series**: v10_nano, v10_small, v10_middle, v10_large, v10_xlarge
 
-### OCR Models (Test API)
-- **v13 Series**: v13_eu, v13_euplus, v13_kr, v13_cn, v13_univ
-- **v11 Series**: v11_eu, v11_euplus, v11_kr, v11_cn, v11_univ
+### OCR Models
+- **V13 Series**: v13_eu, v13_euplus, v13_kr, v13_cn, v13_univ
+- **V11 Series**: v11_eu, v11_euplus, v11_kr, v11_cn, v11_univ
 - **Base Models**: eu, euplus, kr, cn, univ
-
-## V14 Models Testing
-
-V14 models can be tested through:
-- Public test API (limited requests)
-- Local processing with V2 license for unlimited use
 
 ## Limitations
 
-**Test API:**
-- 1000 requests per day
+**Test API (All models including V14):**
+- 1000 requests per day limit
 - 10MB maximum image size
 - JPEG/PNG formats only
-- All models available for testing
 
-**Licensed Version (V1/V2):**
+**Licensed Version:**
 - Unlimited local requests
 - On-premise deployment
-- V2 license adds V14 model support
+- V2 license required for V14 models
 
 ## Getting Started
 
