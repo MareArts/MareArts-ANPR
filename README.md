@@ -51,19 +51,19 @@ print(result)
 # Output: {'results': [{'ocr': 'ABC123', 'ocr_conf': 99, ...}], ...}
 ```
 
-#### V2 License (V14 Models)
+#### V2 License (Current - includes V14 Models)
 ```python
 from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr
 
-# V2 credentials with signature
-# export MAREARTS_ANPR_SIGNATURE="your-16-char-signature"
+# V2 is the current license format (you receive all credentials when you purchase)
+# export MAREARTS_ANPR_SIGNATURE="your-signature"
 
 # Initialize V14 detector
 detector = ma_anpr_detector_v14(
     "v14_small_640p_fp16",  # V14 model
-    user_name, 
-    serial_key,  # MAEV2: format
-    signature,   # Required for V14
+    user_name,
+    serial_key,  # Current V2 license
+    signature,   # Provided with your license
     backend="cuda"  # cpu, cuda, directml, tensorrt
 )
 ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
@@ -96,8 +96,8 @@ The latest V14 models introduce enhanced features:
 - 🚀 **TensorRT Acceleration**: Up to 4x faster on NVIDIA GPUs
 
 ### Requirements
-- V2 License key (starts with `MAEV2:`)
-- Digital signature (16 hex characters)
+- V2 License (current license format - provided when you purchase)
+- Digital signature (provided with your license)
 - Backend-specific dependencies (CUDA, TensorRT, etc.)
 
 ### TensorRT Installation
@@ -153,7 +153,7 @@ TensorRT models provide:
 
 *Benchmarked on: Intel i7-9800X @ 3.8GHz | NVIDIA RTX 4090 | Ubuntu Linux*
 
-### V14 Models (V2 License Required)
+### V14 Models (Current V2 License)
 | Model | Precision | Recall | F1 Score | mAP | Speed CUDA (ms) | Speed CPU (ms) | Notes |
 |-------|-----------|---------|----------|-----|-----------------|----------------|--------|
 | v14_small_320p_fp32 | 95.92% | 97.01% | 95.62% | 93.66% | 9.9ms (101 FPS) | 37ms (27 FPS) | Standard precision |
