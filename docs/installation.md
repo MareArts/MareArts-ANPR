@@ -68,7 +68,7 @@ The SDK automatically detects and uses available hardware:
 
 You can set credentials in three ways:
 
-### V1 (Legacy) License Setup
+### V1 License Setup
 1. **Environment variables** (recommended for security):
 ```bash
 export MAREARTS_ANPR_USERNAME="your-email@domain.com"
@@ -85,8 +85,8 @@ ma-anpr config
 detector = ma_anpr_detector("v13_middle", "your-email", "your-key")
 ```
 
-### V2 (Current) License Setup
-V2 is the current license format. You receive all credentials when you purchase:
+### V2 License Setup
+All new licenses are V2. You receive all credentials when you purchase:
 
 1. **Environment variables**:
 ```bash

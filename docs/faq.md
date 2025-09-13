@@ -22,8 +22,8 @@
 - Lifetime licenses
 
 **License Versions:**
-- **V1 (Legacy) License:** Access to V13 and standard models with multi-backend support
-- **V2 (Current) License:** Access to all models including V14, with digital signature
+- **V1 License:** Access to all models up to V13 with multi-backend support
+- **V2 License:** Access to all models including V14, with digital signature
 
 ### Q: How does license renewal work?
 **A:** 
@@ -65,14 +65,14 @@ This ensures you'll always have access to the software you've invested in.
 - Better accuracy and performance
 - Requires V2 (Current) license with signature
 
-### Q: Can I use V14 models with a V1 (Legacy) license?
-**A:** No, V14 models require a V2 (Current) license with signature. V1 (Legacy) license holders can use V13 and all standard models with multi-backend support (CPU, CUDA, DirectML).
+### Q: Can I use V14 models with a V1 license?
+**A:** No, V14 models require a V2 license with signature. V1 license holders can use all models up to V13 with multi-backend support (CPU, CUDA, DirectML).
 
-### Q: How do I upgrade from V1 (Legacy) to V2 (Current) license?
-**A:** Contact [hello@marearts.com](mailto:hello@marearts.com) for upgrade options. V2 (Current) licenses include:
-- Access to all V14 models
+### Q: How do I get a V2 license?
+**A:** All new license generations now produce V2 licenses for all subscribers. V2 licenses include:
+- Access to all models including V14
 - Digital signature (provided with license)
-- All features of V1 (Legacy) license
+- All features of V1 license
 - Latest model updates
 
 ## Technical Support

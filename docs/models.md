@@ -30,7 +30,7 @@ The V14 series introduces advanced detection with digital signature authenticati
 
 *Note: V14 middle and large models coming soon!*
 
-### V13 & Legacy Models (V1 Legacy / V2 Current License)
+### V13 & Legacy Models (V1 / V2 License)
 
 | Model | Size | Precision | Recall | F1 Score | Speed CUDA (ms) | Recommendation |
 |-------|------|-----------|---------|----------|-----------------|----------------|
@@ -47,10 +47,16 @@ The V14 series introduces advanced detection with digital signature authenticati
 
 ### Detector Selection Guide
 
-- **Fast processing**: Use `v13_nano` (36ms)
-- **Balanced**: Use `v13_middle` (good balance)
-- **Higher accuracy**: Use `v13_large` or `v11_large`
-- **Limited resources**: Use `v13_nano` or `v13_small`
+**Recommended (V2 License with V14 models):**
+- **Fast processing**: Use `v14_small_320p_trt_fp16` (7.9ms, 127 FPS)
+- **Balanced**: Use `v14_small_640p_trt_fp16` (12.1ms, 83 FPS)
+- **Best accuracy**: Use `v14_small_640p_trt_bf16` (12.5ms, 80 FPS)
+- **CPU only**: Use `v14_small_320p_fp32` (37ms, 27 FPS)
+
+**Legacy models (no longer updated):**
+- Fast: `v13_nano` (36ms)
+- Balanced: `v13_middle`
+- Higher accuracy: `v13_large`
 
 ## OCR Models
 
@@ -164,26 +170,9 @@ ocr = ma_anpr_ocr("v13_univ", user_name, serial_key)
 
 ## Performance Notes
 
-### Test System Specifications
-- **CPU**: Intel Core i7-9800X @ 3.80GHz (8 cores, 16 threads)
-- **GPU**: NVIDIA GeForce RTX 4090 (24GB VRAM)
-- **CUDA**: Driver 535.261.03
-- **OS**: Ubuntu Linux
-- **RAM**: 64GB DDR4
-
-### Measurement Details
-- Speed measurements for V14 models tested on both NVIDIA GPU (CUDA) and Intel CPU
-- Speed measurements for V13/legacy models tested on NVIDIA GPU (CUDA)
-- CPU speeds typically 3-5x slower than CUDA for same model
-- First inference includes model loading time
-- Subsequent inferences are faster due to caching
-- Batch processing can improve throughput
-- TensorRT models require NVIDIA GPU with TensorRT installed
-
-### Performance Expectations
-- **RTX 4090**: Baseline performance as shown in tables
-- **RTX 3090/3080**: ~20-30% slower than RTX 4090
-- **RTX 2080/2070**: ~40-50% slower than RTX 4090
-- **GTX 1080/1070**: ~60-70% slower than RTX 4090
-- **CPU Only**: 3-5x slower than GPU, varies by CPU model
+### Performance Notes
+- Benchmarked on RTX 4090 + Intel i7-9800X
+- CPU speeds typically 3-5x slower than GPU
+- Older GPUs: RTX 3090 (~20-30% slower), RTX 2080 (~40-50% slower)
+- TensorRT models require NVIDIA GPU
 
