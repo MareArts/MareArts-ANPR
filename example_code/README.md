@@ -18,7 +18,7 @@ Advanced usage example showing:
 - Performance timing measurements
 - Custom result formatting
 
-### 3. v14_example.py (V2 License Required)
+### 3. v14_example.py (V2 Current License Required)
 V14 models example showing:
 - V14 detector initialization with signature
 - Backend selection (CPU, CUDA, DirectML, TensorRT)
@@ -33,7 +33,7 @@ Background subtraction example for:
 
 ## Quick Start
 
-### V1 License (Legacy Models)
+### V1 (Legacy) License
 
 ```python
 from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
@@ -52,16 +52,16 @@ result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
 print(result)
 ```
 
-### V2 License (V14 Models)
+### V2 (Current) License - V14 Models
 
 ```python
 from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr
 from marearts_anpr import marearts_anpr_from_image_file
 
-# Initialize with V2 credentials
+# Initialize with V2 (Current) credentials - you receive all when you purchase
 user_name = "your_email"
-serial_key = "MAEV2:your_encrypted_key"
-signature = "your_16_char_hex"
+serial_key = "your_serial_key"
+signature = "your_signature"
 
 # Create V14 detector with backend selection
 detector = ma_anpr_detector_v14(
@@ -82,11 +82,11 @@ print(result)
 
 ### Detector Models
 
-**V14 Models (V2 License Required):**
+**V14 Models (V2 Current License Only):**
 - Standard: `v14_small_320p_fp32`, `v14_small_320p_fp16`, `v14_small_640p_fp32`, `v14_small_640p_fp16`
 - TensorRT: `v14_small_320p_trt_fp8`, `v14_small_320p_trt_fp16`, `v14_small_640p_trt_fp8`, `v14_small_640p_trt_fp16`
 
-**V13 Models (V1/V2 License):**
+**V13 Models (V1 Legacy / V2 Current License):**
 - `v13_nano`, `v13_small`, `v13_middle`, `v13_large`
 
 **Legacy Models:**
@@ -98,7 +98,7 @@ print(result)
 - **V11**: `v11_eu`, `v11_euplus`, `v11_kr`, `v11_cn`, `v11_univ`
 - **Base**: `eu`, `euplus`, `kr`, `cn`, `univ`
 
-## Backend Options (V14 Only)
+## Backend Options (V14 Models with V2 Current License)
 
 - **cpu**: Cross-platform CPU inference
 - **cuda**: NVIDIA GPU acceleration
@@ -112,7 +112,7 @@ Set credentials via environment variables:
 ```bash
 export MAREARTS_ANPR_USERNAME="your-email@domain.com"
 export MAREARTS_ANPR_SERIAL_KEY="your-serial-key"
-export MAREARTS_ANPR_SIGNATURE="your-signature"  # V2 only
+export MAREARTS_ANPR_SIGNATURE="your-signature"  # V2 (Current) license only
 ```
 
 ## Requirements
@@ -125,7 +125,7 @@ pip install pillow  # For PIL examples
 
 ## Notes
 
-- V14 models require V2 license with signature
+- V14 models require V2 (Current) license
 - First run downloads models (may take time)
 - Models are cached after first download
 - TensorRT models require NVIDIA GPU with TensorRT

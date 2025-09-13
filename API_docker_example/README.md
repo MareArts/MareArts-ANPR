@@ -1,20 +1,20 @@
 # MareArts ANPR Docker API Example
 
-This example demonstrates how to deploy MareArts ANPR as a REST API service using Docker, with support for both V1 and V2 licenses including V14 models.
+This example demonstrates how to deploy MareArts ANPR as a REST API service using Docker, with support for both V1 (Legacy) and V2 (Current) licenses including V14 models.
 
 ## Features
 
 - FastAPI-based REST API
-- Support for V1 and V2 licenses
+- Support for V1 (Legacy) and V2 (Current) licenses
 - V14 model support with multi-backend inference
 - Auto-update capability (checks for package updates)
 - Basic authentication + API key security
 
-## V14 Model Support (V2 License Only)
+## V14 Model Support (V2 Current License Only)
 
 V14 models require:
-- V2 license key (starts with "MAEV2:")
-- Digital signature (16 hex characters)
+- V2 (Current) license key
+- Digital signature (provided with V2 license)
 - Backend selection (cpu, cuda, directml, tensorrt)
 
 ### Available V14 Models
@@ -43,7 +43,7 @@ V14 models require:
 
 ### 3. Test API
 
-#### V1 License (Legacy Models)
+#### V1 (Legacy) License
 ```bash
 curl -X POST http://localhost:8000/process_image \
   -H "X-API-Key: your_secret_api_key" \
@@ -53,14 +53,14 @@ curl -X POST http://localhost:8000/process_image \
   -F "image=@test.jpg"
 ```
 
-#### V2 License (V14 Models)
+#### V2 (Current) License with V14 Models
 ```bash
 curl -X POST http://localhost:8000/process_image \
   -H "X-API-Key: your_secret_api_key" \
-  -u "user@email.com:MAEV2:your_encrypted_key" \
+  -u "user@email.com:your_v2_serial_key" \
   -F "detection_model_version=v14_small_640p_fp16" \
   -F "ocr_model_version=v13_euplus" \
-  -F "signature=your_16_char_hex" \
+  -F "signature=your_signature" \
   -F "backend=cuda" \
   -F "image=@test.jpg"
 ```
@@ -72,7 +72,7 @@ curl -X POST http://localhost:8000/process_image \
 **Parameters:**
 - `detection_model_version` (required): Detection model name
 - `ocr_model_version` (required): OCR model name
-- `signature` (optional): Required for V14 models with V2 license
+- `signature` (optional): Required for V14 models with V2 (Current) license
 - `backend` (optional): Backend for V14 models (default: "cpu")
 - `image` (required): Image file
 
@@ -90,15 +90,15 @@ Returns API status and marearts-anpr version.
 import requests
 from requests.auth import HTTPBasicAuth
 
-# V2 License with V14 model
+# V2 (Current) License with V14 model
 url = "http://localhost:8000/process_image"
 headers = {"X-API-Key": "your_secret_api_key"}
-auth = HTTPBasicAuth('user@email.com', 'MAEV2:your_key')
+auth = HTTPBasicAuth('user@email.com', 'your_v2_serial_key')
 
 data = {
     "detection_model_version": "v14_small_640p_fp16",
     "ocr_model_version": "v13_euplus",
-    "signature": "your_16_char_hex",
+    "signature": "your_signature",
     "backend": "cuda"
 }
 

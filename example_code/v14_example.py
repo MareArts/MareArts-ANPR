@@ -1,11 +1,11 @@
 # pip install marearts-anpr
 """
-V14 Models Example (V2 License Required)
+V14 Models Example (V2 Current License Required)
 
 This example demonstrates how to use V14 models with MareArts ANPR.
 V14 models require:
-- V2 license key (starts with "MAEV2:")
-- Digital signature (16 hex characters)
+- V2 (Current) license key
+- Digital signature (provided with V2 license)
 - Backend selection (cpu, cuda, directml, tensorrt)
 """
 
@@ -24,15 +24,15 @@ if __name__ == '__main__':
     ## Initiate MareArts ANPR with V14 Models
     print("MareArts ANPR V14 Example")
     
-    # V2 License credentials
+    # V2 (Current) License credentials - you receive all when you purchase
     user_name = "your_email"
-    serial_key = "MAEV2:your_encrypted_key"  # V2 key format
-    signature = "your_16_char_hex"  # Required for V14
+    serial_key = "your_serial_key"  # V2 (Current) license
+    signature = "your_signature"  # Provided with V2 license
     
     # Optional: Load from environment variables if set
     # export MAREARTS_ANPR_USERNAME="your-email@domain.com"
-    # export MAREARTS_ANPR_SERIAL_KEY="MAEV2:your-encrypted-key"
-    # export MAREARTS_ANPR_SIGNATURE="your-16-char-signature"
+    # export MAREARTS_ANPR_SERIAL_KEY="your-serial-key"
+    # export MAREARTS_ANPR_SIGNATURE="your-signature"
     # import os
     # user_name = os.getenv("MAREARTS_ANPR_USERNAME", user_name)
     # serial_key = os.getenv("MAREARTS_ANPR_SERIAL_KEY", serial_key)

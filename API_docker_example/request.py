@@ -5,7 +5,7 @@ import io
 from requests.auth import HTTPBasicAuth
 
 # Example Python client for MareArts ANPR Docker API
-# Supports both V1 and V2 licenses
+# Supports both V1 (Legacy) and V2 (Current) licenses
 
 url = "http://localhost:8000/process_image"
 
@@ -14,9 +14,9 @@ headers = {
     "X-API-Key": "your_secret_api_key"
 }
 
-# Example 1: V1 License configuration
+# Example 1: V1 (Legacy) License configuration
 def test_v1_license():
-    print("Testing V1 License with V13 models...")
+    print("Testing V1 (Legacy) License with V13 models...")
     
     data = {
         "detection_model_version": "v13_middle",
@@ -26,18 +26,18 @@ def test_v1_license():
     auth_values = HTTPBasicAuth('user@email.com', 'your_v1_serial_key')
     return data, auth_values
 
-# Example 2: V2 License configuration with V14 models
+# Example 2: V2 (Current) License configuration with V14 models
 def test_v2_license():
-    print("Testing V2 License with V14 models...")
+    print("Testing V2 (Current) License with V14 models...")
     
     data = {
         "detection_model_version": "v14_middle_640p_fp16",
         "ocr_model_version": "v13_euplus",
-        "signature": "your_16_char_hex",  # Required for V14
+        "signature": "your_signature",  # Required for V14 with V2 license
         "backend": "cuda"  # Options: cpu, cuda, directml, tensorrt
     }
     
-    auth_values = HTTPBasicAuth('user@email.com', 'MAEV2:your_encrypted_key')
+    auth_values = HTTPBasicAuth('user@email.com', 'your_v2_serial_key')  # V2 (Current) license
     return data, auth_values
 
 # Choose which license to test

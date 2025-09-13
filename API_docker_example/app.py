@@ -76,8 +76,7 @@ def initialize_anpr(user_name, serial_key, detection_model_version, ocr_model_ve
         # Check if V14 model and initialize accordingly
         if detection_model_version.startswith("v14_"):
             logger.info(f"V14 model detected, backend: {backend}")
-            if not serial_key.startswith("MAEV2:"):
-                raise HTTPException(status_code=400, detail="V14 models require V2 license key (MAEV2:)")
+            # V14 models require V2 (Current) license with signature
             if not signature:
                 raise HTTPException(status_code=400, detail="V14 models require signature parameter")
             
