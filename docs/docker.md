@@ -29,7 +29,7 @@ Form data:
 - `detection_model_version`: Detection model (e.g., "v13_middle", "v14_small_640p_fp16" for V2 Current license)
 - `ocr_model_version`: OCR model (e.g., "v13_euplus")
 - `signature`: (Optional) Signature for V14 models (provided with V2 Current license)
-- `backend`: (Optional) Backend for V14 models: "cpu", "cuda", "directml", "tensorrt" (default: "cuda")
+- `backend`: (Optional) Backend for V14 models: "cpu", "cuda", "directml", "tensorrt" (default: "cpu")
 - `image`: Image file (JPEG/PNG)
 
 Headers:
@@ -116,4 +116,3 @@ curl -X POST http://localhost:8000/process_image \
 - Credentials passed via Basic Auth for security
 - V14 models require V2 (Current) license with signature
 - Auto-update feature checks for marearts-anpr updates on health checks
-- Default backend for V14 is "cuda" in Docker deployment
