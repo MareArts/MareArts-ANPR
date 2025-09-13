@@ -90,54 +90,27 @@ ma-anpr validate
 The latest V14 models introduce enhanced features:
 
 ### Features
-- 🔐 **Digital Signature Authentication**: Enhanced security with V2 licenses
 - 🎯 **Multi-Backend Support**: CPU, CUDA, DirectML, TensorRT
 - ⚡ **Optimized Inference**: FP32, FP16, and FP8 precision options
-- 🚀 **TensorRT Acceleration**: Up to 4x faster on NVIDIA GPUs
+- 🚀 **GPU Acceleration**: Up to 4x faster on NVIDIA GPUs
 
 ### Requirements
-- V2 License (current license format - provided when you purchase)
-- Digital signature (provided with your license)
-- Backend-specific dependencies (CUDA, TensorRT, etc.)
+- V2 License (provided when you purchase)
+- Python 3.9+ and pip
 
-### TensorRT Installation
-
-For maximum performance with TensorRT backend:
+### GPU Acceleration
 
 ```bash
-# Install with TensorRT support
+# TensorRT for maximum performance (Linux, NVIDIA GPUs)
 pip install marearts-anpr[tensorrt]
-
-# Manual TensorRT setup (if needed)
-# 1. Install CUDA Toolkit (11.8 or 12.x)
-# 2. Install TensorRT (8.6+ recommended)
-# 3. Install PyCUDA
-pip install tensorrt pycuda nvidia-cuda-runtime-cu12
 ```
 
-#### Using TensorRT Backend
-
-```python
-# V14 models with TensorRT acceleration
-detector = ma_anpr_detector_v14(
-    "v14_small_640p_trt_fp16",  # TRT optimized model
-    user_name,
-    serial_key,
-    signature,
-    backend="tensorrt"  # Use TensorRT backend
-)
-```
-
-TensorRT models provide:
-- **Up to 4x faster inference** compared to ONNX Runtime
-- **FP16/FP8 precision** support for modern GPUs
-- **Optimized for batch processing**
-- **Lower latency** for real-time applications
+For GPU setup details, see [Installation Guide](docs/installation.md)
 
 ### Available V14 Models
-- **Standard**: `v14_small_320p_fp32`, `v14_small_320p_fp16`, `v14_small_640p_fp32`, `v14_small_640p_fp16`
-- **TensorRT**: `v14_small_320p_trt_fp8`, `v14_small_320p_trt_fp16`, `v14_small_640p_trt_fp8`, `v14_small_640p_trt_fp16`
-- **Coming Soon**: V14 middle and large models
+- **CPU/CUDA/DirectML**: `v14_small_320p_fp32`, `v14_small_640p_fp32` (and FP16 variants)
+- **TensorRT Optimized**: `v14_small_320p_trt_fp16`, `v14_small_640p_trt_fp16` (and other precisions)
+- See [Model Versions](docs/models.md) for complete list and detailed benchmarks
 
 ## Documentation
 
@@ -154,20 +127,13 @@ TensorRT models provide:
 *Benchmarked on: Intel i7-9800X @ 3.8GHz | NVIDIA RTX 4090 | Ubuntu Linux*
 
 ### V14 Models (Current V2 License)
-| Model | Precision | Recall | F1 Score | mAP | Speed CUDA (ms) | Speed CPU (ms) | Notes |
-|-------|-----------|---------|----------|-----|-----------------|----------------|--------|
-| v14_small_320p_fp32 | 95.92% | 97.01% | 95.62% | 93.66% | 9.9ms (101 FPS) | 37ms (27 FPS) | Standard precision |
-| v14_small_320p_fp16 | 95.92% | 97.00% | 95.62% | 93.66% | 15.9ms (63 FPS)* | 64.7ms (15 FPS) | *CUDA not optimized for FP16 |
-| v14_small_640p_fp32 | 94.97% | 98.40% | 95.80% | 93.87% | 12.7ms (79 FPS) | 102.8ms (10 FPS) | High detail |
-| v14_small_640p_fp16 | 94.99% | 98.40% | 95.81% | 93.89% | 22.3ms (45 FPS)* | 182.2ms (5 FPS) | *Use TensorRT for FP16 |
-| v14_small_320p_trt_fp16 | 95.85% | 98.11% | 96.18% | 94.37% | 7.9ms (127 FPS) | - | ⚡ Fastest |
-| v14_small_320p_trt_fp32 | 95.85% | 98.12% | 96.18% | 94.37% | 8.8ms (114 FPS) | - | TensorRT FP32 |
-| v14_small_320p_trt_fp8 | 95.85% | 98.12% | 96.18% | 94.37% | 8.7ms (115 FPS) | - | RTX 40 only |
-| v14_small_320p_trt_bf16 | 95.86% | 97.97% | 96.11% | 94.28% | 8.6ms (116 FPS) | - | TensorRT BF16 |
-| v14_small_640p_trt_fp16 | 94.81% | 99.18% | 96.07% | 94.19% | 12.1ms (83 FPS) | - | 🎯 Recommended |
-| v14_small_640p_trt_fp32 | 94.81% | 99.18% | 96.07% | 94.18% | 12.7ms (79 FPS) | - | TensorRT FP32 |
-| v14_small_640p_trt_fp8 | 94.81% | 99.18% | 96.07% | 94.18% | 13.9ms (72 FPS) | - | RTX 40 only |
-| v14_small_640p_trt_bf16 | 95.24% | 98.84% | 96.15% | 94.33% | 12.5ms (80 FPS) | - | Best accuracy |
+| Model | F1 Score | Speed CUDA | Speed CPU | Notes |
+|-------|----------|------------|-----------|-------|
+| v14_small_320p_fp32 | 95.62% | 9.9ms (101 FPS) | 37ms (27 FPS) | Standard model |
+| v14_small_320p_trt_fp16 | 96.18% | 7.9ms (127 FPS) | - | ⚡ Fastest (TensorRT) |
+| v14_small_640p_trt_fp16 | 96.07% | 12.1ms (83 FPS) | - | 🎯 Best balance |
+
+📊 [View complete benchmarks and all models](docs/models.md)
 
 ### V13 Models (V1 Legacy / V2 Current Licenses)
 | Model | Precision | Recall | F1 Score | Speed CUDA (ms) |
