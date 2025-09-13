@@ -13,7 +13,7 @@ Automatic Number Plate Recognition (ANPR) SDK for multiple regions with GPU acce
 - 🚗 **Multi-Region Support**: EU, Korea, China, and Universal license plates
 - ⚡ **Performance**: Optimized C++ core with GPU acceleration support
 - 🎯 **Accuracy**: Trained detection and OCR models for various regions
-- 🆕 **V14 Models**: Latest generation with Crystal v2.4.0 and multi-backend support
+- 🆕 **V14 Models**: Latest generation with enhanced security and multi-backend support
 - 🔧 **Integration**: Python API and command-line tools
 - 🐳 **Deployment**: Docker support and API server examples
 
@@ -87,7 +87,7 @@ ma-anpr validate
 
 ## V14 Models (NEW!)
 
-The latest V14 models introduce Crystal v2.4.0 support with enhanced features:
+The latest V14 models introduce enhanced features:
 
 ### Features
 - 🔐 **Digital Signature Authentication**: Enhanced security with V2 licenses

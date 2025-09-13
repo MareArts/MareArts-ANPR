@@ -6,7 +6,7 @@ Detection models locate license plates in images.
 
 ### V14 Models (V2 License Required)
 
-The V14 series introduces advanced detection with Crystal v2.4.0 support and multiple inference backends.
+The V14 series introduces advanced detection with digital signature authentication and multiple inference backends.
 
 #### V14 Models - Performance Metrics
 | Model | Size | Resolution | Precision | Recall | F1 Score | mAP | Speed CUDA | Speed CPU |

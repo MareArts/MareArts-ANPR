@@ -23,7 +23,7 @@
 
 **License Versions:**
 - **V1 License:** Access to V13 and legacy models
-- **V2 License:** Access to all models including V14 with Crystal v2.4.0 support
+- **V2 License:** Access to all models including V14 with digital signature authentication
 
 ### Q: How does license renewal work?
 **A:** 
@@ -61,7 +61,7 @@ This ensures you'll always have access to the software you've invested in.
 ### Q: What are V14 models?
 **A:** V14 models are our latest generation detectors featuring:
 - Multiple backend support (CPU, CUDA, DirectML, TensorRT)
-- Crystal v2.4.0 digital signature tracking
+- Digital signature tracking for enhanced security
 - Optimized precision options (FP32, FP16, FP8)
 - Better accuracy and performance
 

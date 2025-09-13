@@ -140,7 +140,7 @@ The public test API supports V13 and legacy models only. V14 models require a V2
 
 ## V14 Models (V2 License Only)
 
-V14 models with Crystal v2.4.0 support are NOT available on the public test API. They require:
+V14 models are NOT available on the public test API. They require:
 - V2 license key (MAEV2: prefix)
 - Digital signature authentication
 - Local processing with backend selection (CPU, CUDA, DirectML, TensorRT)
@@ -167,7 +167,7 @@ To test V14 models, you need to:
 - Unlimited local requests
 - All models including V14
 - Multi-backend support (CPU/GPU)
-- Crystal v2.4.0 digital signature tracking
+- Digital signature tracking for enhanced security
 - On-premise deployment
 
 ## Getting Started
