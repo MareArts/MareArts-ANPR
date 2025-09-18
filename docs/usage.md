@@ -57,9 +57,19 @@ result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
 from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
 import cv2
 
-# Initialize (V1 Legacy or V2 Current with standard models)
-detector = ma_anpr_detector("v13_middle", user_name, serial_key, 
-                           conf_thres=0.3, iou_thres=0.5)
+# Initialize detector with all parameters
+detector = ma_anpr_detector(
+    model_name="v13_middle",    # Required: Model name (v13_nano, v13_small, v13_middle, v13_large)
+    user_name=user_name,        # Required: Your email
+    serial_key=serial_key,       # Required: Your serial key
+    conf_thres=0.25,           # Default: 0.25 (Detection confidence threshold)
+    iou_thres=0.5              # Default: 0.5 (IoU threshold for NMS)
+)
+
+# Or with defaults (minimal parameters)
+detector = ma_anpr_detector("v13_middle", user_name, serial_key)
+# Uses conf_thres=0.25, iou_thres=0.5
+
 ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
 
 # Load image
@@ -118,14 +128,24 @@ user_name = "your_email"
 serial_key = "your_serial_key"
 signature = "your_signature"  # Provided with V2 license
 
-# Initialize V14 detector with backend selection
+# Initialize V14 detector with all parameters
 detector_v14 = ma_anpr_detector_v14(
-    "v14_small_640p_fp16",  # V14 model name
+    model_name="v14_small_640p_fp16",  # Required: V14 model name
+    user_name=user_name,                # Required: Your email
+    serial_key=serial_key,               # Required: Your V2 serial key
+    signature=signature,                 # Required for V14: Your signature
+    backend="auto",                     # Default: "auto" (Options: auto, cpu, cuda, directml, tensorrt)
+    conf_thres=0.25,                    # Default: 0.25 (Detection confidence threshold)
+    iou_thres=0.5                       # Default: 0.5 (IoU threshold for NMS)
+)
+
+# Or with defaults (minimal parameters)
+detector_v14 = ma_anpr_detector_v14(
+    "v14_small_640p_fp16",
     user_name,
     serial_key,
-    signature,
-    backend="cuda"  # Options: cpu, cuda, directml, tensorrt
-)
+    signature
+)  # Uses backend="auto", conf_thres=0.25, iou_thres=0.5
 
 # OCR remains the same
 ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
@@ -288,3 +308,31 @@ except Exception as e:
    - `cuda`: Good performance on NVIDIA GPUs
    - `directml`: For Windows with various GPU types
    - `cpu`: Cross-platform compatibility
+
+## Environment Variables
+
+### Performance Optimization
+
+```bash
+# Skip model update checks for faster initialization (default: 0)
+export MAREARTS_ANPR_SKIP_UPDATE=1
+
+# Enable verbose logging for debugging (default: 0)
+export MAREARTS_VERBOSE=1
+```
+
+**MAREARTS_ANPR_SKIP_UPDATE**: When set to `1`, skips server checks for model updates and uses cached files directly. This significantly reduces initialization time. Useful for production environments where models are stable. Default is `0` (checks for updates).
+
+**MAREARTS_VERBOSE**: When set to `1`, enables detailed logging showing download progress, server checks, and timing information. Useful for debugging and monitoring. Default is `0` (minimal output).
+
+Example usage:
+```python
+import os
+
+# Configure before importing marearts_anpr
+os.environ['MAREARTS_ANPR_SKIP_UPDATE'] = '1'  # Skip update checks
+os.environ['MAREARTS_VERBOSE'] = '1'           # Enable verbose output
+
+from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
+# Models will load faster without server checks
+```

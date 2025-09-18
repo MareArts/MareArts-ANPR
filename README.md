@@ -101,7 +101,7 @@ The latest V14 models with enhanced performance:
 ## Documentation
 
 - 📦 [Installation Guide](docs/installation.md) - Detailed installation options and requirements
-- 🔧 [Usage Examples](docs/usage.md) - Python SDK and CLI usage
+- 🔧 [Usage Examples](docs/usage.md) - Python SDK, CLI usage, and environment variables
 - 🚀 [Model Versions](docs/models.md) - Available models and benchmarks
 - 🌍 [Regional Support](docs/regional-support.md) - Supported countries and characters
 - 🐳 [Docker Deployment](docs/docker.md) - Container setup and API server
