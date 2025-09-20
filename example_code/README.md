@@ -44,7 +44,7 @@ user_name = "your_email"
 serial_key = "your_serial_key"
 
 # Create detector and OCR
-detector = ma_anpr_detector("v13_middle", user_name, serial_key)
+detector = ma_anpr_detector("v13_middle", user_name, serial_key, conf_thres=0.7, iou_thres=0.5)
 ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
 
 # Process image
@@ -69,7 +69,9 @@ detector = ma_anpr_detector_v14(
     user_name,
     serial_key,
     signature,
-    backend="cuda"  # Options: cpu, cuda, directml, tensorrt
+    backend="cuda",  # Options: cpu, cuda, directml, tensorrt
+    conf_thres=0.25,  # Optional: Detection confidence threshold
+    iou_thres=0.5     # Optional: IoU threshold for NMS
 )
 ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
 

@@ -62,13 +62,12 @@ detector = ma_anpr_detector(
     model_name="v13_middle",    # Required: Model name (v13_nano, v13_small, v13_middle, v13_large)
     user_name=user_name,        # Required: Your email
     serial_key=serial_key,       # Required: Your serial key
-    conf_thres=0.25,           # Default: 0.25 (Detection confidence threshold)
-    iou_thres=0.5              # Default: 0.5 (IoU threshold for NMS)
+    conf_thres=0.7,            # Optional: Detection confidence threshold
+    iou_thres=0.5              # Optional: IoU threshold for NMS
 )
 
-# Or with defaults (minimal parameters)
+# Or with minimal parameters
 detector = ma_anpr_detector("v13_middle", user_name, serial_key)
-# Uses conf_thres=0.25, iou_thres=0.5
 
 ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
 
@@ -134,18 +133,18 @@ detector_v14 = ma_anpr_detector_v14(
     user_name=user_name,                # Required: Your email
     serial_key=serial_key,               # Required: Your V2 serial key
     signature=signature,                 # Required for V14: Your signature
-    backend="auto",                     # Default: "auto" (Options: auto, cpu, cuda, directml, tensorrt)
-    conf_thres=0.25,                    # Default: 0.25 (Detection confidence threshold)
-    iou_thres=0.5                       # Default: 0.5 (IoU threshold for NMS)
+    backend="auto",                     # Optional: "auto" (Options: auto, cpu, cuda, directml, tensorrt)
+    conf_thres=0.25,                    # Optional: Detection confidence threshold
+    iou_thres=0.5                       # Optional: IoU threshold for NMS
 )
 
-# Or with defaults (minimal parameters)
+# Or with minimal parameters
 detector_v14 = ma_anpr_detector_v14(
     "v14_small_640p_fp16",
     user_name,
     serial_key,
     signature
-)  # Uses backend="auto", conf_thres=0.25, iou_thres=0.5
+)
 
 # OCR remains the same
 ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)

@@ -108,7 +108,9 @@ detector = ma_anpr_detector_v14(
     user_name,                # Your username
     serial_key,               # V2 (Current) serial key
     signature,                # Provided with V2 license
-    backend="cuda"            # Backend: cpu, cuda, directml, tensorrt
+    backend="cuda",           # Backend: cpu, cuda, directml, tensorrt
+    conf_thres=0.25,          # Optional: Detection confidence threshold
+    iou_thres=0.5             # Optional: IoU threshold for NMS
 )
 
 # TensorRT optimized for maximum speed (NVIDIA only)
@@ -139,7 +141,7 @@ ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
 from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
 
 # Balanced configuration
-detector = ma_anpr_detector("v13_middle", user_name, serial_key)
+detector = ma_anpr_detector("v13_middle", user_name, serial_key, conf_thres=0.7, iou_thres=0.5)
 
 # Region-specific OCR
 ocr_eu = ma_anpr_ocr("v13_euplus", user_name, serial_key)  # For EU
@@ -157,7 +159,7 @@ detector = ma_anpr_detector_v14(
 )
 
 # For V1 (Legacy) license holders
-detector = ma_anpr_detector("v13_nano", user_name, serial_key)
+detector = ma_anpr_detector("v13_nano", user_name, serial_key, conf_thres=0.7, iou_thres=0.5)
 ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
 ```
 
@@ -170,7 +172,7 @@ detector = ma_anpr_detector_v14(
 )
 
 # For V1 (Legacy) license holders
-detector = ma_anpr_detector("v11_large", user_name, serial_key)
+detector = ma_anpr_detector("v11_large", user_name, serial_key, conf_thres=0.7, iou_thres=0.5)
 ocr = ma_anpr_ocr("v13_univ", user_name, serial_key)
 ```
 

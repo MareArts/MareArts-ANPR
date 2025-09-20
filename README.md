@@ -46,7 +46,7 @@ from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
 # export MAREARTS_ANPR_SERIAL_KEY="your-serial-key"
 
 # Initialize (model names from performance tables)
-detector = ma_anpr_detector("v13_middle", user_name, serial_key)
+detector = ma_anpr_detector("v13_middle", user_name, serial_key, conf_thres=0.7, iou_thres=0.5)
 ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
 
 # Process image
@@ -68,7 +68,9 @@ detector = ma_anpr_detector_v14(
     user_name,
     serial_key,  # V2 license
     signature,   # Provided with your license
-    backend="cuda"  # cpu, cuda, directml, tensorrt
+    backend="cuda",  # cpu, cuda, directml, tensorrt
+    conf_thres=0.25,  # Detection confidence threshold (default: 0.25)
+    iou_thres=0.5     # IoU threshold for NMS (default: 0.5)
 )
 ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
 
