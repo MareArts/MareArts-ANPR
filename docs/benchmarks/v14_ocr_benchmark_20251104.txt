@@ -1,0 +1,87 @@
+================================================================================
+                    V14 ANPR OCR MODEL BENCHMARK
+================================================================================
+
+Date: November 4, 2025
+Backend: CUDA (RTX GPU)
+
+================================================================================
+
+OVERALL MODEL PERFORMANCE BY REGION
+================================================================================
+Model                Region     Exact Acc    Char Acc     FPS        Time(ms)
+--------------------------------------------------------------------------------
+pico_fp32            kor        98.99%       99.77%       272.3      3.67ms
+pico_fp32            euplus     94.98%       97.39%       279.5      3.58ms
+pico_fp32            na         71.21%       88.43%       268.0      3.73ms
+pico_fp32            china      96.24%       98.82%       268.0      3.73ms
+pico_fp32            univ       97.48%       98.87%       264.3      3.78ms
+micro_fp32           kor        99.21%       99.80%       250.0      4.00ms
+micro_fp32           euplus     95.07%       97.46%       265.8      3.76ms
+micro_fp32           na         71.21%       87.67%       268.9      3.72ms
+micro_fp32           china      96.30%       98.74%       265.0      3.77ms
+micro_fp32           univ       97.54%       98.86%       259.8      3.85ms
+small_fp32           kor        99.19%       99.80%       295.1      3.39ms
+small_fp32           euplus     94.98%       97.43%       303.5      3.29ms
+small_fp32           na         69.70%       88.27%       311.0      3.22ms
+small_fp32           china      96.36%       98.88%       301.2      3.32ms
+small_fp32           univ       97.51%       98.85%       291.2      3.43ms
+medium_fp32          kor        99.21%       99.80%       266.7      3.75ms
+medium_fp32          euplus     95.03%       97.46%       277.6      3.60ms
+medium_fp32          na         63.64%       87.24%       283.5      3.53ms
+medium_fp32          china      96.36%       98.89%       276.3      3.62ms
+medium_fp32          univ       97.57%       98.89%       244.7      4.09ms
+large_fp32           kor        99.27%       99.82%       264.6      3.78ms
+large_fp32           euplus     95.32%       97.54%       260.3      3.84ms
+large_fp32           na         69.70%       86.25%       270.5      3.70ms
+large_fp32           china      96.49%       98.87%       261.9      3.82ms
+large_fp32           univ       97.75%       98.91%       252.7      3.96ms
+
+
+MODEL AVERAGES (Across All Regions)
+================================================================================
+Model                Exact Acc    Char Acc     FPS        Avg Time(ms)
+--------------------------------------------------------------------------------
+pico_fp32            91.78%       96.65%       270.4      3.69ms
+micro_fp32           91.86%       96.50%       261.9      3.82ms
+small_fp32           91.54%       96.64%       300.4      3.33ms
+medium_fp32          90.36%       96.45%       269.7      3.71ms
+large_fp32           91.70%       96.27%       262.0      3.82ms
+
+
+================================================================================
+SUMMARY
+================================================================================
+
+Total Evaluations: 25
+
+BEST PERFORMERS
+--------------------------------------------------------------------------------
+Best Exact Match:     large_fp32 on kor (99.27%)
+Best Character Acc:   large_fp32 on kor (99.82%)
+Fastest Model:        small_fp32 on na (311.0 FPS)
+
+RECOMMENDATIONS
+--------------------------------------------------------------------------------
+• For best accuracy: Use large_fp32 with kor region
+• For real-time processing: Use small_fp32 with na region
+
+MODEL SIZE REFERENCE (FP32)
+--------------------------------------------------------------------------------
+Pico model:   ~20MB   (Smallest)
+Micro model:  ~71MB   (Fast)
+Small model:  ~112MB  (Balanced)
+Medium model: ~164MB  (High accuracy)
+Large model:  ~179MB  (Highest accuracy)
+
+REGION REFERENCE
+--------------------------------------------------------------------------------
+kor    - Korean license plates (Hangul + numbers)
+euplus - European license plates (English letters + numbers)
+na     - North American license plates (English letters + numbers)
+china  - Chinese license plates (Chinese characters + numbers)
+univ   - Universal (all characters from all regions)
+
+================================================================================
+Benchmarked on real-world samples with RTX CUDA GPU
+================================================================================

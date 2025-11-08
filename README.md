@@ -10,11 +10,12 @@ Automatic Number Plate Recognition (ANPR) SDK for multiple regions with GPU acce
 
 ## Features
 
-- 🚗 **Multi-Region Support**: EU, Korea, China, and Universal license plates
-- ⚡ **Performance**: Optimized C++ core with GPU acceleration support
-- 🎯 **Accuracy**: Trained detection and OCR models for various regions
-- 🔧 **Integration**: Python API and command-line tools
-- 🐳 **Deployment**: Docker support and API server examples
+- 🌍 **Multi-Region Support**: Korean, Europe+, North America, China, and Universal license plates
+- 🔄 **Dynamic Region Switching**: Change regions instantly with `set_region()` without model reload
+- ⚡ **GPU Acceleration**: CUDA, DirectML support for real-time processing
+- 🎯 **High Accuracy**: Advanced models with regional vocabulary optimization
+- 📦 **Batch Processing**: Process multiple plates simultaneously
+- 🐳 **Production Ready**: Docker API with smart model caching and multi-architecture support
 
 ## Quick Start
 
@@ -24,30 +25,39 @@ Automatic Number Plate Recognition (ANPR) SDK for multiple regions with GPU acce
 # CPU Installation
 pip install marearts-anpr
 
-# GPU Installation (for faster processing)
-pip install marearts-anpr[gpu]        # NVIDIA CUDA (ONNX Runtime GPU)
-pip install marearts-anpr[directml]   # Windows GPU (DirectML)
-pip install marearts-anpr[tensorrt]   # NVIDIA TensorRT (Linux only)
+# GPU Installation (CUDA, DirectML)
+pip install marearts-anpr[gpu]        # NVIDIA CUDA
+pip install marearts-anpr[directml]   # Windows GPU (AMD/Intel/NVIDIA)
 ```
 
-📦 [See Installation Guide](docs/installation.md) for detailed setup instructions
+📦 [See complete installation guide](docs/installation.md)
 
 ### Basic Usage
 
-💡 **Model names**: Use the model names from the performance tables below (e.g., `v13_middle`, `v14_small_640p_fp16`)
+💡 **Model names**: See [models and benchmarks](docs/models.md) (e.g., `small_640p_fp32`, `small_fp32`)
 
-#### Python SDK Usage
 ```python
-from marearts_anpr import marearts_anpr_from_image_file
-from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
+from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v14, marearts_anpr_from_image_file
 
-# Set environment variables (recommended)
-# export MAREARTS_ANPR_USERNAME="your-email@domain.com"
-# export MAREARTS_ANPR_SERIAL_KEY="your-serial-key"
+# Initialize detector
+detector = ma_anpr_detector_v14(
+    "small_640p_fp32",  # pico_640p_fp32, micro_640p_fp32, small_640p_fp32, medium_640p_fp32, large_640p_fp32
+    user_name,
+    serial_key,
+    signature,
+    backend="cuda",  # cpu, cuda, directml (auto-selected if "auto")
+    conf_thres=0.25,  # Detection confidence threshold (default: 0.25)
+    iou_thres=0.5     # IoU threshold for NMS (default: 0.5)
+)
 
-# Initialize (model names from performance tables)
-detector = ma_anpr_detector("v13_middle", user_name, serial_key, conf_thres=0.7, iou_thres=0.5)
-ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
+# Initialize OCR with regional vocabulary
+ocr = ma_anpr_ocr_v14(
+    "small_fp32",       # Model: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
+    "univ",             # Region: kr, eup, na, cn, univ (choose specific region for best accuracy)
+    user_name,
+    serial_key,
+    signature
+)
 
 # Process image
 result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
@@ -55,89 +65,92 @@ print(result)
 # Output: {'results': [{'ocr': 'ABC123', 'ocr_conf': 99, ...}], ...}
 ```
 
-#### V14 Models (V2 License)
+#### Dynamic Region Switching
+
+Switch regions without reinitialization:
+
 ```python
-from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr
+ocr.set_region('eup')  # Europe+
+ocr.set_region('kr')   # Korean
+ocr.set_region('na')   # North America
+```
 
-# V2 license includes signature for V14 models
-# export MAREARTS_ANPR_SIGNATURE="your-signature"
+🔄 [Learn more about dynamic region switching](docs/usage.md#dynamic-region-switching-370)
 
-# Initialize V14 detector (model name from tables)
-detector = ma_anpr_detector_v14(
-    "v14_small_640p_fp16",  # From V14 performance table
-    user_name,
-    serial_key,  # V2 license
-    signature,   # Provided with your license
-    backend="cuda",  # cpu, cuda, directml, tensorrt
-    conf_thres=0.25,  # Detection confidence threshold (default: 0.25)
-    iou_thres=0.5     # IoU threshold for NMS (default: 0.5)
-)
-ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
+#### Multiple Input Formats & CLI
 
-# Process image
+**From different image sources:**
+```python
+import cv2
+from PIL import Image
+from marearts_anpr import marearts_anpr_from_cv2, marearts_anpr_from_pil
+
+result = marearts_anpr_from_cv2(detector, ocr, cv2.imread("image.jpg"))
+result = marearts_anpr_from_pil(detector, ocr, Image.open("image.jpg"))
 result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
 ```
 
-### CLI Usage
-
+**CLI commands:**
 ```bash
-# Process image
-ma-anpr image.jpg
-
-# Test without credentials (1000 requests/day)
-ma-anpr test-api image.jpg
-
-# Validate license
-ma-anpr validate
+ma-anpr image.jpg                    # Process image
+ma-anpr test-api image.jpg           # Test API (1000/day limit)
+ma-anpr validate                     # Validate license
 ```
 
-## V14 Models (NEW!)
+🔧 [See complete usage examples and CLI reference](docs/usage.md)
 
-The latest V14 models with enhanced performance:
-- 🎯 **Multi-Backend Support**: CPU, CUDA, DirectML, TensorRT
-- ⚡ **Optimized Inference**: FP32, FP16, and FP8 precision options
-- 🚀 **Up to 4x faster** on NVIDIA GPUs
+## Model Performance
 
-🔧 [See all models and benchmarks](docs/models.md)
+### Detector Performance
+
+| Model Name | F1 Score | Speed CUDA | Speed CPU | Notes |
+|-------|----------|------------|-----------|-------|
+| pico_640p_fp32 | 93.08% | 68.7 FPS (14.5ms) | - | Fastest, smallest model |
+| micro_640p_fp32 | 93.39% | 69.5 FPS (14.4ms) | - | Fast with good accuracy |
+| small_640p_fp32 | 92.58% | 69.5 FPS (14.4ms) | - | Balanced performance |
+| medium_640p_fp32 | 92.27% | 62.1 FPS (16.1ms) | - | Higher accuracy |
+| large_640p_fp32 | 93.77% | 57.4 FPS (17.4ms) | - | 🎯 Highest F1 score |
+
+### OCR Performance
+
+*Average across all regions*
+
+| Model Name | Exact Match | Char Accuracy | FPS | Notes |
+|-------|-------------|---------------|-----|-------|
+| pico_fp32 | 91.78% | 96.65% | 270 | Fastest, smallest |
+| micro_fp32 | 91.86% | 96.50% | 262 | Fast with good accuracy |
+| small_fp32 | 91.54% | 96.64% | **300** | ⚡ Fastest inference |
+| medium_fp32 | 90.36% | 96.45% | 270 | Balanced performance |
+| **large_fp32** | **91.70%** | **96.27%** | 262 | 🎯 Best accuracy |
+
+**Supported Regions**: Korean (`kr`), Europe+ (`eup`), North America (`na`), China (`cn`), Universal (`univ`)
+
+📊 [See detailed benchmarks by region](docs/models.md)
+
+## Regional Support
+
+MareArts ANPR supports license plates from multiple regions with specialized vocabulary optimization:
+
+- 🇰🇷 **Korean (`kr`)** - Korean license plates with Hangul characters (best accuracy: 99.27%)
+- 🇪🇺 **Europe+ (`eup`)** - EU countries + Albania, Andorra, Bosnia & Herzegovina, Indonesia, and more
+- 🇺🇸 **North America (`na`)** - USA and Canada license plates
+- 🇨🇳 **China (`cn`)** - Chinese license plates with province codes
+- 🌍 **Universal (`univ`)** - All regions (default, but choose specific region for best accuracy)
+
+💡 **Dynamic Region Switching**: Use `ocr.set_region('kr')` to switch regions instantly without reloading the model, saving ~180 MB per additional region.
+
+🌍 [See complete regional support and character sets](docs/regional-support.md)
 
 ## Documentation
 
 - 📦 [Installation Guide](docs/installation.md) - Detailed installation options and requirements
-- 🔧 [Usage Examples](docs/usage.md) - Python SDK, CLI usage, and environment variables
-- 🚀 [Model Versions](docs/models.md) - Available models and benchmarks
-- 🌍 [Regional Support](docs/regional-support.md) - Supported countries and characters
-- 🐳 [Docker Deployment](docs/docker.md) - Container setup and API server
-- 🧪 [Try ANPR](docs/api-testing.md) - Test our ANPR without license
-- ❓ [FAQ](docs/faq.md) - Frequently asked questions
-
-## Performance
-
-*Benchmarked on: Intel i7-9800X @ 3.8GHz | NVIDIA RTX 4090 | Ubuntu Linux*
-
-### V14 Models Performance
-| Model Name | F1 Score | Speed CUDA | Speed CPU | Notes |
-|-------|----------|------------|-----------|-------|
-| v14_small_320p_fp32 | 95.62% | 9.9ms (101 FPS) | 37ms (27 FPS) | Standard model |
-| v14_small_320p_trt_fp16 | 96.18% | 7.9ms (127 FPS) | - | ⚡ Fastest (TensorRT) |
-| v14_small_640p_trt_fp16 | 96.07% | 12.1ms (83 FPS) | - | 🎯 Best balance |
-
-📊 [View complete benchmarks and all models](docs/models.md)
-
-*Use these model names directly in `ma_anpr_detector_v14()` function*
-
-### V13 Models Performance
-| Model Name | Precision | Recall | F1 Score | Speed CUDA (ms) |
-|-------|-----------|---------|----------|-----------------|
-| v13_nano (Detector) | 95.3% | 96.5% | 0.951 | 7.0 |
-| v13_small (Detector) | 95.7% | 97.9% | 0.961 | 7.4 |
-| v13_middle (Detector) | 95.7% | 98.0% | 0.962 | 8.3 |
-| v13_large (Detector) | 95.9% | 98.1% | 0.964 | 9.5 |
-| v13_euplus (OCR) | 96.2% | - | 0.990 | 82 |
-| v13_kr (OCR) | 97.2% | - | 0.995 | 85 |
-| v13_cn (OCR) | 96.6% | - | 0.993 | 86 |
-| v13_univ (OCR) | 98.3% | - | 0.996 | 85 |
-
-*Use these model names in `ma_anpr_detector()` for detectors and `ma_anpr_ocr()` for OCR*
+- 🔧 [Usage Examples](docs/usage.md) - Python SDK, CLI usage, dynamic region switching, and environment variables
+- 💻 [Example Code](example_code/) - Basic, advanced, and batch processing examples
+- 🚀 [Model Versions](docs/models.md) - Available models, benchmarks, and performance metrics
+- 🌍 [Regional Support](docs/regional-support.md) - Supported countries and character sets
+- 🐳 [Docker Deployment](docs/docker.md) - Container setup, API server, and multi-architecture builds
+- 🧪 [Try ANPR](docs/api-testing.md) - Test our ANPR without license (1000 requests/day)
+- ❓ [FAQ](docs/faq.md) - Licensing, regions, features, and troubleshooting
 
 ## MareArts Ecosystem
 
@@ -158,7 +171,6 @@ Explore our AI toolkit:
 | 💳 **License Purchase** | [ANPR Solution](https://study.marearts.com/p/anpr-lpr-solution.html) |
 | 🎮 **Live Demo** | [http://live.marearts.com](http://live.marearts.com) |
 | 📺 **Video Examples** | [YouTube Playlist](https://www.youtube.com/playlist?list=PLvX6vpRszMkxJBJf4EjQ5VCnmkjfE59-J) |
-| 🧪 **Colab Demo** | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1zZlueTZ1Le73yOQ3mdJFONxcebKyCgr-?usp=sharing) |
 
 ## License
 

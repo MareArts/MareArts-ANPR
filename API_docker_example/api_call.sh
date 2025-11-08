@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Example API calls for V1 (Legacy) and V2 (Current) licenses
+# Example API calls for V14 models
 
 echo "==================================="
 echo "MareArts ANPR Docker API Test"
@@ -10,37 +10,54 @@ echo "==================================="
 API_KEY="your_secret_api_key"
 IMAGE_PATH="../sample_images/eu-a.jpg"
 
-# Example 1: V1 (Legacy) License
-echo "1. Testing V1 (Legacy) License (V13 model)..."
+# Example 1: Korean plates (CPU)
+echo "1. Testing V14 model - Korean plates (CPU)..."
 curl -X POST "http://localhost:8000/process_image" \
      -H "X-API-Key: ${API_KEY}" \
-     -u "user@email.com:your_v1_serial_key" \
-     -F "detection_model_version=v13_middle" \
-     -F "ocr_model_version=v13_euplus" \
+     -u "user@email.com:serial_key" \
+     -F "detection_model_version=v14_medium_640p_fp32" \
+     -F "ocr_model_version=v14_medium_fp32" \
+     -F "region=kr" \
+     -F "signature=your_signature" \
+     -F "backend=cpu" \
      -F "image=@${IMAGE_PATH}"
 echo -e "\n"
 
-# Example 2: V2 (Current) License with V14 models
-echo "2. Testing V2 (Current) License (V14 model with CUDA)..."
+# Example 2: European+ plates with CUDA
+echo "2. Testing V14 model - European+ plates (CUDA)..."
 curl -X POST "http://localhost:8000/process_image" \
      -H "X-API-Key: ${API_KEY}" \
-     -u "user@email.com:your_v2_serial_key" \
-     -F "detection_model_version=v14_middle_640p_fp16" \
-     -F "ocr_model_version=v13_euplus" \
+     -u "user@email.com:serial_key" \
+     -F "detection_model_version=v14_medium_640p_fp32" \
+     -F "ocr_model_version=v14_medium_fp32" \
+     -F "region=eup" \
      -F "signature=your_signature" \
      -F "backend=cuda" \
      -F "image=@${IMAGE_PATH}"
 echo -e "\n"
 
-# Example 3: V2 (Current) License with V14 TensorRT model
-echo "3. Testing V2 (Current) License (V14 TensorRT)..."
+# Example 3: Universal (all regions)
+echo "3. Testing V14 model - Universal (CPU)..."
 curl -X POST "http://localhost:8000/process_image" \
      -H "X-API-Key: ${API_KEY}" \
-     -u "user@email.com:your_v2_serial_key" \
-     -F "detection_model_version=v14_small_320p_trt_fp8" \
-     -F "ocr_model_version=v13_kr" \
+     -u "user@email.com:serial_key" \
+     -F "detection_model_version=v14_small_640p_fp32" \
+     -F "ocr_model_version=v14_small_fp32" \
+     -F "region=univ" \
      -F "signature=your_signature" \
-     -F "backend=tensorrt" \
+     -F "backend=cpu" \
+     -F "image=@${IMAGE_PATH}"
+echo -e "\n"
+
+# Example 4: No region specified (defaults to univ)
+echo "4. Testing V14 model - Default region (univ)..."
+curl -X POST "http://localhost:8000/process_image" \
+     -H "X-API-Key: ${API_KEY}" \
+     -u "user@email.com:serial_key" \
+     -F "detection_model_version=v14_small_640p_fp32" \
+     -F "ocr_model_version=v14_small_fp32" \
+     -F "signature=your_signature" \
+     -F "backend=cpu" \
      -F "image=@${IMAGE_PATH}"
 echo -e "\n"
 

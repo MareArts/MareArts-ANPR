@@ -5,7 +5,7 @@ import io
 from requests.auth import HTTPBasicAuth
 
 # Example Python client for MareArts ANPR Docker API
-# Supports both V1 (Legacy) and V2 (Current) licenses
+# V14 models
 
 url = "http://localhost:8000/process_image"
 
@@ -14,35 +14,23 @@ headers = {
     "X-API-Key": "your_secret_api_key"
 }
 
-# Example 1: V1 (Legacy) License configuration
-def test_v1_license():
-    print("Testing V1 (Legacy) License with V13 models...")
+# V14 models configuration
+def setup_request():
+    print("Testing V14 models...")
     
     data = {
-        "detection_model_version": "v13_middle",
-        "ocr_model_version": "v13_euplus"
+        "detection_model_version": "v14_medium_640p_fp32",  # V14 detector (requires v14_ prefix)
+        "ocr_model_version": "v14_large_fp32",  # V14 OCR (requires v14_ prefix)
+        "region": "univ",  # Optional: kr, eup, na, cn, univ (default: univ). Choose specific region for best accuracy!
+        "signature": "your_signature",  # Required for V14 models
+        "backend": "cuda"  # Options: cpu, cuda, directml
     }
     
-    auth_values = HTTPBasicAuth('user@email.com', 'your_v1_serial_key')
+    auth_values = HTTPBasicAuth('user@email.com', 'serial_key')
     return data, auth_values
 
-# Example 2: V2 (Current) License configuration with V14 models
-def test_v2_license():
-    print("Testing V2 (Current) License with V14 models...")
-    
-    data = {
-        "detection_model_version": "v14_middle_640p_fp16",
-        "ocr_model_version": "v13_euplus",
-        "signature": "your_signature",  # Required for V14 with V2 license
-        "backend": "cuda"  # Options: cpu, cuda, directml, tensorrt
-    }
-    
-    auth_values = HTTPBasicAuth('user@email.com', 'your_v2_serial_key')  # V2 (Current) license
-    return data, auth_values
-
-# Choose which license to test
-# data, auth_values = test_v1_license()
-data, auth_values = test_v2_license()
+# Setup request data and authentication
+data, auth_values = setup_request()
 
 # Open the image using PIL
 image_path = "../sample_images/eu-a.jpg"

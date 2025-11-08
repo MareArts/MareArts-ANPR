@@ -1,121 +1,97 @@
 # MareArts ANPR Example Code
 
-This directory contains example code demonstrating how to use the MareArts ANPR SDK.
-
-## Examples
-
-### 1. basic.py
-Basic usage example showing:
-- How to initialize detector and OCR
-- Processing images from file, OpenCV, and PIL
-- Multi-region support (EU and Korean plates)
-- V1/V2 license compatible
-
-### 2. advanced.py
-Advanced usage example showing:
-- Manual detection and OCR processing
-- Working with individual detections
-- Performance timing measurements
-- Custom result formatting
-
-### 3. v14_example.py (V2 Current License Required)
-V14 models example showing:
-- V14 detector initialization with signature
-- Backend selection (CPU, CUDA, DirectML, TensorRT)
-- Performance comparison between backends
-- TensorRT optimized models usage
-
-### 4. bg_subtraction.py
-Background subtraction example for:
-- Video processing
-- Motion detection
-- Processing only moving vehicles
+This directory contains example code demonstrating how to use the MareArts ANPR V14 SDK.
 
 ## Quick Start
 
-### V1 (Legacy) License
+### V14 Models (Recommended)
 
 ```python
-from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
+from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v14
 from marearts_anpr import marearts_anpr_from_image_file
 
-# Initialize
+# Initialize with V2 credentials
 user_name = "your_email"
 serial_key = "your_serial_key"
+signature = "your_signature"  # Provided with license
 
-# Create detector and OCR
-detector = ma_anpr_detector("v13_middle", user_name, serial_key, conf_thres=0.7, iou_thres=0.5)
-ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
-
-# Process image
-result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
-print(result)
-```
-
-### V2 (Current) License - V14 Models
-
-```python
-from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr
-from marearts_anpr import marearts_anpr_from_image_file
-
-# Initialize with V2 (Current) credentials - you receive all when you purchase
-user_name = "your_email"
-serial_key = "your_serial_key"
-signature = "your_signature"
-
-# Create V14 detector with backend selection
+# Create V14 detector
 detector = ma_anpr_detector_v14(
-    "v14_small_640p_fp16",
+    "medium_640p_fp32",
     user_name,
     serial_key,
     signature,
-    backend="cuda",  # Options: cpu, cuda, directml, tensorrt
-    conf_thres=0.25,  # Optional: Detection confidence threshold
-    iou_thres=0.5     # Optional: IoU threshold for NMS
+    backend="cuda"  # cpu, cuda, directml
 )
-ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
+
+# Create V14 OCR with regional vocabulary
+# Regions: kr, eup, na, cn, univ
+ocr = ma_anpr_ocr_v14("medium_fp32", "eup", user_name, serial_key, signature)
 
 # Process image
 result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
 print(result)
 ```
 
-## Model Options
+> **Note**: For legacy V13 models, see [Legacy Models Documentation](../docs/legacy-models.md)
 
-### Detector Models
+## Examples
 
-**V14 Models (V2 Current License Only):**
-- Standard: `v14_small_320p_fp32`, `v14_small_320p_fp16`, `v14_small_640p_fp32`, `v14_small_640p_fp16`
-- TensorRT: `v14_small_320p_trt_fp8`, `v14_small_320p_trt_fp16`, `v14_small_640p_trt_fp8`, `v14_small_640p_trt_fp16`
+### 1. basic.py ⭐ (Recommended Starting Point)
 
-**V13 Models (V1 Legacy / V2 Current License):**
-- `v13_nano`, `v13_small`, `v13_middle`, `v13_large`
+**V14 basic usage:**
+- Simple initialization with V14 models
+- Processing images from file, OpenCV, and PIL
+- **Multi-region support using set_region()** (>3.7.0)
+- **Batch processing** - Process multiple plates efficiently
+- Memory-efficient region switching (saves ~180MB per region)
 
-**Legacy Models:**
-- `v10_small`, `v10_middle`, `v10_large`
-- `v11_small`, `v11_middle`, `v11_large`
+### 2. advanced.py (Manual Processing & Performance)
 
-### OCR Models
-- **V13**: `v13_eu`, `v13_euplus`, `v13_kr`, `v13_cn`, `v13_univ`
-- **V11**: `v11_eu`, `v11_euplus`, `v11_kr`, `v11_cn`, `v11_univ`
-- **Base**: `eu`, `euplus`, `kr`, `cn`, `univ`
+**V14 advanced usage:**
+- Manual detection and OCR processing with V14 models
+- Working with individual detections
+- Performance timing measurements
+- **Backend comparison** - Test cpu vs cuda performance
+- Custom result formatting
 
-## Backend Options (V14 Models with V2 Current License)
+### 3. bg_subtraction.py (Utility)
 
-- **cpu**: Cross-platform CPU inference
-- **cuda**: NVIDIA GPU acceleration
-- **directml**: Windows GPU acceleration
-- **tensorrt**: NVIDIA TensorRT optimization
+**Background subtraction for video processing:**
+- Video processing
+- Motion detection
+- Processing only moving vehicles
+- Can be combined with V14 ANPR
 
-## Environment Variables
+## Available Models & Configuration
 
-Set credentials via environment variables:
+For complete model specifications, performance benchmarks, and configuration options, see:
 
-```bash
-export MAREARTS_ANPR_USERNAME="your-email@domain.com"
-export MAREARTS_ANPR_SERIAL_KEY="your-serial-key"
-export MAREARTS_ANPR_SIGNATURE="your-signature"  # V2 (Current) license only
+- **[V14 Models Documentation](../docs/models.md)** - All available models, performance, sizes, and recommendations
+- **[Regional Support](../docs/regional-support.md)** - Regional vocabularies (kr, eup, na, cn, univ)
+- **[Usage Guide](../docs/usage.md)** - Backend options (cpu, cuda, directml), dynamic region switching
+
+## New Features (>3.7.0)
+
+### Dynamic Region Switching
+
+Use `set_region()` to switch regions without creating new OCR instances:
+
+```python
+# Initialize once
+ocr = ma_anpr_ocr_v14("medium_fp32", "kr", user_name, serial_key, signature)
+
+# Switch regions on demand
+ocr.set_region('eup')  # Europe+
+ocr.set_region('na')   # North America
+ocr.set_region('cn')   # China
+
+# Saves ~180 MB per region vs creating multiple instances!
 ```
+
+## Setup
+
+See **[Installation Guide](../docs/installation.md)** for credential configuration with `ma-anpr config`.
 
 ## Requirements
 
@@ -125,9 +101,15 @@ pip install opencv-python  # For OpenCV examples
 pip install pillow  # For PIL examples
 ```
 
+## Model Storage
+
+Models are automatically downloaded to `~/.marearts/marearts_anpr_data/` on first use and cached for subsequent runs.
+
 ## Notes
 
-- V14 models require V2 (Current) license
+- V14 models require signature for authentication
 - First run downloads models (may take time)
 - Models are cached after first download
-- TensorRT models require NVIDIA GPU with TensorRT
+- GPU acceleration significantly improves performance
+- Use specific regions for best accuracy (kr, eup, na, cn)
+- For multi-region applications, use set_region() instead of creating multiple instances

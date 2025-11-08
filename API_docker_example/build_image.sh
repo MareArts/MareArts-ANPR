@@ -14,9 +14,15 @@ if ! docker buildx inspect mybuilder > /dev/null 2>&1; then
     docker buildx create --name mybuilder --use
 fi
 
-# Build the image locally
-#multi platform
-docker buildx build --platform linux/amd64 -t marearts-anpr-fastapi-amd64:latest .
-# docker buildx build --platform linux/arm64 -t marearts-anpr-fastapi-arm64:latest .
+# Build the images for both platforms
+echo "Building for AMD64 (x86_64)..."
+docker buildx build --platform linux/amd64 -t marearts-anpr-fastapi-amd64:latest --load .
+
+echo "Building for ARM64 (aarch64)..."
+docker buildx build --platform linux/arm64 -t marearts-anpr-fastapi-arm64:latest --load .
 
 echo "Build completed successfully!"
+echo ""
+echo "Available images:"
+echo "  - marearts-anpr-fastapi-amd64:latest (for x86_64/Intel/AMD)"
+echo "  - marearts-anpr-fastapi-arm64:latest (for ARM/Apple Silicon/Raspberry Pi)"

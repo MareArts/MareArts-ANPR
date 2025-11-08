@@ -26,15 +26,24 @@ The API will be available at `http://localhost:8000`
 Authentication: Basic Auth (username/password) + API Key
 
 Form data:
-- `detection_model_version`: Detection model (e.g., "v13_middle", "v14_small_640p_fp16" for V2 Current license)
-- `ocr_model_version`: OCR model (e.g., "v13_euplus")
-- `signature`: (Optional) Signature for V14 models (provided with V2 Current license)
-- `backend`: (Optional) Backend for V14 models: "cpu", "cuda", "directml", "tensorrt" (default: "cpu")
+- `detection_model_version`: Detector model name
+  - Example: "v14_medium_640p_fp32"
+  - Sizes: pico, micro, small, medium, large
+  - Resolutions: 320p, 640p (availability may vary)
+  - Precision: fp32, fp16 (availability may vary)
+- `ocr_model_version`: OCR model name
+  - Example: "v14_medium_fp32"
+  - Sizes: pico, micro, small, medium, large
+  - Precision: fp32, fp16 (availability may vary)
+- `region`: OCR region
+  - Options: "kr", "eup", "na", "cn", "univ"
+- `signature`: Required signature for V2 license
+- `backend`: (Optional) Backend: "cpu", "cuda", "directml" (default: "cpu")
 - `image`: Image file (JPEG/PNG)
 
 Headers:
 - `X-API-Key`: your_secret_api_key
-- `Authorization`: Basic Auth with credentials (V1 Legacy or V2 Current serial key)
+- `Authorization`: Basic Auth with V2 credentials
 
 ### Health Check
 **GET** `/health`
@@ -56,10 +65,14 @@ API_docker_example/
 
 ## Dockerfile
 
-Based on Python 3.11 slim image with:
+Based on Python 3.12 slim image with:
 - FastAPI web framework
 - OpenCV for image processing
 - MareArts ANPR SDK
+
+Supports multiple architectures:
+- **linux/amd64** (x86_64) - Intel/AMD processors
+- **linux/arm64** (aarch64) - ARM processors (Apple Silicon, Raspberry Pi, etc.)
 
 ## Requirements
 
@@ -69,25 +82,39 @@ Based on Python 3.11 slim image with:
 
 ## Example API Calls
 
-### V1 (Legacy) License
-```bash
-curl -X POST http://localhost:8000/process_image \
-  -H "X-API-Key: your_secret_api_key" \
-  -u "username:v1_serial_key" \
-  -F "detection_model_version=v13_middle" \
-  -F "ocr_model_version=v13_euplus" \
-  -F "image=@test_image.jpg"
-```
+### V14 Models
 
-### V2 (Current) License with V14 Models
 ```bash
+# Korean plates
 curl -X POST http://localhost:8000/process_image \
   -H "X-API-Key: your_secret_api_key" \
-  -u "username:v2_serial_key" \
-  -F "detection_model_version=v14_small_640p_fp16" \
-  -F "ocr_model_version=v13_euplus" \
+  -u "username:serial_key" \
+  -F "detection_model_version=v14_medium_640p_fp32" \
+  -F "ocr_model_version=v14_medium_fp32" \
+  -F "region=kr" \
   -F "signature=your_signature" \
   -F "backend=cuda" \
+  -F "image=@test_image.jpg"
+
+# European+ plates
+curl -X POST http://localhost:8000/process_image \
+  -H "X-API-Key: your_secret_api_key" \
+  -u "username:serial_key" \
+  -F "detection_model_version=v14_medium_640p_fp32" \
+  -F "ocr_model_version=v14_medium_fp32" \
+  -F "region=eup" \
+  -F "signature=your_signature" \
+  -F "backend=cuda" \
+  -F "image=@test_image.jpg"
+
+# Universal (all regions) - default if region not specified
+curl -X POST http://localhost:8000/process_image \
+  -H "X-API-Key: your_secret_api_key" \
+  -u "username:serial_key" \
+  -F "detection_model_version=v14_medium_640p_fp32" \
+  -F "ocr_model_version=v14_medium_fp32" \
+  -F "signature=your_signature" \
+  -F "backend=cpu" \
   -F "image=@test_image.jpg"
 ```
 
@@ -111,7 +138,27 @@ curl -X POST http://localhost:8000/process_image \
 ## Notes
 
 - Container runs on port 8000 by default
-- Supports AMD64 architecture (ARM64 commented out)
-- Models are downloaded on first use
+- Supports both AMD64 (x86_64) and ARM64 (aarch64) architectures
+- **Smart model caching** - API reuses initialized models when same model requested (>3.7.0)
+- **Dynamic region switching** - Region changes without reloading OCR model (>3.7.0)
+- Models are downloaded on first use and cached
 - Credentials passed via Basic Auth for security
-- V14 models require V2 (Current) license with signature
+- Requires license with signature
+- Region parameter optional (default: univ)
+
+### Performance Optimization
+
+The API automatically optimizes model usage:
+- **Same model requests** → Reuses existing instance (no reload)
+- **Region changes only** → Uses `set_region()` for instant switching
+- **Model changes** → Only reloads the changed model (detector or OCR)
+
+Example: Consecutive requests with `v14_medium_fp32` OCR but different regions (kr → eup → na) will reuse the same OCR instance and only switch regions internally.
+
+## Regions
+
+- **kr** - Korean license plates (best for Korean)
+- **eup** - European+ license plates (EU countries + additional European countries + Indonesia)
+- **na** - North American license plates (USA, Canada)
+- **cn** - Chinese license plates
+- **univ** - Universal (all regions) - **default, but choose specific region for best accuracy**

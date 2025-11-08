@@ -1,8 +1,8 @@
 # pip install marearts-anpr
 import cv2
 from PIL import Image
-from marearts_anpr import ma_anpr_detector
-from marearts_anpr import ma_anpr_ocr
+from marearts_anpr import ma_anpr_detector_v14
+from marearts_anpr import ma_anpr_ocr_v14
 from marearts_anpr import marearts_anpr_from_pil
 from marearts_anpr import marearts_anpr_from_image_file
 from marearts_anpr import marearts_anpr_from_cv2
@@ -10,74 +10,132 @@ from marearts_anpr import marearts_anpr_from_cv2
 if __name__ == '__main__':
     
     #################################
-    ## Initiate MareArts ANPR
-    print("EU ANPR")
+    ## Initiate MareArts ANPR V14
+    print("MareArts ANPR V14 - Multi-Region Example")
     
-    # Initialize with your credentials
+    # Initialize with your V2 credentials
     user_name = "your_email"
     serial_key = "your_serial_key"
+    signature = "your_signature"  # Required for V14 models
     
-    # Optional: Load from environment variables if set
-    # export MAREARTS_ANPR_USERNAME="your-email@domain.com"
-    # export MAREARTS_ANPR_SERIAL_KEY="your-serial-key"
+    # Recommended: Use ma-anpr CLI to configure credentials
+    # $ ma-anpr config
+    # Then credentials are auto-loaded from ~/.marearts/.marearts_env
+    # Or load manually:
     # import os
     # user_name = os.getenv("MAREARTS_ANPR_USERNAME", user_name)
     # serial_key = os.getenv("MAREARTS_ANPR_SERIAL_KEY", serial_key)
+    # signature = os.getenv("MAREARTS_ANPR_SIGNATURE", signature)
     
-    # Detector options: v13_nano, v13_small, v13_middle, v13_large
-    # Legacy: v10_small, v10_middle, v10_large, v11_small, v11_middle, v11_large
-    detector_model_version = "v13_middle" 
-    # OCR options: v13_eu, v13_euplus, v13_kr, v13_cn, v13_univ
-    # Legacy: eu, kr, euplus, univ
-    ocr_model_version = "v13_euplus" 
-    
+    # V14 Detector models: pico_640p_fp32, micro_640p_fp32, small_640p_fp32, medium_640p_fp32, large_640p_fp32
+    detector_model = "medium_640p_fp32"
+    # V14 OCR models: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
+    ocr_model = "medium_fp32"
+    # Backend: cpu, cuda, directml (default: cpu)
+    backend = "cpu"
 
-    # MareArts ANPR Detector Inference
-    anpr_d = ma_anpr_detector(detector_model_version, user_name, serial_key, conf_thres=0.3, iou_thres=0.5)
-    # MareArts ANPR OCR Inference
-    anpr_r = ma_anpr_ocr(ocr_model_version, user_name, serial_key)
+    # Initialize V14 Detector
+    anpr_d = ma_anpr_detector_v14(
+        detector_model, 
+        user_name, 
+        serial_key, 
+        signature,
+        backend=backend,
+        conf_thres=0.25, 
+        iou_thres=0.5
+    )
+    
+    # Initialize V14 OCR with Europe+ region
+    # Regions: kr (Korean), eup (Europe+), na (North America), cn (China), univ (Universal)
+    anpr_r = ma_anpr_ocr_v14(ocr_model, "eup", user_name, serial_key, signature)
     #################################
 
     #################################
-    # Routine Task 1 - Predict from File
+    # Example 1: European Plates
+    print("\n=== Processing European Plate ===")
     image_path = './sample_images/eu-a.jpg'
+    
+    # Method 1: From file
     output = marearts_anpr_from_image_file(anpr_d, anpr_r, image_path)
-    print(output)
+    print("From file:", output)
 
-    # Routine Task 2 - Predict from cv2
+    # Method 2: From OpenCV
     img = cv2.imread(image_path)
     output = marearts_anpr_from_cv2(anpr_d, anpr_r, img)
-    print(output)
+    print("From cv2:", output)
 
-    # Routine Task 3 - Predict from Pillow
+    # Method 3: From Pillow
     pil_img = Image.open(image_path)
     output = marearts_anpr_from_pil(anpr_d, anpr_r, pil_img)
-    print(output)
+    print("From PIL:", output)
     #################################
 
 
     #################################
-    ## Initiate MareArts ANPR for Korea
-    print("ANPR Korean")
-    # user_name, serial_key are already defined
-    # anpr_d is also already initiated before
-    ocr_model_version = "v13_kr"  # Korean OCR model
-    # MareArts ANPR OCR Inference
-    anpr_r = ma_anpr_ocr(ocr_model_version, user_name, serial_key)
-
-    #################################
-    # Routine Task 1 - Predict from File
+    # Example 2: Korean Plates (using set_region for efficiency)
+    print("\n=== Processing Korean Plate ===")
+    
+    # NEW (>3.7.0): Use set_region() instead of creating new OCR instance
+    # This saves ~180MB memory and is instant!
+    anpr_r.set_region('kr')
+    
     image_path = './sample_images/kr-a.jpg'
+    
+    # Method 1: From file
     output = marearts_anpr_from_image_file(anpr_d, anpr_r, image_path)
-    print(output)
+    print("From file:", output)
 
-    # Routine Task 2 - Predict from cv2
+    # Method 2: From OpenCV
     img = cv2.imread(image_path)
     output = marearts_anpr_from_cv2(anpr_d, anpr_r, img)
-    print(output)
+    print("From cv2:", output)
 
-    # Routine Task 3 - Predict from Pillow
+    # Method 3: From Pillow
     pil_img = Image.open(image_path)
     output = marearts_anpr_from_pil(anpr_d, anpr_r, pil_img)
-    print(output)
+    print("From PIL:", output)
     #################################
+    
+    
+    #################################
+    # Example 3: Batch Processing (V14 Feature)
+    print("\n=== Example 3: Batch Processing ===")
+    
+    # Collect multiple plate images for batch processing
+    img_kr = cv2.imread('./sample_images/kr-a.jpg')
+    img_eu = cv2.imread('./sample_images/eu-a.jpg')
+    
+    # Switch to universal region for mixed plates
+    anpr_r.set_region('univ')
+    
+    # Convert to PIL
+    pil_kr = Image.fromarray(cv2.cvtColor(img_kr, cv2.COLOR_BGR2RGB))
+    pil_eu = Image.fromarray(cv2.cvtColor(img_eu, cv2.COLOR_BGR2RGB))
+    
+    # Detect plates
+    detections_kr = anpr_d.detector(img_kr)
+    detections_eu = anpr_d.detector(img_eu)
+    
+    # Collect plate crops
+    plate_images = []
+    if detections_kr:
+        bbox = detections_kr[0]['bbox']
+        l, t, r, b = bbox[0], bbox[1], bbox[2], bbox[3]
+        crop = img_kr[int(t):int(b), int(l):int(r)]
+        plate_images.append(Image.fromarray(cv2.cvtColor(crop, cv2.COLOR_BGR2RGB)))
+
+    if detections_eu:
+        bbox = detections_eu[0]['bbox']
+        l, t, r, b = bbox[0], bbox[1], bbox[2], bbox[3]
+        crop = img_eu[int(t):int(b), int(l):int(r)]
+        plate_images.append(Image.fromarray(cv2.cvtColor(crop, cv2.COLOR_BGR2RGB)))
+    
+    if len(plate_images) > 1:
+        # V14 OCR supports batch processing!
+        batch_results = anpr_r.predict(plate_images)  # Pass list of images
+        print(f"Batch processed {len(plate_images)} plates:")
+        for i, (text, conf) in enumerate(batch_results):
+            print(f"  Plate {i+1}: {text} ({conf}%)")
+    #################################
+    
+    print("\n✅ Demo complete! Single OCR instance processed both EU and Korean plates.")

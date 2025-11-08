@@ -1,5 +1,9 @@
 # Software Licensing FAQ
 
+**Last Updated:** November 7, 2025
+
+---
+
 ## General Questions
 
 ### Q: Do I need an internet connection to use the software?
@@ -14,16 +18,18 @@
 ## License Types & Renewal
 
 ### Q: What types of licenses are available?
-**A:** We offer three license types in two versions:
+**A:** We offer licenses in three durations:
 
-**License Duration:**
-- Monthly licenses
-- Yearly licenses  
-- Lifetime licenses
+- **Monthly licenses** - Renewable monthly
+- **Yearly licenses** - Renewable annually
+- **Lifetime licenses** - No expiration, use indefinitely
 
-**License Versions:**
-- **V1 License:** Access to all models up to V13 with multi-backend support
-- **V2 License:** Access to all models including V14, with digital signature
+All licenses include:
+- Access to V14 models with digital signature
+- Multi-backend support (CPU, CUDA, DirectML)
+- Multi-region support (kr, eup, na, cn, univ)
+- Unlimited computers - no device limits
+- Latest model updates
 
 ### Q: How does license renewal work?
 **A:** 
@@ -56,24 +62,46 @@ This ensures you'll always have access to the software you've invested in.
 - Try our **live test website** to see the software in action
 - These testing options ensure the software meets your needs before committing to a purchase
 
-## V14 Models & V2 (Current) License
+## V14 Models & Features
 
 ### Q: What are V14 models?
-**A:** V14 models are our latest generation detectors featuring:
-- Enhanced TensorRT optimization
-- Optimized precision options (FP32, FP16, FP8)
-- Better accuracy and performance
-- Requires V2 (Current) license with signature
+**A:** V14 models are our latest generation featuring:
+- Improved accuracy and performance
+- Multi-backend support (CPU, CUDA, DirectML)
+- Multi-region support with region selection
+- Optimized for production use
 
-### Q: Can I use V14 models with a V1 license?
-**A:** No, V14 models require a V2 license with signature. V1 license holders can use all models up to V13 with multi-backend support (CPU, CUDA, DirectML).
+### Q: What regions are supported?
+**A:** V14 models support multiple regions:
+- **kr** - Korean license plates (best for Korean)
+- **eup** - European+ plates (EU countries + Albania, Andorra, Bosnia & Herzegovina, Liechtenstein, Monaco, Montenegro, North Macedonia, Norway, San Marino, Serbia, Switzerland, UK, Indonesia)
+- **na** - North American plates (USA, Canada)
+- **cn** - Chinese plates
+- **univ** - Universal (all regions) - default, but choose specific region for best accuracy
 
-### Q: How do I get a V2 license?
-**A:** All new license generations now produce V2 licenses for all subscribers. V2 licenses include:
-- Access to all models including V14
-- Digital signature (provided with license)
-- All features of V1 license
-- Latest model updates
+### Q: Do I need to specify a region?
+**A:** Region parameter is optional with `univ` (universal) as default. However, **we strongly recommend choosing a specific region** (kr, eup, na, or cn) for best accuracy. Only use `univ` when the region is truly unknown or mixed.
+
+### Q: Can I change the region after initialization? (>3.7.0)
+**A:** Yes! Use the `set_region()` method to dynamically switch regions without creating new OCR instances:
+
+```python
+# Initialize once
+ocr = ma_anpr_ocr_v14("large_fp32", "kr", user, key, sig)
+
+# Switch regions as needed
+ocr.set_region('eup')  # Switch to Europe+
+ocr.set_region('na')   # Switch to North America
+ocr.set_region('cn')   # Switch to China
+```
+
+This saves significant memory - one instance (~180 MB) instead of multiple instances (~540 MB for 3 regions).
+
+### Q: When should I use set_region() vs multiple OCR instances?
+**A:** 
+- **Use `set_region()`**: When processing different regions sequentially, or in memory-constrained environments
+- **Use multiple instances**: When processing multiple regions concurrently in different threads
+- **Note**: `set_region()` is not thread-safe. For multi-threaded applications, create separate OCR instances per thread.
 
 ## Technical Support
 

@@ -18,8 +18,8 @@ ma-anpr test-api image.jpg
 # Test with multiple images
 ma-anpr test-api *.jpg
 
-# Specify models
-ma-anpr test-api image.jpg --detector v13_small --ocr v13_kr
+# Specify models and region (note: v14_ prefix required for API)
+ma-anpr test-api image.jpg --detector v14_micro_640p_fp32 --ocr v14_micro_fp32 --region univ
 
 # Save results
 ma-anpr test-api image.jpg --json results.json
@@ -37,8 +37,9 @@ curl -X POST https://we303v9ck8.execute-api.eu-west-1.amazonaws.com/Prod/mareart
      -H "Content-Type: image/jpeg" \
      -H "x-api-key: J4K9L2Wory34@G7T1Y8rt-PP83uSSvkV3Z6ioSTR!" \
      -H "user-id: marearts@public" \
-     -H "detector_model_version: v13_middle" \
-     -H "ocr_model_version: v13_euplus" \
+     -H "detector_model_version: v14_medium_640p_fp32" \
+     -H "ocr_model_version: v14_medium_fp32" \
+     -H "region: eup" \
      --data-binary "@./image.jpg"
 ```
 
@@ -47,15 +48,16 @@ curl -X POST https://we303v9ck8.execute-api.eu-west-1.amazonaws.com/Prod/mareart
 import requests
 import json
 
-def test_marearts_anpr(image_path):
+def test_marearts_anpr(image_path, region='eup'):
     url = "https://we303v9ck8.execute-api.eu-west-1.amazonaws.com/Prod/marearts_anpr"
     
     headers = {
         "Content-Type": "image/jpeg",
         "x-api-key": "J4K9L2Wory34@G7T1Y8rt-PP83uSSvkV3Z6ioSTR!",
         "user-id": "marearts@public",
-        "detector_model_version": "v13_middle",
-        "ocr_model_version": "v13_euplus"
+        "detector_model_version": "v14_medium_640p_fp32",
+        "ocr_model_version": "v14_medium_fp32",
+        "region": region
     }
     
     with open(image_path, 'rb') as f:
@@ -63,8 +65,12 @@ def test_marearts_anpr(image_path):
     
     return response.json()
 
-# Test
-result = test_marearts_anpr("test_image.jpg")
+# Test with different regions
+result = test_marearts_anpr("test_image.jpg", region="eup")  # European+ plates
+# result = test_marearts_anpr("test_image.jpg", region="kr")   # Korean plates
+# result = test_marearts_anpr("test_image.jpg", region="cn")   # Chinese plates
+# result = test_marearts_anpr("test_image.jpg", region="na")   # North American plates
+# result = test_marearts_anpr("test_image.jpg", region="univ") # Universal (all regions)
 print(json.dumps(result, indent=2))
 ```
 
@@ -88,60 +94,51 @@ print(json.dumps(result, indent=2))
 ## Testing Different Regions
 
 ```bash
-# European plates
-ma-anpr test-api eu_plate.jpg --ocr v13_euplus
-
 # Korean plates
-ma-anpr test-api kr_plate.jpg --ocr v13_kr
+ma-anpr test-api kr_plate.jpg --detector v14_medium_640p_fp32 --ocr v14_medium_fp32 --region kr
+
+# European+ plates
+ma-anpr test-api eu_plate.jpg --detector v14_medium_640p_fp32 --ocr v14_medium_fp32 --region eup
+
+# North American plates
+ma-anpr test-api na_plate.jpg --detector v14_small_640p_fp32 --ocr v14_small_fp32 --region na
 
 # Chinese plates
-ma-anpr test-api cn_plate.jpg --ocr v13_cn
+ma-anpr test-api cn_plate.jpg --detector v14_medium_640p_fp32 --ocr v14_medium_fp32 --region cn
 
-# Universal (auto-detect)
-ma-anpr test-api mixed_plate.jpg --ocr v13_univ
+# Universal (all regions)
+ma-anpr test-api mixed_plate.jpg --detector v14_medium_640p_fp32 --ocr v14_medium_fp32 --region univ
 ```
 
 ## Rate Limiting
 
 ### Daily Limits
 - **Test API**: 1000 requests per day
-- **Reset**: Midnight UTC
+- **Reset**: Midnight KST (Korea Standard Time / UTC+9)
 
-### Retry Logic
-```python
-import time
+## Available Models
 
-def test_with_retry(image_path, max_retries=3):
-    for attempt in range(max_retries):
-        try:
-            return test_marearts_anpr(image_path)
-        except Exception as e:
-            if "rate limit" in str(e).lower() and attempt < max_retries - 1:
-                wait_time = 60 * (attempt + 1)
-                print(f"Rate limited. Waiting {wait_time}s...")
-                time.sleep(wait_time)
-            else:
-                raise e
-```
+### Detector Models (API requires v14_ prefix)
+- **Sizes**: pico, micro, small, medium, large
+- **Resolution**: 640p
+- **Precision**: fp32
+- **Example**: `v14_medium_640p_fp32`
 
-## Available Models on Test API
+### OCR Models (API requires v14_ prefix)
+- **Sizes**: pico, micro, small, medium, large
+- **Precision**: fp32
+- **Example**: `v14_medium_fp32`
 
-The public test API supports all models equally, including V14 models.
-
-### Detector Models
-- **V14 Series**: v14_small_320p_fp32, v14_small_640p_fp32, v14_small_320p_fp16, v14_small_640p_fp16
-- **V13 Series**: v13_nano, v13_small, v13_middle, v13_large
-- **V11 Series**: v11_nano, v11_small, v11_middle, v11_large
-- **V10 Series**: v10_nano, v10_small, v10_middle, v10_large, v10_xlarge
-
-### OCR Models
-- **V13 Series**: v13_eu, v13_euplus, v13_kr, v13_cn, v13_univ
-- **V11 Series**: v11_eu, v11_euplus, v11_kr, v11_cn, v11_univ
-- **Base Models**: eu, euplus, kr, cn, univ
+### Regions
+- **kr** - Korean license plates (best for Korean)
+- **eup** - European+ license plates (EU countries + additional European countries + Indonesia)
+- **na** - North American license plates (USA, Canada)
+- **cn** - Chinese license plates
+- **univ** - Universal (all regions) - **default, but choose specific region for best accuracy**
 
 ## Limitations
 
-**Test API (All models including V14):**
+**Test API:**
 - 1000 requests per day limit
 - 10MB maximum image size
 - JPEG/PNG formats only
@@ -149,10 +146,10 @@ The public test API supports all models equally, including V14 models.
 **Licensed Version:**
 - Unlimited local requests
 - On-premise deployment
-- V2 license required for V14 models
+- Full access to all models and features
 
 ## Getting Started
 
 For production use:
-- **Purchase**: [ANPR Solution](https://study.marearts.com/p/anpr-lpr-solution.html)
+- **Subscribe**: [ANPR Solution](https://www.marearts.com/products/anpr)
 - **Contact**: [hello@marearts.com](mailto:hello@marearts.com)

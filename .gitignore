@@ -144,6 +144,11 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 *.lnk
+*.pyx
+*.so
+*.cpp
+*.h
+*.hpp
 
 # Linux
 *~

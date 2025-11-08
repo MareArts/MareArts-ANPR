@@ -6,26 +6,22 @@
 
 ```python
 from marearts_anpr import marearts_anpr_from_image_file
-from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
+from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v14
 
-# Initialize with credentials
+# Initialize with credentials (V2 license required for V14)
 user_name = "your_email"
 serial_key = "your_serial_key"
+signature = "your_signature"  # Required - provided with your V2 license
 
 # Or load from environment variables
 import os
 user_name = os.getenv("MAREARTS_ANPR_USERNAME", "")
 serial_key = os.getenv("MAREARTS_ANPR_SERIAL_KEY", "")
+signature = os.getenv("MAREARTS_ANPR_SIGNATURE", "")
 
-# Create detector and OCR instances
-# For V1 (Legacy) or V2 (Current) license:
-detector = ma_anpr_detector("v13_middle", user_name, serial_key)
-ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
-
-# For V2 (Current) license with V14 models:
-# from marearts_anpr import ma_anpr_detector_v14
-# detector = ma_anpr_detector_v14("v14_small_640p_fp16", user_name, serial_key, signature, backend="cuda")
-# ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
+# Create V14 detector and OCR instances (V2 license required)
+detector = ma_anpr_detector_v14("medium_640p_fp32", user_name, serial_key, signature, backend="cuda")
+ocr = ma_anpr_ocr_v14("large_fp32", "univ", user_name, serial_key, signature)  # univ = universal (all regions)
 
 # Process image file
 result = marearts_anpr_from_image_file(detector, ocr, "path/to/image.jpg")
@@ -54,28 +50,31 @@ result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
 ### Advanced Usage - Separate Detection and OCR
 
 ```python
-from marearts_anpr import ma_anpr_detector, ma_anpr_ocr
+from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v14
 import cv2
 
-# Initialize detector with all parameters
-detector = ma_anpr_detector(
-    model_name="v13_middle",    # Required: Model name (v13_nano, v13_small, v13_middle, v13_large)
-    user_name=user_name,        # Required: Your email
-    serial_key=serial_key,       # Required: Your serial key
-    conf_thres=0.7,            # Optional: Detection confidence threshold
-    iou_thres=0.5              # Optional: IoU threshold for NMS
+# Initialize V14 detector with all parameters
+detector = ma_anpr_detector_v14(
+    model_name="medium_640p_fp32",  # Required: V14 detector model
+    user_name=user_name,            # Required: Your email
+    serial_key=serial_key,          # Required: Your V2 serial key
+    signature=signature,            # Required: Your signature
+    backend="cuda",                 # Optional: "auto", "cpu", "cuda", "directml"
+    conf_thres=0.25,                # Optional: Detection confidence threshold
+    iou_thres=0.5                   # Optional: IoU threshold for NMS
 )
 
 # Or with minimal parameters
-detector = ma_anpr_detector("v13_middle", user_name, serial_key)
+detector = ma_anpr_detector_v14("medium_640p_fp32", user_name, serial_key, signature)
 
-ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
+# Initialize V14 OCR
+ocr = ma_anpr_ocr_v14("large_fp32", "univ", user_name, serial_key, signature)
 
 # Load image
 image = cv2.imread("test.jpg")
 
 # Step 1: Detect license plates
-plates = detector.predict(image)
+plates = detector.detector(image)  # Note: V14 uses 'detector' method
 print(f"Found {len(plates)} license plates")
 
 # Step 2: Process each detected plate
@@ -116,38 +115,38 @@ for r in results:
     print(f"{r['file']}: {len(r['plates'])} plates found in {r['processing_time']:.3f}s")
 ```
 
-### V14 Models Usage (V2 Current License Only)
+### V14 Models Configuration
 
 ```python
-from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr
+from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v14
 from marearts_anpr import marearts_anpr_from_image_file
 
-# V2 (Current) license credentials - you receive all when you purchase
+# V2 license credentials - you receive all when you purchase
 user_name = "your_email"
 serial_key = "your_serial_key"
-signature = "your_signature"  # Provided with V2 license
+signature = "your_signature"  # Required - provided with V2 license
 
 # Initialize V14 detector with all parameters
 detector_v14 = ma_anpr_detector_v14(
-    model_name="v14_small_640p_fp16",  # Required: V14 model name
-    user_name=user_name,                # Required: Your email
-    serial_key=serial_key,               # Required: Your V2 serial key
-    signature=signature,                 # Required for V14: Your signature
-    backend="auto",                     # Optional: "auto" (Options: auto, cpu, cuda, directml, tensorrt)
-    conf_thres=0.25,                    # Optional: Detection confidence threshold
-    iou_thres=0.5                       # Optional: IoU threshold for NMS
+    model_name="small_640p_fp32",   # Required: V14 model name
+    user_name=user_name,            # Required: Your email
+    serial_key=serial_key,          # Required: Your V2 serial key
+    signature=signature,            # Required: Your signature (mandatory for V14)
+    backend="auto",                 # Optional: "auto" (Options: auto, cpu, cuda, directml)
+    conf_thres=0.25,                # Optional: Detection confidence threshold
+    iou_thres=0.5                   # Optional: IoU threshold for NMS
 )
 
 # Or with minimal parameters
 detector_v14 = ma_anpr_detector_v14(
-    "v14_small_640p_fp16",
+    "small_640p_fp32",
     user_name,
     serial_key,
-    signature
+    signature  # Required
 )
 
-# OCR remains the same
-ocr = ma_anpr_ocr("v13_euplus", user_name, serial_key)
+# Initialize V14 OCR
+ocr = ma_anpr_ocr_v14("large_fp32", "univ", user_name, serial_key, signature)  # signature required
 
 # Process image - detector method name is 'detector' not 'predict'
 image = cv2.imread("test.jpg")
@@ -160,24 +159,54 @@ result = marearts_anpr_from_image_file(detector_v14, ocr, "test.jpg")
 ### Multi-Region Support
 
 ```python
-# Initialize OCR models for different regions
-ocr_models = {
-    'eu': ma_anpr_ocr("v13_euplus", user_name, serial_key),
-    'kr': ma_anpr_ocr("v13_kr", user_name, serial_key),
-    'cn': ma_anpr_ocr("v13_cn", user_name, serial_key),
-    'universal': ma_anpr_ocr("v13_univ", user_name, serial_key)
-}
+# Option 1: Initialize with specific region
+ocr = ma_anpr_ocr_v14("large_fp32", "kr", user_name, serial_key, signature)    # Korean
+# ocr = ma_anpr_ocr_v14("large_fp32", "eup", user_name, serial_key, signature)   # Europe+
+# ocr = ma_anpr_ocr_v14("large_fp32", "na", user_name, serial_key, signature)    # North America
+# ocr = ma_anpr_ocr_v14("large_fp32", "cn", user_name, serial_key, signature)    # China
 
-# Use appropriate model based on region
-def process_image(image_path, region='universal'):
-    ocr = ocr_models.get(region, ocr_models['universal'])
-    return marearts_anpr_from_image_file(detector, ocr, image_path)
+# Option 2: Universal region (handles all regions)
+ocr = ma_anpr_ocr_v14("large_fp32", "univ", user_name, serial_key, signature)
 
-# Examples
-eu_result = process_image("eu_plate.jpg", region='eu')
-kr_result = process_image("kr_plate.jpg", region='kr')
-cn_result = process_image("cn_plate.jpg", region='cn')
+# Process images
+result = marearts_anpr_from_image_file(detector, ocr, "plate.jpg")
 ```
+
+### Dynamic Region Switching (>3.7.0)
+
+For applications processing plates from multiple regions, use `set_region()` to dynamically switch regions without creating multiple OCR instances. This **saves significant memory** (~180 MB per additional region).
+
+```python
+# Initialize ONE OCR instance
+ocr = ma_anpr_ocr_v14("large_fp32", "kr", user_name, serial_key, signature)
+
+# Process Korean plates
+korean_result = marearts_anpr_from_image_file(detector, ocr, "korean_plate.jpg")
+
+# Switch to Europe+ region
+ocr.set_region('eup')
+european_result = marearts_anpr_from_image_file(detector, ocr, "eu_plate.jpg")
+
+# Switch to North America
+ocr.set_region('na')
+us_result = marearts_anpr_from_image_file(detector, ocr, "us_plate.jpg")
+
+# Switch to China
+ocr.set_region('cn')
+china_result = marearts_anpr_from_image_file(detector, ocr, "china_plate.jpg")
+
+# Switch to Universal (all regions)
+ocr.set_region('univ')
+```
+
+**Benefits:**
+- 💾 **Memory efficient**: Use 1 instance (~180 MB) instead of multiple instances
+- ⚡ **No reinitialization**: Instant region switching
+- 🎯 **Same accuracy**: Region-specific vocabulary filtering maintained
+
+**When to use `set_region()` vs multiple instances:**
+- ✅ Use `set_region()`: Processing different regions sequentially, memory-constrained environments
+- ❌ Avoid `set_region()`: Multi-threaded concurrent processing (use separate instances per thread)
 
 ## CLI Usage
 
@@ -190,11 +219,8 @@ ma-anpr image.jpg
 # Process multiple images
 ma-anpr *.jpg
 
-# Specify models (V1/V2 with legacy models)
-ma-anpr image.jpg --detector-model v13_small --ocr-model v13_kr
-
-# V14 models (V2 Current license only)
-ma-anpr image.jpg --detector-model v14_middle_640p_fp16 --backend cuda
+# Specify V14 models
+ma-anpr image.jpg --detector-model medium_640p_fp32 --ocr-model large_fp32 --backend cuda
 
 # Save results to JSON
 ma-anpr image.jpg --json results.json
@@ -254,6 +280,48 @@ ma-anpr benchmark image.jpg --iterations 100
 }
 ```
 
+### Detector API Output
+
+When using `detector.detector()` directly (advanced usage), it returns a list of detections:
+
+```python
+detections = detector.detector(image)
+# Returns: List of detection dictionaries
+
+# Each detection contains:
+[
+    {
+        'bbox': [x1, y1, x2, y2],  # Bounding box coordinates (left, top, right, bottom)
+        'score': 0.98,              # Detection confidence (0.0-1.0)
+        'class': 'license_plate'    # Object class
+    },
+    # ... more detections
+]
+```
+
+**Example usage:**
+```python
+import cv2
+from PIL import Image
+
+img = cv2.imread("image.jpg")
+detections = detector.detector(img)
+
+for det in detections:
+    bbox = det['bbox']
+    x1, y1, x2, y2 = bbox[0], bbox[1], bbox[2], bbox[3]
+    score = det['score']
+
+    # Crop the plate region
+    crop = img[int(y1):int(y2), int(x1):int(x2)]
+
+    # Convert to PIL for OCR
+    plate_img = Image.fromarray(cv2.cvtColor(crop, cv2.COLOR_BGR2RGB))
+    text, conf = ocr.predict(plate_img)
+
+    print(f"Plate: {text} (detection: {score*100:.1f}%, OCR: {conf}%)")
+```
+
 ### Multiple Detections
 
 ```python
@@ -291,20 +359,16 @@ except Exception as e:
 
 1. **Use GPU acceleration** when available
 2. **Batch process** multiple images together
-3. **Choose appropriate models** based on your license and needs:
-   - **V2 (Current) License holders**: Use V14 models for best performance
-     - `v14_small_320p_trt_fp8` with TensorRT for maximum speed
-     - `v14_middle_640p_fp16` with CUDA for balanced performance
-     - `v14_large_640p_fp32` for maximum accuracy
-   - **V1 License holders**: Use V13 models
-     - `v13_nano` for speed
-     - `v13_middle` for balance
-     - `v13_large` for accuracy
+3. **Choose appropriate V14 models** based on your needs:
+   - `pico_640p_fp32` - Fastest, smallest model
+   - `micro_640p_fp32` - Fast with good accuracy
+   - `small_640p_fp32` - Balanced performance
+   - `medium_640p_fp32` - Higher accuracy
+   - `large_640p_fp32` - Highest F1 score
 4. **Reuse detector/OCR instances** instead of recreating them
 5. **Adjust confidence thresholds** to reduce false positives
-6. **For V14 models**, select appropriate backend:
-   - `tensorrt`: Fastest on NVIDIA GPUs
-   - `cuda`: Good performance on NVIDIA GPUs
+6. **Select appropriate backend**:
+   - `cuda`: NVIDIA GPU acceleration (fastest)
    - `directml`: For Windows with various GPU types
    - `cpu`: Cross-platform compatibility
 
