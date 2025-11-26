@@ -103,6 +103,9 @@ export MAREARTS_ANPR_SIGNATURE="your-signature"
 
 3. **Direct in code** (hardcoded credentials):
 ```python
+# Supported detector modes:
+#   model: pico_640p_fp32, micro_640p_fp32, small_640p_fp32, medium_640p_fp32, large_640p_fp32
+#   backend: "cpu", "cuda", "directml", "auto" (default: cpu)
 # V14 detector
 detector = ma_anpr_detector_v14(
     "small_640p_fp32", 
@@ -111,6 +114,10 @@ detector = ma_anpr_detector_v14(
     "your-signature"
 )
 
+# Supported OCR modes:
+#   model: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
+#   region: "kr", "eup", "na", "cn", "univ" (default: univ)
+#   backend: "cpu", "cuda", "directml", "auto" (default: cpu)
 # V14 OCR with regional vocabularies
 ocr = ma_anpr_ocr_v14(
     model='small_fp32',

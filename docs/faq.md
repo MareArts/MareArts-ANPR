@@ -82,7 +82,7 @@ This ensures you'll always have access to the software you've invested in.
 ### Q: Do I need to specify a region?
 **A:** Region parameter is optional with `univ` (universal) as default. However, **we strongly recommend choosing a specific region** (kr, eup, na, or cn) for best accuracy. Only use `univ` when the region is truly unknown or mixed.
 
-### Q: Can I change the region after initialization? (>3.7.0)
+### Q: Can I change the region after initialization? (>3.6.5)
 **A:** Yes! Use the `set_region()` method to dynamically switch regions without creating new OCR instances:
 
 ```python
@@ -99,7 +99,14 @@ This saves significant memory - one instance (~180 MB) instead of multiple insta
 
 ### Q: When should I use set_region() vs multiple OCR instances?
 **A:** 
-- **Use `set_region()`**: When processing different regions sequentially, or in memory-constrained environments
+**Use `set_region()`**: When processing different regions sequentially, or in memory-constrained environments
+### Supported detector modes:
+	# model: pico_640p_fp32, micro_640p_fp32, small_640p_fp32, medium_640p_fp32, large_640p_fp32
+	# backend: "cpu", "cuda", "directml", "auto" (default: cpu)
+### Supported OCR modes:
+	# model: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
+	# region: "kr", "eup", "na", "cn", "univ" (default: univ)
+	# backend: "cpu", "cuda", "directml", "auto" (default: cpu)
 - **Use multiple instances**: When processing multiple regions concurrently in different threads
 - **Note**: `set_region()` is not thread-safe. For multi-threaded applications, create separate OCR instances per thread.
 

@@ -26,7 +26,7 @@ detector = ma_anpr_detector_v14(
 
 # Create V14 OCR with regional vocabulary
 # Regions: kr, eup, na, cn, univ
-ocr = ma_anpr_ocr_v14("medium_fp32", "eup", user_name, serial_key, signature)
+ocr = ma_anpr_ocr_v14("medium_fp32", "kr", user_name, serial_key, signature)
 
 # Process image
 result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
@@ -40,11 +40,19 @@ print(result)
 ### 1. basic.py ⭐ (Recommended Starting Point)
 
 **V14 basic usage:**
-- Simple initialization with V14 models
-- Processing images from file, OpenCV, and PIL
-- **Multi-region support using set_region()** (>3.7.0)
-- **Batch processing** - Process multiple plates efficiently
-- Memory-efficient region switching (saves ~180MB per region)
+ Simple initialization with V14 models
+ Processing images from file, OpenCV, and PIL
+ **Multi-region support using set_region()** (>3.6.5)
+ **Batch processing** - Process multiple plates efficiently
+ Memory-efficient region switching (saves ~180MB per region)
+ 
+ # Supported detector modes:
+ #   - model: pico_640p_fp32, micro_640p_fp32, small_640p_fp32, medium_640p_fp32, large_640p_fp32
+ #   - backend: "cpu", "cuda", "directml", "auto" (default: cpu)
+ # Supported OCR modes:
+ #   - model: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
+ #   - region: "kr", "eup", "na", "cn", "univ" (default: univ)
+ #   - backend: "cpu", "cuda", "directml", "auto" (default: cpu)
 
 ### 2. advanced.py (Manual Processing & Performance)
 
@@ -79,7 +87,7 @@ Use `set_region()` to switch regions without creating new OCR instances:
 
 ```python
 # Initialize once
-ocr = ma_anpr_ocr_v14("medium_fp32", "kr", user_name, serial_key, signature)
+ocr = ma_anpr_ocr_v14("medium_fp32", "eup", user_name, serial_key, signature)
 
 # Switch regions on demand
 ocr.set_region('eup')  # Europe+

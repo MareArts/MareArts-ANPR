@@ -185,7 +185,14 @@ for text, conf in results:
 # ocr = ma_anpr_ocr_v14('small_fp32', 'na', user_name, serial_key, signature)    # North America
 # ocr = ma_anpr_ocr_v14('small_fp32', 'cn', user_name, serial_key, signature)    # China
 
-# NEW (>3.7.0): Dynamic region switching (saves memory)
+# NEW (>3.6.5): Dynamic region switching (saves memory)
+# Supported detector modes:
+#   model: pico_640p_fp32, micro_640p_fp32, small_640p_fp32, medium_640p_fp32, large_640p_fp32
+#   backend: "cpu", "cuda", "directml", "auto" (default: cpu)
+# Supported OCR modes:
+#   model: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
+#   region: "kr", "eup", "na", "cn", "univ" (default: univ)
+#   backend: "cpu", "cuda", "directml", "auto" (default: cpu)
 ocr.set_region('eup')  # Switch to Europe+
 ocr.set_region('kr')   # Switch to Korea
 ocr.set_region('na')   # Switch to North America

@@ -6,8 +6,8 @@ This example demonstrates how to deploy MareArts ANPR as a REST API service usin
 
 - FastAPI-based REST API
 - V14 model support with multi-backend inference (cpu, cuda, directml)
-- **Smart model caching** - Reuses initialized models when same model requested (>3.7.0)
-- **Dynamic region switching** - Changes region without reloading OCR model (>3.7.0)
+- **Smart model caching** - Reuses initialized models when same model requested (>3.6.5)
+- **Dynamic region switching** - Changes region without reloading OCR model (>3.6.5)
 - Auto-update capability (checks for package updates)
 - Basic authentication + API key security
 
@@ -129,7 +129,17 @@ print(response.json())
 ## Notes
 
 - **API automatically reuses models**: If same model requested, no reinitialization (saves time & memory)
-- **Dynamic region switching**: Change region parameter without reloading OCR model (>3.7.0)
+- **Dynamic region switching**: Change region parameter without reloading OCR model (>3.6.5)
+## Supported Modes
+
+### Detector
+  - model: v14_pico_640p_fp32, v14_micro_640p_fp32, v14_small_640p_fp32, v14_medium_640p_fp32, v14_large_640p_fp32
+  - backend: "cpu", "cuda", "directml", "auto" (default: cpu)
+
+### OCR
+  - model: v14_pico_fp32, v14_micro_fp32, v14_small_fp32, v14_medium_fp32, v14_large_fp32
+  - region: "kr", "eup", "na", "cn", "univ" (default: univ)
+  - backend: "cpu", "cuda", "directml", "auto" (default: cpu)
 - First request downloads models (may take time)
 - Models are cached after first download
 - V14 models require more memory than legacy models

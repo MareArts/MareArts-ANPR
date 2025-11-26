@@ -139,8 +139,8 @@ curl -X POST http://localhost:8000/process_image \
 
 - Container runs on port 8000 by default
 - Supports both AMD64 (x86_64) and ARM64 (aarch64) architectures
-- **Smart model caching** - API reuses initialized models when same model requested (>3.7.0)
-- **Dynamic region switching** - Region changes without reloading OCR model (>3.7.0)
+- **Smart model caching** - API reuses initialized models when same model requested (>3.6.5)
+- **Dynamic region switching** - Region changes without reloading OCR model (>3.6.5)
 - Models are downloaded on first use and cached
 - Credentials passed via Basic Auth for security
 - Requires license with signature
@@ -152,6 +152,18 @@ The API automatically optimizes model usage:
 - **Same model requests** → Reuses existing instance (no reload)
 - **Region changes only** → Uses `set_region()` for instant switching
 - **Model changes** → Only reloads the changed model (detector or OCR)
+
+
+## Supported Modes
+
+### Detector
+  - model: v14_pico_640p_fp32, v14_micro_640p_fp32, v14_small_640p_fp32, v14_medium_640p_fp32, v14_large_640p_fp32
+  - backend: "cpu", "cuda", "directml", "auto" (default: cpu)
+
+### OCR
+  - model: v14_pico_fp32, v14_micro_fp32, v14_small_fp32, v14_medium_fp32, v14_large_fp32
+  - region: "kr", "eup", "na", "cn", "univ" (default: univ)
+  - backend: "cpu", "cuda", "directml", "auto" (default: cpu)
 
 Example: Consecutive requests with `v14_medium_fp32` OCR but different regions (kr → eup → na) will reuse the same OCR instance and only switch regions internally.
 
