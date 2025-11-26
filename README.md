@@ -56,7 +56,8 @@ ocr = ma_anpr_ocr_v14(
     "univ",             # Region: kr, eup, na, cn, univ (choose specific region for best accuracy)
     user_name,
     serial_key,
-    signature
+    signature,
+    backend="cuda",  # cpu, cuda, directml (auto-selected if "auto") 
 )
 
 # Process image
