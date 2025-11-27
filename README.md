@@ -3,10 +3,45 @@
 [![PyPI version](https://badge.fury.io/py/marearts-anpr.svg)](https://badge.fury.io/py/marearts-anpr)
 [![Python versions](https://img.shields.io/pypi/pyversions/marearts-anpr.svg)](https://pypi.org/project/marearts-anpr/)
 [![Downloads](https://pepy.tech/badge/marearts-anpr)](https://pepy.tech/project/marearts-anpr)
-[![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](https://study.marearts.com/p/anpr-lpr-solution.html)
+[![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](https://www.marearts.com/products/anpr)
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen.svg)](http://live.marearts.com)
 
+<div align="center">
+
+| ANPR Detection | Road Objects Detection | Mobile App |
+|:---:|:---:|:---:|
+| <img src="promotion_image/anpr_result.png" alt="ANPR Results" width="280"/> | <img src="promotion_image/robj_result.png" alt="Road Objects Results" width="280"/> | <img src="mobile_app/scan_page.png" alt="Mobile App" width="280"/> |
+
+</div>
+
 Automatic Number Plate Recognition (ANPR) SDK for multiple regions with GPU acceleration support.
+
+**💎 One License, All Access:** SDK + Mobile App + Road Objects Detection - Use everywhere with a single license.
+
+---
+
+## 🎉 New: MareArts ANPR Mobile App Released!
+
+**📱 Now available on iOS! Android coming soon.**
+
+Experience the power of MareArts ANPR directly on your mobile device! Fast, accurate, on-device license plate recognition for parking management, security, and vehicle tracking.
+
+[![Download on App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/us/app/marearts-anpr/id6753904859)
+
+✨ **Key Features:**
+- 🚀 Fast on-device AI processing
+- 🔒 100% offline - privacy first
+- 📊 Statistics and analytics
+- 🗺️ Map view with GPS tracking
+- ✅ Whitelist/Blacklist management
+- 🌍 Multi-region support
+
+📖 **[Read the complete Mobile App Guide →](mobile_app/APP_GUIDE.md)**
+
+> **🎁 Special Offer:** Use the mobile app as your ANPR license - no additional purchase required!  
+> Get your license at [marearts.com/products/anpr](https://www.marearts.com/products/anpr)
+
+---
 
 ## Features
 
@@ -116,13 +151,13 @@ ma-anpr validate                     # Validate license
 
 *Average across all regions*
 
-| Model Name | Exact Match | Char Accuracy | FPS | Notes |
-|-------|-------------|---------------|-----|-------|
-| pico_fp32 | 91.78% | 96.65% | 270 | Fastest, smallest |
-| micro_fp32 | 91.86% | 96.50% | 262 | Fast with good accuracy |
-| small_fp32 | 91.54% | 96.64% | **300** | ⚡ Fastest inference |
-| medium_fp32 | 90.36% | 96.45% | 270 | Balanced performance |
-| **large_fp32** | **91.70%** | **96.27%** | 262 | 🎯 Best accuracy |
+| Model Name | Exact Match | Char Accuracy | Speed CUDA | Notes |
+|-------|-------------|---------------|------------|-------|
+| pico_fp32 | 91.78% | 96.65% | 270 FPS (3.7ms) | Fastest, smallest |
+| micro_fp32 | 91.86% | 96.50% | 262 FPS (3.8ms) | Fast with good accuracy |
+| small_fp32 | 91.54% | 96.64% | 300 FPS (3.3ms) | ⚡ Fastest inference |
+| medium_fp32 | 90.36% | 96.45% | 270 FPS (3.7ms) | Balanced performance |
+| **large_fp32** | **91.70%** | **96.27%** | 262 FPS (3.8ms) | 🎯 Best accuracy |
 
 **Supported Regions**: Korean (`kr`), Europe+ (`eup`), North America (`na`), China (`cn`), Universal (`univ`)
 
@@ -158,6 +193,7 @@ MareArts ANPR supports license plates from multiple regions with specialized voc
 Explore our AI toolkit:
 
 - **marearts-anpr** - Automatic Number Plate Recognition ([GitHub](https://github.com/MareArts/MareArts-ANPR))
+- **🎉 marearts-anpr Mobile App** - ANPR on iOS & Android ([App Store](https://apps.apple.com/us/app/marearts-anpr/id6753904859) | [Guide](mobile_app/APP_GUIDE.md))
 - **marearts-road-objects** - Road object detection for persons, vehicles, and 2-wheelers ([GitHub](https://github.com/MareArts/MareArts-Road-Objects))
 - **marearts-xcolor** - Color extraction and similarity analysis ([GitHub](https://github.com/MareArts/MareArts-Xcolor))
 - **marearts-mast** - Real-time panoramic stitching ([GitHub](https://github.com/MareArts/MareArts-MAST))
@@ -169,7 +205,7 @@ Explore our AI toolkit:
 |----------|------|
 | 📧 **Contact** | [hello@marearts.com](mailto:hello@marearts.com) |
 | 🏠 **Homepage** | [https://marearts.com](https://marearts.com) |
-| 💳 **License Purchase** | [ANPR Solution](https://study.marearts.com/p/anpr-lpr-solution.html) |
+| 💳 **License Purchase** | [ANPR Solution](https://www.marearts.com/products/anpr) |
 | 🎮 **Live Demo** | [http://live.marearts.com](http://live.marearts.com) |
 | 📺 **Video Examples** | [YouTube Playlist](https://www.youtube.com/playlist?list=PLvX6vpRszMkxJBJf4EjQ5VCnmkjfE59-J) |
 
@@ -177,4 +213,4 @@ Explore our AI toolkit:
 
 © 2024 MareArts. All rights reserved.
 
-This software requires a valid license key. Visit [MareArts ANPR Solution](https://study.marearts.com/p/anpr-lpr-solution.html) for licensing options.
+This software requires a valid license key. Visit [MareArts ANPR Solution](https://www.marearts.com/products/anpr) for licensing options.
