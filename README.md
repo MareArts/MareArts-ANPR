@@ -45,12 +45,13 @@ Experience the power of MareArts ANPR directly on your mobile device! Fast, accu
 
 ## Features
 
-- 🌍 **Multi-Region Support**: Korean, Europe+, North America, China, and Universal license plates
+- 🌍 **Multi-Region Support**: Korean, Europe+, North America (USA/Canada/Mexico), China, and Universal license plates
 - 🔄 **Dynamic Region Switching**: Change regions instantly with `set_region()` without model reload
 - ⚡ **GPU Acceleration**: CUDA, DirectML support for real-time processing
 - 🎯 **High Accuracy**: Advanced models with regional vocabulary optimization
 - 📦 **Batch Processing**: Process multiple plates simultaneously
 - 🐳 **Production Ready**: Docker API with smart model caching and multi-architecture support
+
 
 ## Quick Start
 
@@ -163,19 +164,21 @@ ma-anpr validate                     # Validate license
 
 📊 [See detailed benchmarks by region](docs/models.md)
 
+
 ## Regional Support
 
 MareArts ANPR supports license plates from multiple regions with specialized vocabulary optimization:
 
 - 🇰🇷 **Korean (`kr`)** - Korean license plates with Hangul characters (best accuracy: 99.27%)
 - 🇪🇺 **Europe+ (`eup`)** - EU countries + Albania, Andorra, Bosnia & Herzegovina, Indonesia, and more
-- 🇺🇸 **North America (`na`)** - USA and Canada license plates
+- 🇺🇸🇨🇦🇲🇽 **North America (`na`)** - USA, Canada, and Mexico license plates
 - 🇨🇳 **China (`cn`)** - Chinese license plates with province codes
 - 🌍 **Universal (`univ`)** - All regions (default, but choose specific region for best accuracy)
 
 💡 **Dynamic Region Switching**: Use `ocr.set_region('kr')` to switch regions instantly without reloading the model, saving ~180 MB per additional region.
 
 🌍 [See complete regional support and character sets](docs/regional-support.md)
+
 
 ## Documentation
 
@@ -188,6 +191,7 @@ MareArts ANPR supports license plates from multiple regions with specialized voc
 - 🧪 [Try ANPR](docs/api-testing.md) - Test our ANPR without license (1000 requests/day)
 - ❓ [FAQ](docs/faq.md) - Licensing, regions, features, and troubleshooting
 
+
 ## MareArts Ecosystem
 
 Explore our AI toolkit:
@@ -198,6 +202,7 @@ Explore our AI toolkit:
 - **marearts-xcolor** - Color extraction and similarity analysis ([GitHub](https://github.com/MareArts/MareArts-Xcolor))
 - **marearts-mast** - Real-time panoramic stitching ([GitHub](https://github.com/MareArts/MareArts-MAST))
 - **marearts-crystal** - Encryption and decryption toolkit ([PyPI](https://pypi.org/project/marearts-crystal/))
+
 
 ## Support & Resources
 

@@ -282,11 +282,11 @@ The app has 5 main tabs at the bottom:
 - 60s = Maximum (ignore for 1 minute)
 
 **Plate Region** 🌍
-- **Universal** - All regions (default)
-- **Europe+** - EU, UK, Switzerland, Norway, etc.
-- **Korea** - South Korea (한국)
-- **North America** - USA, Canada, Mexico
-- **China** - China (中国)
+- 🌍 **Universal** - All regions (default)
+- 🇪🇺 **Europe+** - EU, UK, Switzerland, Norway, etc.
+- 🇰🇷 **Korea** - South Korea (한국)
+- 🇺🇸🇨🇦🇲🇽 **North America** - USA, Canada, Mexico
+- 🇨🇳 **China** - China (中国)
 - Selecting specific region improves accuracy
 
 ### Storage:
