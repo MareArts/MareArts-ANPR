@@ -135,6 +135,7 @@ ma-anpr validate                     # Validate license
 ```
 
 🔧 [See complete usage examples and CLI reference](docs/usage.md)
+
 <br><br>
 ## Model Performance
 
