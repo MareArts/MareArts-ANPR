@@ -70,8 +70,6 @@ pip install marearts-anpr[directml]   # Windows GPU (AMD/Intel/NVIDIA)
 
 ### Basic Usage
 
-💡 **Model names**: See [models and benchmarks](docs/models.md) (e.g., `small_640p_fp32`, `small_fp32`)
-
 ```python
 from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v14, marearts_anpr_from_image_file
 
@@ -101,6 +99,8 @@ result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
 print(result)
 # Output: {'results': [{'ocr': 'ABC123', 'ocr_conf': 99, ...}], ...}
 ```
+💡 **Getting started?** See [Usage Guide](docs/usage.md) for examples and complete documentation
+
 
 #### Dynamic Region Switching
 
