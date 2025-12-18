@@ -1,0 +1,15 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 📧 Email Support
+    url: mailto:hello@marearts.com
+    about: Contact us directly for licensing, sales, or urgent issues
+  - name: 🏠 MareArts Website
+    url: https://marearts.com
+    about: Visit our homepage for product information and demos
+  - name: 📺 Video Tutorials
+    url: https://www.youtube.com/playlist?list=PLvX6vpRszMkxJBJf4EjQ5VCnmkjfE59-J
+    about: Watch video examples and tutorials
+  - name: 🎮 Live Demo
+    url: http://live.marearts.com
+    about: Try ANPR live in your browser
+

@@ -1,0 +1,89 @@
+name: Bug Report
+description: Report a problem with MareArts ANPR
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this bug! Please fill out the information below.
+        
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: Where are you experiencing the issue?
+      options:
+        - Mobile App (iOS)
+        - Mobile App (Android)
+        - Python SDK
+        - Docker API
+        - Other
+    validations:
+      required: true
+      
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: What version are you using? (e.g., 1.5.16, v2.0.1)
+      placeholder: "1.5.16"
+    validations:
+      required: true
+      
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: Clear description of what's wrong
+      placeholder: Tell us what happened...
+    validations:
+      required: true
+      
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this issue?
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. See error
+    validations:
+      required: true
+      
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should happen?
+      placeholder: What did you expect to happen?
+      
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+      placeholder: What actually happened?
+      
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots/Videos
+      description: If applicable, add screenshots or videos
+      placeholder: Drag and drop images here
+      
+  - type: input
+    id: device
+    attributes:
+      label: Device/Environment
+      description: Device model, OS version, or system specs
+      placeholder: "iPhone 15 Pro, iOS 18.2 / Ubuntu 22.04, CUDA 12.1"
+      
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any other relevant information
+      placeholder: Add any other context about the problem here
+
