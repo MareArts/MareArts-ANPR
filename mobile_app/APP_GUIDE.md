@@ -15,6 +15,16 @@
 MareArts ANPR is a professional license plate recognition app for parking management, security checkpoints, and vehicle tracking. All AI processing happens on-device for privacy and speed.
 
 ---
+
+## 🆕 Latest Release
+
+**Version 1.5.16 (Build 81)** - December 18, 2025
+
+New: Year selector, custom date range, search in rules, swipe navigation, and more!
+
+[📖 View Release Notes](https://github.com/MareArts/MareArts-ANPR/releases/latest)
+
+---
 ## 📲 Download
 
 <div align="center">
@@ -65,6 +75,7 @@ The app has 5 main tabs at the bottom:
 - **Single Capture** (⭕) - Capture one plate
 - **Continuous Mode** (🔄) - Auto-scan continuously
 - **Cloud Mode** (☁️) - Send to cloud API for processing
+- **Swipe left/right** - Quick switch between modes
 
 **Status Display:**
 - Shows last detected plate number
@@ -150,11 +161,14 @@ The app has 5 main tabs at the bottom:
 - Plays "alert" sound
 
 **Management:**
+- **Search Bar** - Type to filter plates (real-time)
+- **Tab Counter** - Shows total: "White List (200)"
 - **+ Button** (bottom center) - Add new plate
 - **Swipe left** to delete
+- **Scroll** - Smooth iOS-style scrolling for long lists
 - Type full plate number or partial (e.g., "ABC" matches "ABC-123")
 - Auto-uppercase
-- Instant filtering on scan
+- Tap "X" to clear search, "Done" to dismiss keyboard
 
 **Use Cases:**
 - Parking: Whitelist residents, blacklist violators
@@ -183,11 +197,17 @@ The app has 5 main tabs at the bottom:
 - Shows scan count for each
 - **Tap** to view all scans for that plate
 
-### Time Period Charts:
+### Time Period Selector:
+- **Today** - Hourly breakdown
+- **This Week** - Monday to today (calendar week)
+- **This Month** - First day to today
+- **Year** - Full year with year selector (2024, 2025, 2026...)
+- **Custom Range** - Pick any start and end dates
 
-**This Week** - Bar chart (7 days)
-**This Month** - Bar chart (30 days)  
-**This Year** - Bar chart (12 months, scrollable)
+### Charts:
+- Automatic layout based on period selected
+- **Date range displayed** below selector (e.g., "Dec 1, 2025 - Jan 7, 2026")
+- Scrollable for year view (12 months)
 
 ### Status Filter:
 - **All** - Show everything
@@ -295,7 +315,9 @@ The app has 5 main tabs at the bottom:
 ### About:
 
 - App name & version
+- Website: www.marearts.com
 - Support email: hello@marearts.com
+- **Report Bug / Request Feature** - Opens GitHub Issues
 - Build number (for troubleshooting)
 
 ---
