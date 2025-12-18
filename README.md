@@ -5,7 +5,7 @@
 [![Downloads](https://pepy.tech/badge/marearts-anpr)](https://pepy.tech/project/marearts-anpr)
 [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](https://www.marearts.com/products/anpr)
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen.svg)](http://live.marearts.com)
-
+<br><br>
 <div align="center">
 
 | ANPR Detection | Road Objects Detection | Mobile App |
@@ -19,7 +19,7 @@ Automatic Number Plate Recognition (ANPR) SDK for multiple regions with GPU acce
 **💎 One License, All Access:** SDK + Mobile App + Road Objects Detection - Use everywhere with a single license.
 
 ---
-
+<br><br>
 ## 🎉 New: MareArts ANPR Mobile App Released!
 
 **📱 Now available on iOS! Android coming soon.**
@@ -42,7 +42,7 @@ Experience the power of MareArts ANPR directly on your mobile device! Fast, accu
 > Get your license at [marearts.com/products/anpr](https://www.marearts.com/products/anpr)
 
 ---
-
+<br><br>
 ## Features
 
 - 🌍 **Multi-Region Support**: Korean, Europe+, North America (USA/Canada/Mexico), China, and Universal license plates
@@ -52,7 +52,7 @@ Experience the power of MareArts ANPR directly on your mobile device! Fast, accu
 - 📦 **Batch Processing**: Process multiple plates simultaneously
 - 🐳 **Production Ready**: Docker API with smart model caching and multi-architecture support
 
-
+<br><br>
 ## Quick Start
 
 ### Installation
@@ -135,7 +135,7 @@ ma-anpr validate                     # Validate license
 ```
 
 🔧 [See complete usage examples and CLI reference](docs/usage.md)
-
+<br><br>
 ## Model Performance
 
 ### Detector Performance
@@ -164,7 +164,7 @@ ma-anpr validate                     # Validate license
 
 📊 [See detailed benchmarks by region](docs/models.md)
 
-
+<br><br>
 ## Regional Support
 
 MareArts ANPR supports license plates from multiple regions with specialized vocabulary optimization:
@@ -179,7 +179,7 @@ MareArts ANPR supports license plates from multiple regions with specialized voc
 
 🌍 [See complete regional support and character sets](docs/regional-support.md)
 
-
+<br><br>
 ## Documentation
 
 - 📦 [Installation Guide](docs/installation.md) - Detailed installation options and requirements
@@ -191,7 +191,7 @@ MareArts ANPR supports license plates from multiple regions with specialized voc
 - 🧪 [Try ANPR](docs/api-testing.md) - Test our ANPR without license (1000 requests/day)
 - ❓ [FAQ](docs/faq.md) - Licensing, regions, features, and troubleshooting
 
-
+<br><br>
 ## MareArts Ecosystem
 
 Explore our AI toolkit:
@@ -203,7 +203,7 @@ Explore our AI toolkit:
 - **marearts-mast** - Real-time panoramic stitching ([GitHub](https://github.com/MareArts/MareArts-MAST))
 - **marearts-crystal** - Encryption and decryption toolkit ([PyPI](https://pypi.org/project/marearts-crystal/))
 
-
+<br>
 ## Support & Resources
 
 | Resource | Link |
@@ -214,6 +214,7 @@ Explore our AI toolkit:
 | 🎮 **Live Demo** | [http://live.marearts.com](http://live.marearts.com) |
 | 📺 **Video Examples** | [YouTube Playlist](https://www.youtube.com/playlist?list=PLvX6vpRszMkxJBJf4EjQ5VCnmkjfE59-J) |
 
+<br><br>
 ## License
 
 © 2024 MareArts. All rights reserved.
