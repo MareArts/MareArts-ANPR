@@ -5,12 +5,12 @@
 [![Downloads](https://pepy.tech/badge/marearts-anpr)](https://pepy.tech/project/marearts-anpr)
 [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](https://www.marearts.com/products/anpr)
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen.svg)](http://live.marearts.com)
-<br><br>
+
 <div align="center">
 
 | ANPR Detection | Road Objects Detection | Mobile App |
 |:---:|:---:|:---:|
-| <img src="promotion_image/anpr_result.png" alt="ANPR Results" width="280"/> | <img src="promotion_image/robj_result.png" alt="Road Objects Results" width="280"/> | <img src="mobile_app/scan_page.png" alt="Mobile App" width="280"/> |
+| <img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/promotion_image/anpr_result.png" alt="ANPR Results" width="280"/> | <img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/promotion_image/robj_result.png" alt="Road Objects Results" width="280"/> | <img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/mobile_app/scan_page.png" alt="Mobile App" width="280"/> |
 
 </div>
 
@@ -19,7 +19,7 @@ Automatic Number Plate Recognition (ANPR) SDK for multiple regions with GPU acce
 **💎 One License, All Access:** SDK + Mobile App + Road Objects Detection - Use everywhere with a single license.
 
 ---
-<br><br>
+
 ## 🎉 New: MareArts ANPR Mobile App Released!
 
 **📱 Now available on iOS! Android coming soon.**
@@ -36,23 +36,26 @@ Experience the power of MareArts ANPR directly on your mobile device! Fast, accu
 - ✅ Whitelist/Blacklist management
 - 🌍 Multi-region support
 
-📖 **[Read the complete Mobile App Guide →](mobile_app/APP_GUIDE.md)**
+📖 **[Read the complete Mobile App Guide →](https://github.com/MareArts/MareArts-ANPR/blob/main/mobile_app/APP_GUIDE.md)**
 
 > **🎁 Special Offer:** Use the mobile app as your ANPR license - no additional purchase required!  
 > Get your license at [marearts.com/products/anpr](https://www.marearts.com/products/anpr)
 
 ---
-<br><br>
+
+<br>
+
 ## Features
 
-- 🌍 **Multi-Region Support**: Korean, Europe+, North America (USA/Canada/Mexico), China, and Universal license plates
+- 🌍 **Multi-Region Support**: Korean, Europe+, North America, China, and Universal license plates
 - 🔄 **Dynamic Region Switching**: Change regions instantly with `set_region()` without model reload
 - ⚡ **GPU Acceleration**: CUDA, DirectML support for real-time processing
 - 🎯 **High Accuracy**: Advanced models with regional vocabulary optimization
 - 📦 **Batch Processing**: Process multiple plates simultaneously
 - 🐳 **Production Ready**: Docker API with smart model caching and multi-architecture support
 
-<br><br>
+<br>
+
 ## Quick Start
 
 ### Installation
@@ -66,16 +69,19 @@ pip install marearts-anpr[gpu]        # NVIDIA CUDA
 pip install marearts-anpr[directml]   # Windows GPU (AMD/Intel/NVIDIA)
 ```
 
-📦 [See complete installation guide](docs/installation.md)
+📦 [See complete installation guide](https://github.com/MareArts/MareArts-ANPR/blob/main/docs/installation.md)
 
 ### Basic Usage
+
 
 ```python
 from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v14, marearts_anpr_from_image_file
 
 # Initialize detector
 detector = ma_anpr_detector_v14(
-    "small_640p_fp32",  # pico_640p_fp32, micro_640p_fp32, small_640p_fp32, medium_640p_fp32, large_640p_fp32
+    "micro_320p_fp32",
+    # 320p models (Fast): pico_320p_fp32/fp16, micro_320p_fp32/fp16, small_320p_fp32/fp16, medium_320p_fp32/fp16, large_320p_fp32/fp16
+    # 640p models (High detection): pico_640p_fp32/fp16, micro_640p_fp32/fp16, small_640p_fp32/fp16, medium_640p_fp32/fp16, large_640p_fp32/fp16
     user_name,
     serial_key,
     signature,
@@ -99,8 +105,7 @@ result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
 print(result)
 # Output: {'results': [{'ocr': 'ABC123', 'ocr_conf': 99, ...}], ...}
 ```
-💡 **Getting started?** See [Usage Guide](docs/usage.md) for examples and complete documentation
-
+💡 🔄 [Learn more about usage](https://github.com/MareArts/MareArts-ANPR/blob/main/docs/usage.md#dynamic-region-switching)
 
 #### Dynamic Region Switching
 
@@ -110,9 +115,11 @@ Switch regions without reinitialization:
 ocr.set_region('eup')  # Europe+
 ocr.set_region('kr')   # Korean
 ocr.set_region('na')   # North America
+ocr.set_region('cn')   # China
+ocr.set_region('univ') # Universal (all regions)
 ```
 
-🔄 [Learn more about dynamic region switching](docs/usage.md#dynamic-region-switching-370)
+🔄 [Learn more about dynamic region switching](https://github.com/MareArts/MareArts-ANPR/blob/main/docs/usage.md#dynamic-region-switching)
 
 #### Multiple Input Formats & CLI
 
@@ -134,38 +141,46 @@ ma-anpr test-api image.jpg           # Test API (1000/day limit)
 ma-anpr validate                     # Validate license
 ```
 
-🔧 [See complete usage examples and CLI reference](docs/usage.md)
+🔧 [See complete usage examples and CLI reference](https://github.com/MareArts/MareArts-ANPR/blob/main/docs/usage.md)
 
-<br><br>
+<br>
+
 ## Model Performance
 
 ### Detector Performance
 
-| Model Name | F1 Score | Speed CUDA | Speed CPU | Notes |
-|-------|----------|------------|-----------|-------|
-| pico_640p_fp32 | 93.08% | 68.7 FPS (14.5ms) | - | Fastest, smallest model |
-| micro_640p_fp32 | 93.39% | 69.5 FPS (14.4ms) | - | Fast with good accuracy |
-| small_640p_fp32 | 92.58% | 69.5 FPS (14.4ms) | - | Balanced performance |
-| medium_640p_fp32 | 92.27% | 62.1 FPS (16.1ms) | - | Higher accuracy |
-| large_640p_fp32 | 93.77% | 57.4 FPS (17.4ms) | - | 🎯 Highest F1 score |
+| Model Name | Detection Rate | Speed (GPU) | Notes |
+|------------|----------------|-------------|-------|
+| **micro_320p_fp32** | **97.13%** | **128 FPS** (7.8ms) | 🏆 Best overall |
+| **micro_320p_fp16** | **97.13%** | **56 FPS** (17.9ms) | 🏆 Best mobile (50% smaller) |
+| micro_640p_fp32 | 98.99% | 68 FPS (14.6ms) | Highest detection |
+| small_320p_fp32 | 98.00% | 142 FPS (7.0ms) | ⚡ Fastest |
+| medium_320p_fp32 | 98.06% | 136 FPS (7.4ms) | High detection |
+| pico_320p_fp32 | 96.02% | 129 FPS (7.8ms) | Smallest + fast |
+| pico_640p_fp32 | 98.54% | 66 FPS (15.2ms) | Balanced |
+
+**Note:** 320p models are 2× faster than 640p. FP16 models are 50% smaller with same detection rate.
+
+<br>
 
 ### OCR Performance
 
 *Average across all regions*
 
-| Model Name | Exact Match | Char Accuracy | Speed CUDA | Notes |
-|-------|-------------|---------------|------------|-------|
-| pico_fp32 | 91.78% | 96.65% | 270 FPS (3.7ms) | Fastest, smallest |
+| Model Name | Exact Match | Character Accuracy | Speed (GPU) | Notes |
+|------------|-------------|-------------------|-------------|-------|
+| **large_fp32** | **91.70%** | **96.27%** | 262 FPS (3.8ms) | 🎯 Best accuracy |
 | micro_fp32 | 91.86% | 96.50% | 262 FPS (3.8ms) | Fast with good accuracy |
+| pico_fp32 | 91.78% | 96.65% | 270 FPS (3.7ms) | Fastest, smallest |
 | small_fp32 | 91.54% | 96.64% | 300 FPS (3.3ms) | ⚡ Fastest inference |
 | medium_fp32 | 90.36% | 96.45% | 270 FPS (3.7ms) | Balanced performance |
-| **large_fp32** | **91.70%** | **96.27%** | 262 FPS (3.8ms) | 🎯 Best accuracy |
 
 **Supported Regions**: Korean (`kr`), Europe+ (`eup`), North America (`na`), China (`cn`), Universal (`univ`)
 
-📊 [See detailed benchmarks by region](docs/models.md)
+📊 [See all models and benchmarks](https://github.com/MareArts/MareArts-ANPR/blob/main/docs/models.md)
 
-<br><br>
+<br>
+
 ## Regional Support
 
 MareArts ANPR supports license plates from multiple regions with specialized vocabulary optimization:
@@ -178,33 +193,36 @@ MareArts ANPR supports license plates from multiple regions with specialized voc
 
 💡 **Dynamic Region Switching**: Use `ocr.set_region('kr')` to switch regions instantly without reloading the model, saving ~180 MB per additional region.
 
-🌍 [See complete regional support and character sets](docs/regional-support.md)
+🌍 [See complete regional support and character sets](https://github.com/MareArts/MareArts-ANPR/blob/main/docs/regional-support.md)
 
-<br><br>
+<br>
+
 ## Documentation
 
-- 📦 [Installation Guide](docs/installation.md) - Detailed installation options and requirements
-- 🔧 [Usage Examples](docs/usage.md) - Python SDK, CLI usage, dynamic region switching, and environment variables
-- 💻 [Example Code](example_code/) - Basic, advanced, and batch processing examples
-- 🚀 [Model Versions](docs/models.md) - Available models, benchmarks, and performance metrics
-- 🌍 [Regional Support](docs/regional-support.md) - Supported countries and character sets
-- 🐳 [Docker Deployment](docs/docker.md) - Container setup, API server, and multi-architecture builds
-- 🧪 [Try ANPR](docs/api-testing.md) - Test our ANPR without license (1000 requests/day)
-- ❓ [FAQ](docs/faq.md) - Licensing, regions, features, and troubleshooting
+- 📦 [Installation Guide](https://github.com/MareArts/MareArts-ANPR/blob/main/docs/installation.md) - Detailed installation options and requirements
+- 🔧 [Usage Examples](https://github.com/MareArts/MareArts-ANPR/blob/main/docs/usage.md) - Python SDK, CLI usage, dynamic region switching, and environment variables
+- 💻 [Example Code](https://github.com/MareArts/MareArts-ANPR/tree/main/example_code) - Basic, advanced, and batch processing examples
+- 🚀 [Model Versions](https://github.com/MareArts/MareArts-ANPR/blob/main/docs/models.md) - Available models, benchmarks, and performance metrics
+- 🌍 [Regional Support](https://github.com/MareArts/MareArts-ANPR/blob/main/docs/regional-support.md) - Supported countries and character sets
+- 🐳 [Docker Deployment](https://github.com/MareArts/MareArts-ANPR/blob/main/docs/docker.md) - Container setup, API server, and multi-architecture builds
+- 🧪 [Try ANPR](https://github.com/MareArts/MareArts-ANPR/blob/main/docs/api-testing.md) - Test our ANPR without license (1000 requests/day)
+- ❓ [FAQ](https://github.com/MareArts/MareArts-ANPR/blob/main/docs/faq.md) - Licensing, regions, features, and troubleshooting
 
-<br><br>
+<br>
+
 ## MareArts Ecosystem
 
 Explore our AI toolkit:
 
 - **marearts-anpr** - Automatic Number Plate Recognition ([GitHub](https://github.com/MareArts/MareArts-ANPR))
-- **🎉 marearts-anpr Mobile App** - ANPR on iOS & Android ([App Store](https://apps.apple.com/us/app/marearts-anpr/id6753904859) | [Guide](mobile_app/APP_GUIDE.md))
+- **🎉 marearts-anpr Mobile App** - ANPR on iOS & Android ([App Store](https://apps.apple.com/us/app/marearts-anpr/id6753904859) | [Guide](https://github.com/MareArts/MareArts-ANPR/blob/main/mobile_app/APP_GUIDE.md))
 - **marearts-road-objects** - Road object detection for persons, vehicles, and 2-wheelers ([GitHub](https://github.com/MareArts/MareArts-Road-Objects))
 - **marearts-xcolor** - Color extraction and similarity analysis ([GitHub](https://github.com/MareArts/MareArts-Xcolor))
 - **marearts-mast** - Real-time panoramic stitching ([GitHub](https://github.com/MareArts/MareArts-MAST))
 - **marearts-crystal** - Encryption and decryption toolkit ([PyPI](https://pypi.org/project/marearts-crystal/))
 
 <br>
+
 ## Support & Resources
 
 | Resource | Link |
@@ -215,7 +233,8 @@ Explore our AI toolkit:
 | 🎮 **Live Demo** | [http://live.marearts.com](http://live.marearts.com) |
 | 📺 **Video Examples** | [YouTube Playlist](https://www.youtube.com/playlist?list=PLvX6vpRszMkxJBJf4EjQ5VCnmkjfE59-J) |
 
-<br><br>
+<br>
+
 ## License
 
 © 2024 MareArts. All rights reserved.

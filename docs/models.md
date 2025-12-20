@@ -1,6 +1,6 @@
 # Model Versions & Performance
 
-**Last Updated: November 7, 2025**
+**Last Updated: December 20, 2025**
 
 **Current Version: V14** - Latest generation with advanced architecture
 
@@ -12,11 +12,12 @@ All V14 models are automatically downloaded to `~/.marearts/marearts_anpr_data/`
 
 ```
 ~/.marearts/marearts_anpr_data/
-├── v14_small_640p_fp32.dat      # Detector model
-├── v14_small_fp32.dat           # OCR model
-├── v14_medium_640p_fp32.dat
-├── v14_medium_fp32.dat
-└── ... (other models as needed)
+├── marearts_anpr_d_v14_micro_320p_fp32.dat  # Detector model
+├── marearts_anpr_d_v14_micro_320p_fp16.dat  # Detector model (FP16)
+├── marearts_anpr_d_v14_micro_640p_fp32.dat  # Detector model (640p)
+├── marearts_anpr_r_v14_large_fp32.dat       # OCR model
+├── marearts_anpr_r_v14_large_fp32_config.dat # OCR config
+└── ... (other models downloaded as needed)
 ```
 
 **Environment Variable**: Set `MAREARTS_ANPR_SKIP_UPDATE=1` to skip update checks and use cached models directly (faster initialization in production).
@@ -31,21 +32,42 @@ Detection models locate license plates in images.
 
 The V14 series introduces advanced detection with digital signature authentication and multiple inference backends.
 
+**Available Resolutions:**
+- **320p models** (320×320) - Faster speed, excellent detection (96-98%)
+- **640p models** (640×640) - Highest detection rates (98-99%), larger input
+
+**Available Precisions:**
+- **FP32** - Fastest on GPU (2× faster than FP16), standard size
+- **FP16** - 50% smaller file size, same detection rate, slower inference
+
+#### V14 Models - Performance Comparison
+
+![Detector Speed–Accuracy Trade-off](images/detector_performance_comparison.svg)
+
 #### V14 Models - Performance Metrics
 
-| Model Name | Size | Precision | Recall | F1 Score | FPS (CUDA) | Recommendation |
-|------------|------|-----------|--------|----------|------------|----------------|
-| pico_640p_fp32 | 100 MB | 0.8819 | 0.9854 | 0.9308 | 69 | 📱 Edge/Mobile |
-| micro_640p_fp32 | 111 MB | 0.8840 | 0.9899 | 0.9339 | 70 | ⚡ Fastest |
-| small_640p_fp32 | 153 MB | 0.8683 | 0.9915 | 0.9258 | 70 | 🎯 Balanced |
-| medium_640p_fp32 | 180 MB | 0.8623 | 0.9921 | 0.9227 | 62 | - |
-| large_640p_fp32 | 220 MB | 0.8902 | 0.9904 | 0.9377 | 57 | 🏆 Best accuracy |
+| Model Name | Detection Rate | Speed (GPU) | Size | Recommendation |
+|------------|----------------|-------------|------|----------------|
+| **micro_320p_fp32** | **97.13%** | **128 FPS** (7.8ms) | 83 MB | 🏆 Best overall |
+| **micro_320p_fp16** | **97.13%** | **56 FPS** (17.9ms) | 42 MB | 🏆 Best mobile (50% smaller) |
+| micro_640p_fp32 | 98.99% | 68 FPS (14.6ms) | 83 MB | Highest detection rate |
+| small_320p_fp32 | 98.00% | 142 FPS (7.0ms) | 114 MB | ⚡ Fastest |
+| medium_320p_fp32 | 98.06% | 136 FPS (7.4ms) | 153 MB | High detection |
+| large_320p_fp32 | 98.40% | 131 FPS (7.6ms) | 164 MB | Strong performance |
+| pico_320p_fp32 | 96.02% | 129 FPS (7.8ms) | 75 MB | 📱 Smallest + fast |
+| pico_640p_fp32 | 98.54% | 66 FPS (15.2ms) | 75 MB | Balanced |
+| small_640p_fp32 | 99.15% | 70 FPS (14.3ms) | 114 MB | High detection |
+| medium_640p_fp32 | 99.21% | 66 FPS (15.1ms) | 153 MB | Very high detection |
+| large_640p_fp32 | 99.31% | 60 FPS (16.7ms) | 164 MB | Highest detection |
 
-**✅ Benchmarked with RTX CUDA GPU**
+**Key Findings:**
+- **320p models**: 2× faster than 640p with excellent detection rates (96-98%)
+- **640p models**: Highest detection rates (98-99%) for difficult cases
+- **FP16 models**: 50% smaller size, same detection rate, ~50% slower
+- **Best overall**: micro_320p_fp32 (97.13% detection, 128 FPS)
+- **Best mobile**: micro_320p_fp16 (97.13% detection, 56 FPS, 42 MB)
 
 *Use these model names directly in `ma_anpr_detector_v14()` function*
-
-📊 **[View Full Detector Benchmark Results](benchmarks/v14_detector_benchmark_20251104.txt)** *(Updated: Nov 4, 2025)*
 
 ---
 
@@ -57,7 +79,7 @@ OCR models read text from detected license plates.
 
 The V14 OCR series introduces advanced OCR architecture with batch processing support and regional vocabulary filtering.
 
-**✅ Tested on real-world samples with RTX CUDA GPU**
+**✅ Tested on real-world samples with GPU acceleration**
 
 📊 **[View Full OCR Benchmark Results](benchmarks/v14_ocr_benchmark_20251104.txt)** *(Updated: Nov 4, 2025)*
 
@@ -150,7 +172,7 @@ The V14 OCR series introduces advanced OCR architecture with batch processing su
 ```python
 from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v14
 
-# V14 detector with CUDA backend (recommended for NVIDIA GPUs)
+# V14 detector with CUDA backend (GPU acceleration)
 detector = ma_anpr_detector_v14(
     "small_640p_fp32",   # Model name
     user_name,                # Your username
@@ -187,7 +209,8 @@ for text, conf in results:
 
 # NEW (>3.6.5): Dynamic region switching (saves memory)
 # Supported detector modes:
-#   model: pico_640p_fp32, micro_640p_fp32, small_640p_fp32, medium_640p_fp32, large_640p_fp32
+#   model: {size}_{res}_{prec} (e.g., micro_320p_fp32, medium_640p_fp32)
+#   size: pico, micro, small, medium, large | res: 320p, 640p | prec: fp32, fp16
 #   backend: "cpu", "cuda", "directml", "auto" (default: cpu)
 # Supported OCR modes:
 #   model: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
@@ -231,7 +254,7 @@ ocr = ma_anpr_ocr_v14('large_fp32', 'kr', user_name, serial_key, signature)
 
 ## Performance Notes
 
-- Benchmarked with RTX CUDA GPU
+- Benchmarked with GPU acceleration
 - CPU speeds typically 3-5x slower than GPU
 - FP16 models optimize memory and speed on compatible hardware
 - All V14 models require signature for authentication

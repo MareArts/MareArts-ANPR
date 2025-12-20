@@ -27,10 +27,10 @@ Authentication: Basic Auth (username/password) + API Key
 
 Form data:
 - `detection_model_version`: Detector model name
-  - Example: "v14_medium_640p_fp32"
+  - Example: "v14_micro_320p_fp32" or "v14_medium_640p_fp32"
   - Sizes: pico, micro, small, medium, large
-  - Resolutions: 320p, 640p (availability may vary)
-  - Precision: fp32, fp16 (availability may vary)
+  - Resolutions: 320p (fast), 640p (accurate)
+  - Precision: fp32 (fast), fp16 (compact)
 - `ocr_model_version`: OCR model name
   - Example: "v14_medium_fp32"
   - Sizes: pico, micro, small, medium, large
@@ -157,7 +157,10 @@ The API automatically optimizes model usage:
 ## Supported Modes
 
 ### Detector
-  - model: v14_pico_640p_fp32, v14_micro_640p_fp32, v14_small_640p_fp32, v14_medium_640p_fp32, v14_large_640p_fp32
+  - model: v14_{size}_{res}_{prec} (e.g., v14_micro_320p_fp32, v14_medium_640p_fp32)
+    - size: pico, micro, small, medium, large
+    - res: 320p (fast), 640p (accurate)
+    - prec: fp32 (fast), fp16 (compact)
   - backend: "cpu", "cuda", "directml", "auto" (default: cpu)
 
 ### OCR

@@ -149,6 +149,7 @@ $RECYCLE.BIN/
 *.cpp
 *.h
 *.hpp
+*.html
 
 # Linux
 *~
@@ -189,3 +190,6 @@ test_results/
 temp_images/
 output_images/
 md_images/
+# Test scripts
+docs/test/
+test/

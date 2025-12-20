@@ -101,7 +101,8 @@ This saves significant memory - one instance (~180 MB) instead of multiple insta
 **A:** 
 **Use `set_region()`**: When processing different regions sequentially, or in memory-constrained environments
 ### Supported detector modes:
-	# model: pico_640p_fp32, micro_640p_fp32, small_640p_fp32, medium_640p_fp32, large_640p_fp32
+	# model: {size}_{res}_{prec} (e.g., micro_320p_fp32, medium_640p_fp32)
+	# size: pico, micro, small, medium, large | res: 320p, 640p | prec: fp32, fp16
 	# backend: "cpu", "cuda", "directml", "auto" (default: cpu)
 ### Supported OCR modes:
 	# model: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32

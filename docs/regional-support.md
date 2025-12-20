@@ -192,7 +192,8 @@ ocr = ma_anpr_ocr_v14("large_fp32", "univ", user_name, serial_key, signature)
 
 # NEW (>3.6.5): Dynamic region switching for multi-region applications
 # Supported detector modes:
-#   model: pico_640p_fp32, micro_640p_fp32, small_640p_fp32, medium_640p_fp32, large_640p_fp32
+#   model: {size}_{res}_{prec} (e.g., micro_320p_fp32, medium_640p_fp32)
+#   size: pico, micro, small, medium, large | res: 320p, 640p | prec: fp32, fp16
 #   backend: "cpu", "cuda", "directml", "auto" (default: cpu)
 # Supported OCR modes:
 #   model: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32

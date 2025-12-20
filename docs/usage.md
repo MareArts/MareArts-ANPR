@@ -20,7 +20,7 @@ serial_key = os.getenv("MAREARTS_ANPR_SERIAL_KEY", "")
 signature = os.getenv("MAREARTS_ANPR_SIGNATURE", "")
 
 # Create V14 detector and OCR instances (V2 license required)
-detector = ma_anpr_detector_v14("medium_640p_fp32", user_name, serial_key, signature, backend="cuda")
+detector = ma_anpr_detector_v14("micro_320p_fp32", user_name, serial_key, signature, backend="cuda")  # Fast, recommended
 ocr = ma_anpr_ocr_v14("large_fp32", "univ", user_name, serial_key, signature)  # univ = universal (all regions)
 
 # Process image file
@@ -55,7 +55,7 @@ import cv2
 
 # Initialize V14 detector with all parameters
 detector = ma_anpr_detector_v14(
-    model_name="medium_640p_fp32",  # Required: V14 detector model
+    model_name="micro_320p_fp32",   # Required: V14 detector model (320p=fast, 640p=accurate)
     user_name=user_name,            # Required: Your email
     serial_key=serial_key,          # Required: Your V2 serial key
     signature=signature,            # Required: Your signature
@@ -65,7 +65,7 @@ detector = ma_anpr_detector_v14(
 )
 
 # Or with minimal parameters
-detector = ma_anpr_detector_v14("medium_640p_fp32", user_name, serial_key, signature)
+detector = ma_anpr_detector_v14("micro_320p_fp32", user_name, serial_key, signature)
 
 # Initialize V14 OCR
 ocr = ma_anpr_ocr_v14("large_fp32", "univ", user_name, serial_key, signature)
@@ -128,7 +128,7 @@ signature = "your_signature"  # Required - provided with V2 license
 
 # Initialize V14 detector with all parameters
 detector_v14 = ma_anpr_detector_v14(
-    model_name="small_640p_fp32",   # Required: V14 model name
+    model_name="micro_320p_fp32",   # Required: V14 model name (320p=fast, 640p=accurate)
     user_name=user_name,            # Required: Your email
     serial_key=serial_key,          # Required: Your V2 serial key
     signature=signature,            # Required: Your signature (mandatory for V14)
@@ -139,7 +139,7 @@ detector_v14 = ma_anpr_detector_v14(
 
 # Or with minimal parameters
 detector_v14 = ma_anpr_detector_v14(
-    "small_640p_fp32",
+    "micro_320p_fp32",
     user_name,
     serial_key,
     signature  # Required
@@ -220,7 +220,7 @@ ma-anpr image.jpg
 ma-anpr *.jpg
 
 # Specify V14 models
-ma-anpr image.jpg --detector-model medium_640p_fp32 --ocr-model large_fp32 --backend cuda
+ma-anpr image.jpg --detector-model micro_320p_fp32 --ocr-model large_fp32 --backend cuda
 
 # Save results to JSON
 ma-anpr image.jpg --json results.json
@@ -360,11 +360,9 @@ except Exception as e:
 1. **Use GPU acceleration** when available
 2. **Batch process** multiple images together
 3. **Choose appropriate V14 models** based on your needs:
-   - `pico_640p_fp32` - Fastest, smallest model
-   - `micro_640p_fp32` - Fast with good accuracy
-   - `small_640p_fp32` - Balanced performance
-   - `medium_640p_fp32` - Higher accuracy
-   - `large_640p_fp32` - Highest F1 score
+   - **320p** models (fast): `micro_320p_fp32` (recommended), `small_320p_fp32`
+   - **640p** models (accurate): `micro_640p_fp32`, `medium_640p_fp32`
+   - **FP16** models: 50% smaller, same accuracy, slower inference
 4. **Reuse detector/OCR instances** instead of recreating them
 5. **Adjust confidence thresholds** to reduce false positives
 6. **Select appropriate backend**:
