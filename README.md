@@ -6,6 +6,9 @@
 [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](https://www.marearts.com/products/anpr)
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen.svg)](http://live.marearts.com)
 
+[![Python SDK](https://img.shields.io/github/v/release/MareArts/MareArts-ANPR?filter=marearts-anpr-python-sdk-*&label=Python%20SDK&color=blue)](https://pypi.org/project/marearts-anpr/)
+[![iOS App](https://img.shields.io/github/v/release/MareArts/MareArts-ANPR?filter=marearts-anpr-mobile-app-ios-*&label=iOS%20App&color=green)](https://apps.apple.com/app/marearts-anpr/id6753904859)
+
 <div align="center">
 
 | ANPR Detection | Road Objects Detection | Mobile App |
