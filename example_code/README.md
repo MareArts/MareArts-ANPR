@@ -35,26 +35,72 @@ print(result)
 
 > **Note**: For legacy V13 models, see [Legacy Models Documentation](../docs/legacy-models.md)
 
-## Examples
+## Testing & Verification (Start Here!)
 
-### 1. basic.py ⭐ (Recommended Starting Point)
+### 0. verify_installation.py 🔍 (First Time Setup)
+
+**Check if everything is installed correctly:**
+- Verifies Python version compatibility
+- Checks NumPy version (must be 1.x, not 2.x)
+- Tests all dependencies
+- Validates CLI commands
+- Checks license configuration status
+
+```bash
+python example_code/verify_installation.py
+```
+
+**When to use:** Run this first to diagnose any installation issues!
+
+### 1. quick_test.py ⚡ (Quick Validation)
+
+**Complete installation and API test:**
+- Tests package installation
+- Tests CLI commands
+- Tests free API (no license needed)
+- Validates license (if configured)
+- Guides next steps
+
+```bash
+python example_code/quick_test.py
+```
+
+**When to use:** Quick check that everything works!
+
+### 2. test_api_regions.py 🌍 (Try Before You Buy)
+
+**Test the free API with different regions:**
+- No license required! (1000 requests/day)
+- Test Korean, European, US, Chinese plates
+- Examples for all regions
+- Shows how regions affect accuracy
+
+```bash
+python example_code/test_api_regions.py your_image.jpg
+```
+
+**When to use:** Try MareArts ANPR before purchasing!
+
+---
+
+## Usage Examples
+
+### 3. basic.py ⭐ (Recommended Starting Point)
 
 **V14 basic usage:**
- Simple initialization with V14 models
- Processing images from file, OpenCV, and PIL
- **Multi-region support using set_region()** (>3.6.5)
- **Batch processing** - Process multiple plates efficiently
- Memory-efficient region switching (saves ~180MB per region)
- 
- # Supported detector modes:
- #   - model: pico_640p_fp32, micro_640p_fp32, small_640p_fp32, medium_640p_fp32, large_640p_fp32
- #   - backend: "cpu", "cuda", "directml", "auto" (default: cpu)
- # Supported OCR modes:
- #   - model: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
- #   - region: "kr", "eup", "na", "cn", "univ" (default: univ)
- #   - backend: "cpu", "cuda", "directml", "auto" (default: cpu)
+- Simple initialization with V14 models
+- Processing images from file, OpenCV, and PIL
+- **Multi-region support using set_region()** (>3.6.5)
+- **Batch processing** - Process multiple plates efficiently
+- Memory-efficient region switching (saves ~180MB per region)
 
-### 2. advanced.py (Manual Processing & Performance)
+**Requires:** License configured with `ma-anpr config`
+
+```bash
+python example_code/basic.py
+```
+
+### 4. advanced.py (Manual Processing & Performance)
 
 **V14 advanced usage:**
 - Manual detection and OCR processing with V14 models
@@ -63,7 +109,9 @@ print(result)
 - **Backend comparison** - Test cpu vs cuda performance
 - Custom result formatting
 
-### 3. bg_subtraction.py (Utility)
+**Requires:** License configured
+
+### 5. bg_subtraction.py (Utility)
 
 **Background subtraction for video processing:**
 - Video processing
@@ -97,9 +145,44 @@ ocr.set_region('cn')   # China
 # Saves ~180 MB per region vs creating multiple instances!
 ```
 
-## Setup
+## Setup & Configuration
 
-See **[Installation Guide](../docs/installation.md)** for credential configuration with `ma-anpr config`.
+### First Time Users
+
+1. **Install the package:**
+   ```bash
+   pip install marearts-anpr
+   ```
+
+2. **Verify installation:**
+   ```bash
+   python example_code/verify_installation.py
+   ```
+
+3. **If you have a license, configure credentials:**
+   ```bash
+   ma-anpr config
+   ```
+   
+   You'll be prompted to enter:
+   - Username/email
+   - Serial key
+   - Signature (for V2 licenses)
+
+4. **Test it works:**
+   ```bash
+   python example_code/quick_test.py
+   ```
+
+### No License?
+
+Use the **free test API** (1000 requests/day):
+```bash
+ma-anpr test-api your_image.jpg --region eup
+python example_code/test_api_regions.py your_image.jpg
+```
+
+See **[Installation Guide](../docs/installation.md)** for more details.
 
 ## Requirements
 
