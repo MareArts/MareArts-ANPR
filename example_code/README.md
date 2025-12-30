@@ -2,8 +2,10 @@
 
 This directory contains example code demonstrating how to use the MareArts ANPR V14 SDK.
 
-## Quick Start
+<br>
 
+
+## Quick Start
 
 ### V14 Models (Recommended)
 
@@ -36,6 +38,9 @@ print(result)
 
 > **Note**: For legacy V13 models, see [Legacy Models Documentation](../docs/legacy-models.md)
 
+<br>
+
+
 
 ## Testing & Verification (Start Here!)
 
@@ -52,7 +57,10 @@ print(result)
 python example_code/verify_installation.py
 ```
 
+
+
 **When to use:** Run this first to diagnose any installation issues!
+<br>
 
 
 ### 1. quick_test.py ⚡ (Quick Validation)
@@ -68,7 +76,9 @@ python example_code/verify_installation.py
 python example_code/quick_test.py
 ```
 
+
 **When to use:** Quick check that everything works!
+<br>
 
 
 ### 2. test_api_regions.py 🌍 (Try Before You Buy)
@@ -83,7 +93,9 @@ python example_code/quick_test.py
 python example_code/test_api_regions.py your_image.jpg
 ```
 
+
 **When to use:** Try MareArts ANPR before purchasing!
+
 
 
 ### 2b. test_api_examples.sh 📋 (Interactive Examples)
@@ -100,9 +112,11 @@ python example_code/test_api_regions.py your_image.jpg
 ./example_code/test_api_examples.sh your_image.jpg
 ```
 
+
 **When to use:** Learn all available options interactively!
 
 ---
+
 
 
 ## Usage Examples
@@ -116,11 +130,14 @@ python example_code/test_api_regions.py your_image.jpg
 - **Batch processing** - Process multiple plates efficiently
 - Memory-efficient region switching (saves ~180MB per region)
 
+
+
 **Requires:** License configured with `ma-anpr config`
 
 ```bash
 python example_code/basic.py
 ```
+
 
 
 ### 4. advanced.py (Manual Processing & Performance)
@@ -135,6 +152,7 @@ python example_code/basic.py
 **Requires:** License configured
 
 
+
 ### 5. bg_subtraction.py (Utility)
 
 **Background subtraction for video processing:**
@@ -145,7 +163,9 @@ python example_code/basic.py
 
 ---
 
+
 ## Integration & Troubleshooting
+
 
 
 ### 6. simple_server.py 🌐 (HTTP Server - Easiest Integration!)
@@ -187,9 +207,12 @@ var content = new ByteArrayContent(imageBytes);
 await client.PostAsync("http://localhost:8000/detect/binary", content);
 ```
 
+
+
 **Use case:** Easiest way to integrate with ANY software (C#, Visual Studio, web app)
 
 **Note:** Server must be running before sending images!
+
 
 
 ### 7. memory_processing.py 💾 (Direct Integration)
@@ -209,6 +232,7 @@ python example_code/memory_processing.py
 - If "test-api works but local doesn't": Lower confidence to 0.15-0.20
 - Check region: eup, kr, na, cn
 - Run: `ma-anpr validate`
+
 
 
 ## Available Models & Configuration
