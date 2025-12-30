@@ -253,6 +253,6 @@ This software requires a valid license key. Visit [MareArts ANPR Solution](https
 
 <div align="center">
 
-<a href='https://clustrmaps.com/site/1c8t6' title='Visit tracker'><img src='https://clustrmaps.com/map_v2.png?cl=080808&w=600&t=t&d=I-__iZrXFcHfzEXPbD_E0f9ipSE8cNnANPUFRBu-c2Q&co=ffffff&ct=808080' alt='Visitor Map' width='300'/></a>
+<a href='https://clustrmaps.com/site/1c8t6' title='Visit tracker'><img src='https://clustrmaps.com/map_v2.png?cl=00ff00&w=500&t=tt&d=I-__iZrXFcHfzEXPbD_E0f9ipSE8cNnANPUFRBu-c2Q&co=0a0a0a&ct=ffffff&cmn=00ff00&cmo=111111&r=5' alt='Visitor Map' width='500'/></a>
 
 </div>
