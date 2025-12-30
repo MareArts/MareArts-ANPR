@@ -23,7 +23,7 @@ Automatic Number Plate Recognition (ANPR) SDK for multiple regions with GPU acce
 
 ---
 
-## 🎉 New: MareArts ANPR Mobile App Released!
+## 🎉 MareArts ANPR Mobile App - v1.6.0 Update!
 
 **📱 Now available on iOS! Android coming soon.**
 
@@ -32,7 +32,10 @@ Experience the power of MareArts ANPR directly on your mobile device! Fast, accu
 [![Download on App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/us/app/marearts-anpr/id6753904859)
 
 ✨ **Key Features:**
-- 🚀 Fast on-device AI processing
+- 🚀 Fast on-device AI processing (~100-160ms)
+- 🔄 **NEW: Complete cloud sync** - Keep data in sync across devices
+- 📊 **NEW: Export/Import CSV** - Professional data management
+- 📸 **NEW: Resolution control** - Choose 480p/720p/1080p
 - 🔒 100% offline - privacy first
 - 📊 Statistics and analytics
 - 🗺️ Map view with GPS tracking
@@ -40,6 +43,8 @@ Experience the power of MareArts ANPR directly on your mobile device! Fast, accu
 - 🌍 Multi-region support
 
 📖 **[Read the complete Mobile App Guide →](https://github.com/MareArts/MareArts-ANPR/blob/main/mobile_app/APP_GUIDE.md)**
+
+🆕 **Version 1.6.0:** Two-way cloud sync, CSV export/import, and enhanced data management!
 
 > **🎁 Special Offer:** Use the mobile app as your ANPR license - no additional purchase required!  
 > Get your license at [marearts.com/products/anpr](https://www.marearts.com/products/anpr)

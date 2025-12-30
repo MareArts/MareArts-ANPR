@@ -18,9 +18,13 @@ MareArts ANPR is a professional license plate recognition app for parking manage
 
 ## 🆕 Latest Release
 
-**Version 1.5.16 (Build 81)** - December 18, 2025
+**Version 1.6.0 (Build 111)** - December 30, 2025
 
-New: Year selector, custom date range, search in rules, swipe navigation, and more!
+**🔄 Complete Cloud Sync** - Two-way synchronization keeps your data perfectly in sync across all devices and marearts.com
+
+**📊 CSV Export/Import** - Professional data management with export and bulk import features
+
+**📸 Resolution Control** - Choose camera quality (480p/720p/1080p) for speed vs detail
 
 [📖 View Release Notes](https://github.com/MareArts/MareArts-ANPR/releases/latest)
 
@@ -89,6 +93,21 @@ The app has 5 main tabs at the bottom:
 - Resets daily at midnight
 - **Login for unlimited scans** (infinite usage)
 
+### Camera Settings:
+
+Tap the **⚙️ icon** next to the mode buttons to adjust:
+
+**Resolution:**
+- **1080p (1920×1080)** - Highest quality, best for detail (~140-160ms)
+- **720p (1280×720)** - Balanced quality and speed (~100-130ms) ⭐ Recommended
+- **480p (640×480)** - Fastest processing, good for high-volume (~80-110ms)
+
+**Frame Rate:**
+- **60 FPS** - Smooth preview (default)
+- **30 FPS** - Battery saver mode
+
+💡 **Tip:** Lower resolution = faster processing and less storage space!
+
 ---
 
 ## 🕐 2. Detections Page
@@ -138,6 +157,19 @@ The app has 5 main tabs at the bottom:
 - **Search bar**: Filter by plate number
 - **Header**: Shows total locations count
 
+### Export Data:
+
+Tap **⋮ menu** in top-right corner:
+
+**Export All Data (CSV)**
+- Downloads all your detections as a CSV file
+- Includes: Plate number, date, time, GPS coordinates, confidence scores
+- Compatible with Excel, Google Sheets, and marearts.com
+- Use for backup, analysis, or reporting
+- Share via AirDrop, Files app, or email
+
+💡 **Tip:** Export regularly to keep backups of your detection history!
+
 ---
 
 ## ✅ 3. Rules Page
@@ -174,6 +206,28 @@ The app has 5 main tabs at the bottom:
 - Parking: Whitelist residents, blacklist violators
 - Security: Whitelist staff, blacklist banned vehicles
 - Delivery: Track known vehicles
+
+### Bulk Management:
+
+Tap **⋮ menu** in top-right corner for CSV operations:
+
+**Export All Rules**
+- Downloads all your whitelist and blacklist plates as CSV
+- Compatible with Excel, Google Sheets, and marearts.com
+- Perfect for backup or editing in spreadsheet
+
+**Import Rules**
+- Upload a CSV file to replace all current rules
+- Download sample template first to see the format
+- Great for bulk adding plates (e.g., 100+ employee vehicles)
+- ⚠️ Replaces all existing rules - export first as backup!
+
+**Download Sample CSV**
+- Get a template file with instructions
+- Fill in: Plate Number, Type (whitelist/blacklist), Note
+- Import when ready
+
+💡 **Workflow:** Export → Edit in Excel → Import back for bulk updates!
 
 ---
 
@@ -240,6 +294,29 @@ The app has 5 main tabs at the bottom:
 - Resets at midnight
 - **Login for infinite scans**
 
+### Cloud Sync:
+
+**Sync to Cloud** (Login required)
+- **Two-way sync** - Keeps data in sync across all devices
+- Tap **"Sync Now"** button to synchronize
+- **Step 1:** Upload your device changes to cloud
+- **Step 2:** Download data from cloud (other devices/web)
+- **Step 3:** Merge changes automatically
+
+**What Gets Synced:**
+- ✅ All detections (plate numbers, timestamps, GPS)
+- ✅ All rules (whitelist & blacklist)
+- ✅ Detection images from this device
+- ℹ️ Images from other devices viewable on marearts.com
+
+**Benefits:**
+- 📱 Use multiple devices with same account
+- 🌐 View all data on marearts.com web dashboard
+- 🔄 Rules added on web appear on all devices
+- 💾 Cloud backup of all your data
+
+💡 **Tip:** Sync regularly to keep devices updated!
+
 ### Notifications:
 
 **Sound** 🔊
@@ -296,14 +373,15 @@ The app has 5 main tabs at the bottom:
 - Viewable in Detections page
 - Uses device storage
 
-**Clear History** 🗑️
-- Delete all detection records
-- **Warning**: Cannot be undone
+**Clear All Data** 🗑️
+- Delete all detections AND rules
+- Shows count before deletion
+- **Warning**: Cannot be undone unless logged in (syncs deletion to cloud)
 
-**Data Retention** (7-365 days, Never)
-- Auto-delete old records
+**Data Retention** (7-365 days)
+- Auto-delete old detections
 - **Default**: 30 days
-- **Never**: Keep forever
+- Applies to detections only (rules kept)
 
 ### Location:
 
