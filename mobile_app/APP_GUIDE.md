@@ -315,6 +315,11 @@ Tap **⋮ menu** in top-right corner for CSV operations:
 - 🔄 Rules added on web appear on all devices
 - 💾 Cloud backup of all your data
 
+<div align="center">
+  <img src="webpage_sync.png" alt="Web Dashboard - Synced Data" width="600"/>
+  <p><i>View and manage all your detections on marearts.com</i></p>
+</div>
+
 💡 **Tip:** Sync regularly to keep devices updated!
 
 ### Notifications:
