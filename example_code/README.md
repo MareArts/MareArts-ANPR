@@ -81,6 +81,22 @@ python example_code/test_api_regions.py your_image.jpg
 
 **When to use:** Try MareArts ANPR before purchasing!
 
+### 2b. test_api_examples.sh 📋 (Interactive Examples)
+
+**Comprehensive test-api tutorial with 20+ examples:**
+- All detector models (pico → large)
+- All regions (kr, eup, na, cn, univ)
+- Different resolutions (320p vs 640p)
+- Precision options (FP16 vs FP32)
+- Use case examples (security, parking, law enforcement)
+- Interactive - press Enter between examples
+
+```bash
+./example_code/test_api_examples.sh your_image.jpg
+```
+
+**When to use:** Learn all available options interactively!
+
 ---
 
 ## Usage Examples
@@ -177,8 +193,19 @@ ocr.set_region('cn')   # China
 ### No License?
 
 Use the **free test API** (1000 requests/day):
+
+**Quick test:**
 ```bash
 ma-anpr test-api your_image.jpg --region eup
+```
+
+**Interactive examples (20+ test cases):**
+```bash
+./example_code/test_api_examples.sh your_image.jpg
+```
+
+**Python script:**
+```bash
 python example_code/test_api_regions.py your_image.jpg
 ```
 
