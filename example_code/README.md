@@ -135,6 +135,29 @@ python example_code/basic.py
 - Processing only moving vehicles
 - Can be combined with V14 ANPR
 
+---
+
+## Integration & Troubleshooting
+
+### 6. memory_processing.py 💾 (For Software Integration)
+
+**Simple example: Process images from memory (no disk I/O)**
+- Process bytes (Visual Studio, HTTP)
+- Process numpy arrays (OpenCV, cameras)
+- Confidence threshold control
+- 40 lines of code - easy to adapt!
+
+```bash
+python example_code/memory_processing.py
+```
+
+**Use case:** Integrating with existing parking/access control software
+
+**Troubleshooting tip:**
+- If "test-api works but local doesn't": Lower confidence to 0.15-0.20
+- Check region is correct (eup, kr, na, cn)
+- Run: `ma-anpr validate` to check license
+
 ## Available Models & Configuration
 
 For complete model specifications, performance benchmarks, and configuration options, see:

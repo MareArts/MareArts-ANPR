@@ -7,6 +7,8 @@ dependencies are working. Useful for troubleshooting installation issues.
 """
 
 import sys
+import subprocess
+import os
 
 def check_installation():
     """Verify marearts-anpr installation"""

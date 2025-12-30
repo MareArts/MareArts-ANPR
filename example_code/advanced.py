@@ -11,19 +11,36 @@ if __name__ == '__main__':
     ## Initiate MareArts ANPR V14
     print("MareArts ANPR V14 - Advanced Example with Manual Processing")
     
-    # Initialize with your V2 credentials
+    # CREDENTIALS - Choose one:
+    # Method 1: Hardcode (edit below)
     user_name = "your_email"
     serial_key = "your_serial_key"
-    signature = "your_signature"  # Required for V14 models
+    signature = "your_signature"
     
-    # Recommended: Use ma-anpr CLI to configure credentials
-    # $ ma-anpr config
-    # Then credentials are auto-loaded from ~/.marearts/.marearts_env
-    # Or load manually:
-    # import os
-    # user_name = os.getenv("MAREARTS_ANPR_USERNAME", user_name)
-    # serial_key = os.getenv("MAREARTS_ANPR_SERIAL_KEY", serial_key)
-    # signature = os.getenv("MAREARTS_ANPR_SIGNATURE", signature)
+    # Method 2: Auto-load from ma-anpr config
+    if user_name == "your_email":
+        import os
+        from pathlib import Path
+        
+        def load_credentials():
+            user = os.getenv('MAREARTS_ANPR_USERNAME')
+            key = os.getenv('MAREARTS_ANPR_SERIAL_KEY')
+            sig = os.getenv('MAREARTS_ANPR_SIGNATURE')
+            
+            if not all([user, key, sig]):
+                config = Path.home() / '.marearts' / '.marearts_env'
+                if config.exists():
+                    for line in open(config):
+                        if 'USERNAME=' in line: user = line.split('=')[1].strip().strip('"')
+                        elif 'SERIAL_KEY=' in line: key = line.split('=')[1].strip().strip('"')
+                        elif 'SIGNATURE=' in line: sig = line.split('=')[1].strip().strip('"')
+            return user, key, sig
+        
+        user_name, serial_key, signature = load_credentials()
+    
+    if not all([user_name, serial_key, signature]) or user_name == "your_email":
+        print("❌ Edit credentials above OR run: ma-anpr config")
+        exit(1)
 
     # V14 Detector models: pico_640p_fp32, micro_640p_fp32, small_640p_fp32, medium_640p_fp32, large_640p_fp32
     detector_model = "medium_640p_fp32"
