@@ -4,6 +4,7 @@ This directory contains example code demonstrating how to use the MareArts ANPR 
 
 ## Quick Start
 
+
 ### V14 Models (Recommended)
 
 ```python
@@ -35,6 +36,7 @@ print(result)
 
 > **Note**: For legacy V13 models, see [Legacy Models Documentation](../docs/legacy-models.md)
 
+
 ## Testing & Verification (Start Here!)
 
 ### 0. verify_installation.py 🔍 (First Time Setup)
@@ -52,6 +54,7 @@ python example_code/verify_installation.py
 
 **When to use:** Run this first to diagnose any installation issues!
 
+
 ### 1. quick_test.py ⚡ (Quick Validation)
 
 **Complete installation and API test:**
@@ -67,6 +70,7 @@ python example_code/quick_test.py
 
 **When to use:** Quick check that everything works!
 
+
 ### 2. test_api_regions.py 🌍 (Try Before You Buy)
 
 **Test the free API with different regions:**
@@ -80,6 +84,7 @@ python example_code/test_api_regions.py your_image.jpg
 ```
 
 **When to use:** Try MareArts ANPR before purchasing!
+
 
 ### 2b. test_api_examples.sh 📋 (Interactive Examples)
 
@@ -99,6 +104,7 @@ python example_code/test_api_regions.py your_image.jpg
 
 ---
 
+
 ## Usage Examples
 
 ### 3. basic.py ⭐ (Recommended Starting Point)
@@ -116,6 +122,7 @@ python example_code/test_api_regions.py your_image.jpg
 python example_code/basic.py
 ```
 
+
 ### 4. advanced.py (Manual Processing & Performance)
 
 **V14 advanced usage:**
@@ -126,6 +133,7 @@ python example_code/basic.py
 - Custom result formatting
 
 **Requires:** License configured
+
 
 ### 5. bg_subtraction.py (Utility)
 
@@ -138,6 +146,7 @@ python example_code/basic.py
 ---
 
 ## Integration & Troubleshooting
+
 
 ### 6. simple_server.py 🌐 (HTTP Server - Easiest Integration!)
 
@@ -182,6 +191,7 @@ await client.PostAsync("http://localhost:8000/detect/binary", content);
 
 **Note:** Server must be running before sending images!
 
+
 ### 7. memory_processing.py 💾 (Direct Integration)
 
 **Process images from memory without server:**
@@ -200,6 +210,7 @@ python example_code/memory_processing.py
 - Check region: eup, kr, na, cn
 - Run: `ma-anpr validate`
 
+
 ## Available Models & Configuration
 
 For complete model specifications, performance benchmarks, and configuration options, see:
@@ -207,6 +218,7 @@ For complete model specifications, performance benchmarks, and configuration opt
 - **[V14 Models Documentation](../docs/models.md)** - All available models, performance, sizes, and recommendations
 - **[Regional Support](../docs/regional-support.md)** - Regional vocabularies (kr, eup, na, cn, univ)
 - **[Usage Guide](../docs/usage.md)** - Backend options (cpu, cuda, directml), dynamic region switching
+
 
 ## New Features (>3.7.0)
 
@@ -225,6 +237,7 @@ ocr.set_region('cn')   # China
 
 # Saves ~180 MB per region vs creating multiple instances!
 ```
+
 
 ## Setup & Configuration
 
@@ -276,6 +289,7 @@ python example_code/test_api_regions.py your_image.jpg
 
 See **[Installation Guide](../docs/installation.md)** for more details.
 
+
 ## Requirements
 
 ```bash
@@ -284,9 +298,11 @@ pip install opencv-python  # For OpenCV examples
 pip install pillow  # For PIL examples
 ```
 
+
 ## Model Storage
 
 Models are automatically downloaded to `~/.marearts/marearts_anpr_data/` on first use and cached for subsequent runs.
+
 
 ## Notes
 
