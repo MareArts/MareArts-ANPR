@@ -13,7 +13,7 @@ Author: MareArts
 """
 
 from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v14
-from marearts_anpr import marearts_anpr_from_image, marearts_anpr_from_pil
+from marearts_anpr import marearts_anpr_from_cv2, marearts_anpr_from_pil
 import numpy as np
 import cv2
 from PIL import Image
@@ -123,8 +123,8 @@ def process_from_opencv(image_array):
     """
     print("Method 1: Processing from NumPy array (OpenCV)")
     
-    # Use marearts_anpr_from_image() - accepts numpy array directly
-    result = marearts_anpr_from_image(detector, ocr, image_array)
+    # Use marearts_anpr_from_cv2() - accepts OpenCV numpy array
+    result = marearts_anpr_from_cv2(detector, ocr, image_array)
     
     return result
 
@@ -179,7 +179,7 @@ def process_from_bytes(image_bytes):
     image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     
     # Process
-    result = marearts_anpr_from_image(detector, ocr, image)
+    result = marearts_anpr_from_cv2(detector, ocr, image)
     
     return result
 
@@ -214,7 +214,7 @@ def process_from_base64(base64_string):
     image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     
     # Process
-    result = marearts_anpr_from_image(detector, ocr, image)
+    result = marearts_anpr_from_cv2(detector, ocr, image)
     
     return result
 
@@ -250,7 +250,7 @@ def process_video_stream(camera_id=0, num_frames=10):
             break
         
         # Process frame directly from memory
-        result = marearts_anpr_from_image(detector, ocr, frame)
+        result = marearts_anpr_from_cv2(detector, ocr, frame)
         
         if result and result.get('results'):
             print(f"Frame {frame_count}: Found {len(result['results'])} plates")

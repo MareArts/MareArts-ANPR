@@ -139,24 +139,66 @@ python example_code/basic.py
 
 ## Integration & Troubleshooting
 
-### 6. memory_processing.py 💾 (For Software Integration)
+### 6. simple_server.py 🌐 (HTTP Server - Easiest Integration!)
 
-**Simple example: Process images from memory (no disk I/O)**
-- Process bytes (Visual Studio, HTTP)
-- Process numpy arrays (OpenCV, cameras)
+**Minimal HTTP server - load models once, accept images from memory:**
+- 3 input methods: file upload, raw bytes, base64
+- No disk I/O - process from memory
+- Perfect for Visual Studio / C# integration
+- Server loads models ONCE (~22s), then fast processing (~0.03s per image)
+
+**Step 1: Install requirements**
+```bash
+pip install fastapi uvicorn python-multipart
+```
+
+**Step 2: Start server** (one terminal, leave running)
+```bash
+python example_code/simple_server.py
+# Models load once, then server waits for requests
+```
+
+**Step 3: Send images** (another terminal or from your app)
+
+From command line:
+```bash
+curl -X POST http://localhost:8000/detect -F "image=@plate.jpg"
+curl -X POST http://localhost:8000/detect/binary --data-binary "@plate.jpg"
+```
+
+From Python:
+```bash
+python example_code/test_server.py your_image.jpg
+```
+
+From Visual Studio C#:
+```csharp
+var client = new HttpClient();
+var content = new ByteArrayContent(imageBytes);
+await client.PostAsync("http://localhost:8000/detect/binary", content);
+```
+
+**Use case:** Easiest way to integrate with ANY software (C#, Visual Studio, web app)
+
+**Note:** Server must be running before sending images!
+
+### 7. memory_processing.py 💾 (Direct Integration)
+
+**Process images from memory without server:**
+- Process bytes, numpy arrays
+- 40 lines - copy into your code
 - Confidence threshold control
-- 40 lines of code - easy to adapt!
 
 ```bash
 python example_code/memory_processing.py
 ```
 
-**Use case:** Integrating with existing parking/access control software
+**Use case:** Embed directly in your Python application
 
-**Troubleshooting tip:**
+**Troubleshooting:**
 - If "test-api works but local doesn't": Lower confidence to 0.15-0.20
-- Check region is correct (eup, kr, na, cn)
-- Run: `ma-anpr validate` to check license
+- Check region: eup, kr, na, cn
+- Run: `ma-anpr validate`
 
 ## Available Models & Configuration
 

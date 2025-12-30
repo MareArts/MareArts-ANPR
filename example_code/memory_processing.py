@@ -11,7 +11,7 @@ Credential Options:
 3. Environment variables: export MAREARTS_ANPR_USERNAME=...
 """
 
-from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v14, marearts_anpr_from_image
+from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v14, marearts_anpr_from_cv2
 import cv2
 import numpy as np
 import os
@@ -75,11 +75,11 @@ print("✅ Ready!\n")
 def process_bytes(image_bytes):
     nparr = np.frombuffer(image_bytes, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    return marearts_anpr_from_image(detector, ocr, img)
+    return marearts_anpr_from_cv2(detector, ocr, img)
 
 # Method 2: From numpy array (OpenCV, cameras)
 def process_array(image_array):
-    return marearts_anpr_from_image(detector, ocr, image_array)
+    return marearts_anpr_from_cv2(detector, ocr, image_array)
 
 # Example usage
 if __name__ == '__main__':
