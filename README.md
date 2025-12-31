@@ -64,7 +64,9 @@ Deploy a complete ANPR management system with real-time monitoring, detection hi
 **Quick Start:**
 ```bash
 cd management_server
-python server.py
+pip install -r requirements.txt  # First time only
+ma-anpr config                   # Configure credentials
+python server.py                 # Start server
 # Open http://localhost:8000/
 ```
 
