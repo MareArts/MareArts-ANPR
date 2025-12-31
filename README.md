@@ -78,7 +78,7 @@ python server.py                 # Start server
 
 <br>
 
-## MareArts ANPR Features
+## MareArts ANPR SDK Features
 
 - 🌍 **Multi-Region Support**: Korean, Europe+, North America, China, and Universal license plates
 - 🔄 **Dynamic Region Switching**: Change regions instantly with `set_region()` without model reload
