@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MareArts ANPR Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            border-bottom: 1px solid #e1e8ed;
+            padding: 20px 30px;
+            margin: -20px -20px 20px -20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .header h1 {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .header .subtitle {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        .tabs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: white;
+            border-bottom: 2px solid #e1e8ed;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .tab {
+            padding: 16px 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            color: #7f8c8d;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            text-align: center;
+        }
+
+        .tab:hover {
+            color: #3498db;
+            background: #f8f9fa;
+        }
+
+        .tab.active {
+            color: #3498db;
+            border-bottom-color: #3498db;
+            background: white;
+        }
+
+        .content {
+            background: white;
+            border-radius: 4px;
+            padding: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            min-height: 600px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e1e8ed;
+            padding: 15px;
+            border-radius: 4px;
+            transition: box-shadow 0.2s;
+        }
+
+        .stat-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .stat-card h3 {
+            font-size: 0.75em;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .stat-card .value {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .detection-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .detection-card {
+            background: white;
+            border: 1px solid #e1e8ed;
+            border-radius: 4px;
+            padding: 15px;
+            transition: all 0.2s;
+        }
+
+        .detection-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-color: #3498db;
+        }
+
+        .detection-card .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .detection-card .plate-text {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #2c3e50;
+            font-family: 'Courier New', monospace;
+        }
+
+        .detection-card .timestamp {
+            color: #95a5a6;
+            font-size: 0.85em;
+        }
+
+        .detection-card .details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+        }
+
+        .detection-card .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detection-card .detail-label {
+            font-size: 0.75em;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .detection-card .detail-value {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.95em;
+        }
+
+        .detection-card img {
+            width: 100%;
+            border-radius: 4px;
+            border: 1px solid #e1e8ed;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .detection-card img:hover {
+            opacity: 0.8;
+        }
+
+        .detection-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .detection-image {
+            width: 100%;
+        }
+
+        .detection-info {
+            flex: 1;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal img {
+            max-width: 95%;
+            max-height: 95vh;
+            border-radius: 4px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            font-weight: 300;
+        }
+
+        .modal-close:hover {
+            color: #ccc;
+        }
+
+        @media (max-width: 1200px) {
+            #dashboard > div > div:first-child {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .detection-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .tab {
+                font-size: 0.9em;
+            }
+            
+            div[style*="grid-template-columns: repeat(2, 1fr)"] {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        .upload-area {
+            border: 2px dashed #bdc3c7;
+            border-radius: 4px;
+            padding: 60px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #fafbfc;
+        }
+
+        .upload-area:hover {
+            background: #f0f2f5;
+            border-color: #3498db;
+        }
+
+        .upload-area.dragging {
+            background: #e8f4f8;
+            border-color: #3498db;
+        }
+
+        .upload-area h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .upload-area p {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95em;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+
+        .btn-period {
+            padding: 8px 16px;
+            border: 1px solid #e1e8ed;
+            background: white;
+            color: #7f8c8d;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9em;
+        }
+
+        .btn-period:hover {
+            background: #f8f9fa;
+            border-color: #3498db;
+            color: #3498db;
+        }
+
+        .btn-period.active {
+            background: #3498db;
+            border-color: #3498db;
+            color: white;
+        }
+
+        .processing {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .processing.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid;
+        }
+
+        .alert-success {
+            background: #d5f4e6;
+            border-color: #27ae60;
+            color: #1e7e44;
+        }
+
+        .alert-error {
+            background: #fadbd8;
+            border-color: #e74c3c;
+            color: #c0392b;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            border-color: #f39c12;
+            color: #856404;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #d5f4e6;
+            color: #27ae60;
+        }
+
+        .badge-high {
+            background: #d5f4e6;
+            color: #27ae60;
+        }
+
+        .badge-medium {
+            background: #fff3cd;
+            color: #f39c12;
+        }
+
+        .badge-low {
+            background: #fadbd8;
+            color: #e74c3c;
+        }
+
+        .chart-container {
+            background: #fafbfc;
+            border: 1px solid #e1e8ed;
+            border-radius: 4px;
+            padding: 20px;
+            margin-top: 20px;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .chart-container canvas {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #95a5a6;
+        }
+
+        .empty-state h3 {
+            color: #7f8c8d;
+            margin-top: 15px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #7f8c8d;
+            font-size: 0.85em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-group input, .filter-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95em;
+            transition: border-color 0.2s;
+        }
+
+        .filter-group input:focus, .filter-group select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .info-box {
+            background: #fafbfc;
+            border: 1px solid #e1e8ed;
+            border-radius: 4px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .info-box h3 {
+            margin-bottom: 15px;
+        }
+
+        .info-box p {
+            color: #7f8c8d;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .info-box ul {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+
+        .info-box li {
+            color: #7f8c8d;
+            line-height: 1.8;
+        }
+
+        .info-box code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>MareArts ANPR Management System</h1>
+        <p class="subtitle">Automatic Number Plate Recognition Platform</p>
+    </div>
+
+    <div class="container">
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('dashboard')">Dashboard</div>
+            <div class="tab" onclick="switchTab('upload')">Upload & Detect</div>
+            <div class="tab" onclick="switchTab('history')">Detection History</div>
+            <div class="tab" onclick="switchTab('settings')">Settings</div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content active">
+                <h2>Dashboard & Statistics</h2>
+                
+                <div id="server-status"></div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 350px; gap: 20px; margin-bottom: 20px;">
+                    <div>
+                        <div style="margin-bottom: 15px;">
+                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                <button class="btn btn-period active" onclick="setDashboardPeriod('today')">Today</button>
+                                <button class="btn btn-period" onclick="setDashboardPeriod('week')">This Week</button>
+                                <button class="btn btn-period" onclick="setDashboardPeriod('month')">This Month</button>
+                                <button class="btn btn-period" onclick="setDashboardPeriod('3months')">Last 3 Months</button>
+                                <button class="btn btn-period" onclick="setDashboardPeriod('all')">All Time</button>
+                            </div>
+                        </div>
+
+                        <div id="dashboard-period" style="margin-bottom: 15px; padding: 10px; background: #f8f9fa; border-radius: 4px; color: #7f8c8d; font-size: 0.9em;"></div>
+                        
+                        <div class="stats-grid" id="stats-grid">
+                            <!-- Stats will be loaded here -->
+                        </div>
+
+                        <div class="chart-container" style="margin-top: 20px;">
+                            <h3 style="margin-bottom: 15px;">Daily Activity</h3>
+                            <canvas id="daily-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div style="background: white; border: 1px solid #e1e8ed; border-radius: 4px; padding: 15px; height: 600px; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div>
+                                    <h3 style="margin-bottom: 2px;">Real-Time Server Log</h3>
+                                    <p style="font-size: 0.75em; color: #7f8c8d; margin: 0;">Max 500 entries, auto-rotates</p>
+                                </div>
+                                <button class="btn" style="padding: 4px 10px; font-size: 0.8em; background: #95a5a6; color: white;" onclick="clearServerLog()">Clear</button>
+                            </div>
+                            <div id="realtime-log" style="flex: 1; overflow-y: auto; background: #fafbfc; border: 1px solid #e1e8ed; border-radius: 4px; padding: 10px; font-family: monospace; font-size: 0.75em; line-height: 1.6;">
+                                <div style="color: #95a5a6;">Connecting to server log stream...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Tab -->
+            <div id="upload" class="tab-content">
+                <h2>Upload & Detect</h2>
+                
+                <div class="upload-area" id="upload-area" onclick="document.getElementById('file-input').click()">
+                    <div style="font-size: 3em; margin-bottom: 15px; color: #bdc3c7;">📷</div>
+                    <h3>Click or Drag Image to Upload</h3>
+                    <p>Supports JPG, PNG, BMP formats</p>
+                    <input type="file" id="file-input" accept="image/*" style="display: none;" onchange="uploadImage(this.files[0])">
+                </div>
+
+                <div class="processing" id="processing">
+                    <div class="spinner"></div>
+                    <p>Processing image...</p>
+                </div>
+
+                <div id="upload-result"></div>
+            </div>
+
+            <!-- History Tab -->
+            <div id="history" class="tab-content">
+                <h2>Detection History</h2>
+                
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;">
+                        <button class="btn btn-period active" onclick="setQuickPeriod('today')">Today</button>
+                        <button class="btn btn-period" onclick="setQuickPeriod('week')">This Week</button>
+                        <button class="btn btn-period" onclick="setQuickPeriod('month')">This Month</button>
+                        <button class="btn btn-period" onclick="setQuickPeriod('3months')">Last 3 Months</button>
+                        <button class="btn btn-period" onclick="setQuickPeriod('custom')">Custom Range</button>
+                        <button class="btn btn-period" onclick="setQuickPeriod('all')">All Time</button>
+                    </div>
+                </div>
+
+                <div class="filters" id="custom-date-filter" style="display: none;">
+                    <div class="filter-group">
+                        <label>From Date</label>
+                        <input type="date" id="date-from">
+                    </div>
+                    <div class="filter-group">
+                        <label>To Date</label>
+                        <input type="date" id="date-to">
+                    </div>
+                    <div class="filter-group">
+                        <label>&nbsp;</label>
+                        <button class="btn btn-primary" onclick="loadHistory()">Apply Filter</button>
+                    </div>
+                </div>
+
+                <div id="current-period" style="margin-bottom: 15px; padding: 10px; background: #f8f9fa; border-radius: 4px; color: #7f8c8d; font-size: 0.9em;"></div>
+
+                <div style="margin-bottom: 15px;">
+                    <button class="btn" style="background: #95a5a6; color: white; font-size: 0.85em;" onclick="debugDatabase()">
+                        Debug Database
+                    </button>
+                </div>
+
+                <div id="history-list"></div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settings" class="tab-content">
+                <h2>System Configuration</h2>
+
+                <div id="settings-info"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="image-modal" class="modal" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img id="modal-image" src="" alt="Full size image">
+    </div>
+
+    <script>
+        // Real-time log via Server-Sent Events
+        let logEventSource = null;
+        const logEntries = [];
+        const maxLogEntries = 100;
+
+        function connectLogStream() {
+            if (logEventSource) {
+                logEventSource.close();
+            }
+
+            logEventSource = new EventSource('/api/logs/stream');
+            
+            logEventSource.onmessage = (event) => {
+                if (event.data === 'keepalive') return;
+                
+                // Parse: timestamp|level|message
+                const parts = event.data.split('|');
+                if (parts.length >= 3) {
+                    const timestamp = parts[0];
+                    const level = parts[1];
+                    const message = parts.slice(2).join('|');
+                    
+                    addLogEntry(timestamp, message, level);
+                }
+            };
+            
+            logEventSource.onerror = () => {
+                console.log('Log stream disconnected, reconnecting...');
+                setTimeout(connectLogStream, 5000);
+            };
+        }
+
+        function addLogEntry(timestamp, message, level) {
+            const colors = {
+                'info': '#7f8c8d',
+                'success': '#27ae60',
+                'error': '#e74c3c',
+                'warning': '#f39c12'
+            };
+            
+            logEntries.unshift({
+                time: timestamp,
+                message: message,
+                level: level
+            });
+            
+            if (logEntries.length > maxLogEntries) {
+                logEntries.pop();
+            }
+            
+            updateLogDisplay();
+        }
+
+        function updateLogDisplay() {
+            const logDiv = document.getElementById('realtime-log');
+            if (logEntries.length === 0) {
+                logDiv.innerHTML = '<div style="color: #95a5a6;">Waiting for server activity...</div>';
+                return;
+            }
+            
+            const colors = {
+                'info': '#7f8c8d',
+                'success': '#27ae60',
+                'error': '#e74c3c',
+                'warning': '#f39c12'
+            };
+            
+            logDiv.innerHTML = logEntries.map(entry => 
+                `<div style="color: ${colors[entry.level]}; margin-bottom: 5px;">
+                    [${entry.time}] ${entry.message}
+                </div>`
+            ).join('');
+            
+            // Keep scroll at top (newest)
+            logDiv.scrollTop = 0;
+        }
+
+        async function clearServerLog() {
+            if (!confirm('Clear all log entries from server memory?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/logs/clear', {
+                    method: 'POST'
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    logEntries.length = 0;
+                    updateLogDisplay();
+                }
+            } catch (error) {
+                alert('Error clearing logs: ' + error.message);
+            }
+        }
+
+        // Image modal
+        function showImage(imageUrl) {
+            event.stopPropagation();
+            document.getElementById('modal-image').src = imageUrl;
+            document.getElementById('image-modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('image-modal').classList.remove('active');
+        }
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Set dashboard period
+        function setDashboardPeriod(period) {
+            // Update button states
+            document.querySelectorAll('#dashboard .btn-period').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+
+            const now = new Date();
+            let dateFrom = null;
+            let dateTo = now.toISOString().split('T')[0];
+            let days = 7;
+
+            switch(period) {
+                case 'today':
+                    dateFrom = dateTo;
+                    days = 1;
+                    break;
+                case 'week':
+                    days = 7;
+                    const weekAgo = new Date(now);
+                    weekAgo.setDate(now.getDate() - 7);
+                    dateFrom = weekAgo.toISOString().split('T')[0];
+                    break;
+                case 'month':
+                    days = 30;
+                    const monthAgo = new Date(now);
+                    monthAgo.setMonth(now.getMonth() - 1);
+                    dateFrom = monthAgo.toISOString().split('T')[0];
+                    break;
+                case '3months':
+                    days = 90;
+                    const threeMonthsAgo = new Date(now);
+                    threeMonthsAgo.setMonth(now.getMonth() - 3);
+                    dateFrom = threeMonthsAgo.toISOString().split('T')[0];
+                    break;
+                case 'all':
+                    dateFrom = null;
+                    dateTo = null;
+                    days = 30;
+                    break;
+            }
+
+            // Update period display
+            const periodDiv = document.getElementById('dashboard-period');
+            if (dateFrom && dateTo) {
+                if (dateFrom === dateTo) {
+                    periodDiv.innerHTML = `<strong>Period:</strong> ${dateFrom}`;
+                } else {
+                    periodDiv.innerHTML = `<strong>Period:</strong> ${dateFrom} to ${dateTo}`;
+                }
+            } else {
+                periodDiv.innerHTML = `<strong>Period:</strong> All Time`;
+            }
+
+            // Reload dashboard with period
+            loadDashboard(dateFrom, dateTo, days);
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            try {
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+
+                document.getElementById(tabName).classList.add('active');
+                if (event && event.target) {
+                    event.target.classList.add('active');
+                }
+
+                if (tabName === 'dashboard') {
+                    setDashboardPeriod('today');
+                } else if (tabName === 'history') {
+                    // Initialize with "Today" filter
+                    setQuickPeriod('today');
+                } else if (tabName === 'settings') {
+                    loadSettings();
+                }
+            } catch (error) {
+                console.error('Error switching tab:', error);
+                alert('Error switching tab: ' + error.message);
+            }
+        }
+
+        // Load dashboard
+        async function loadDashboard(dateFrom = null, dateTo = null, days = 7) {
+            try {
+                const healthRes = await fetch('/api/health');
+                const health = await healthRes.json();
+                
+                const statusDiv = document.getElementById('server-status');
+                if (!health.credentials_configured) {
+                    statusDiv.innerHTML = `
+                        <div class="alert alert-warning">
+                            <strong>Configuration Required</strong><br>
+                            Set MAREARTS_ANPR_USERNAME, MAREARTS_ANPR_SERIAL_KEY, and MAREARTS_ANPR_SIGNATURE environment variables.
+                        </div>
+                    `;
+                } else if (!health.models_loaded) {
+                    statusDiv.innerHTML = `
+                        <div class="alert alert-error">
+                            <strong>Model Loading Failed</strong><br>
+                            Verify credentials and restart the server.
+                        </div>
+                    `;
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="alert alert-success">
+                            <strong>System Operational</strong> - All models loaded successfully
+                        </div>
+                    `;
+                }
+
+                const statsRes = await fetch('/api/stats');
+                const stats = await statsRes.json();
+                
+                document.getElementById('stats-grid').innerHTML = `
+                    <div class="stat-card">
+                        <h3>Total Detections</h3>
+                        <div class="value">${stats.total_detections}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Plates Detected</h3>
+                        <div class="value">${stats.total_plates_detected}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Today</h3>
+                        <div class="value">${stats.today_count}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Avg Confidence</h3>
+                        <div class="value">${stats.avg_confidence}%</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Avg Time</h3>
+                        <div class="value">${(stats.avg_processing_time * 1000).toFixed(0)}ms</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Success Rate</h3>
+                        <div class="value">${stats.success_rate}%</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Uptime</h3>
+                        <div class="value">${Math.floor(stats.uptime / 60)}m</div>
+                    </div>
+                `;
+
+                // Load daily chart for the selected period
+                const dailyRes = await fetch(`/api/daily-stats?days=${days}`);
+                const daily = await dailyRes.json();
+                drawChart(daily.stats);
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+            }
+        }
+
+        // Upload image
+        async function uploadImage(file) {
+            if (!file) return;
+
+            document.getElementById('upload-area').style.display = 'none';
+            document.getElementById('processing').classList.add('active');
+            document.getElementById('upload-result').innerHTML = '';
+
+            try {
+                const formData = new FormData();
+                formData.append('image', file);
+
+                const response = await fetch('/api/detect', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                document.getElementById('processing').classList.remove('active');
+                document.getElementById('upload-area').style.display = 'block';
+
+                if (result.success && result.results.length > 0) {
+                    document.getElementById('upload-result').innerHTML = `
+                        <div class="alert alert-success" style="margin-top: 20px;">
+                            <strong>Detection Successful</strong><br>
+                            Found ${result.results.length} plate(s) in ${(result.processing_time * 1000).toFixed(0)}ms
+                        </div>
+                        <div class="detection-card" style="margin-top: 20px;">
+                            <div class="detection-layout">
+                                ${result.image_url ? `
+                                    <div class="detection-image">
+                                        <img src="${result.image_url}" alt="Detection result" onclick="showImage('${result.image_url}')">
+                                        <p style="text-align: center; color: #7f8c8d; font-size: 0.8em; margin-top: 5px;">Click to enlarge</p>
+                                    </div>
+                                ` : '<div></div>'}
+                                
+                                <div class="detection-info">
+                                    ${result.results.map((r, idx) => `
+                                        <div style="${idx > 0 ? 'margin-top: 20px; padding-top: 20px; border-top: 1px solid #f0f0f0;' : ''}">
+                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                                <div class="plate-text">${r.plate_text}</div>
+                                                <span class="badge badge-success">${r.confidence.toFixed(1)}%</span>
+                                            </div>
+                                            
+                                            <div class="details">
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Detection ID</div>
+                                                    <div class="detail-value">#${result.detection_id}</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">OCR Conf.</div>
+                                                    <div class="detail-value">${r.confidence.toFixed(1)}%</div>
+                                                </div>
+                                                <div class="detail-item">
+                                                    <div class="detail-label">Detection Conf.</div>
+                                                    <div class="detail-value">${r.detection_confidence}%</div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div style="margin-top: 10px; padding: 8px; background: #f8f9fa; border-radius: 4px;">
+                                                <div class="detail-label" style="margin-bottom: 5px;">Bounding Box</div>
+                                                <div style="font-family: monospace; font-size: 0.9em; color: #7f8c8d;">
+                                                    [${r.bbox.join(', ')}]
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    document.getElementById('upload-result').innerHTML = `
+                        <div class="alert alert-warning" style="margin-top: 20px;">
+                            <strong>No Plates Detected</strong><br>
+                            ${result.error || 'No license plates found. Try a different image or adjust detection settings.'}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('processing').classList.remove('active');
+                document.getElementById('upload-area').style.display = 'block';
+                document.getElementById('upload-result').innerHTML = `
+                    <div class="alert alert-error" style="margin-top: 20px;">
+                        <strong>Error:</strong> ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        // Drag and drop
+        const uploadArea = document.getElementById('upload-area');
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragging');
+        });
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragging');
+        });
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragging');
+            if (e.dataTransfer.files.length > 0) {
+                uploadImage(e.dataTransfer.files[0]);
+            }
+        });
+
+        // Debug database
+        async function debugDatabase() {
+            try {
+                const response = await fetch('/api/debug/database');
+                const debug = await response.json();
+                
+                alert(`Database Debug Info:
+                
+Total Entries: ${debug.total_entries}
+Database: ${debug.database_path}
+Earliest: ${debug.earliest || 'N/A'}
+Latest: ${debug.latest || 'N/A'}
+
+Recent Entries: ${debug.recent_entries.length}
+${debug.recent_entries.map(e => `\nID ${e.id}: ${e.plates} - ${e.timestamp}`).join('')}
+                `);
+                
+                console.log('Database Debug:', debug);
+            } catch (error) {
+                alert('Debug error: ' + error.message);
+            }
+        }
+
+        // Set quick period filter
+        function setQuickPeriod(period) {
+            // Update button states
+            document.querySelectorAll('.btn-period').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to the clicked button
+            if (event && event.target) {
+                event.target.classList.add('active');
+            } else {
+                // If called programmatically, find the button by period
+                const buttons = document.querySelectorAll('.btn-period');
+                buttons.forEach(btn => {
+                    const text = btn.textContent.toLowerCase();
+                    if ((period === 'today' && text === 'today') ||
+                        (period === 'week' && text === 'this week') ||
+                        (period === 'month' && text === 'this month') ||
+                        (period === '3months' && text === 'last 3 months') ||
+                        (period === 'custom' && text === 'custom range') ||
+                        (period === 'all' && text === 'all time')) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
+            const now = new Date();
+            let dateFrom = null;
+            let dateTo = null;
+
+            switch(period) {
+                case 'today':
+                    dateFrom = now.toISOString().split('T')[0];
+                    dateTo = dateFrom;
+                    document.getElementById('custom-date-filter').style.display = 'none';
+                    break;
+                
+                case 'week':
+                    const weekAgo = new Date(now);
+                    weekAgo.setDate(now.getDate() - 7);
+                    dateFrom = weekAgo.toISOString().split('T')[0];
+                    dateTo = now.toISOString().split('T')[0];
+                    document.getElementById('custom-date-filter').style.display = 'none';
+                    break;
+                
+                case 'month':
+                    const monthAgo = new Date(now);
+                    monthAgo.setMonth(now.getMonth() - 1);
+                    dateFrom = monthAgo.toISOString().split('T')[0];
+                    dateTo = now.toISOString().split('T')[0];
+                    document.getElementById('custom-date-filter').style.display = 'none';
+                    break;
+                
+                case '3months':
+                    const threeMonthsAgo = new Date(now);
+                    threeMonthsAgo.setMonth(now.getMonth() - 3);
+                    dateFrom = threeMonthsAgo.toISOString().split('T')[0];
+                    dateTo = now.toISOString().split('T')[0];
+                    document.getElementById('custom-date-filter').style.display = 'none';
+                    break;
+                
+                case 'custom':
+                    document.getElementById('custom-date-filter').style.display = 'flex';
+                    // Don't load history yet, wait for user to select dates
+                    return;
+                
+                case 'all':
+                    dateFrom = null;
+                    dateTo = null;
+                    document.getElementById('custom-date-filter').style.display = 'none';
+                    break;
+            }
+
+            // Set date inputs
+            if (dateFrom) document.getElementById('date-from').value = dateFrom;
+            if (dateTo) document.getElementById('date-to').value = dateTo;
+            
+            // Load history with selected period
+            loadHistory();
+        }
+
+        // Load history
+        async function loadHistory() {
+            try {
+                const dateFrom = document.getElementById('date-from').value;
+                const dateTo = document.getElementById('date-to').value;
+                
+                let url = '/api/history?limit=100';
+                if (dateFrom) url += `&date_from=${dateFrom}`;
+                if (dateTo) url += `&date_to=${dateTo}`;
+
+                const response = await fetch(url);
+                const history = await response.json();
+
+                // Update period info
+                const periodDiv = document.getElementById('current-period');
+                if (dateFrom && dateTo) {
+                    if (dateFrom === dateTo) {
+                        periodDiv.innerHTML = `<strong>Showing:</strong> ${dateFrom}`;
+                    } else {
+                        periodDiv.innerHTML = `<strong>Showing:</strong> ${dateFrom} to ${dateTo}`;
+                    }
+                } else {
+                    periodDiv.innerHTML = `<strong>Showing:</strong> All detections`;
+                }
+                periodDiv.innerHTML += ` <span style="color: #3498db; margin-left: 10px;">(${history.results.length} results)</span>`;
+
+                const historyDiv = document.getElementById('history-list');
+                if (history.results.length === 0) {
+                    historyDiv.innerHTML = `
+                        <div class="empty-state">
+                            <div style="font-size: 3em; opacity: 0.3;">📭</div>
+                            <h3>No Results Found</h3>
+                            <p style="margin-top: 10px;">No detections match the selected criteria</p>
+                        </div>
+                    `;
+                } else {
+                    historyDiv.innerHTML = history.results.map(d => {
+                        const conf = d.confidences.length > 0 ? d.confidences[0] : 0;
+                        const confBadge = conf >= 90 ? 'badge-high' : conf >= 70 ? 'badge-medium' : 'badge-low';
+                        
+                        return `
+                            <div class="detection-card">
+                                <div class="detection-layout">
+                                    ${d.thumbnail_path ? `
+                                        <div class="detection-image">
+                                            <img src="${d.thumbnail_path}" alt="Detection" onclick="showImage('${d.image_path || d.thumbnail_path}')">
+                                            <p style="text-align: center; color: #7f8c8d; font-size: 0.8em; margin-top: 5px;">Click to enlarge</p>
+                                        </div>
+                                    ` : '<div></div>'}
+                                    
+                                    <div class="detection-info">
+                                        <div class="header-row">
+                                            <div>
+                                                <div class="plate-text">${d.plates.join(', ') || 'No plates'}</div>
+                                                <div class="timestamp">${new Date(d.timestamp).toLocaleString()}</div>
+                                            </div>
+                                            <span class="badge ${confBadge}">${conf.toFixed(1)}%</span>
+                                        </div>
+                                        
+                                        <div class="details">
+                                            <div class="detail-item">
+                                                <div class="detail-label">ID</div>
+                                                <div class="detail-value">#${d.id}</div>
+                                            </div>
+                                            <div class="detail-item">
+                                                <div class="detail-label">Plates</div>
+                                                <div class="detail-value">${d.num_plates}</div>
+                                            </div>
+                                            <div class="detail-item">
+                                                <div class="detail-label">Total</div>
+                                                <div class="detail-value">${(d.processing_time * 1000).toFixed(0)}ms</div>
+                                            </div>
+                                            <div class="detail-item">
+                                                <div class="detail-label">Detector</div>
+                                                <div class="detail-value">${(d.detector_time * 1000).toFixed(0)}ms</div>
+                                            </div>
+                                            <div class="detail-item">
+                                                <div class="detail-label">OCR</div>
+                                                <div class="detail-value">${(d.ocr_time * 1000).toFixed(0)}ms</div>
+                                            </div>
+                                        </div>
+                                        
+                                        ${d.bboxes && d.bboxes.length > 0 ? `
+                                            <div style="margin-top: 12px; padding: 10px; background: #f8f9fa; border-radius: 4px; font-size: 0.85em;">
+                                                <div class="detail-label" style="margin-bottom: 8px;">Bounding Boxes</div>
+                                                ${d.bboxes.map((bbox, idx) => `
+                                                    <div style="color: #7f8c8d; font-family: monospace; margin-bottom: 4px;">
+                                                        Plate ${idx + 1}: [${bbox.join(', ')}]
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            } catch (error) {
+                console.error('Error loading history:', error);
+            }
+        }
+
+        // Draw chart
+        function drawChart(stats) {
+            const canvas = document.getElementById('daily-chart');
+            if (!canvas) return;
+            
+            const container = canvas.parentElement;
+            
+            // Set fixed canvas size (don't use container width to avoid resize loop)
+            const maxWidth = Math.min(container.offsetWidth - 40, 1200);
+            canvas.width = maxWidth;
+            canvas.height = 300;
+            
+            // Save stats for resize
+            currentDashboardStats = stats;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (stats.length === 0) {
+                ctx.fillStyle = '#95a5a6';
+                ctx.font = '16px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('No data available', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+
+            const maxCount = Math.max(...stats.map(s => s.count));
+            const barWidth = canvas.width / stats.length * 0.7;
+            const gap = canvas.width / stats.length * 0.3;
+
+            stats.reverse().forEach((stat, i) => {
+                const barHeight = (stat.count / maxCount) * (canvas.height - 60);
+                const x = i * (barWidth + gap) + gap;
+                const y = canvas.height - barHeight - 40;
+
+                // Draw bar
+                ctx.fillStyle = '#3498db';
+                ctx.fillRect(x, y, barWidth, barHeight);
+
+                // Draw value
+                ctx.fillStyle = '#2c3e50';
+                ctx.font = 'bold 13px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(stat.count, x + barWidth / 2, y - 5);
+
+                // Draw date
+                ctx.fillStyle = '#7f8c8d';
+                ctx.font = '11px Arial';
+                const date = new Date(stat.date);
+                ctx.fillText(
+                    `${date.getMonth() + 1}/${date.getDate()}`,
+                    x + barWidth / 2,
+                    canvas.height - 20
+                );
+            });
+        }
+
+        // Toggle credential edit form
+        function toggleCredentialEdit() {
+            const display = document.getElementById('credential-display');
+            const form = document.getElementById('credential-form');
+            
+            if (form.style.display === 'none') {
+                display.style.display = 'none';
+                form.style.display = 'block';
+            } else {
+                display.style.display = 'block';
+                form.style.display = 'none';
+                document.getElementById('config-status').innerHTML = '';
+            }
+        }
+
+        // Configure credentials
+        async function configureCredentials() {
+            const username = document.getElementById('config-username').value;
+            const serialKey = document.getElementById('config-serial-key').value;
+            const signature = document.getElementById('config-signature').value;
+
+            if (!username || !serialKey || !signature) {
+                alert('All fields are required');
+                return;
+            }
+
+            document.getElementById('config-status').innerHTML = `
+                <div class="alert alert-warning">
+                    <strong>Loading models...</strong><br>
+                    This may take a few moments. Please wait.
+                </div>
+            `;
+
+            try {
+                const response = await fetch('/api/configure', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        serial_key: serialKey,
+                        signature: signature
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('config-status').innerHTML = `
+                        <div class="alert alert-success">
+                            <strong>Success!</strong><br>
+                            ${result.message}
+                        </div>
+                    `;
+                    // Reload settings page
+                    setTimeout(() => loadSettings(), 2000);
+                } else {
+                    document.getElementById('config-status').innerHTML = `
+                        <div class="alert alert-error">
+                            <strong>Error:</strong> ${result.error}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('config-status').innerHTML = `
+                    <div class="alert alert-error">
+                        <strong>Error:</strong> ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        // Delete all data
+        async function deleteAllData() {
+            if (!confirm('⚠️ Are you sure you want to delete ALL detection history?\n\nThis will:\n- Delete all detection records\n- Delete all result images\n- Clear all statistics\n\nThis action CANNOT be undone!')) {
+                return;
+            }
+
+            if (!confirm('Final confirmation: Delete ALL data permanently?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/database/clear', {
+                    method: 'POST'
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('✅ All data deleted successfully!');
+                    // Reload settings page
+                    loadSettings();
+                    // Reload dashboard if open
+                    if (document.getElementById('dashboard').classList.contains('active')) {
+                        loadDashboard();
+                    }
+                } else {
+                    alert('❌ Error: ' + result.error);
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+
+        // Update models
+        async function updateModels() {
+            const detectorModel = document.getElementById('select-detector').value;
+            const ocrModel = document.getElementById('select-ocr').value;
+            const region = document.getElementById('select-region').value;
+
+            document.getElementById('model-update-status').innerHTML = `
+                <div class="alert alert-warning">
+                    <strong>Updating models...</strong><br>
+                    Loading ${detectorModel} + ${ocrModel} (${region}). This may take a few moments.
+                </div>
+            `;
+
+            try {
+                const response = await fetch('/api/models/update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        detector_model: detectorModel,
+                        ocr_model: ocrModel,
+                        region: region
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('model-update-status').innerHTML = `
+                        <div class="alert alert-success">
+                            <strong>Success!</strong><br>
+                            ${result.message}
+                        </div>
+                    `;
+                    // Reload settings page to show updated configuration
+                    setTimeout(() => loadSettings(), 2000);
+                } else {
+                    document.getElementById('model-update-status').innerHTML = `
+                        <div class="alert alert-error">
+                            <strong>Error:</strong> ${result.error}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('model-update-status').innerHTML = `
+                    <div class="alert alert-error">
+                        <strong>Error:</strong> ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        // Load settings
+        async function loadSettings() {
+            try {
+                const healthRes = await fetch('/api/health');
+                const health = await healthRes.json();
+
+                // Load model status first
+                const modelsRes = await fetch('/api/models/status');
+                const models = await modelsRes.json();
+
+                let settingsHTML = `
+                    <div class="info-box">
+                        <h3>System Information</h3>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px;">
+                            <div>
+                                <p><strong>Credentials:</strong> ${health.credentials_configured ? 'Yes' : 'No'}</p>
+                                <p><strong>Models:</strong> ${health.models_loaded ? 'Yes' : 'No'}</p>
+                                <p><strong>Version:</strong> ${health.version}</p>
+                                <p><strong>Uptime:</strong> ${Math.floor(health.uptime / 60)} minutes</p>
+                            </div>
+                            <div>
+                                <p><strong>Detector:</strong> ${models.current_detector}</p>
+                                <p><strong>OCR:</strong> ${models.current_ocr}</p>
+                                <p><strong>Region:</strong> ${models.current_region}</p>
+                                <p><strong>Backend:</strong> ${models.current_backend}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Always show credential section
+                settingsHTML += `
+                    <div class="info-box" style="border-left: 4px solid ${health.credentials_configured ? '#27ae60' : '#f39c12'};">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3>${health.credentials_configured ? 'Current Credentials' : 'Configure Credentials'}</h3>
+                            ${health.credentials_configured ? `<button class="btn" style="padding: 6px 12px; font-size: 0.85em; background: #3498db; color: white;" onclick="toggleCredentialEdit()">Edit</button>` : ''}
+                        </div>
+                        
+                        ${health.credentials_configured && health.credentials ? `
+                            <div id="credential-display">
+                                <p><strong>Username:</strong> ${health.credentials.username || 'Not set'}</p>
+                                <p><strong>Serial Key:</strong> <code>${health.credentials.serial_key_masked || 'Not set'}</code></p>
+                                <p><strong>Signature:</strong> <code>${health.credentials.signature_masked || 'Not set'}</code></p>
+                            </div>
+                        ` : ''}
+                        
+                        <div id="credential-form" style="display: ${health.credentials_configured ? 'none' : 'block'}; margin-top: 15px;">
+                            ${!health.credentials_configured ? '<p style="margin-bottom: 15px;">Enter your MareArts ANPR credentials:</p>' : ''}
+                            
+                            <div class="filter-group" style="margin-bottom: 15px;">
+                                <label>Username / Email</label>
+                                <input type="text" id="config-username" placeholder="your@email.com" value="${health.credentials?.username || ''}">
+                            </div>
+                            
+                            <div class="filter-group" style="margin-bottom: 15px;">
+                                <label>Serial Key</label>
+                                <input type="text" id="config-serial-key" placeholder="MAEV...">
+                            </div>
+                            
+                            <div class="filter-group" style="margin-bottom: 15px;">
+                                <label>Signature</label>
+                                <input type="text" id="config-signature" placeholder="5f6b...">
+                            </div>
+                            
+                            <button class="btn btn-primary" onclick="configureCredentials()">
+                                ${health.credentials_configured ? 'Update Credentials' : 'Load Models & Activate'}
+                            </button>
+                            ${health.credentials_configured ? `
+                                <button class="btn" style="margin-left: 10px; background: #95a5a6; color: white;" onclick="toggleCredentialEdit()">
+                                    Cancel
+                                </button>
+                            ` : ''}
+                            
+                            <div id="config-status" style="margin-top: 15px;"></div>
+                        </div>
+                        
+                        ${!health.credentials_configured ? `
+                            <p style="margin-top: 20px; color: #7f8c8d; font-size: 0.9em;">
+                                Don't have credentials? Get your license at 
+                                <a href="https://www.marearts.com/products/anpr" target="_blank" style="color: #3498db;">
+                                    marearts.com
+                                </a>
+                            </p>
+                        ` : ''}
+                    </div>
+                `;
+
+                settingsHTML += `
+                    ${health.models_loaded ? `
+                    <div class="info-box" style="border-left: 4px solid #3498db;">
+                        <h3>Change Models & Region</h3>
+                        <p style="margin-bottom: 20px;">Select different models or region without restarting the server:</p>
+                        
+                        <div class="filter-group" style="margin-bottom: 15px;">
+                            <label>Detector Model</label>
+                            <select id="select-detector" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                                ${models.detector_models.map(m => `
+                                    <option value="${m.name}" ${m.current ? 'selected' : ''}>
+                                        ${m.name} - ${m.description}
+                                    </option>
+                                `).join('')}
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group" style="margin-bottom: 15px;">
+                            <label>OCR Model</label>
+                            <select id="select-ocr" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                                ${models.ocr_models.map(m => `
+                                    <option value="${m.name}" ${m.current ? 'selected' : ''}>
+                                        ${m.name} - ${m.description}
+                                    </option>
+                                `).join('')}
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group" style="margin-bottom: 15px;">
+                            <label>Region</label>
+                            <select id="select-region" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                                ${models.regions.map(r => `
+                                    <option value="${r.code}" ${r.code === models.current_region ? 'selected' : ''}>
+                                        ${r.name} - ${r.description}
+                                    </option>
+                                `).join('')}
+                            </select>
+                        </div>
+                        
+                        <button class="btn btn-primary" onclick="updateModels()">
+                            Update Models
+                        </button>
+                        
+                        <div id="model-update-status" style="margin-top: 15px;"></div>
+                        
+                        <p style="margin-top: 15px; color: #7f8c8d; font-size: 0.9em;">
+                            <strong>Note:</strong> Models will download automatically if not already cached. This may take a few moments.
+                        </p>
+                    </div>
+                    ` : ''}
+
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                        <div class="info-box">
+                            <h3>Detector Models</h3>
+                            <p style="margin-bottom: 15px; font-size: 0.9em;">Available detector models and download status:</p>
+                            <div style="display: grid; gap: 8px;">
+                                ${models.detector_models.map(m => `
+                                    <div style="padding: 8px 12px; background: ${m.current ? '#e8f4f8' : '#fafbfc'}; border: 1px solid ${m.current ? '#3498db' : '#e1e8ed'}; border-radius: 4px; font-size: 0.85em;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <strong style="font-size: 0.95em;">${m.name}</strong>
+                                            ${m.current ? '<span class="badge badge-success" style="font-size: 0.7em;">NOW</span>' : ''}
+                                        </div>
+                                        <div style="font-size: 0.85em; color: #7f8c8d; margin-top: 3px;">
+                                            ${m.downloaded 
+                                                ? `✓ ${(m.size / 1024 / 1024).toFixed(1)} MB`
+                                                : '✗ Not downloaded'
+                                            }
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <h3>OCR Models</h3>
+                            <p style="margin-bottom: 15px; font-size: 0.9em;">Available OCR models and download status:</p>
+                            <div style="display: grid; gap: 8px;">
+                                ${models.ocr_models.map(m => `
+                                    <div style="padding: 8px 12px; background: ${m.current ? '#e8f4f8' : '#fafbfc'}; border: 1px solid ${m.current ? '#3498db' : '#e1e8ed'}; border-radius: 4px; font-size: 0.85em;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <strong style="font-size: 0.95em;">${m.name}</strong>
+                                            ${m.current ? '<span class="badge badge-success" style="font-size: 0.7em;">NOW</span>' : ''}
+                                        </div>
+                                        <div style="font-size: 0.85em; color: #7f8c8d; margin-top: 3px;">
+                                            ${m.downloaded 
+                                                ? `✓ ${(m.size / 1024 / 1024).toFixed(1)} MB`
+                                                : '✗ Not downloaded'
+                                            }
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h3>Danger Zone</h3>
+                        <p style="color: #e74c3c; margin-bottom: 15px;">
+                            <strong>Warning:</strong> The following actions are destructive and cannot be undone.
+                        </p>
+                        <button class="btn" style="background: #e74c3c; color: white;" onclick="deleteAllData()">
+                            Delete All Detection History
+                        </button>
+                        <p style="margin-top: 10px; color: #7f8c8d; font-size: 0.85em;">
+                            This will permanently delete all detection records and result images.
+                        </p>
+                    </div>
+
+                    <div class="info-box">
+                        <h3>Advanced Configuration</h3>
+                        <p style="margin-bottom: 10px;">For advanced users, you can configure via environment variables or edit <code>~/.marearts/.marearts_env</code></p>
+                        <p style="font-size: 0.9em; color: #7f8c8d;">
+                            Most users should use: <strong>ma-anpr config</strong> command or the web UI above.
+                        </p>
+                    </div>
+                `;
+
+                document.getElementById('settings-info').innerHTML = settingsHTML;
+            } catch (error) {
+                console.error('Error loading settings:', error);
+            }
+        }
+
+        // Current dashboard state for resize
+        let currentDashboardStats = null;
+        let resizeTimeout = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Connect to server log stream
+            connectLogStream();
+            
+            // Load dashboard with "today" period
+            const now = new Date();
+            const today = now.toISOString().split('T')[0];
+            loadDashboard(today, today, 1);
+            
+            // Update period display
+            document.getElementById('dashboard-period').innerHTML = `<strong>Period:</strong> ${today}`;
+        });
+
+        // Redraw chart on window resize (debounced)
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                if (currentDashboardStats && document.getElementById('dashboard').classList.contains('active')) {
+                    drawChart(currentDashboardStats);
+                }
+            }, 250);
+        });
+
+        // Auto-refresh dashboard stats every 30 seconds
+        setInterval(() => {
+            if (document.getElementById('dashboard').classList.contains('active')) {
+                const now = new Date();
+                const today = now.toISOString().split('T')[0];
+                loadDashboard(today, today, 1);
+            }
+        }, 30000);
+    </script>
+</body>
+</html>

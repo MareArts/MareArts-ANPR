@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.pyc
+
+# Database (generated at runtime)
+*.db
+*.sqlite
+*.sqlite3
+anpr_history.db
+
+# Uploads and results (runtime artifacts)
+uploads/*
+!uploads/.gitkeep
+results/*
+!results/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+

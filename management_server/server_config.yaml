@@ -1,0 +1,25 @@
+# MareArts ANPR Management Server Configuration
+# 
+# NOTE: Credentials are configured via 'ma-anpr config' command
+#       This file is only for server-specific settings
+
+server:
+  host: "0.0.0.0"
+  port: 8000
+
+models:
+  detector: "micro_320p_fp32"    # Detector model (pico/micro/small/medium/large)
+  ocr: "small_fp32"              # OCR model (pico/micro/small/medium/large)
+  region: "eup"                  # Region: kr, eup, na, cn, univ
+  backend: "cpu"                 # Backend: cpu, cuda, directml
+  confidence: 0.25               # Detection confidence threshold (0.0-1.0)
+
+storage:
+  save_images: true              # Save detection result images
+  max_history: 1000              # Max database entries (older entries auto-deleted)
+  max_logs: 500                  # Max log entries in memory
+
+# Optional: Override via environment variables
+# ANPR_PORT, ANPR_DETECTOR, ANPR_OCR, ANPR_REGION, ANPR_BACKEND,
+# ANPR_CONFIDENCE, ANPR_SAVE_IMAGES, ANPR_MAX_HISTORY, ANPR_MAX_LOGS
+

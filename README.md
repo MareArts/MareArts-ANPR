@@ -51,6 +51,29 @@ Experience the power of MareArts ANPR directly on your mobile device! Fast, accu
 
 ---
 
+## 🌐 NEW: ANPR Management Server
+
+**Professional server with REST API and Web Dashboard**
+
+Deploy a complete ANPR management system with real-time monitoring, detection history, and visual analytics.
+
+<div align="center">
+<img src="management_server/screenshots/dashboard.png" alt="Management Server Dashboard" width="800"/>
+</div>
+
+**Quick Start:**
+```bash
+cd management_server
+python server.py
+# Open http://localhost:8000/
+```
+
+**Features:** REST API, Web Dashboard, Real-time logs, SQLite database, Live model switching
+
+📖 **[Full Documentation →](management_server/)**
+
+---
+
 <br>
 
 ## Features
