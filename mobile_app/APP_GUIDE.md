@@ -18,13 +18,15 @@ MareArts ANPR is a professional license plate recognition app for parking manage
 
 ## 🆕 Latest Release
 
-**Version 1.6.0 (Build 111)** - December 30, 2025
+**Version 1.8.0 (Build 180)** - January 31, 2026
 
-**🔄 Complete Cloud Sync** - Two-way synchronization keeps your data perfectly in sync across all devices and marearts.com
+**⚡ Faster Performance** - App launches quicker and runs smoother
 
-**📊 CSV Export/Import** - Professional data management with export and bulk import features
+**📋 Smart Rules Grouping** - Rules organized A-Z for easy navigation with large lists
 
-**📸 Resolution Control** - Choose camera quality (480p/720p/1080p) for speed vs detail
+**🌐 Download Rules from Web** - Upload rules on marearts.com, download on your phone
+
+**🔄 Background Sync** - Keep using the app while syncing in the background
 
 [📖 View Release Notes](https://github.com/MareArts/MareArts-ANPR/releases/latest)
 
@@ -175,7 +177,7 @@ Tap **⋮ menu** in top-right corner:
 ## ✅ 3. Rules Page
 
 <div align="center">
-  <img src="rules_page.png" alt="Rules Page Screenshot" width="300"/>
+  <img src="rules_page_grouping.PNG" alt="Rules Page Screenshot" width="300"/>
 </div>
 
 **Purpose**: Manage plate whitelists and blacklists
@@ -192,12 +194,18 @@ Tap **⋮ menu** in top-right corner:
 - Shows red badge on scan
 - Plays "alert" sound
 
+**Smart Grouping** (NEW! 📋)
+- Rules organized by letter (A, B, C... sections)
+- Tap section header to expand/collapse
+- Easy to navigate with hundreds or thousands of rules
+- Quick scroll to any letter
+
 **Management:**
 - **Search Bar** - Type to filter plates (real-time)
 - **Tab Counter** - Shows total: "White List (200)"
 - **+ Button** (bottom center) - Add new plate
 - **Swipe left** to delete
-- **Scroll** - Smooth iOS-style scrolling for long lists
+- **Group Sections** - Tap to expand/collapse
 - Type full plate number or partial (e.g., "ABC" matches "ABC-123")
 - Auto-uppercase
 - Tap "X" to clear search, "Done" to dismiss keyboard
@@ -209,7 +217,7 @@ Tap **⋮ menu** in top-right corner:
 
 ### Bulk Management:
 
-Tap **⋮ menu** in top-right corner for CSV operations:
+Tap **⋮ menu** in top-right corner for more options:
 
 **Export All Rules**
 - Downloads all your whitelist and blacklist plates as CSV
@@ -217,10 +225,9 @@ Tap **⋮ menu** in top-right corner for CSV operations:
 - Perfect for backup or editing in spreadsheet
 
 **Import Rules**
-- Upload a CSV file to replace all current rules
+- Upload a CSV file to add rules to your phone
 - Download sample template first to see the format
 - Great for bulk adding plates (e.g., 100+ employee vehicles)
-- ⚠️ Replaces all existing rules - export first as backup!
 
 **Download Sample CSV**
 - Get a template file with instructions
@@ -228,6 +235,46 @@ Tap **⋮ menu** in top-right corner for CSV operations:
 - Import when ready
 
 💡 **Workflow:** Export → Edit in Excel → Import back for bulk updates!
+
+---
+
+### Download Rules from Web (NEW! 🌐)
+
+<div align="center">
+  <img src="rules_page_package_ready.PNG" alt="Rules Package Ready" width="300"/>
+</div>
+
+**Upload rules on marearts.com, download on your phone:**
+
+**Step 1: Upload on Web**
+
+<div align="center">
+  <img src="webpage_upload_rule_package_button.png" alt="Web Upload Button" width="600"/>
+</div>
+
+1. Go to marearts.com/my-account
+2. Click "Upload Rule Package" button
+3. Choose your CSV file
+4. Click upload
+
+<div align="center">
+  <img src="webpage_upload_rule_package_uploaded.png" alt="Upload Complete" width="600"/>
+</div>
+
+**Step 2: Download on Phone**
+1. Open Rules page in app
+2. See blue banner: "Rules package ready"
+3. Tap to download
+4. Choose "Replace All" or "Add to Existing"
+5. Done! Rules imported automatically
+
+**Benefits:**
+- Upload large CSV files on computer (easier than phone)
+- Share rules between team members
+- Bulk import thousands of rules at once
+- Works across all your devices
+
+💡 **Tip:** Great for importing company vehicle lists or large databases!
 
 ---
 
@@ -296,31 +343,38 @@ Tap **⋮ menu** in top-right corner for CSV operations:
 
 ### Cloud Sync:
 
+<div align="center">
+  <img src="setting_page_sync_backround.PNG" alt="Background Sync" width="300"/>
+</div>
+
 **Sync to Cloud** (Login required)
 - **Two-way sync** - Keeps data in sync across all devices
 - Tap **"Sync Now"** button to synchronize
+- **Runs in background** - Keep using the app while syncing
 - **Step 1:** Upload your device changes to cloud
 - **Step 2:** Download data from cloud (other devices/web)
 - **Step 3:** Merge changes automatically
+- **Progress shown** - See sync status in real-time
 
 **What Gets Synced:**
 - ✅ All detections (plate numbers, timestamps, GPS)
 - ✅ All rules (whitelist & blacklist)
-- ✅ Detection images from this device
-- ℹ️ Images from other devices viewable on marearts.com
+- ✅ Detection images from all devices
+- ✅ Changes from marearts.com web
 
 **Benefits:**
 - 📱 Use multiple devices with same account
 - 🌐 View all data on marearts.com web dashboard
 - 🔄 Rules added on web appear on all devices
 - 💾 Cloud backup of all your data
+- ⚡ Keep using app while syncing (NEW!)
 
 <div align="center">
-  <img src="webpage_sync.png" alt="Web Dashboard - Synced Data" width="600"/>
-  <p><i>View and manage all your detections on marearts.com</i></p>
+  <img src="setting_page_sync_data.PNG" alt="Sync Statistics" width="300"/>
+  <p><i>See what's synced and when</i></p>
 </div>
 
-💡 **Tip:** Sync regularly to keep devices updated!
+💡 **Tip:** Sync runs in background - no need to wait!
 
 ### Notifications:
 
@@ -382,6 +436,14 @@ Tap **⋮ menu** in top-right corner for CSV operations:
 - Delete all detections AND rules
 - Shows count before deletion
 - **Warning**: Cannot be undone unless logged in (syncs deletion to cloud)
+
+**Factory Reset** 🔄 (NEW!)
+- Fresh start - deletes all local data
+- **Cloud backup stays safe** - can sync to restore
+- Resets settings to defaults
+- Keeps login credentials
+- Located in Advanced section at bottom
+- **Use when:** Corrupted data, want fresh start, or troubleshooting
 
 **Data Retention** (7-365 days)
 - Auto-delete old detections
@@ -463,16 +525,20 @@ Tap **⋮ menu** in top-right corner for CSV operations:
 ## 🔒 Privacy & Security
 
 ✅ **100% On-Device**: All AI processing on your device  
-✅ **No Cloud Storage**: Images never uploaded (unless you use cloud mode)  
 ✅ **Local Database**: All data stored locally  
 ✅ **GPS Optional**: Can disable location tracking  
-✅ **No Analytics**: We don't track your usage  
+✅ **Your Control**: Cloud sync only when you choose  
 
 **Cloud Mode** (Optional):
 - Sends image to API for processing
 - Used only when you tap cloud button
 - More accurate (server-side AI)
 - Requires internet connection
+
+**Cloud Sync** (Optional):
+- Only syncs when you tap "Sync Now"
+- Images uploaded only if you enable sync
+- Can work 100% offline if preferred
 
 ---
 
