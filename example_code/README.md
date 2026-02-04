@@ -1,13 +1,19 @@
 # MareArts ANPR Example Code
 
-This directory contains example code demonstrating how to use the MareArts ANPR V14 SDK.
+This directory contains example code demonstrating how to use the MareArts ANPR SDK (V14 detector + V14/V15 OCR).
+
+**Quick comparison:**
+- **V14 OCR:** Standard accuracy
+- **V15 OCR:** ⭐ Improved accuracy, better multi-line support (recommended)
+
+Test both: `quick_test_v14.py` and `quick_test_v15.py`
 
 <br>
 
 
 ## Quick Start
 
-### V14 Models (Recommended)
+### V14 Detector + V14 OCR
 
 ```python
 from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v14
@@ -28,15 +34,29 @@ detector = ma_anpr_detector_v14(
 )
 
 # Create V14 OCR with regional vocabulary
-# Regions: kr, eup, na, cn, univ
-ocr = ma_anpr_ocr_v14("medium_fp32", "kr", user_name, serial_key, signature)
+# Regions: univ (universal), kr, eup, na, cn
+ocr = ma_anpr_ocr_v14("medium_fp32", "univ", user_name, serial_key, signature)
 
 # Process image
 result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
 print(result)
 ```
 
-> **Note**: For legacy V13 models, see [Legacy Models Documentation](../docs/legacy-models.md)
+### V14 Detector + V15 OCR (Latest - Recommended)
+
+```python
+from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v15
+from marearts_anpr import marearts_anpr_from_image_file
+
+# V15 OCR: Improved accuracy, better multi-line support
+# Use 'univ' for universal region (recommended)
+ocr = ma_anpr_ocr_v15("medium_fp32", "univ", user_name, serial_key, signature)
+
+# Use V14 detector with V15 OCR
+result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
+```
+
+> **Test both versions:** Use `quick_test_v14.py` and `quick_test_v15.py` to compare models
 
 <br>
 
@@ -63,21 +83,23 @@ python example_code/verify_installation.py
 <br>
 
 
-### 1. quick_test.py ⚡ (Quick Validation)
+### 1. quick_test_v14.py / quick_test_v15.py ⚡ (Model Testing)
 
-**Complete installation and API test:**
-- Tests package installation
-- Tests CLI commands
-- Tests free API (no license needed)
-- Validates license (if configured)
-- Guides next steps
+**Test V14 and V15 local models:**
+- Tests 5 model pairs (pico, micro, small, medium, large) = **5 tests total**
+- Uses universal region (works for all plate types)
+- Shows actual OCR results with confidence scores
+- Requires: License configured with `ma-anpr config`
 
 ```bash
-python example_code/quick_test.py
+# Test V14 detector + V14 OCR (5 tests)
+python example_code/quick_test_v14.py
+
+# Test V14 detector + V15 OCR (5 tests, latest)
+python example_code/quick_test_v15.py
 ```
 
-
-**When to use:** Quick check that everything works!
+**When to use:** Quick test and compare V14 vs V15 OCR models!
 <br>
 
 
@@ -123,14 +145,14 @@ python example_code/test_api_regions.py your_image.jpg
 
 ### 3. basic.py ⭐ (Recommended Starting Point)
 
-**V14 basic usage:**
-- Simple initialization with V14 models
+**Basic usage with V14 models:**
+- Simple initialization with V14 detector + V14 OCR
 - Processing images from file, OpenCV, and PIL
 - **Multi-region support using set_region()** (>3.6.5)
 - **Batch processing** - Process multiple plates efficiently
 - Memory-efficient region switching (saves ~180MB per region)
 
-
+> **Tip:** Change `ma_anpr_ocr_v14` to `ma_anpr_ocr_v15` to use V15 OCR (improved accuracy)
 
 **Requires:** License configured with `ma-anpr config`
 
@@ -244,20 +266,36 @@ For complete model specifications, performance benchmarks, and configuration opt
 - **[Usage Guide](../docs/usage.md)** - Backend options (cpu, cuda, directml), dynamic region switching
 
 
-## New Features (>3.7.0)
+## New Features
 
-### Dynamic Region Switching
+### V15 OCR (Latest)
+
+New V15 OCR models with improved accuracy and multi-line support:
+
+```python
+from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v15
+
+# Use V15 OCR for better accuracy
+detector = ma_anpr_detector_v14("medium_640p_fp32", user_name, serial_key, signature)
+ocr = ma_anpr_ocr_v15("medium_fp32", "univ", user_name, serial_key, signature)
+```
+
+Test and compare: `python quick_test_v14.py` vs `python quick_test_v15.py`
+
+### Dynamic Region Switching (>3.7.0)
 
 Use `set_region()` to switch regions without creating new OCR instances:
 
 ```python
-# Initialize once
-ocr = ma_anpr_ocr_v14("medium_fp32", "eup", user_name, serial_key, signature)
+# Works with both V14 and V15 OCR
+ocr = ma_anpr_ocr_v15("medium_fp32", "univ", user_name, serial_key, signature)
 
 # Switch regions on demand
-ocr.set_region('eup')  # Europe+
-ocr.set_region('na')   # North America
-ocr.set_region('cn')   # China
+ocr.set_region('univ')  # Universal (all regions)
+ocr.set_region('eup')   # Europe+
+ocr.set_region('na')    # North America
+ocr.set_region('cn')    # China
+ocr.set_region('kr')    # Korea
 
 # Saves ~180 MB per region vs creating multiple instances!
 ```
@@ -289,7 +327,9 @@ ocr.set_region('cn')   # China
 
 4. **Test it works:**
    ```bash
-   python example_code/quick_test.py
+   python example_code/quick_test_v15.py  # Test V15 OCR (recommended)
+   # or
+   python example_code/quick_test_v14.py  # Test V14 OCR
    ```
 
 ### No License?
@@ -330,9 +370,10 @@ Models are automatically downloaded to `~/.marearts/marearts_anpr_data/` on firs
 
 ## Notes
 
-- V14 models require signature for authentication
+- V14/V15 models require signature for authentication
 - First run downloads models (may take time)
 - Models are cached after first download
 - GPU acceleration significantly improves performance
 - Use specific regions for best accuracy (kr, eup, na, cn)
 - For multi-region applications, use set_region() instead of creating multiple instances
+- **V15 OCR recommended** for better accuracy and multi-line support
