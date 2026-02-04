@@ -77,7 +77,8 @@ MAREARTS_USERNAME, MAREARTS_SERIAL_KEY, MAREARTS_SIGNATURE = load_marearts_crede
 models_config = yaml_config.get('models', {})
 DETECTOR_MODEL = os.getenv("ANPR_DETECTOR", models_config.get('detector', "micro_320p_fp32"))
 OCR_MODEL = os.getenv("ANPR_OCR", models_config.get('ocr', "small_fp32"))
-REGION = os.getenv("ANPR_REGION", models_config.get('region', "eup"))
+OCR_VERSION = os.getenv("ANPR_OCR_VERSION", models_config.get('ocr_version', "v15"))  # v15 (default) or v14
+REGION = os.getenv("ANPR_REGION", models_config.get('region', "euplus"))
 BACKEND = os.getenv("ANPR_BACKEND", models_config.get('backend', "cpu"))
 CONFIDENCE_THRESHOLD = float(os.getenv("ANPR_CONFIDENCE", models_config.get('confidence', 0.25)))
 

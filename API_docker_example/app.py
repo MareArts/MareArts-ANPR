@@ -5,15 +5,15 @@ import cv2
 import numpy as np
 from PIL import Image
 from importlib.metadata import version, PackageNotFoundError
-from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v14, marearts_anpr_from_pil
+from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr, marearts_anpr_from_pil
 import logging
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# MareArts ANPR Docker API - V14 Models Only
-# This API only supports V14 detector and OCR models with V2 license
+# MareArts ANPR Docker API
+# Supports V14 Detector with V14/V15 OCR models
 
 
 
@@ -56,7 +56,7 @@ class ANPRInput(BaseModel):
 
 # Dependency for API key validation
 async def get_api_key(api_key_header: str = Depends(api_key_header)):
-    if api_key_header == "your_secret_api_key":
+    if api_key_header == "your_secret_api_key":  # ⚠️ CHANGE THIS in production!
         return api_key_header
     raise HTTPException(status_code=403, detail="Could not validate credentials")
 
@@ -65,17 +65,17 @@ def get_current_credentials(credentials: HTTPBasicCredentials = Depends(security
     return credentials
 
 
-def initialize_anpr(user_name, serial_key, detection_model_version, ocr_model_version, region, signature, backend="cpu"):
+def initialize_anpr(user_name, serial_key, detection_model_version, ocr_model_version, region, signature, backend="cpu", ocr_version="v15"):
     global anpr_d, anpr_r, current_detection_version, current_ocr_version, current_region
     
-    # V14 models require V2 license with signature
+    # All models require license with signature
     if not signature:
-        raise HTTPException(status_code=400, detail="V14 models require signature parameter")
+        raise HTTPException(status_code=400, detail="Models require signature parameter")
     
     # Initialize or reinitialize detector only if needed
     if anpr_d is None:
         # First initialization
-        logger.info(f"Initializing V14 detector: {detection_model_version} (backend: {backend})")
+        logger.info(f"Initializing V14 Detector: {detection_model_version} (backend: {backend})")
         anpr_d = ma_anpr_detector_v14(
             detection_model_version, 
             user_name, 
@@ -103,15 +103,29 @@ def initialize_anpr(user_name, serial_key, detection_model_version, ocr_model_ve
     # Initialize or reinitialize OCR only if needed
     if anpr_r is None:
         # First initialization
-        logger.info(f"Initializing V14 OCR: {ocr_model_version} (region: {region})")
-        anpr_r = ma_anpr_ocr_v14(ocr_model_version, region, user_name, serial_key, signature)
+        logger.info(f"Initializing {ocr_version.upper()} OCR: {ocr_model_version} (region: {region})")
+        anpr_r = ma_anpr_ocr(
+            model=ocr_model_version, 
+            region=region, 
+            user_name=user_name, 
+            serial_key=serial_key, 
+            signature=signature,
+            version=ocr_version
+        )
         current_ocr_version = ocr_model_version
         current_region = region
         
     elif ocr_model_version != current_ocr_version:
         # Different OCR model requested - reinitialize
-        logger.info(f"Switching OCR from {current_ocr_version} to {ocr_model_version} (region: {region})")
-        anpr_r = ma_anpr_ocr_v14(ocr_model_version, region, user_name, serial_key, signature)
+        logger.info(f"Switching {ocr_version.upper()} OCR from {current_ocr_version} to {ocr_model_version} (region: {region})")
+        anpr_r = ma_anpr_ocr(
+            model=ocr_model_version, 
+            region=region, 
+            user_name=user_name, 
+            serial_key=serial_key, 
+            signature=signature,
+            version=ocr_version
+        )
         current_ocr_version = ocr_model_version
         current_region = region
         
@@ -129,8 +143,9 @@ def initialize_anpr(user_name, serial_key, detection_model_version, ocr_model_ve
 async def process_image(
     detection_model_version: str = Form(...),
     ocr_model_version: str = Form(...),
-    region: str = Form("univ"),  # Optional - Default: univ (universal), Options: kr, eup, na, cn, univ
-    signature: str = Form(...),  # Required for V14 models
+    ocr_version: str = Form("v15"),  # Optional - v15 (latest, default) or v14 (backward compatible)
+    region: str = Form("univ"),  # Optional - Default: univ, Options: kor/kr, euplus/eup, na, china/cn, univ
+    signature: str = Form(...),  # Required
     backend: str = Form("cpu"),  # Default to CPU, options: cpu, cuda, directml
     image: UploadFile = File(...),
     api_key: str = Depends(get_api_key),
@@ -141,12 +156,12 @@ async def process_image(
     
     logger.info(f"Processing request from user: {user_name}")
     logger.info(f"Detection model: {detection_model_version}")
-    logger.info(f"OCR model: {ocr_model_version}")
+    logger.info(f"OCR model: {ocr_model_version} ({ocr_version.upper()})")
     logger.info(f"Region: {region}")
     logger.info(f"Backend: {backend}")
 
-    # Initialize V14 ANPR models with signature and backend
-    initialize_anpr(user_name, serial_key, detection_model_version, ocr_model_version, region, signature, backend)
+    # Initialize ANPR models with signature and backend
+    initialize_anpr(user_name, serial_key, detection_model_version, ocr_model_version, region, signature, backend, ocr_version)
     
     # Read the uploaded image
     contents = await image.read()

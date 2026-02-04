@@ -21,7 +21,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 
-from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v14, marearts_anpr_from_cv2
+from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr, marearts_anpr_from_cv2
 
 import config
 from database import db
@@ -98,8 +98,8 @@ def init_models():
     
     try:
         print(f"\n📦 Loading models...")
-        print(f"  Detector: {config.DETECTOR_MODEL}")
-        print(f"  OCR: {config.OCR_MODEL}")
+        print(f"  Detector: {config.DETECTOR_MODEL} (V14)")
+        print(f"  OCR: {config.OCR_MODEL} ({config.OCR_VERSION.upper()})")
         print(f"  Region: {config.REGION}")
         print(f"  Backend: {config.BACKEND}")
         
@@ -114,13 +114,14 @@ def init_models():
             iou_thres=0.5
         )
         
-        # Load OCR
-        state.ocr = ma_anpr_ocr_v14(
-            config.OCR_MODEL,
-            config.REGION,
-            config.MAREARTS_USERNAME,
-            config.MAREARTS_SERIAL_KEY,
-            config.MAREARTS_SIGNATURE,
+        # Load OCR (unified interface - supports v14 and v15)
+        state.ocr = ma_anpr_ocr(
+            model=config.OCR_MODEL,
+            region=config.REGION,
+            user_name=config.MAREARTS_USERNAME,
+            serial_key=config.MAREARTS_SERIAL_KEY,
+            signature=config.MAREARTS_SIGNATURE,
+            version=config.OCR_VERSION,  # v15 (default) or v14
             backend=config.BACKEND
         )
         
@@ -589,13 +590,14 @@ async def configure_credentials(request: Request):
                 iou_thres=0.5
             )
             
-            # Load OCR
-            test_ocr = ma_anpr_ocr_v14(
-                config.OCR_MODEL,
-                config.REGION,
-                username,
-                serial_key,
-                signature,
+            # Load OCR (unified interface)
+            test_ocr = ma_anpr_ocr(
+                model=config.OCR_MODEL,
+                region=config.REGION,
+                user_name=username,
+                serial_key=serial_key,
+                signature=signature,
+                version=config.OCR_VERSION,
                 backend=config.BACKEND
             )
             
@@ -741,13 +743,14 @@ async def update_models(request: Request):
                 iou_thres=0.5
             )
             
-            # Load new OCR
-            new_ocr = ma_anpr_ocr_v14(
-                ocr_model,
-                region,
-                config.MAREARTS_USERNAME,
-                config.MAREARTS_SERIAL_KEY,
-                config.MAREARTS_SIGNATURE,
+            # Load new OCR (unified interface)
+            new_ocr = ma_anpr_ocr(
+                model=ocr_model,
+                region=region,
+                user_name=config.MAREARTS_USERNAME,
+                serial_key=config.MAREARTS_SERIAL_KEY,
+                signature=config.MAREARTS_SIGNATURE,
+                version=config.OCR_VERSION,
                 backend=config.BACKEND
             )
             

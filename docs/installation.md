@@ -67,7 +67,7 @@ You can set credentials in three ways:
 
 - Username (your email)
 - Serial key
-- Signature (for V14 models)
+- Signature
 
 **Setup Methods:**
 
@@ -90,7 +90,8 @@ username = os.getenv("MAREARTS_ANPR_USERNAME")
 serial_key = os.getenv("MAREARTS_ANPR_SERIAL_KEY")
 signature = os.getenv("MAREARTS_ANPR_SIGNATURE")
 
-detector = ma_anpr_detector_v14("small_640p_fp32", username, serial_key, signature)
+detector = ma_anpr_detector_v14("small_640p_fp32", username, serial_key, signature)  # V14 Detector
+ocr = ma_anpr_ocr("small_fp32", "univ", username, serial_key, signature, version='v15')  # V15 OCR (latest)
 ```
 
 2. **Environment variables** (manual - temporary, not recommended):
@@ -103,38 +104,35 @@ export MAREARTS_ANPR_SIGNATURE="your-signature"
 
 3. **Direct in code** (hardcoded credentials):
 ```python
-# Supported detector modes:
-#   model: {size}_{res}_{prec} (e.g., micro_320p_fp32, medium_640p_fp32)
-#   size: pico, micro, small, medium, large | res: 320p, 640p | prec: fp32, fp16
-#   backend: "cpu", "cuda", "directml", "auto" (default: cpu)
-# V14 detector
+from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr
+
+# V14 Detector
 detector = ma_anpr_detector_v14(
-    "micro_320p_fp32", 
-    "your-email", 
-    "your-serial-key",
-    "your-signature"
+    model_name="micro_320p_fp32",     # pico/micro/small/medium/large_320p/640p_fp32/fp16
+    user_name="your-email", 
+    serial_key="your-serial-key",
+    signature="your-signature",
+    backend="cuda"                    # cpu, cuda, directml (default: cpu)
 )
 
-# Supported OCR modes:
-#   model: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
-#   region: "kr", "eup", "na", "cn", "univ" (default: univ)
-#   backend: "cpu", "cuda", "directml", "auto" (default: cpu)
-# V14 OCR with regional vocabularies
-ocr = ma_anpr_ocr_v14(
-    model='small_fp32',
-    region='kr',  # kr, eup, na, cn, univ (default: univ)
+# V15 OCR (Recommended - Latest)
+ocr = ma_anpr_ocr(
+    model='small_fp32',               # pico/micro/small/medium/large_fp32 or _int8
+    region='univ',                    # kor/kr, euplus/eup, na, china/cn, univ
     user_name="your-email",
     serial_key="your-serial-key",
-    signature="your-signature"
+    signature="your-signature",
+    version='v15',                    # v15 (latest) or v14 (backward compatible)
+    backend="cuda"                    # cpu, cuda, directml (default: auto)
 )
 ```
 
 **Regions:**
-- **kr** - Korean license plates (best for Korean)
-- **eup** - European+ plates (EU countries + additional European countries + Indonesia)
+- **kor** (or kr) - Korean license plates
+- **euplus** (or eup) - European+ plates (EU + additional countries)
 - **na** - North American plates (USA, Canada)
-- **cn** - Chinese plates
-- **univ** - Universal (all regions) - **default, but choose specific region for best accuracy**
+- **china** (or cn) - Chinese plates
+- **univ** - Universal (all regions) - default, but choose specific region for best accuracy
 
 ### Model Storage Location
 
@@ -142,11 +140,12 @@ Models are automatically downloaded to `~/.marearts/marearts_anpr_data/` on firs
 
 ```
 ~/.marearts/
-├── .marearts_env          # Credentials file
-└── marearts_anpr_data/    # ANPR models (auto-downloaded)
-    ├── v14_medium_640p_fp32.dat
-    ├── v14_medium_fp32.dat
-    └── ... (other models)
+├── .marearts_env                        # Credentials file
+└── marearts_anpr_data/                  # ANPR models (auto-downloaded)
+    ├── marearts_anpr_d_v14_medium_640p_fp32.dat     # V14 Detector
+    ├── marearts_anpr_r_v15_small_fp32.dat           # V15 OCR (latest)
+    ├── marearts_anpr_r_v14_small_fp32.dat           # V14 OCR (legacy)
+    └── ... (other models as needed)
 ```
 
 ### Verify Installation

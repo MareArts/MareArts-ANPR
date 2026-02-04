@@ -1,0 +1,90 @@
+================================================================================
+                    V14 ANPR OCR MODEL EVALUATION REPORT
+================================================================================
+
+Date: 2026-02-04 10:12:20
+Test Percentage: 50%
+Requested Backend: CUDA
+Actual Backend: GPU (cuda)
+
+================================================================================
+
+OVERALL MODEL PERFORMANCE BY REGION
+================================================================================
+Model                Region     Exact Acc    Char Acc     FPS        Time(ms)     Samples   
+--------------------------------------------------------------------------------
+pico_fp32            kor        99.04%       99.77%       269.6      3.71ms       20341     
+pico_fp32            euplus     94.69%       97.35%       274.6      3.64ms       11760     
+pico_fp32            na         72.00%       88.24%       273.9      3.65ms       1143      
+pico_fp32            china      96.15%       98.93%       271.0      3.69ms       2415      
+pico_fp32            univ       96.41%       98.46%       269.6      3.71ms       35725     
+micro_fp32           kor        99.20%       99.80%       264.1      3.79ms       20341     
+micro_fp32           euplus     94.51%       97.31%       267.4      3.74ms       11760     
+micro_fp32           na         71.92%       88.53%       265.3      3.77ms       1143      
+micro_fp32           china      96.02%       98.83%       267.0      3.75ms       2415      
+micro_fp32           univ       96.55%       98.46%       260.0      3.85ms       35725     
+small_fp32           kor        99.22%       99.80%       302.1      3.31ms       20341     
+small_fp32           euplus     94.35%       97.32%       301.2      3.32ms       11760     
+small_fp32           na         70.34%       88.05%       309.2      3.23ms       1143      
+small_fp32           china      96.40%       98.95%       298.8      3.35ms       2415      
+small_fp32           univ       96.51%       98.45%       297.6      3.36ms       35725     
+medium_fp32          kor        99.19%       99.80%       277.6      3.60ms       20341     
+medium_fp32          euplus     94.65%       97.38%       284.7      3.51ms       11760     
+medium_fp32          na         72.53%       89.28%       285.5      3.50ms       1143      
+medium_fp32          china      96.02%       98.92%       284.5      3.51ms       2415      
+medium_fp32          univ       96.57%       98.53%       274.4      3.64ms       35725     
+large_fp32           kor        99.28%       99.81%       258.7      3.87ms       20341     
+large_fp32           euplus     95.18%       97.57%       265.8      3.76ms       11760     
+large_fp32           na         73.84%       89.51%       270.6      3.70ms       1143      
+large_fp32           china      96.36%       98.94%       262.7      3.81ms       2415      
+large_fp32           univ       96.83%       98.57%       263.0      3.80ms       35725     
+
+
+MODEL AVERAGES (Across All Regions)
+================================================================================
+Model                Exact Acc    Char Acc     FPS        Avg Time(ms) Total Samples
+--------------------------------------------------------------------------------
+pico_fp32            91.65%       96.55%       271.7      3.68ms       71384       
+micro_fp32           91.64%       96.58%       264.7      3.78ms       71384       
+small_fp32           91.36%       96.51%       301.7      3.31ms       71384       
+medium_fp32          91.79%       96.78%       281.3      3.55ms       71384       
+large_fp32           92.29%       96.88%       264.1      3.78ms       71384       
+
+
+================================================================================
+SUMMARY
+================================================================================
+
+Total Evaluations: 25 / 25
+Failed Evaluations: 0
+
+BEST PERFORMERS
+--------------------------------------------------------------------------------
+Best Exact Match:     large_fp32 on kor (99.28%)
+Best Character Acc:   large_fp32 on kor (99.81%)
+Fastest Model:        small_fp32 on na (309.2 FPS)
+
+RECOMMENDATIONS
+--------------------------------------------------------------------------------
+• For best accuracy: Use large_fp32 with kor region
+• For real-time processing: Use small_fp32 with na region
+
+MODEL SIZE REFERENCE (FP32)
+--------------------------------------------------------------------------------
+Pico model:   ~61MB   (Fastest)
+Micro model:  ~72MB   (Fast)
+Small model:  ~114MB  (Balanced)
+Medium model: ~165MB  (High accuracy)
+Large model:  ~180MB  (Highest accuracy)
+
+REGION REFERENCE
+--------------------------------------------------------------------------------
+kor    - Korean license plates (Hangul + numbers)
+euplus - European license plates (English letters + numbers)
+na     - North American license plates (English letters + numbers)
+china  - Chinese license plates (Chinese characters + numbers)
+univ   - Universal (all characters from all regions)
+
+================================================================================
+Report generated: 2026-02-04 10:48:34
+================================================================================

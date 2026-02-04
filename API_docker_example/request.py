@@ -5,7 +5,7 @@ import io
 from requests.auth import HTTPBasicAuth
 
 # Example Python client for MareArts ANPR Docker API
-# V14 models
+# V14 Detector + V15 OCR (latest)
 
 url = "http://localhost:8000/process_image"
 
@@ -14,16 +14,17 @@ headers = {
     "X-API-Key": "your_secret_api_key"
 }
 
-# V14 models configuration
+# V15 OCR configuration (Latest - Recommended)
 def setup_request():
-    print("Testing V14 models...")
+    print("Testing V14 Detector + V15 OCR...")
     
     data = {
-        "detection_model_version": "v14_medium_640p_fp32",  # V14 detector (requires v14_ prefix)
-        "ocr_model_version": "v14_large_fp32",  # V14 OCR (requires v14_ prefix)
-        "region": "univ",  # Optional: kr, eup, na, cn, univ (default: univ). Choose specific region for best accuracy!
-        "signature": "your_signature",  # Required for V14 models
-        "backend": "cuda"  # Options: cpu, cuda, directml
+        "detection_model_version": "medium_640p_fp32",  # V14 Detector model
+        "ocr_model_version": "large_fp32",              # OCR model (works with v14 or v15)
+        "ocr_version": "v15",                           # v15 (latest) or v14 (backward compatible)
+        "region": "univ",                               # kor/kr, euplus/eup, na, china/cn, univ (default: univ)
+        "signature": "your_signature",                  # Required
+        "backend": "cuda"                               # Options: cpu, cuda, directml
     }
     
     auth_values = HTTPBasicAuth('user@email.com', 'serial_key')

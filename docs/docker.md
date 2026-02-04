@@ -1,6 +1,8 @@
 # Docker Deployment
 
-Deploy MareArts ANPR as a REST API service using Docker.
+**Last Updated:** February 4, 2026
+
+Deploy MareArts ANPR as a REST API service using Docker with V14 Detector + V15 OCR (V14 OCR also supported).
 
 ## Quick Start
 
@@ -26,24 +28,25 @@ The API will be available at `http://localhost:8000`
 Authentication: Basic Auth (username/password) + API Key
 
 Form data:
-- `detection_model_version`: Detector model name
-  - Example: "v14_micro_320p_fp32" or "v14_medium_640p_fp32"
+- `detection_model_version`: V14 Detector model name
+  - Example: "micro_320p_fp32" or "medium_640p_fp32"
   - Sizes: pico, micro, small, medium, large
   - Resolutions: 320p (fast), 640p (accurate)
   - Precision: fp32 (fast), fp16 (compact)
 - `ocr_model_version`: OCR model name
-  - Example: "v14_medium_fp32"
+  - Example: "medium_fp32"
   - Sizes: pico, micro, small, medium, large
-  - Precision: fp32, fp16 (availability may vary)
+  - Precision: fp32 (or int8 for smaller files)
+- `ocr_version`: (Optional) OCR version - "v15" (latest, default) or "v14" (backward compatible)
 - `region`: OCR region
-  - Options: "kr", "eup", "na", "cn", "univ"
-- `signature`: Required signature for V2 license
+  - Options: "kor"/"kr", "euplus"/"eup", "na", "china"/"cn", "univ"
+- `signature`: Required signature
 - `backend`: (Optional) Backend: "cpu", "cuda", "directml" (default: "cpu")
 - `image`: Image file (JPEG/PNG)
 
 Headers:
 - `X-API-Key`: your_secret_api_key
-- `Authorization`: Basic Auth with V2 credentials
+- `Authorization`: Basic Auth with credentials
 
 ### Health Check
 **GET** `/health`
@@ -156,24 +159,26 @@ The API automatically optimizes model usage:
 
 ## Supported Modes
 
-### Detector
-  - model: v14_{size}_{res}_{prec} (e.g., v14_micro_320p_fp32, v14_medium_640p_fp32)
+### V14 Detector
+  - Model: {size}_{res}_{prec} (e.g., micro_320p_fp32, medium_640p_fp32)
     - size: pico, micro, small, medium, large
     - res: 320p (fast), 640p (accurate)
     - prec: fp32 (fast), fp16 (compact)
-  - backend: "cpu", "cuda", "directml", "auto" (default: cpu)
+  - backend: "cpu", "cuda", "directml" (default: cpu)
 
-### OCR
-  - model: v14_pico_fp32, v14_micro_fp32, v14_small_fp32, v14_medium_fp32, v14_large_fp32
-  - region: "kr", "eup", "na", "cn", "univ" (default: univ)
-  - backend: "cpu", "cuda", "directml", "auto" (default: cpu)
+### OCR (V15 Latest / V14 Backward Compatible)
+  - Model: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
+           pico_int8, micro_int8, small_int8, medium_int8, large_int8 (V15 only)
+  - Version: "v15" (latest, default) or "v14" (backward compatible)
+  - Region: "kor"/"kr", "euplus"/"eup", "na", "china"/"cn", "univ" (default: univ)
+  - backend: "cpu", "cuda", "directml" (default: cpu)
 
-Example: Consecutive requests with `v14_medium_fp32` OCR but different regions (kr → eup → na) will reuse the same OCR instance and only switch regions internally.
+**Example:** Consecutive requests with `medium_fp32` OCR and v15 but different regions (kor → euplus → na) will reuse the same OCR instance and only switch regions internally.
 
 ## Regions
 
-- **kr** - Korean license plates (best for Korean)
-- **eup** - European+ license plates (EU countries + additional European countries + Indonesia)
+- **kor** (or kr) - Korean license plates
+- **euplus** (or eup) - European+ license plates (EU + additional countries)
 - **na** - North American license plates (USA, Canada)
-- **cn** - Chinese license plates
-- **univ** - Universal (all regions) - **default, but choose specific region for best accuracy**
+- **china** (or cn) - Chinese license plates
+- **univ** - Universal (all regions) - default, but choose specific region for best accuracy

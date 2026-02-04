@@ -1,0 +1,120 @@
+================================================================================
+                    V15 ANPR OCR MODEL EVALUATION REPORT
+================================================================================
+
+Date: 2026-02-03 19:27:15
+Test Percentage: 50%
+Requested Backend: CUDA
+Actual Backend: GPU (cuda)
+
+================================================================================
+
+OVERALL MODEL PERFORMANCE BY REGION
+================================================================================
+Model                Region     Exact Acc    Char Acc     FPS        Time(ms)     Samples   
+--------------------------------------------------------------------------------
+pico_fp32            kor        98.91%       99.74%       279.0      3.58ms       20341     
+pico_fp32            euplus     95.44%       97.65%       281.8      3.55ms       11760     
+pico_fp32            na         88.54%       96.11%       271.1      3.69ms       1143      
+pico_fp32            china      96.52%       98.93%       284.3      3.52ms       2415      
+pico_fp32            univ       97.15%       98.80%       274.8      3.64ms       35725     
+pico_int8            kor        96.73%       99.08%       57.3       17.47ms      20341     
+pico_int8            euplus     92.26%       96.32%       57.7       17.34ms      11760     
+pico_int8            na         80.66%       92.43%       48.5       20.63ms      1143      
+pico_int8            china      94.45%       98.10%       57.1       17.50ms      2415      
+pico_int8            univ       94.50%       97.80%       56.0       17.85ms      35725     
+micro_fp32           kor        98.94%       99.75%       285.8      3.50ms       20341     
+micro_fp32           euplus     94.90%       97.54%       278.3      3.59ms       11760     
+micro_fp32           na         87.58%       95.72%       285.4      3.50ms       1143      
+micro_fp32           china      96.23%       98.86%       280.0      3.57ms       2415      
+micro_fp32           univ       97.01%       98.75%       274.7      3.64ms       35725     
+micro_int8           kor        98.96%       99.75%       39.6       25.28ms      20341     
+micro_int8           euplus     94.70%       97.48%       40.1       24.94ms      11760     
+micro_int8           na         87.31%       95.69%       35.0       28.54ms      1143      
+micro_int8           china      96.15%       98.79%       37.4       26.71ms      2415      
+micro_int8           univ       96.91%       98.72%       39.7       25.21ms      35725     
+small_fp32           kor        98.99%       99.76%       336.7      2.97ms       20341     
+small_fp32           euplus     94.01%       97.22%       337.8      2.96ms       11760     
+small_fp32           na         85.30%       94.90%       341.6      2.93ms       1143      
+small_fp32           china      95.90%       98.78%       332.5      3.01ms       2415      
+small_fp32           univ       96.63%       98.61%       324.6      3.08ms       35725     
+small_int8           kor        98.96%       99.76%       53.6       18.67ms      20341     
+small_int8           euplus     94.03%       97.22%       54.8       18.26ms      11760     
+small_int8           na         85.30%       94.87%       54.4       18.38ms      1143      
+small_int8           china      96.02%       98.79%       50.7       19.73ms      2415      
+small_int8           univ       96.63%       98.61%       54.1       18.47ms      35725     
+medium_fp32          kor        98.95%       99.75%       303.3      3.30ms       20341     
+medium_fp32          euplus     94.90%       97.49%       306.9      3.26ms       11760     
+medium_fp32          na         87.31%       95.85%       306.9      3.26ms       1143      
+medium_fp32          china      96.27%       98.83%       301.2      3.32ms       2415      
+medium_fp32          univ       97.00%       98.73%       293.6      3.41ms       35725     
+medium_int8          kor        98.96%       99.75%       39.8       25.15ms      20341     
+medium_int8          euplus     94.91%       97.48%       40.4       24.78ms      11760     
+medium_int8          na         87.31%       95.85%       35.0       28.57ms      1143      
+medium_int8          china      96.27%       98.83%       39.3       25.46ms      2415      
+medium_int8          univ       96.99%       98.73%       39.6       25.24ms      35725     
+large_fp32           kor        98.68%       99.70%       287.5      3.48ms       20341     
+large_fp32           euplus     95.77%       97.79%       293.4      3.41ms       11760     
+large_fp32           na         88.36%       96.42%       296.9      3.37ms       1143      
+large_fp32           china      96.44%       98.92%       292.4      3.42ms       2415      
+large_fp32           univ       97.07%       98.80%       288.2      3.47ms       35725     
+large_int8           kor        98.70%       99.70%       31.9       31.33ms      20341     
+large_int8           euplus     95.77%       97.79%       31.9       31.38ms      11760     
+large_int8           na         88.63%       96.54%       32.2       31.02ms      1143      
+large_int8           china      96.48%       98.93%       32.0       31.26ms      2415      
+large_int8           univ       97.09%       98.80%       31.8       31.42ms      35725     
+
+
+MODEL AVERAGES (Across All Regions)
+================================================================================
+Model                Exact Acc    Char Acc     FPS        Avg Time(ms) Total Samples
+--------------------------------------------------------------------------------
+pico_fp32            95.31%       98.24%       278.2      3.59ms       71384       
+pico_int8            91.72%       96.74%       55.3       18.15ms      71384       
+micro_fp32           94.93%       98.12%       280.8      3.56ms       71384       
+micro_int8           94.80%       98.08%       38.3       26.13ms      71384       
+small_fp32           94.16%       97.85%       334.6      2.99ms       71384       
+small_int8           94.18%       97.85%       53.5       18.70ms      71384       
+medium_fp32          94.88%       98.13%       302.3      3.31ms       71384       
+medium_int8          94.88%       98.12%       38.8       25.84ms      71384       
+large_fp32           95.26%       98.32%       291.6      3.43ms       71384       
+large_int8           95.33%       98.35%       31.9       31.28ms      71384       
+
+
+================================================================================
+SUMMARY
+================================================================================
+
+Total Evaluations: 50 / 50
+Failed Evaluations: 0
+
+BEST PERFORMERS
+--------------------------------------------------------------------------------
+Best Exact Match:     small_fp32 on kor (98.99%)
+Best Character Acc:   small_fp32 on kor (99.76%)
+Fastest Model:        small_fp32 on na (341.6 FPS)
+
+RECOMMENDATIONS
+--------------------------------------------------------------------------------
+• For best accuracy: Use small_fp32 with kor region
+• For real-time processing: Use small_fp32 with na region
+
+MODEL SIZE REFERENCE (FP32)
+--------------------------------------------------------------------------------
+Pico model:   ~61MB   (Fastest)
+Micro model:  ~72MB   (Fast)
+Small model:  ~114MB  (Balanced)
+Medium model: ~165MB  (High accuracy)
+Large model:  ~180MB  (Highest accuracy)
+
+REGION REFERENCE
+--------------------------------------------------------------------------------
+kor    - Korean license plates (Hangul + numbers)
+euplus - European license plates (English letters + numbers)
+na     - North American license plates (English letters + numbers)
+china  - Chinese license plates (Chinese characters + numbers)
+univ   - Universal (all characters from all regions)
+
+================================================================================
+Report generated: 2026-02-03 22:36:13
+================================================================================

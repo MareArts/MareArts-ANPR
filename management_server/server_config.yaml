@@ -8,9 +8,10 @@ server:
   port: 8000
 
 models:
-  detector: "micro_320p_fp32"    # Detector model (pico/micro/small/medium/large)
-  ocr: "small_fp32"              # OCR model (pico/micro/small/medium/large)
-  region: "eup"                  # Region: kr, eup, na, cn, univ
+  detector: "micro_320p_fp32"    # V14 Detector model (pico/micro/small/medium/large_320p/640p_fp32/fp16)
+  ocr: "small_fp32"              # OCR model (pico/micro/small/medium/large_fp32 or _int8)
+  ocr_version: "v15"             # OCR version: v15 (latest, recommended) or v14 (backward compatible)
+  region: "euplus"               # Region: kor/kr, euplus/eup, na, china/cn, univ
   backend: "cpu"                 # Backend: cpu, cuda, directml
   confidence: 0.25               # Detection confidence threshold (0.0-1.0)
 
@@ -20,6 +21,6 @@ storage:
   max_logs: 500                  # Max log entries in memory
 
 # Optional: Override via environment variables
-# ANPR_PORT, ANPR_DETECTOR, ANPR_OCR, ANPR_REGION, ANPR_BACKEND,
+# ANPR_PORT, ANPR_DETECTOR, ANPR_OCR, ANPR_OCR_VERSION, ANPR_REGION, ANPR_BACKEND,
 # ANPR_CONFIDENCE, ANPR_SAVE_IMAGES, ANPR_MAX_HISTORY, ANPR_MAX_LOGS
 

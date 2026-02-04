@@ -1,50 +1,57 @@
 # MareArts ANPR Docker API Example
 
-This example demonstrates how to deploy MareArts ANPR as a REST API service using Docker with V14 models.
+This example demonstrates how to deploy MareArts ANPR as a REST API service using Docker.
 
 ## Features
 
 - FastAPI-based REST API
-- V14 model support with multi-backend inference (cpu, cuda, directml)
-- **Smart model caching** - Reuses initialized models when same model requested (>3.6.5)
-- **Dynamic region switching** - Changes region without reloading OCR model (>3.6.5)
+- V14 Detector + V15 OCR support (V14 OCR backward compatible)
+- Multi-backend inference (cpu, cuda, directml)
+- **Smart model caching** - Reuses initialized models when same model requested
+- **Dynamic region switching** - Changes region without reloading OCR model
+- **Easy OCR version switching** - Select v15 (latest) or v14 via API parameter
 - Auto-update capability (checks for package updates)
 - Basic authentication + API key security
 
-## V14 Model Requirements
+## Model Requirements
 
-V14 models require:
+All models require:
 
 - License serial key
 - Digital signature (provided with license)
 - Backend selection (cpu, cuda, directml) - default: cpu
-- Region parameter (kr, eup, na, cn, univ) - default: univ
+- Region parameter - default: univ
 
-### Available V14 Models
+### Available Models
 
-**Detector Models (example, actual models may vary):**
+**V14 Detector Models:**
 
-- `v14_pico_640p_fp32` - Fastest, smallest
-- `v14_micro_640p_fp32` - Fast with good accuracy
-- `v14_small_640p_fp32` - Balanced performance
-- `v14_medium_640p_fp32` - Higher accuracy
-- `v14_large_640p_fp32` - Highest accuracy
+- `pico_640p_fp32` - Smallest, fast
+- `micro_320p_fp32` - Fast, recommended
+- `small_640p_fp32` - Balanced performance
+- `medium_640p_fp32` - Higher accuracy
+- `large_640p_fp32` - Highest accuracy
 
-**OCR Models (example, actual models may vary):**
+**V15 OCR Models (Latest - Recommended):**
 
-- `v14_pico_fp32` - Fast
-- `v14_micro_fp32` - Balanced
-- `v14_small_fp32` - Fastest
-- `v14_medium_fp32` - High accuracy
-- `v14_large_fp32` - Highest exact match
+- `pico_fp32` / `pico_int8` - Smallest
+- `micro_fp32` / `micro_int8` - Fast
+- `small_fp32` / `small_int8` - Balanced
+- `medium_fp32` / `medium_int8` - High accuracy
+- `large_fp32` / `large_int8` - Best accuracy
+
+**V14 OCR Models (Backward Compatible):**
+
+- Same model names as V15: `pico_fp32`, `micro_fp32`, etc.
+- Use `ocr_version="v14"` parameter to select
 
 **Regions:**
 
-- `kr` - Korean plates (best for Korean)
-- `eup` - European+ plates (EU countries + additional European countries + Indonesia)
-- `na` - North American plates (USA, Canada)
-- `cn` - Chinese plates
-- `univ` - Universal (all regions) - **default, but choose specific region for best accuracy**
+- `kor` or `kr` - Korean plates
+- `euplus` or `eup` - European+ plates
+- `na` - North American plates
+- `china` or `cn` - Chinese plates
+- `univ` - Universal (all regions, default)
 
 ## Quick Start
 
@@ -61,14 +68,28 @@ V14 models require:
 ### 3. Test API
 
 ```bash
+# Using V15 OCR (Latest - Default)
 curl -X POST http://localhost:8000/process_image \
   -H "X-API-Key: your_secret_api_key" \
   -u "user@email.com:serial_key" \
-  -F "detection_model_version=v14_medium_640p_fp32" \
-  -F "ocr_model_version=v14_large_fp32" \
+  -F "detection_model_version=medium_640p_fp32" \
+  -F "ocr_model_version=large_fp32" \
+  -F "ocr_version=v15" \
   -F "region=univ" \
   -F "signature=your_signature" \
   -F "backend=cuda" \
+  -F "image=@test.jpg"
+
+# Using V14 OCR (Backward Compatible)
+curl -X POST http://localhost:8000/process_image \
+  -H "X-API-Key: your_secret_api_key" \
+  -u "user@email.com:serial_key" \
+  -F "detection_model_version=medium_640p_fp32" \
+  -F "ocr_model_version=large_fp32" \
+  -F "ocr_version=v14" \
+  -F "region=univ" \
+  -F "signature=your_signature" \
+  -F "backend=cpu" \
   -F "image=@test.jpg"
 ```
 
@@ -78,11 +99,12 @@ curl -X POST http://localhost:8000/process_image \
 
 **Parameters:**
 
-- `detection_model_version` (required): Detection model name (e.g., v14_medium_640p_fp32)
-- `ocr_model_version` (required): OCR model name (e.g., v14_medium_fp32)
-- `region` (optional): OCR region - kr, eup, na, cn, univ (default: univ)
-- `signature` (required): Signature for V14 models (mandatory)
-- `backend` (optional): Backend for V14 models - cpu, cuda, directml (default: cpu)
+- `detection_model_version` (required): V14 Detector model name (e.g., medium_640p_fp32)
+- `ocr_model_version` (required): OCR model name (e.g., large_fp32)
+- `ocr_version` (optional): OCR version - v15 (latest, default) or v14 (backward compatible)
+- `region` (optional): OCR region - kor/kr, euplus/eup, na, china/cn, univ (default: univ)
+- `signature` (required): Signature (mandatory)
+- `backend` (optional): Backend - cpu, cuda, directml (default: cpu)
 - `image` (required): Image file
 
 **Authentication:**
@@ -100,15 +122,17 @@ Returns API status and marearts-anpr version.
 import requests
 from requests.auth import HTTPBasicAuth
 
-# V14 models
+# Setup
 url = "http://localhost:8000/process_image"
 headers = {"X-API-Key": "your_secret_api_key"}
 auth = HTTPBasicAuth('user@email.com', 'serial_key')
 
+# Using V15 OCR (Latest - Recommended)
 data = {
-    "detection_model_version": "v14_small_640p_fp32",
-    "ocr_model_version": "v14_small_fp32",
-    "region": "kr",  # Optional: kr, eup, na, cn, univ (default: univ). Choose specific region for best accuracy!
+    "detection_model_version": "small_640p_fp32",
+    "ocr_model_version": "small_fp32",
+    "ocr_version": "v15",  # v15 (latest) or v14 (backward compatible)
+    "region": "kor",       # kor/kr, euplus/eup, na, china/cn, univ (default: univ)
     "signature": "your_signature",
     "backend": "cuda"
 }
@@ -118,6 +142,9 @@ with open("test.jpg", "rb") as f:
     response = requests.post(url, headers=headers, auth=auth, data=data, files=files)
 
 print(response.json())
+
+# Using V14 OCR (Backward Compatible)
+# Just change: "ocr_version": "v14"
 ```
 
 ## Backend Options for V14

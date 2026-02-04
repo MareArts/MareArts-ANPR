@@ -2,7 +2,8 @@
 """
 Simple ANPR Server - Process Images from Memory
 
-Minimal server that loads models once and processes images from memory.
+Minimal server using V14 Detector + V15 OCR (latest).
+Loads models once and processes images from memory.
 Perfect for integration with Visual Studio, C#, or any HTTP client.
 
 Requirements:
@@ -23,7 +24,7 @@ Test:
 from fastapi import FastAPI, File, UploadFile, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v14, marearts_anpr_from_cv2
+from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr, marearts_anpr_from_cv2
 import cv2
 import numpy as np
 import os
@@ -44,10 +45,11 @@ if not all([USER, KEY, SIG]):
     exit(1)
 
 # Settings
-DETECTOR_MODEL = "medium_640p_fp32"
-OCR_MODEL = "small_fp32"
-REGION = "eup"
-BACKEND = "cpu"  # Change to "cuda" if GPU available
+DETECTOR_MODEL = "medium_640p_fp32"  # V14 Detector: pico/micro/small/medium/large_640p_fp32
+OCR_MODEL = "small_fp32"              # OCR models: pico/micro/small/medium/large_fp32 or _int8
+OCR_VERSION = "v15"                   # v15 (latest, recommended) or v14 (backward compatible)
+REGION = "euplus"                     # Regions: kor/kr, euplus/eup, na, china/cn, univ
+BACKEND = "cpu"                       # cpu, cuda, directml (change to "cuda" if GPU available)
 CONFIDENCE = 0.20
 
 # ============================================================================
@@ -59,8 +61,8 @@ print("Starting ANPR Server...")
 print("="*70)
 
 print(f"\nLoading models...")
-print(f"  Detector: {DETECTOR_MODEL}")
-print(f"  OCR: {OCR_MODEL}")
+print(f"  Detector: {DETECTOR_MODEL} (V14)")
+print(f"  OCR: {OCR_MODEL} ({OCR_VERSION.upper()})")
 print(f"  Region: {REGION}")
 print(f"  Backend: {BACKEND}")
 
@@ -72,8 +74,20 @@ detector = ma_anpr_detector_v14(
     iou_thres=0.5
 )
 
-# Load OCR
-ocr = ma_anpr_ocr_v14(OCR_MODEL, REGION, USER, KEY, SIG, backend=BACKEND)
+# Load OCR (unified interface - easily switch v14/v15)
+ocr = ma_anpr_ocr(
+    model=OCR_MODEL, 
+    region=REGION, 
+    user_name=USER, 
+    serial_key=KEY, 
+    signature=SIG, 
+    version=OCR_VERSION,  # Change OCR_VERSION above to switch between v15 and v14
+    backend=BACKEND
+)
+
+# Alternative: Direct import for specific version
+# from marearts_anpr import ma_anpr_ocr_v15
+# ocr = ma_anpr_ocr_v15(OCR_MODEL, REGION, USER, KEY, SIG, backend=BACKEND)
 
 print("✅ Models loaded and ready!")
 print("="*70)

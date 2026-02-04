@@ -34,7 +34,7 @@ detector = ma_anpr_detector_v14(
 )
 
 # Create V14 OCR with regional vocabulary
-# Regions: univ (universal), kr, eup, na, cn
+# Regions: kor/kr, euplus/eup, na, china/cn, univ
 ocr = ma_anpr_ocr_v14("medium_fp32", "univ", user_name, serial_key, signature)
 
 # Process image
@@ -124,7 +124,7 @@ python example_code/test_api_regions.py your_image.jpg
 
 **Comprehensive test-api tutorial with 20+ examples:**
 - All detector models (pico → large)
-- All regions (kr, eup, na, cn, univ)
+- All regions (kor/kr, euplus/eup, na, china/cn, univ)
 - Different resolutions (320p vs 640p)
 - Precision options (FP16 vs FP32)
 - Use case examples (security, parking, law enforcement)
@@ -262,7 +262,7 @@ python example_code/memory_processing.py
 For complete model specifications, performance benchmarks, and configuration options, see:
 
 - **[V14 Models Documentation](../docs/models.md)** - All available models, performance, sizes, and recommendations
-- **[Regional Support](../docs/regional-support.md)** - Regional vocabularies (kr, eup, na, cn, univ)
+- **[Regional Support](../docs/regional-support.md)** - Regional vocabularies (kor/kr, euplus/eup, na, china/cn, univ)
 - **[Usage Guide](../docs/usage.md)** - Backend options (cpu, cuda, directml), dynamic region switching
 
 
@@ -374,6 +374,6 @@ Models are automatically downloaded to `~/.marearts/marearts_anpr_data/` on firs
 - First run downloads models (may take time)
 - Models are cached after first download
 - GPU acceleration significantly improves performance
-- Use specific regions for best accuracy (kr, eup, na, cn)
+- Use specific regions for best accuracy (kor/kr, euplus/eup, na, china/cn)
 - For multi-region applications, use set_region() instead of creating multiple instances
 - **V15 OCR recommended** for better accuracy and multi-line support

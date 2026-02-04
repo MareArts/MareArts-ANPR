@@ -2,7 +2,7 @@
 import cv2
 from PIL import Image
 from marearts_anpr import ma_anpr_detector_v14
-from marearts_anpr import ma_anpr_ocr_v14
+from marearts_anpr import ma_anpr_ocr_v15
 from marearts_anpr import marearts_anpr_from_pil
 from marearts_anpr import marearts_anpr_from_image_file
 from marearts_anpr import marearts_anpr_from_cv2
@@ -10,8 +10,8 @@ from marearts_anpr import marearts_anpr_from_cv2
 if __name__ == '__main__':
     
     #################################
-    ## Initiate MareArts ANPR V14
-    print("MareArts ANPR V14 - Multi-Region Example")
+    ## Initiate MareArts ANPR (V14 Detector + V15 OCR)
+    print("MareArts ANPR - Multi-Region Example (V14 Detector + V15 OCR)")
     
     # CREDENTIALS - Choose one:
     # Method 1: Hardcode (edit below)
@@ -46,13 +46,14 @@ if __name__ == '__main__':
     
     # V14 Detector models: pico_640p_fp32, micro_640p_fp32, small_640p_fp32, medium_640p_fp32, large_640p_fp32
     detector_model = "medium_640p_fp32"
-    # V14 OCR models: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
+    # V15 OCR models: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
+    #                 pico_int8, micro_int8, small_int8, medium_int8, large_int8 (smaller files)
     ocr_model = "medium_fp32"
     # Backend: cpu, cuda, directml (default: cpu)
     backend = "cpu"
     
-    # Initial region (kr, eup, na, cn, univ)
-    region = "kr"  # Change to your region
+    # Initial region (kor/kr, euplus/eup, na, china/cn, univ)
+    region = "kor"  # Change to your region
 
     # Initialize V14 Detector
     anpr_d = ma_anpr_detector_v14(
@@ -65,16 +66,32 @@ if __name__ == '__main__':
         iou_thres=0.5
     )
     
-    # Initialize V14 OCR with regional vocabulary
-    # Regions: kr (Korean), eup (Europe+), na (North America), cn (China), univ (Universal)
-    anpr_r = ma_anpr_ocr_v14(ocr_model, region, user_name, serial_key, signature)
+    # Initialize V15 OCR with regional vocabulary (Latest - Recommended)
+    # Regions: kor (or kr), euplus (or eup), na, china (or cn), univ (Universal)
+    anpr_r = ma_anpr_ocr_v15(
+        model=ocr_model,              # pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
+                                      # pico_int8, micro_int8, small_int8, medium_int8, large_int8
+        region=region,                # kor/kr, euplus/eup, na, china/cn, univ
+        user_name=user_name,
+        serial_key=serial_key,
+        signature=signature,
+        backend=backend               # cpu, cuda, directml (default: auto)
+    )
+    
+    # Or use V14 OCR (backward compatible)
+    # from marearts_anpr import ma_anpr_ocr_v14
+    # anpr_r = ma_anpr_ocr_v14(ocr_model, region, user_name, serial_key, signature, backend=backend)
+    
+    # Or use unified interface (switch versions easily)
+    # from marearts_anpr import ma_anpr_ocr
+    # anpr_r = ma_anpr_ocr(ocr_model, region, user_name, serial_key, signature, version='v15', backend=backend)  # v15 or v14
     
     # 💡 Dynamic region switching (no reload needed!):
-    # anpr_r.set_region('eup')   # Switch to European plates
-    # anpr_r.set_region('kr')    # Switch to Korean plates
-    # anpr_r.set_region('na')    # Switch to North American plates
-    # anpr_r.set_region('cn')    # Switch to Chinese plates
-    # anpr_r.set_region('univ')  # Switch to Universal
+    # anpr_r.set_region('euplus')   # Switch to European plates
+    # anpr_r.set_region('kor')      # Switch to Korean plates
+    # anpr_r.set_region('na')       # Switch to North American plates
+    # anpr_r.set_region('china')    # Switch to Chinese plates
+    # anpr_r.set_region('univ')     # Switch to Universal
     # Saves ~180MB memory vs creating multiple OCR instances!
     #################################
 
@@ -105,7 +122,7 @@ if __name__ == '__main__':
     
     # NEW (>3.7.0): Use set_region() instead of creating new OCR instance
     # This saves ~180MB memory and is instant!
-    anpr_r.set_region('kr')
+    anpr_r.set_region('kor')  # or 'kr' (both work)
     
     image_path = './sample_images/kr-a.jpg'
     
@@ -126,7 +143,7 @@ if __name__ == '__main__':
     
     
     #################################
-    # Example 3: Batch Processing (V14 Feature)
+    # Example 3: Batch Processing
     print("\n=== Example 3: Batch Processing ===")
     
     # Collect multiple plate images for batch processing
@@ -159,7 +176,7 @@ if __name__ == '__main__':
         plate_images.append(Image.fromarray(cv2.cvtColor(crop, cv2.COLOR_BGR2RGB)))
     
     if len(plate_images) > 1:
-        # V14 OCR supports batch processing!
+        # V15 OCR supports batch processing!
         batch_results = anpr_r.predict(plate_images)  # Pass list of images
         print(f"Batch processed {len(plate_images)} plates:")
         for i, (text, conf) in enumerate(batch_results):

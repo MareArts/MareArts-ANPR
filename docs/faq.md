@@ -1,6 +1,6 @@
 # Software Licensing FAQ
 
-**Last Updated:** November 7, 2025
+**Last Updated:** February 4, 2026
 
 ---
 
@@ -25,9 +25,9 @@
 - **Lifetime licenses** - No expiration, use indefinitely
 
 All licenses include:
-- Access to V14 models with digital signature
+- Access to V14 Detector and V15 OCR models (V14 OCR also supported)
 - Multi-backend support (CPU, CUDA, DirectML)
-- Multi-region support (kr, eup, na, cn, univ)
+- Multi-region support (kor, euplus, na, china, univ)
 - Unlimited computers - no device limits
 - Latest model updates
 
@@ -62,54 +62,71 @@ This ensures you'll always have access to the software you've invested in.
 - Try our **live test website** to see the software in action
 - These testing options ensure the software meets your needs before committing to a purchase
 
-## V14 Models & Features
+## Models & Features
 
-### Q: What are V14 models?
-**A:** V14 models are our latest generation featuring:
-- Improved accuracy and performance
-- Multi-backend support (CPU, CUDA, DirectML)
-- Multi-region support with region selection
-- Optimized for production use
+### Q: What model versions are available?
+**A:** Current version (v3.8.0) includes:
+- **V14 Detector** - Detection models (finds plates in images)
+- **V15 OCR** - Latest text recognition (reads plate text) ⭐ Recommended
+- **V14 OCR** - Backward compatible text recognition
+
+**V15 OCR improvements:**
+- 2.8-3.7% better accuracy
+- 6-11% faster inference
+- Better multi-line plate handling
+- INT8 models available (75% smaller files)
 
 ### Q: What regions are supported?
-**A:** V14 models support multiple regions:
-- **kr** - Korean license plates (best for Korean)
-- **eup** - European+ plates (EU countries + Albania, Andorra, Bosnia & Herzegovina, Liechtenstein, Monaco, Montenegro, North Macedonia, Norway, San Marino, Serbia, Switzerland, UK, Indonesia)
+**A:** All models support multiple regions:
+- **kor** (or kr) - Korean license plates
+- **euplus** (or eup) - European+ plates (EU countries + additional countries)
 - **na** - North American plates (USA, Canada)
-- **cn** - Chinese plates
+- **china** (or cn) - Chinese plates
 - **univ** - Universal (all regions) - default, but choose specific region for best accuracy
+
+**Note:** Both short codes (kr, eup, cn) and full names (kor, euplus, china) work
 
 ### Q: Do I need to specify a region?
 **A:** Region parameter is optional with `univ` (universal) as default. However, **we strongly recommend choosing a specific region** (kr, eup, na, or cn) for best accuracy. Only use `univ` when the region is truly unknown or mixed.
 
-### Q: Can I change the region after initialization? (>3.6.5)
+### Q: Can I change the region after initialization?
 **A:** Yes! Use the `set_region()` method to dynamically switch regions without creating new OCR instances:
 
 ```python
-# Initialize once
-ocr = ma_anpr_ocr_v14("large_fp32", "kr", user, key, sig)
+# Initialize once (V15 OCR recommended)
+from marearts_anpr import ma_anpr_ocr
+ocr = ma_anpr_ocr("large_fp32", "kor", user, key, sig, version='v15')
 
-# Switch regions as needed
-ocr.set_region('eup')  # Switch to Europe+
-ocr.set_region('na')   # Switch to North America
-ocr.set_region('cn')   # Switch to China
+# Switch regions as needed (both short and full codes work)
+ocr.set_region('euplus')  # Switch to Europe+ (or 'eup')
+ocr.set_region('na')      # Switch to North America
+ocr.set_region('china')   # Switch to China (or 'cn')
+ocr.set_region('kor')     # Switch to Korea (or 'kr')
 ```
 
 This saves significant memory - one instance (~180 MB) instead of multiple instances (~540 MB for 3 regions).
 
 ### Q: When should I use set_region() vs multiple OCR instances?
 **A:** 
-**Use `set_region()`**: When processing different regions sequentially, or in memory-constrained environments
-### Supported detector modes:
-	# model: {size}_{res}_{prec} (e.g., micro_320p_fp32, medium_640p_fp32)
-	# size: pico, micro, small, medium, large | res: 320p, 640p | prec: fp32, fp16
-	# backend: "cpu", "cuda", "directml", "auto" (default: cpu)
-### Supported OCR modes:
-	# model: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
-	# region: "kr", "eup", "na", "cn", "univ" (default: univ)
-	# backend: "cpu", "cuda", "directml", "auto" (default: cpu)
+- **Use `set_region()`**: When processing different regions sequentially, or in memory-constrained environments
 - **Use multiple instances**: When processing multiple regions concurrently in different threads
 - **Note**: `set_region()` is not thread-safe. For multi-threaded applications, create separate OCR instances per thread.
+
+### Q: Should I use V14 or V15 OCR?
+**A:** **V15 OCR is recommended** for all new projects:
+- 2.8-3.7% better accuracy
+- 6-11% faster inference  
+- Better multi-line plate handling
+- INT8 models available (75% smaller)
+
+**Use V14 OCR** only if:
+- Maintaining existing production systems
+- Need proven stability
+- Already optimized for V14
+
+**Migration is easy:** Just change `ma_anpr_ocr_v14` to `ma_anpr_ocr_v15` or use `ma_anpr_ocr(version='v15')`.
+
+[See detailed comparison →](v14-vs-v15-comparison.md)
 
 ## Technical Support
 

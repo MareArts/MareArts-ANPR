@@ -11,6 +11,13 @@ CLAUDE.md
 memo.txt
 *.code-workspace
 
+# MD files in md folder (internal notes)
+md/
+/md/
+
+# Changelog files (internal tracking)
+CHANGELOG*.md
+
 # Distribution / packaging
 .Python
 build/

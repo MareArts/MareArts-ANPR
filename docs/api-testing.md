@@ -1,5 +1,7 @@
 # Try MareArts ANPR
 
+**Last Updated:** February 4, 2026
+
 Test our ANPR solution without purchasing a license. We provide free testing options with daily limits.
 
 ## Testing Options
@@ -18,7 +20,7 @@ ma-anpr test-api image.jpg
 # Test with multiple images
 ma-anpr test-api *.jpg
 
-# Specify models and region (note: v14_ prefix required for API)
+# Specify models and region (note: v14_ prefix required for cloud API)
 ma-anpr test-api image.jpg --detector v14_micro_640p_fp32 --ocr v14_micro_fp32 --region univ
 
 # Save results
@@ -39,7 +41,7 @@ curl -X POST https://we303v9ck8.execute-api.eu-west-1.amazonaws.com/Prod/mareart
      -H "user-id: marearts@public" \
      -H "detector_model_version: v14_medium_640p_fp32" \
      -H "ocr_model_version: v14_medium_fp32" \
-     -H "region: eup" \
+     -H "region: euplus" \
      --data-binary "@./image.jpg"
 ```
 
@@ -48,7 +50,7 @@ curl -X POST https://we303v9ck8.execute-api.eu-west-1.amazonaws.com/Prod/mareart
 import requests
 import json
 
-def test_marearts_anpr(image_path, region='eup'):
+def test_marearts_anpr(image_path, region='euplus'):
     url = "https://we303v9ck8.execute-api.eu-west-1.amazonaws.com/Prod/marearts_anpr"
     
     headers = {
@@ -65,12 +67,12 @@ def test_marearts_anpr(image_path, region='eup'):
     
     return response.json()
 
-# Test with different regions
-result = test_marearts_anpr("test_image.jpg", region="eup")  # European+ plates
-# result = test_marearts_anpr("test_image.jpg", region="kr")   # Korean plates
-# result = test_marearts_anpr("test_image.jpg", region="cn")   # Chinese plates
-# result = test_marearts_anpr("test_image.jpg", region="na")   # North American plates
-# result = test_marearts_anpr("test_image.jpg", region="univ") # Universal (all regions)
+# Test with different regions (both short and full codes work)
+result = test_marearts_anpr("test_image.jpg", region="euplus")  # European+ plates (or "eup")
+# result = test_marearts_anpr("test_image.jpg", region="kor")     # Korean plates (or "kr")
+# result = test_marearts_anpr("test_image.jpg", region="china")   # Chinese plates (or "cn")
+# result = test_marearts_anpr("test_image.jpg", region="na")      # North American plates
+# result = test_marearts_anpr("test_image.jpg", region="univ")    # Universal (all regions)
 print(json.dumps(result, indent=2))
 ```
 
@@ -130,11 +132,11 @@ ma-anpr test-api mixed_plate.jpg --detector v14_medium_640p_fp32 --ocr v14_mediu
 - **Example**: `v14_medium_fp32`
 
 ### Regions
-- **kr** - Korean license plates (best for Korean)
-- **eup** - European+ license plates (EU countries + additional European countries + Indonesia)
+- **kor** (or kr) - Korean license plates
+- **euplus** (or eup) - European+ license plates (EU + additional countries)
 - **na** - North American license plates (USA, Canada)
-- **cn** - Chinese license plates
-- **univ** - Universal (all regions) - **default, but choose specific region for best accuracy**
+- **china** (or cn) - Chinese license plates
+- **univ** - Universal (all regions) - default, but choose specific region for best accuracy
 
 ## Limitations
 

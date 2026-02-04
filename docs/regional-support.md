@@ -1,8 +1,8 @@
 # Regional Support
 
-**Last Updated: November 7, 2025**
+**Last Updated: February 4, 2026**
 
-MareArts ANPR provides comprehensive license plate recognition across multiple regions with specialized models optimized for each area.
+MareArts ANPR provides comprehensive license plate recognition across multiple regions with specialized models optimized for each area. Uses V14 Detector with V15 OCR (latest) or V14 OCR (backward compatible).
 
 ## Universal Model
 
@@ -16,8 +16,8 @@ The Universal model is designed to handle license plates from all supported regi
 
 ### Region Code
 - **Code**: `univ` (Universal - default)
-- **Usage**: `ma_anpr_ocr_v14(model='large_fp32', region='univ', ...)` or omit region parameter
-- **Recommendation**: Use specific region codes (`kr`, `eup`, `na`, `cn`) for best accuracy when region is known
+- **Usage**: `ma_anpr_ocr(model='large_fp32', region='univ', ..., version='v15')`
+- **Recommendation**: Use specific region codes for best accuracy when region is known
 
 ---
 
@@ -83,8 +83,8 @@ characters = [
 ```
 
 ### Region Code
-- **Code**: `eup` (Europe Plus)
-- **Usage**: `ma_anpr_ocr_v14(model='large_fp32', region='eup', ...)`
+- **Code**: `euplus` or `eup` (Europe Plus)
+- **Usage**: `ma_anpr_ocr(model='large_fp32', region='euplus', ..., version='v15')`
 
 ## Korea Support
 
@@ -118,8 +118,8 @@ korean_chars = [
 
 
 ### Region Code
-- **Code**: `kr` (Korea)
-- **Usage**: `ma_anpr_ocr_v14(model='large_fp32', region='kr', ...)`
+- **Code**: `kor` or `kr` (Korea)
+- **Usage**: `ma_anpr_ocr(model='large_fp32', region='kor', ..., version='v15')`
 
 ## China Support
 
@@ -146,8 +146,8 @@ chinese_chars = [
 
 
 ### Region Code
-- **Code**: `cn` (China)
-- **Usage**: `ma_anpr_ocr_v14(model='large_fp32', region='cn', ...)`
+- **Code**: `china` or `cn` (China)
+- **Usage**: `ma_anpr_ocr(model='large_fp32', region='china', ..., version='v15')`
 
 ## North America Support
 
@@ -162,16 +162,16 @@ alphanumeric = ['0-9', 'A-Z', '#', '-', '.', '@']
 
 ### Region Code
 - **Code**: `na` (North America)
-- **Usage**: `ma_anpr_ocr_v14(model='large_fp32', region='na', ...)`
+- **Usage**: `ma_anpr_ocr(model='large_fp32', region='na', ..., version='v15')`
 
 ---
 
 ## Implementation Example
 
 ```python
-from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v14
+from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr
 
-# Initialize V14 detector (same for all regions)
+# Initialize V14 Detector (same for all regions)
 detector = ma_anpr_detector_v14(
     "medium_640p_fp32", 
     user_name, 
@@ -180,28 +180,26 @@ detector = ma_anpr_detector_v14(
     backend="cuda"
 )
 
-# Initialize ONE OCR model for your target region
+# Initialize OCR for your target region (V15 - Latest)
 # For Universal (handles all regions):
-ocr = ma_anpr_ocr_v14("large_fp32", "univ", user_name, serial_key, signature)
+ocr = ma_anpr_ocr("large_fp32", "univ", user_name, serial_key, signature, version='v15')
 
 # OR for specific region (better accuracy when region is known):
-# ocr = ma_anpr_ocr_v14("large_fp32", "kr", user_name, serial_key, signature)    # Korean
-# ocr = ma_anpr_ocr_v14("large_fp32", "eup", user_name, serial_key, signature)   # Europe+
-# ocr = ma_anpr_ocr_v14("large_fp32", "na", user_name, serial_key, signature)    # North America
-# ocr = ma_anpr_ocr_v14("large_fp32", "cn", user_name, serial_key, signature)    # China
+# ocr = ma_anpr_ocr("large_fp32", "kor", user_name, serial_key, signature, version='v15')    # Korean (or 'kr')
+# ocr = ma_anpr_ocr("large_fp32", "euplus", user_name, serial_key, signature, version='v15') # Europe+ (or 'eup')
+# ocr = ma_anpr_ocr("large_fp32", "na", user_name, serial_key, signature, version='v15')     # North America
+# ocr = ma_anpr_ocr("large_fp32", "china", user_name, serial_key, signature, version='v15')  # China (or 'cn')
+
+# For V14 OCR (backward compatible):
+# ocr = ma_anpr_ocr("large_fp32", "univ", user_name, serial_key, signature, version='v14')
 
 # NEW (>3.6.5): Dynamic region switching for multi-region applications
-# Supported detector modes:
-#   model: {size}_{res}_{prec} (e.g., micro_320p_fp32, medium_640p_fp32)
-#   size: pico, micro, small, medium, large | res: 320p, 640p | prec: fp32, fp16
-#   backend: "cpu", "cuda", "directml", "auto" (default: cpu)
-# Supported OCR modes:
-#   model: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
-#   region: "kr", "eup", "na", "cn", "univ" (default: univ)
-#   backend: "cpu", "cuda", "directml", "auto" (default: cpu)
-# ocr.set_region('eup')  # Switch to Europe+
-# ocr.set_region('kr')   # Switch to Korea
-# ocr.set_region('na')   # Switch to North America
+# Supports both V14 and V15 OCR
+# ocr.set_region('euplus')  # Switch to Europe+ (or 'eup')
+# ocr.set_region('kor')     # Switch to Korea (or 'kr')
+# ocr.set_region('na')      # Switch to North America
+# ocr.set_region('china')   # Switch to China (or 'cn')
+# ocr.set_region('univ')    # Switch to Universal
 # Use ONE instance for all regions - saves memory!
 
 # Process image

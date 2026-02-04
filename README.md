@@ -80,6 +80,22 @@ python server.py                 # Start server
 
 <br>
 
+## 🎉 MareArts SDK v3.8.0
+
+**V15 OCR - Next Generation Recognition** ⭐
+
+- 🎯 **Improved Accuracy**: Enhanced recognition across all regions
+- 📝 **Better Multi-line Handling**: Improved recognition of plates with multiple text lines
+- 🚀 **Better Performance**: Faster and more accurate than V14
+- 🔄 **Easy Upgrade to V15**: Simple drop-in replacement for V14 OCR
+- ✅ **Recommended**: V15 OCR is now the default for new projects
+
+**Backward Compatible**: V14 OCR continues to be fully supported
+
+---
+
+<br>
+
 ## MareArts ANPR SDK Features
 
 - 🌍 **Multi-Region Support**: Korean, Europe+, North America, China, and Universal license plates
@@ -110,9 +126,9 @@ pip install marearts-anpr[directml]   # Windows GPU (AMD/Intel/NVIDIA)
 
 
 ```python
-from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v14, marearts_anpr_from_image_file
+from marearts_anpr import ma_anpr_detector_v14, ma_anpr_ocr_v15, marearts_anpr_from_image_file
 
-# Initialize detector
+# Initialize V14 Detector
 detector = ma_anpr_detector_v14(
     "micro_320p_fp32",
     # 320p models (Fast): pico_320p_fp32/fp16, micro_320p_fp32/fp16, small_320p_fp32/fp16, medium_320p_fp32/fp16, large_320p_fp32/fp16
@@ -125,15 +141,24 @@ detector = ma_anpr_detector_v14(
     iou_thres=0.5     # IoU threshold for NMS (default: 0.5)
 )
 
-# Initialize OCR with regional vocabulary
-ocr = ma_anpr_ocr_v14(
+# Initialize V15 OCR with regional vocabulary (Recommended - Latest)
+ocr = ma_anpr_ocr_v15(
     "small_fp32",       # Model: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
-    "univ",             # Region: kr, eup, na, cn, univ (choose specific region for best accuracy)
+                        # int8 models available: pico_int8, micro_int8, small_int8, medium_int8, large_int8 (smaller, faster)
+    "univ",             # Region: kor/kr, euplus/eup, na, china/cn, univ (choose specific region for best accuracy)
     user_name,
     serial_key,
     signature,
     backend="cuda",  # cpu, cuda, directml (auto-selected if "auto") 
 )
+
+# Or use V14 OCR (backward compatible)
+# from marearts_anpr import ma_anpr_ocr_v14
+# ocr = ma_anpr_ocr_v14("small_fp32", "univ", user_name, serial_key, signature, backend="cuda")
+
+# Or use unified interface with version parameter
+# from marearts_anpr import ma_anpr_ocr
+# ocr = ma_anpr_ocr("small_fp32", "univ", user_name, serial_key, signature, version='v15', backend="cuda")  # v15: Latest, or version='v14': Stable  
 
 # Process image
 result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
@@ -144,10 +169,10 @@ print(result)
 
 #### Dynamic Region Switching
 
-Switch regions without reinitialization:
+Switch regions without reinitialization (works with both V14 and V15 OCR):
 
 ```python
-ocr.set_region('eup')  # Europe+
+ocr.set_region('euplus')  # Europe+ (or 'eup')
 ocr.set_region('kr')   # Korean
 ocr.set_region('na')   # North America
 ocr.set_region('cn')   # China
@@ -171,9 +196,12 @@ result = marearts_anpr_from_image_file(detector, ocr, "image.jpg")
 
 **CLI commands:**
 ```bash
-ma-anpr image.jpg                    # Process image
+ma-anpr image.jpg                    # Process image (V15 OCR is default)
+ma-anpr image.jpg --ocr-version v15  # Use V15 OCR (explicit)
+ma-anpr image.jpg --ocr-version v14  # Use V14 OCR
 ma-anpr test-api image.jpg           # Test API (1000/day limit)
 ma-anpr validate                     # Validate license
+ma-anpr models                       # List available V14 and V15 models
 ```
 
 🔧 [See complete usage examples and CLI reference](https://github.com/MareArts/MareArts-ANPR/blob/main/docs/usage.md)
@@ -182,35 +210,42 @@ ma-anpr validate                     # Validate license
 
 ## Model Performance
 
-### Detector Performance
+### Detector Performance (V14)
 
 | Model Name | Detection Rate | Speed (GPU) | Notes |
 |------------|----------------|-------------|-------|
+| pico_320p_fp32 | 96.02% | 129 FPS (7.8ms) | 📱 Smallest + fast |
+| pico_640p_fp32 | 98.54% | 66 FPS (15.2ms) | Balanced |
 | **micro_320p_fp32** | **97.13%** | **128 FPS** (7.8ms) | 🏆 Best overall |
 | **micro_320p_fp16** | **97.13%** | **56 FPS** (17.9ms) | 🏆 Best mobile (50% smaller) |
 | micro_640p_fp32 | 98.99% | 68 FPS (14.6ms) | Highest detection |
 | small_320p_fp32 | 98.00% | 142 FPS (7.0ms) | ⚡ Fastest |
 | medium_320p_fp32 | 98.06% | 136 FPS (7.4ms) | High detection |
-| pico_320p_fp32 | 96.02% | 129 FPS (7.8ms) | Smallest + fast |
-| pico_640p_fp32 | 98.54% | 66 FPS (15.2ms) | Balanced |
+| large_320p_fp32 | 98.40% | 131 FPS (7.6ms) | Strong performance |
 
 **Note:** 320p models are 2× faster than 640p. FP16 models are 50% smaller with same detection rate.
 
 <br>
 
-### OCR Performance
+### OCR Performance (V15)
 
 *Average across all regions*
 
 | Model Name | Exact Match | Character Accuracy | Speed (GPU) | Notes |
 |------------|-------------|-------------------|-------------|-------|
-| **large_fp32** | **91.70%** | **96.27%** | 262 FPS (3.8ms) | 🎯 Best accuracy |
-| micro_fp32 | 91.86% | 96.50% | 262 FPS (3.8ms) | Fast with good accuracy |
-| pico_fp32 | 91.78% | 96.65% | 270 FPS (3.7ms) | Fastest, smallest |
-| small_fp32 | 91.54% | 96.64% | 300 FPS (3.3ms) | ⚡ Fastest inference |
-| medium_fp32 | 90.36% | 96.45% | 270 FPS (3.7ms) | Balanced performance |
+| pico_fp32 | 95.31% | 98.24% | 278.2 FPS (3.59ms) | 📱 Smallest, fast |
+| micro_fp32 | 94.93% | 98.12% | 280.8 FPS (3.56ms) | Fast with good accuracy |
+| small_fp32 | 94.16% | 97.85% | 334.6 FPS (2.99ms) | ⚡ Fastest inference |
+| medium_fp32 | 94.88% | 98.13% | 302.3 FPS (3.31ms) | Balanced performance |
+| **large_fp32** | **95.26%** | **98.32%** | 291.6 FPS (3.43ms) | 🎯 Best accuracy |
 
-**Supported Regions**: Korean (`kr`), Europe+ (`eup`), North America (`na`), China (`cn`), Universal (`univ`)
+**int8 Models** (smaller files):
+- pico_int8, micro_int8, small_int8, medium_int8, large_int8
+- 75% smaller file size, similar accuracy
+
+**Supported Regions**: Korea (`kor` or `kr`), Europe+ (`euplus` or `eup`), North America (`na`), China (`china` or `cn`), Universal (`univ`)
+
+*Note: Both short codes and full names are accepted*
 
 📊 [See all models and benchmarks](https://github.com/MareArts/MareArts-ANPR/blob/main/docs/models.md)
 
