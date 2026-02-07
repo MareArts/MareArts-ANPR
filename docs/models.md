@@ -40,6 +40,8 @@ The V14 detector series introduces advanced detection with digital signature aut
 - **320p models** (320×320) - Faster speed, excellent detection (96-98%)
 - **640p models** (640×640) - Highest detection rates (98-99%), larger input
 
+**Note:** test-api (free trial) only supports 640p models. 320p available for licensed local processing.
+
 **Available Precisions:**
 - **FP32** - Fastest on GPU (2× faster than FP16), standard size
 - **FP16** - 50% smaller file size, same detection rate, slower inference
@@ -68,8 +70,9 @@ The V14 detector series introduces advanced detection with digital signature aut
 - **320p models**: 2× faster than 640p with excellent detection rates (96-98%)
 - **640p models**: Highest detection rates (98-99%) for difficult cases
 - **FP16 models**: 50% smaller size, same detection rate, ~50% slower
-- **Best overall**: micro_320p_fp32 (97.13% detection, 128 FPS)
+- **Best overall (local)**: micro_320p_fp32 (97.13% detection, 128 FPS)
 - **Best mobile**: micro_320p_fp16 (97.13% detection, 56 FPS, 42 MB)
+- **Best for test-api**: medium_640p_fp32 (99.21% detection, 640p required for cloud API)
 
 *Use these model names directly in `ma_anpr_detector_v14()` function*
 

@@ -30,7 +30,7 @@ serial_key = os.getenv("MAREARTS_ANPR_SERIAL_KEY", "")
 signature = os.getenv("MAREARTS_ANPR_SIGNATURE", "")
 
 # Create V14 Detector and V15 OCR instances
-detector = ma_anpr_detector_v14("micro_320p_fp32", user_name, serial_key, signature, backend="cuda")  # V14 Detector: Fast, recommended
+detector = ma_anpr_detector_v14("micro_320p_fp32", user_name, serial_key, signature, backend="cuda")  # V14 Detector: Fast, recommended for local
 ocr = ma_anpr_ocr_v15("large_fp32", "univ", user_name, serial_key, signature)  # V15 OCR: Latest, improved accuracy
 
 # Or use V14 OCR (backward compatible)

@@ -336,9 +336,14 @@ ocr.set_region('kr')    # Korea
 
 Use the **free test API** (1000 requests/day):
 
-**Quick test:**
+**Quick test (uses v15 OCR by default):**
 ```bash
-ma-anpr test-api your_image.jpg --region eup
+ma-anpr test-api your_image.jpg --region univ
+```
+
+**With specific models (v15 OCR recommended):**
+```bash
+ma-anpr test-api your_image.jpg --detector v14_small_640p_fp32 --ocr v15_small_fp32 --region kr
 ```
 
 **Interactive examples (20+ test cases):**
@@ -350,6 +355,8 @@ ma-anpr test-api your_image.jpg --region eup
 ```bash
 python example_code/test_api_regions.py your_image.jpg
 ```
+
+**Note**: test-api now defaults to v15 OCR for better accuracy!
 
 See **[Installation Guide](../docs/installation.md)** for more details.
 

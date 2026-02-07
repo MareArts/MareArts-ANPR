@@ -116,49 +116,43 @@ echo "PART 2: DIFFERENT MODEL SIZES"
 echo "========================================================================"
 
 run_example "7. Fastest (Pico - Real-time)" \
-    "ma-anpr test-api \"$IMAGE\" --detector v14_pico_640p_fp32 --ocr v14_pico_fp32 --region eup"
+    "ma-anpr test-api \"$IMAGE\" --detector v14_pico_640p_fp32 --ocr v15_small_fp32 --region univ"
 
 run_example "8. Fast (Micro - Balanced)" \
-    "ma-anpr test-api \"$IMAGE\" --detector v14_micro_640p_fp32 --ocr v14_micro_fp32 --region eup"
+    "ma-anpr test-api \"$IMAGE\" --detector v14_micro_640p_fp32 --ocr v15_small_fp32 --region univ"
 
 run_example "9. Balanced (Small)" \
-    "ma-anpr test-api \"$IMAGE\" --detector v14_small_640p_fp32 --ocr v14_small_fp32 --region eup"
+    "ma-anpr test-api \"$IMAGE\" --detector v14_small_640p_fp32 --ocr v15_small_fp32 --region univ"
 
-run_example "10. Best Overall (Medium - Default)" \
-    "ma-anpr test-api \"$IMAGE\" --detector v14_medium_640p_fp32 --ocr v14_small_fp32 --region eup"
+run_example "10. Best Overall (Medium - Recommended)" \
+    "ma-anpr test-api \"$IMAGE\" --detector v14_medium_640p_fp32 --ocr v15_small_fp32 --region univ"
 
 run_example "11. Highest Accuracy (Large)" \
-    "ma-anpr test-api \"$IMAGE\" --detector v14_large_640p_fp32 --ocr v14_large_fp32 --region eup"
+    "ma-anpr test-api \"$IMAGE\" --detector v14_large_640p_fp32 --ocr v15_large_fp32 --region univ"
 
 ################################################################################
-# RESOLUTION EXAMPLES
-################################################################################
-
-echo ""
-echo "========================================================================"
-echo "PART 3: RESOLUTION OPTIONS"
-echo "========================================================================"
-
-run_example "12. High Resolution (640p - Recommended)" \
-    "ma-anpr test-api \"$IMAGE\" --detector v14_medium_640p_fp32 --ocr v14_small_fp32 --region eup"
-
-run_example "13. Lower Resolution (320p - Faster)" \
-    "ma-anpr test-api \"$IMAGE\" --detector v14_medium_320p_fp32 --ocr v14_small_fp32 --region eup"
-
-################################################################################
-# PRECISION EXAMPLES
+# V15 OCR EXAMPLES (Recommended - Better Accuracy)
 ################################################################################
 
 echo ""
 echo "========================================================================"
-echo "PART 4: PRECISION OPTIONS"
+echo "PART 3: V15 OCR MODELS (Recommended)"
 echo "========================================================================"
 
-run_example "14. FP32 (Standard Precision - Best Compatibility)" \
-    "ma-anpr test-api \"$IMAGE\" --detector v14_medium_640p_fp32 --ocr v14_small_fp32 --region eup"
+run_example "12. V15 OCR - Small (Fast & Accurate)" \
+    "ma-anpr test-api \"$IMAGE\" --detector v14_medium_640p_fp32 --ocr v15_small_fp32 --region univ"
 
-run_example "15. FP16 (Half Precision - Faster on GPU)" \
-    "ma-anpr test-api \"$IMAGE\" --detector v14_medium_640p_fp16 --ocr v14_small_fp32 --region eup"
+run_example "13. V15 OCR - Medium (Higher Accuracy)" \
+    "ma-anpr test-api \"$IMAGE\" --detector v14_medium_640p_fp32 --ocr v15_medium_fp32 --region univ"
+
+run_example "14. V15 OCR - Large (Maximum Accuracy)" \
+    "ma-anpr test-api \"$IMAGE\" --detector v14_large_640p_fp32 --ocr v15_large_fp32 --region univ"
+
+echo ""
+echo -e "${YELLOW}Note:${NC} test-api only supports 640p_fp32 detectors and fp32 OCR models"
+echo "For 320p, FP16, or INT8 models, use licensed local processing:"
+echo "  ma-anpr read image.jpg --detector-model micro_320p_fp32"
+echo ""
 
 ################################################################################
 # USE CASE EXAMPLES
@@ -166,35 +160,35 @@ run_example "15. FP16 (Half Precision - Faster on GPU)" \
 
 echo ""
 echo "========================================================================"
-echo "PART 5: COMMON USE CASES"
+echo "PART 4: COMMON USE CASES (with V15 OCR)"
 echo "========================================================================"
 
-run_example "16. Security Camera (Real-time)" \
-    "ma-anpr test-api \"$IMAGE\" --detector v14_micro_640p_fp32 --ocr v14_micro_fp32 --region eup"
+run_example "15. Security Camera (Real-time)" \
+    "ma-anpr test-api \"$IMAGE\" --detector v14_micro_640p_fp32 --ocr v15_small_fp32 --region univ"
 
 echo "   💡 With license + low confidence (catch everything):"
-echo "      ma-anpr read \"$IMAGE\" --detector-model micro_640p_fp32 --ocr-model micro_fp32 --region eup --confidence 0.25"
+echo "      ma-anpr read \"$IMAGE\" --detector-model micro_640p_fp32 --ocr-model small_fp32 --region univ --confidence 0.25"
 echo ""
 
-run_example "17. Parking Management (Balanced)" \
-    "ma-anpr test-api \"$IMAGE\" --detector v14_medium_640p_fp32 --ocr v14_small_fp32 --region eup"
+run_example "16. Parking Management (Balanced)" \
+    "ma-anpr test-api \"$IMAGE\" --detector v14_medium_640p_fp32 --ocr v15_small_fp32 --region univ"
 
 echo "   💡 With license + medium confidence (balanced):"
-echo "      ma-anpr read \"$IMAGE\" --detector-model medium_640p_fp32 --ocr-model small_fp32 --region eup --confidence 0.50"
+echo "      ma-anpr read \"$IMAGE\" --detector-model medium_640p_fp32 --ocr-model small_fp32 --region univ --confidence 0.50"
 echo ""
 
-run_example "18. Law Enforcement (Maximum Accuracy)" \
-    "ma-anpr test-api \"$IMAGE\" --detector v14_large_640p_fp32 --ocr v14_large_fp32 --region eup"
+run_example "17. Law Enforcement (Maximum Accuracy)" \
+    "ma-anpr test-api \"$IMAGE\" --detector v14_large_640p_fp32 --ocr v15_large_fp32 --region univ"
 
 echo "   💡 With license + high confidence (strict):"
-echo "      ma-anpr read \"$IMAGE\" --detector-model large_640p_fp32 --ocr-model large_fp32 --region eup --confidence 0.75"
+echo "      ma-anpr read \"$IMAGE\" --detector-model large_640p_fp32 --ocr-model large_fp32 --region univ --confidence 0.75"
 echo ""
 
-run_example "19. Mobile App (Fast & Efficient)" \
-    "ma-anpr test-api \"$IMAGE\" --detector v14_small_640p_fp32 --ocr v14_micro_fp32 --region eup"
+run_example "18. Mobile App (Fast & Efficient)" \
+    "ma-anpr test-api \"$IMAGE\" --detector v14_small_640p_fp32 --ocr v15_small_fp32 --region univ"
 
 echo "   💡 With license + confidence:"
-echo "      ma-anpr read \"$IMAGE\" --detector-model small_640p_fp32 --ocr-model micro_fp32 --region eup --confidence 0.50"
+echo "      ma-anpr read \"$IMAGE\" --detector-model small_640p_fp32 --ocr-model small_fp32 --region univ --confidence 0.50"
 echo ""
 
 ################################################################################
@@ -206,16 +200,14 @@ echo "========================================================================"
 echo "PART 6: ADVANCED OPTIONS"
 echo "========================================================================"
 
-# Note about confidence (API doesn't support it, but show the parameter exists)
+# Example with JSON output
+run_example "19. Save Results to JSON" \
+    "ma-anpr test-api \"$IMAGE\" --detector v14_medium_640p_fp32 --ocr v15_small_fp32 --region univ --json results.json && echo 'Results:' && cat results.json 2>/dev/null"
+
 echo ""
-echo -e "${YELLOW}Note:${NC} The test-api doesn't support confidence threshold parameter."
-echo "However, for local processing with a license, you can use:"
+echo -e "${YELLOW}Note:${NC} Confidence threshold is supported via detector initialization:"
 echo "  detector = ma_anpr_detector_v14(model, user, key, sig, conf_thres=0.25)"
 echo ""
-
-# Example with JSON output
-run_example "20. Save Results to JSON" \
-    "ma-anpr test-api \"$IMAGE\" --region eup --json results.json && echo 'Results:' && cat results.json 2>/dev/null"
 
 ################################################################################
 # CONFIDENCE THRESHOLD (LOCAL PROCESSING WITH LICENSE)
@@ -308,11 +300,10 @@ echo ""
 echo "Get help:"
 echo "  ma-anpr test-api --help"
 echo ""
-echo "All detector models (40 total):"
-echo "  v14_{pico,micro,small,medium,large}_{320p,640p}_{fp16,fp32}"
-echo ""
-echo "All OCR models (5 total):"
-echo "  v14_{pico,micro,small,medium,large}_fp32"
+echo "test-api supported models:"
+echo "  Detectors: v14_{pico,micro,small,medium,large}_640p_fp32 (5 models)"
+echo "  OCR: v14_{pico,micro,small,medium,large}_fp32 (5 models)"
+echo "  OCR: v15_{pico,micro,small,medium,large}_fp32 (5 models, recommended)"
 echo ""
 echo "All regions (5 total):"
 echo "  kr, eup, na, cn, univ"
@@ -321,14 +312,14 @@ echo "========================================================================"
 echo "RECOMMENDED COMBINATIONS"
 echo "========================================================================"
 echo ""
-echo "General use (Default):"
+echo "General use (Default - Uses v15 OCR):"
 echo "  ma-anpr test-api image.jpg"
 echo ""
 echo "Fast processing:"
-echo "  ma-anpr test-api image.jpg --detector v14_micro_640p_fp32 --ocr v14_micro_fp32"
+echo "  ma-anpr test-api image.jpg --detector v14_micro_640p_fp32 --ocr v15_small_fp32"
 echo ""
 echo "Best quality:"
-echo "  ma-anpr test-api image.jpg --detector v14_large_640p_fp32 --ocr v14_large_fp32"
+echo "  ma-anpr test-api image.jpg --detector v14_large_640p_fp32 --ocr v15_large_fp32"
 echo ""
 echo "Korean plates:"
 echo "  ma-anpr test-api image.jpg --region kr"
@@ -336,16 +327,16 @@ echo ""
 echo "USA/Canada plates:"
 echo "  ma-anpr test-api image.jpg --region na"
 echo ""
-echo "Unknown region:"
+echo "Universal (all regions):"
 echo "  ma-anpr test-api image.jpg --region univ"
 echo ""
 echo "========================================================================"
 echo "💡 Tips:"
 echo "========================================================================"
-echo "• Use specific regions for best accuracy"
-echo "• 640p resolution recommended (320p faster but may miss plates)"
-echo "• FP32 for CPU, FP16 for GPU"
-echo "• Medium size best overall balance"
+echo "• Use v15 OCR for better accuracy (2-3% improvement)"
+echo "• Use specific regions for best results"
+echo "• test-api only supports 640p_fp32 models"
+echo "• For 320p/FP16/INT8 models, use licensed local processing"
 echo "• Daily limit: 1000 requests"
 echo ""
 echo "🛒 Ready to purchase?"
