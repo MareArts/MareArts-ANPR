@@ -52,6 +52,16 @@ TELEGRAM_CHAT_ID = ""    # e.g. "-1001234567890"
 
 app = FastAPI(title="MareArts ANPR Webhook Receiver")
 
+def round_floats(obj, precision=4):
+    """Recursively round float values for cleaner saved JSON."""
+    if isinstance(obj, float):
+        return round(obj, precision)
+    if isinstance(obj, dict):
+        return {k: round_floats(v, precision) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [round_floats(v, precision) for v in obj]
+    return obj
+
 
 @app.post("/webhook")
 async def receive_webhook(request: Request):
@@ -222,8 +232,9 @@ async def receive_webhook(request: Request):
     # Save metadata JSON alongside image
     if saved_path:
         json_path = saved_path.with_suffix(".json")
+        metadata_clean = round_floats(metadata, precision=4)
         with open(json_path, "w") as f:
-            json.dump(metadata, f, indent=2)
+            json.dump(metadata_clean, f, indent=2)
 
     # Optional: Forward to Slack
     if SLACK_WEBHOOK_URL:
