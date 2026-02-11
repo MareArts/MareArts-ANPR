@@ -208,3 +208,6 @@ md_images/
 # Test scripts
 docs/test/
 test/
+
+# Webhook receiver saved plates
+example_code/received_plates/

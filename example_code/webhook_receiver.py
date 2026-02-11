@@ -30,6 +30,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, File, Form, UploadFile, Request
 from fastapi.responses import JSONResponse
+from starlette.datastructures import UploadFile as StarletteUploadFile
 
 # ============================================================================
 # CONFIGURATION
@@ -53,18 +54,16 @@ app = FastAPI(title="MareArts ANPR Webhook Receiver")
 
 
 @app.post("/webhook")
-async def receive_webhook(
-    file: UploadFile = File(None),
-    payload_json: str = Form("{}")
-):
+async def receive_webhook(request: Request):
     """
     Receive plate detection from MareArts ANPR Mobile App.
 
-    Same multipart format as Discord webhooks:
-      - file: plate image (JPEG)
-      - payload_json: metadata JSON string
+    Supports multiple formats:
+      - multipart/form-data with file + payload_json (Discord-compatible)
+      - application/json body (direct JSON post)
+      - Any other multipart fields the app sends
 
-    Payload format:
+    Payload format (new):
     {
         "source": "marearts_anpr",
         "event": "plate_detected",
@@ -88,18 +87,111 @@ async def receive_webhook(
         "scan_mode": "scan"
     }
     """
-    # Parse metadata
-    try:
-        metadata = json.loads(payload_json)
-    except json.JSONDecodeError:
-        metadata = {}
+    content_type = request.headers.get("content-type", "")
+    metadata = {}
+    file_data = None
+    file_name = "plate.jpg"
 
-    plate_number = metadata.get("plate", {}).get("number", "unknown")
-    det_conf = metadata.get("plate", {}).get("detection_confidence", 0)
-    ocr_conf = metadata.get("plate", {}).get("ocr_confidence", 0)
+    if "multipart/form-data" in content_type:
+        # Parse multipart form
+        form = await request.form()
+
+        # Debug: show all received field names
+        print(f"\n  [DEBUG] Multipart fields: {list(form.keys())}")
+
+        # Get image file (try common field names, including files[0])
+        for field_name in form.keys():
+            upload = form[field_name]
+            if hasattr(upload, "read"):
+                file_data = await upload.read()
+                file_name = getattr(upload, "filename", "plate.jpg") or "plate.jpg"
+                print(f"  [DEBUG] Image field: '{field_name}', size: {len(file_data)} bytes, name: {file_name}")
+                break
+
+        # Get metadata JSON (try multiple field names, in priority order)
+        for field_name in ["metadata_json", "payload_json", "metadata", "data", "json", "content"]:
+            if field_name in form:
+                val = form[field_name]
+                if hasattr(val, "read"):
+                    continue  # skip file fields
+                raw = val if isinstance(val, str) else str(val)
+                print(f"  [DEBUG] JSON field: '{field_name}', value: {raw[:300]}")
+                try:
+                    parsed = json.loads(raw)
+                    # Handle Discord wrapper: {"content": "{\"plateNumber\":...}"}
+                    if isinstance(parsed, dict) and "content" in parsed and len(parsed) <= 2:
+                        inner = parsed["content"]
+                        if isinstance(inner, str):
+                            try:
+                                metadata = json.loads(inner)
+                                print(f"  [DEBUG] Unwrapped Discord content -> keys: {list(metadata.keys())}")
+                            except json.JSONDecodeError:
+                                metadata = parsed
+                        else:
+                            metadata = parsed
+                    else:
+                        metadata = parsed
+                except json.JSONDecodeError:
+                    pass
+                if metadata:
+                    break
+
+        # If no JSON field found, collect all non-file fields as metadata
+        if not metadata:
+            for key in form.keys():
+                val = form[key]
+                if not hasattr(val, "read"):
+                    raw = val if isinstance(val, str) else str(val)
+                    try:
+                        metadata[key] = json.loads(raw)
+                    except (json.JSONDecodeError, TypeError):
+                        metadata[key] = raw
+            print(f"  [DEBUG] Collected fields as metadata: {json.dumps(metadata, default=str)[:300]}")
+
+    elif "application/json" in content_type:
+        # Direct JSON body
+        body = await request.body()
+        print(f"\n  [DEBUG] JSON body: {body.decode()[:300]}")
+        try:
+            metadata = json.loads(body)
+        except json.JSONDecodeError:
+            metadata = {}
+    else:
+        # Try to read as raw body
+        body = await request.body()
+        print(f"\n  [DEBUG] Raw body ({content_type}): {body[:300]}")
+        try:
+            metadata = json.loads(body)
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            metadata = {}
+
+    # Extract fields - support BOTH old (flat) and new (nested) format
+    # New format: plate.number, plate.detection_confidence
+    # Old format: plateNumber, detectionConfidence
+    plate_number = (
+        metadata.get("plate", {}).get("number")
+        or metadata.get("plateNumber")
+        or metadata.get("plate_number")
+        or "unknown"
+    )
+    det_conf = (
+        metadata.get("plate", {}).get("detection_confidence")
+        or metadata.get("detectionConfidence")
+        or metadata.get("detection_confidence")
+        or 0
+    )
+    ocr_conf = (
+        metadata.get("plate", {}).get("ocr_confidence")
+        or metadata.get("ocrConfidence")
+        or metadata.get("ocr_confidence")
+        or 0
+    )
     timestamp = metadata.get("timestamp", datetime.now().isoformat())
-    lat = metadata.get("location", {}).get("latitude")
-    lon = metadata.get("location", {}).get("longitude")
+
+    # GPS - support both formats
+    loc = metadata.get("location") or metadata.get("gps") or {}
+    lat = loc.get("latitude")
+    lon = loc.get("longitude")
 
     # Print to console
     print(f"\n{'='*50}")
@@ -112,20 +204,20 @@ async def receive_webhook(
 
     # Save image if provided
     saved_path = None
-    if file and file.filename:
+    if file_data and len(file_data) > 0:
         save_dir = Path(SAVE_DIR)
         save_dir.mkdir(parents=True, exist_ok=True)
 
         # Filename: PLATE_TIMESTAMP.jpg
         ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-        safe_plate = plate_number.replace("/", "_").replace("\\", "_")
-        filename = f"{safe_plate}_{ts}.jpg"
+        safe_plate = plate_number.replace("/", "_").replace("\\", "_").replace(" ", "_")
+        ext = Path(file_name).suffix or ".jpg"
+        filename = f"{safe_plate}_{ts}{ext}"
         saved_path = save_dir / filename
 
-        image_bytes = await file.read()
         with open(saved_path, "wb") as f:
-            f.write(image_bytes)
-        print(f"  Saved: {saved_path}")
+            f.write(file_data)
+        print(f"  Saved: {saved_path} ({len(file_data)} bytes)")
 
     # Save metadata JSON alongside image
     if saved_path:
@@ -232,24 +324,42 @@ def forward_to_telegram(metadata, image_path=None):
 # RUN
 # ============================================================================
 
+def get_local_ip():
+    """Get the machine's local network IP address"""
+    import socket
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+        return ip
+    except Exception:
+        return "127.0.0.1"
+
+
 if __name__ == "__main__":
     import uvicorn
+
+    local_ip = get_local_ip()
+    port = 9000
 
     print("\n" + "=" * 60)
     print("  MareArts ANPR Webhook Receiver")
     print("=" * 60)
-    print(f"\n  Endpoint:  POST http://0.0.0.0:9000/webhook")
+    print(f"\n  Local IP:  {local_ip}")
+    print(f"  Port:      {port}")
+    print(f"  Endpoint:  POST http://{local_ip}:{port}/webhook")
     print(f"  Save dir:  {SAVE_DIR}/")
     if SLACK_WEBHOOK_URL:
         print(f"  Slack:     enabled")
     if TELEGRAM_BOT_TOKEN:
         print(f"  Telegram:  enabled")
     print(f"\n  Set this URL in MareArts ANPR Mobile App:")
-    print(f"    http://YOUR_SERVER_IP:9000/webhook")
+    print(f"    http://{local_ip}:{port}/webhook")
     print(f"\n  Test:")
-    print(f'    curl -X POST http://localhost:9000/webhook \\')
+    print(f'    curl -X POST http://{local_ip}:{port}/webhook \\')
     print(f'      -F "file=@plate.jpg" \\')
     print(f"      -F 'payload_json={{\"plate\":{{\"number\":\"TEST-123\"}}}}'")
     print("\n" + "=" * 60)
 
-    uvicorn.run(app, host="0.0.0.0", port=9000)
+    uvicorn.run(app, host="0.0.0.0", port=port)
