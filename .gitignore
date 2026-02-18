@@ -164,7 +164,9 @@ $RECYCLE.BIN/
 *.cpp
 *.h
 *.hpp
-*.html
+
+# Research (internal)
+research/
 
 # Linux
 *~
