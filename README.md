@@ -23,32 +23,29 @@ Automatic Number Plate Recognition (ANPR) SDK for multiple regions with GPU acce
 
 ---
 
-## 🎉 MareArts ANPR Mobile App - v1.8.0 Update!
+## 🎉 MareArts ANPR Mobile App - v1.9.4
 
 **📱 Now available on iOS! Android coming soon.**
 
-Experience the power of MareArts ANPR directly on your mobile device! Fast, accurate, on-device license plate recognition for parking management, security, and vehicle tracking.
+Fast, accurate, on-device license plate recognition for parking management, security, and vehicle tracking.
 
 [![Download on App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/us/app/marearts-anpr/id6753904859)
 
 ✨ **Key Features:**
 - 🚀 Fast on-device AI processing (~100-160ms)
-- 📋 **NEW: Smart rules grouping** - Organized A-Z for easy navigation
-- 🌐 **NEW: Download rules from web** - Upload on marearts.com, download on phone
-- 🔄 **NEW: Background sync** - Keep using app while syncing
-- 🔄 Complete cloud sync - Keep data in sync across devices
-- 📊 CSV export/import - Professional data management
+- 🔗 Webhook integration - Send detections to Discord, Slack, or your own server
+- 📊 CSV export with bounding box, notes, reporter, auto-detected device info
+- 🔄 Cloud sync - Two-way background sync across devices
+- 📋 Smart rules grouping - Organized A-Z for easy navigation
+- 🌐 Download rules from web - Upload on marearts.com, download on phone
 - 🔒 100% offline capable - privacy first
-- 📊 Statistics and analytics
 - 🗺️ Map view with GPS tracking
 - ✅ Whitelist/Blacklist management
-- 🌍 Multi-region support
+- 🌍 Multi-region support (Universal, Europe+, Korea, North America, China)
 
-📖 **[Read the complete Mobile App Guide →](https://github.com/MareArts/MareArts-ANPR/blob/main/mobile_app/APP_GUIDE.md)**
+📖 **[Read the complete Mobile App Guide →](https://github.com/MareArts/MareArts-ANPR/blob/main/mobile_app/README.md)**
 
-🆕 **Version 1.8.0:** Faster performance, smart rules grouping, web-to-phone rule downloads, and background sync!
-
-> **🎁 Special Offer:** Use the mobile app as your ANPR license - no additional purchase required!  
+> Use the mobile app as your ANPR license - no additional purchase required.  
 > Get your license at [marearts.com/products/anpr](https://www.marearts.com/products/anpr)
 
 ---
@@ -285,7 +282,7 @@ MareArts ANPR supports license plates from multiple regions with specialized voc
 Explore our AI toolkit:
 
 - **marearts-anpr** - Automatic Number Plate Recognition ([GitHub](https://github.com/MareArts/MareArts-ANPR))
-- **🎉 marearts-anpr Mobile App** - ANPR on iOS & Android ([App Store](https://apps.apple.com/us/app/marearts-anpr/id6753904859) | [Guide](https://github.com/MareArts/MareArts-ANPR/blob/main/mobile_app/APP_GUIDE.md))
+- **🎉 marearts-anpr Mobile App** - ANPR on iOS & Android ([App Store](https://apps.apple.com/us/app/marearts-anpr/id6753904859) | [Guide](https://github.com/MareArts/MareArts-ANPR/blob/main/mobile_app/README.md))
 - **marearts-road-objects** - Road object detection for persons, vehicles, and 2-wheelers ([GitHub](https://github.com/MareArts/MareArts-Road-Objects))
 - **marearts-xcolor** - Color extraction and similarity analysis ([GitHub](https://github.com/MareArts/MareArts-Xcolor))
 - **marearts-mast** - Real-time panoramic stitching ([GitHub](https://github.com/MareArts/MareArts-MAST))
