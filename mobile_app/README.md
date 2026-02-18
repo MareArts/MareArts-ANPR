@@ -574,20 +574,6 @@ python webhook_receiver.py
 - Motion blur
 - Dirty/damaged plates
 
-### Settings Recommendations:
-
-**High Accuracy** (parking/security):
-- Detection: 90%
-- OCR: 90%
-- Max: 1 plate
-- Region: Specific (if known)
-
-**High Recall** (traffic monitoring):
-- Detection: 70%
-- OCR: 70%
-- Max: 5 plates
-- Region: Universal
-
 ---
 
 ## 🔒 Privacy & Security
