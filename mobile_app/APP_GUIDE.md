@@ -18,15 +18,17 @@ MareArts ANPR is a professional license plate recognition app for parking manage
 
 ## 🆕 Latest Release
 
-**Version 1.8.0 (Build 180)** - January 31, 2026
+**Version 1.9.4 (Build 194)** - February 2026
 
-**⚡ Faster Performance** - App launches quicker and runs smoother
+**🔗 Webhook Integration** - Send detection results to Discord, Slack, or any external service in real-time
 
-**📋 Smart Rules Grouping** - Rules organized A-Z for easy navigation with large lists
+**📊 Enhanced CSV Export** - Now includes bounding box coordinates, notes, reporter, and auto-detected device info
 
-**🌐 Download Rules from Web** - Upload rules on marearts.com, download on your phone
+**🔄 Improved Sync** - Orphaned deleted records automatically cleaned up, more reliable cloud synchronization
 
-**🔄 Background Sync** - Keep using the app while syncing in the background
+**⚡ Faster Detection** - Optimized AI pipeline (~20-30ms faster) with baked model normalization
+
+**🔐 Seamless Account Renewal** - Expired signatures automatically renewed without re-login
 
 [📖 View Release Notes](https://github.com/MareArts/MareArts-ANPR/releases/latest)
 
@@ -131,18 +133,27 @@ Tap the **⚙️ icon** next to the mode buttons to adjust:
 </div>
 
 #### **📸 Full Preview** (tap any detection)
-- Large plate image
+
+<div align="center">
+  <img src="detail_preview_infomation_map.png" alt="Detection Detail Screenshot" width="300"/>
+</div>
+
+- **Plate summary** at top: Total Seen count, Average Confidence, Days Active
+- Large plate image with bounding box overlay
 - Plate number (tap ✏️ to edit)
 - Status badge (whitelist/blacklist/unknown)
-- Detection confidence
-- OCR confidence
-- Date & time
-- GPS location & address
+- **Details section:**
+  - Time (date and time of detection)
+  - Overall Confidence with breakdown (Detection % + OCR %)
+  - Bounding Box in LTRB format (Left, Top, Right, Bottom)
+  - GPS Coordinates with embedded map
 - **Buttons**:
   - 📋 **Copy** - Copy plate number
   - 🗑️ **Delete** - Remove from history
   - ➕ **Add to Whitelist**
   - ➖ **Add to Blacklist**
+  - 📤 **Share** - Share detection details in machine-readable format
+- **Navigation**: Swipe left/right or use arrow buttons to browse between detections
 
 <div align="center">
   <img src="map_page.png" alt="Map View Screenshot" width="300"/>
@@ -165,7 +176,8 @@ Tap **⋮ menu** in top-right corner:
 
 **Export All Data (CSV)**
 - Downloads all your detections as a CSV file
-- Includes: Plate number, date, time, GPS coordinates, confidence scores
+- Includes: Plate number, date, time, GPS coordinates, confidence scores, bounding box (LTRB), rule note, reporter email
+- Device model and app version auto-detected per export
 - Compatible with Excel, Google Sheets, and marearts.com
 - Use for backup, analysis, or reporting
 - Share via AirDrop, Files app, or email
@@ -376,6 +388,57 @@ Tap **⋮ menu** in top-right corner for more options:
 
 💡 **Tip:** Sync runs in background - no need to wait!
 
+### Integrations (Webhook):
+
+<div align="center">
+  <img src="settings_webhook.png" alt="Webhook Settings Screenshot" width="300"/>
+</div>
+
+**Send Detection Result to Webhook** 🔗
+- Send real-time plate detections to external services
+- Works with **Discord**, **Slack**, **Zapier**, **Make**, or any custom server
+- Only sent during Scan mode (Single or Continuous)
+- Toggle on/off in Settings → Advanced → Integrations
+
+**Setup:**
+1. Enter your Webhook URL (e.g., Discord webhook URL)
+2. Tap **Send Test** to verify connection
+3. Start scanning - detections are sent automatically
+
+**Webhook Payload (JSON):**
+- `plate_number` - Detected plate text
+- `timestamp` - ISO 8601 detection time
+- `detection_confidence` / `ocr_confidence` - AI confidence scores
+- `bbox` - Bounding box coordinates (left, top, right, bottom)
+- `gps` - Latitude, longitude, address
+- `rule_status` - whitelist / blacklist / unknown
+- `note` - Rule note (if any)
+- `reporter` - Account email or "trial"
+- `scan_mode` - single / continuous
+- `image` - Base64-encoded plate image (if available)
+
+💡 **Tip:** Use Discord webhooks for instant notifications on your phone or desktop!
+
+**Build Your Own Webhook Receiver:**
+
+We provide a ready-to-use Python server you can run on your own machine or cloud:
+
+👉 [**webhook_receiver.py**](https://github.com/MareArts/MareArts-ANPR/blob/main/example_code/webhook_receiver.py)
+
+```bash
+# Install
+pip install fastapi uvicorn python-multipart
+
+# Run
+python webhook_receiver.py
+```
+
+- Saves plate images + JSON metadata to `received_plates/` folder
+- Prints detected plates to console in real-time
+- Optional forwarding to **Slack** and **Telegram** (with images)
+- Discord-compatible format (multipart/form-data)
+- Runs on port 9000 - set `http://YOUR_IP:9000/webhook` in the app
+
 ### Notifications:
 
 **Sound** 🔊
@@ -418,11 +481,16 @@ Tap **⋮ menu** in top-right corner for more options:
 - 60s = Maximum (ignore for 1 minute)
 
 **Plate Region** 🌍
-- 🌍 **Universal** - All regions (default)
-- 🇪🇺 **Europe+** - EU, UK, Switzerland, Norway, etc.
-- 🇰🇷 **Korea** - South Korea (한국)
+
+<div align="center">
+  <img src="settings_region_selectoin.png" alt="Plate Region Selection" width="300"/>
+</div>
+
+- 🌍 **Universal (Default)** - All regions, multi-language support
+- 🇪🇺 **Europe+** - EU countries + UK, Norway, Switzerland, Serbia, Indonesia
+- 🇰🇷 **Korea** - South Korea (한국 자동차 번호판)
 - 🇺🇸🇨🇦🇲🇽 **North America** - USA, Canada, Mexico
-- 🇨🇳 **China** - China (中国)
+- 🇨🇳 **China** - China (中国车牌识别)
 - Selecting specific region improves accuracy
 
 ### Storage:
