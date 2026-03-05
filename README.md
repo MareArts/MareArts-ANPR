@@ -58,7 +58,7 @@ One leader, multiple members — shared detections, shared rules, one web dashbo
 Deploy a complete ANPR management system with real-time monitoring, detection history, and visual analytics.
 
 <div align="center">
-<img src="management_server/screenshots/dashboard.png" alt="Management Server Dashboard" width="800"/>
+<img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/management_server/screenshots/dashboard.png" alt="Management Server Dashboard" width="800"/>
 </div>
 
 **Quick Start:**
@@ -72,7 +72,7 @@ python server.py                 # Start server
 
 **Features:** REST API, Web Dashboard, Real-time logs, SQLite database, Live model switching
 
-📖 **[Full Documentation →](management_server/)**
+📖 **[Full Documentation →](https://github.com/MareArts/MareArts-ANPR/tree/main/management_server/)**
 
 ---
 
