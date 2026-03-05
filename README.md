@@ -33,37 +33,24 @@ Fast, accurate, on-device license plate recognition for parking management, secu
 
 ### 🆕 Team Work (v2.0)
 
-Collaborate with your team in real-time. One leader, multiple members — shared detections, shared rules, one dashboard.
+One leader, multiple members — shared detections, shared rules, one web dashboard.
 
 <div align="center">
 
-| Mobile — Team Leader | Mobile — Team Member |
+| Mobile | Web Dashboard |
 |:---:|:---:|
-| <img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/mobile_app/mobile_teamleader.png" alt="Team Leader" width="300"/> | <img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/mobile_app/mobile_teammember.png" alt="Team Member" width="300"/> |
-
-| Web — Team Leader | Web — Team Member |
-|:---:|:---:|
-| <img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/mobile_app/web_teamleader.png" alt="Web Team Leader" width="400"/> | <img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/mobile_app/web_teammember.png" alt="Web Team Member" width="400"/> |
+| <img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/mobile_app/mobile_teamleader.png" alt="Team Leader" width="280"/> | <img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/mobile_app/web_teamleader.png" alt="Web Dashboard" width="400"/> |
 
 </div>
 
-- **Team Leader**: Create a team, share password with members, view all members' data on web dashboard
-- **Team Member**: Join with leader's password, contribute detections, leave anytime
-- **Web Dashboard**: Leader can switch between members' data; members see their leader info
-- **Cloud Sync**: All team data syncs automatically across devices
-
-### ✨ All Features:
-- 🚀 Fast on-device AI processing (~100-160ms)
+✨ **Key Features:**
 - 👥 **Team Work** - Leader/member collaboration with shared data
-- 🔗 Webhook integration - Send detections to Discord, Slack, or your own server
-- 📊 CSV export with bounding box, notes, reporter, auto-detected device info
-- 🔄 Cloud sync - Two-way background sync across devices
-- 📋 Smart rules grouping - Organized A-Z for easy navigation
-- 🌐 Download rules from web - Upload on marearts.com, download on phone
-- 🔒 100% offline capable - privacy first
-- 🗺️ Map view with GPS tracking
-- ✅ Whitelist/Blacklist management
-- 🌍 Multi-region support (Universal, Europe+, Korea, North America, China)
+- 🚀 Fast on-device AI (~100-160ms)
+- 🔗 Webhook (Discord, Slack, custom)
+- 🔄 Cloud sync & 🌐 Web rules download
+- 📊 CSV export & 🗺️ Map view
+- 🔒 100% offline capable
+- 🌍 Multi-region (Universal, Europe+, Korea, NA, China)
 
 📖 **[Read the complete Mobile App Guide →](https://github.com/MareArts/MareArts-ANPR/blob/main/mobile_app/README.md)**
 
