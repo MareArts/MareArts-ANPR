@@ -1,6 +1,6 @@
 # MareArts ANPR - FAQ
 
-**Last Updated:** February 2026
+**Last Updated:** March 4, 2026
 
 ---
 
@@ -78,21 +78,22 @@ This ensures you'll always have access to the software you've invested in.
 - **V14 OCR** - Backward compatible text recognition
 
 **V15 OCR improvements:**
-- 2.8-3.7% better accuracy
-- 6-11% faster inference
+- 6.7-7.4% better accuracy vs V14 (FP32)
+- Major NA improvement (70.34% -> 96.86% in `small_fp32`)
+- Strong real-time performance in CUDA benchmark
 - Better multi-line plate handling
 - INT8 models available (75% smaller files)
 
 ### Q: Should I use V14 or V15 OCR?
 **A:** **V15 OCR is recommended** for all new projects:
-- 2.8-3.7% better accuracy
-- 6-11% faster inference
+- 6.7-7.4% better accuracy across FP32 models
+- Stronger cross-region robustness (especially NA)
+- INT8 option for edge/mobile deployment
 - Better multi-line plate handling
-- INT8 models available (75% smaller)
 
 **Use V14 OCR** only if:
 - Maintaining existing production systems
-- Need proven stability
+- Need proven stability or maximum FPS on your current hardware
 - Already optimized for V14
 
 **Migration is easy:** Just change `ma_anpr_ocr_v14` to `ma_anpr_ocr_v15` or use `ma_anpr_ocr(version='v15')`.

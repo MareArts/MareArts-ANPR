@@ -83,7 +83,7 @@ python server.py                 # Start server
 
 - 🎯 **Improved Accuracy**: Enhanced recognition across all regions
 - 📝 **Better Multi-line Handling**: Improved recognition of plates with multiple text lines
-- 🚀 **Better Performance**: Faster and more accurate than V14
+- 🚀 **Better Performance**: Higher accuracy with strong real-time throughput
 - 🔄 **Easy Upgrade to V15**: Simple drop-in replacement for V14 OCR
 - ✅ **Recommended**: V15 OCR is now the default for new projects
 
@@ -230,11 +230,11 @@ ma-anpr models                       # List available V14 and V15 models
 
 | Model Name | Exact Match | Character Accuracy | Speed (GPU) | Notes |
 |------------|-------------|-------------------|-------------|-------|
-| pico_fp32 | 95.31% | 98.24% | 278.2 FPS (3.59ms) | 📱 Smallest, fast |
-| micro_fp32 | 94.93% | 98.12% | 280.8 FPS (3.56ms) | Fast with good accuracy |
-| small_fp32 | 94.16% | 97.85% | 334.6 FPS (2.99ms) | ⚡ Fastest inference |
-| medium_fp32 | 94.88% | 98.13% | 302.3 FPS (3.31ms) | Balanced performance |
-| **large_fp32** | **95.26%** | **98.32%** | 291.6 FPS (3.43ms) | 🎯 Best accuracy |
+| pico_fp32 | 98.66% | 99.74% | 235.1 FPS (4.32ms) | 📱 Smallest, fast |
+| micro_fp32 | 99.01% | 99.80% | 245.8 FPS (4.07ms) | Fast with high accuracy |
+| small_fp32 | 98.66% | 99.75% | 280.2 FPS (3.57ms) | ⚡ Fastest inference |
+| **medium_fp32** | **99.13%** | **99.83%** | 254.5 FPS (3.92ms) | 🎯 Best accuracy |
+| large_fp32 | 98.99% | 99.81% | 241.5 FPS (4.14ms) | High accuracy |
 
 **int8 Models** (smaller files):
 - pico_int8, micro_int8, small_int8, medium_int8, large_int8
@@ -252,7 +252,7 @@ ma-anpr models                       # List available V14 and V15 models
 
 MareArts ANPR supports license plates from multiple regions with specialized vocabulary optimization:
 
-- 🇰🇷 **Korean (`kr`)** - Korean license plates with Hangul characters (best accuracy: 99.27%)
+- 🇰🇷 **Korean (`kr`)** - Korean license plates with Hangul characters (best accuracy: 99.56%)
 - 🇪🇺 **Europe+ (`eup`)** - EU countries + Albania, Andorra, Bosnia & Herzegovina, Indonesia, and more
 - 🇺🇸🇨🇦🇲🇽 **North America (`na`)** - USA, Canada, and Mexico license plates
 - 🇨🇳 **China (`cn`)** - Chinese license plates with province codes

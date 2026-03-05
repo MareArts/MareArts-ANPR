@@ -1,6 +1,6 @@
 # Model Versions & Performance
 
-**Last Updated: February 4, 2026**
+**Last Updated: March 4, 2026**
 
 **Current Version: V14 Detector + V15 OCR** - Latest generation with advanced architecture
 
@@ -43,12 +43,12 @@ The V14 detector series introduces advanced detection with digital signature aut
 **Note:** test-api (free trial) only supports 640p models. 320p available for licensed local processing.
 
 **Available Precisions:**
-- **FP32** - Fastest on GPU (2× faster than FP16), standard size
-- **FP16** - 50% smaller file size, same detection rate, slower inference
+- **FP32** - High GPU throughput, standard size
+- **FP16** - 50% smaller file size, same detection rate, compact deployment profile
 
 #### V14 Detector Models - Performance Comparison
 
-![Detector Speed–Accuracy Trade-off](images/detector_performance_comparison.svg)
+![Detector Speed–Accuracy Comparison](images/detector_performance_comparison.svg)
 
 #### V14 Detector Models - Performance Metrics
 
@@ -69,7 +69,7 @@ The V14 detector series introduces advanced detection with digital signature aut
 **Key Findings:**
 - **320p models**: 2× faster than 640p with excellent detection rates (96-98%)
 - **640p models**: Highest detection rates (98-99%) for difficult cases
-- **FP16 models**: 50% smaller size, same detection rate, ~50% slower
+- **FP16 models**: 50% smaller size with the same detection rate
 - **Best overall (local)**: micro_320p_fp32 (97.13% detection, 128 FPS)
 - **Best mobile**: micro_320p_fp16 (97.13% detection, 56 FPS, 42 MB)
 - **Best for test-api**: medium_640p_fp32 (99.21% detection, 640p required for cloud API)
@@ -86,9 +86,9 @@ OCR models read text from detected license plates.
 
 The V15 OCR series delivers improved accuracy and better multi-line plate handling with batch processing support and regional vocabulary filtering.
 
-**Why choose V15?** 2.8-3.7% better accuracy, 6-11% faster inference. [See detailed comparison →](v14-vs-v15-comparison.md)
+**Why choose V15?** 6.7-7.4% better accuracy with strong real-time throughput. [See detailed comparison →](v14-vs-v15-comparison.md)
 
-📊 [View V15 OCR Benchmarks](benchmarks/v15_ocr_evaluation_report_cuda_50pct_20260203_192715.txt) *(Feb 3, 2026)*
+📊 [View V15 OCR Benchmarks](benchmarks/v15_ocr_evaluation_report_cuda_20260304_093504.txt) *(Mar 4, 2026)*
 
 #### V15 OCR Models - Performance by Region (FP32)
 
@@ -96,51 +96,51 @@ The V15 OCR series delivers improved accuracy and better multi-line plate handli
 
 | Model | Exact Match | Char Accuracy | FPS (GPU) | Time | Recommendation |
 |-------|-------------|---------------|-----------|------|----------------|
-| pico_fp32 | 97.15% | 98.80% | 274.8 | 3.64ms | 📱 Smallest |
-| micro_fp32 | 97.01% | 98.75% | 274.7 | 3.64ms | Fast |
-| small_fp32 | 96.63% | 98.61% | 324.6 | 3.08ms | ⚡ Fastest |
-| medium_fp32 | 97.00% | 98.73% | 293.6 | 3.41ms | Balanced |
-| large_fp32 | 97.07% | 98.80% | 288.2 | 3.47ms | 🏆 Best accuracy |
+| pico_fp32 | 98.94% | 99.77% | 247.2 | 4.04ms | 📱 Smallest |
+| micro_fp32 | 99.22% | 99.81% | 239.2 | 4.18ms | Fast |
+| small_fp32 | 99.06% | 99.79% | 272.6 | 3.67ms | ⚡ Fastest |
+| medium_fp32 | 99.29% | 99.83% | 250.5 | 3.99ms | Balanced |
+| large_fp32 | 99.21% | 99.82% | 245.7 | 4.07ms | 🏆 Best accuracy |
 
 **Korean (kor) - Best Overall Accuracy**
 
 | Model | Exact Match | Char Accuracy | FPS (GPU) | Time | Recommendation |
 |-------|-------------|---------------|-----------|------|----------------|
-| pico_fp32 | 98.91% | 99.74% | 279.0 | 3.58ms | 📱 Smallest |
-| micro_fp32 | 98.94% | 99.75% | 285.8 | 3.50ms | Fast |
-| small_fp32 | 98.99% | 99.76% | 336.7 | 2.97ms | ⚡ Fastest |
-| medium_fp32 | 98.95% | 99.75% | 303.3 | 3.30ms | Balanced |
-| large_fp32 | 98.68% | 99.70% | 287.5 | 3.48ms | 🏆 Best accuracy |
+| pico_fp32 | 99.36% | 99.88% | 180.1 | 5.55ms | 📱 Smallest |
+| micro_fp32 | 99.49% | 99.90% | 233.2 | 4.29ms | Fast |
+| small_fp32 | 99.45% | 99.89% | 278.2 | 3.60ms | ⚡ Fastest |
+| medium_fp32 | 99.56% | 99.91% | 251.0 | 3.98ms | Balanced |
+| large_fp32 | 99.54% | 99.91% | 242.4 | 4.13ms | 🏆 Best accuracy |
 
 **Europe+ (euplus) - EU + Additional Countries**
 
 | Model | Exact Match | Char Accuracy | FPS (GPU) | Time | Recommendation |
 |-------|-------------|---------------|-----------|------|----------------|
-| pico_fp32 | 95.44% | 97.65% | 281.8 | 3.55ms | 📱 Smallest |
-| micro_fp32 | 94.90% | 97.54% | 278.3 | 3.59ms | Fast |
-| small_fp32 | 94.01% | 97.22% | 337.8 | 2.96ms | ⚡ Fastest |
-| medium_fp32 | 94.90% | 97.49% | 306.9 | 3.26ms | Balanced |
-| large_fp32 | 95.77% | 97.79% | 293.4 | 3.41ms | 🏆 Best accuracy |
+| pico_fp32 | 97.93% | 99.53% | 250.6 | 3.99ms | 📱 Smallest |
+| micro_fp32 | 98.40% | 99.62% | 253.2 | 3.95ms | Fast |
+| small_fp32 | 98.07% | 99.58% | 285.2 | 3.51ms | ⚡ Fastest |
+| medium_fp32 | 98.67% | 99.70% | 258.3 | 3.87ms | Balanced |
+| large_fp32 | 98.60% | 99.71% | 231.7 | 4.32ms | 🏆 Best accuracy |
 
 **North America (na)**
 
 | Model | Exact Match | Char Accuracy | FPS (GPU) | Time | Recommendation |
 |-------|-------------|---------------|-----------|------|----------------|
-| pico_fp32 | 88.54% | 96.11% | 271.1 | 3.69ms | 📱 Smallest |
-| micro_fp32 | 87.58% | 95.72% | 285.4 | 3.50ms | Fast |
-| small_fp32 | 85.30% | 94.90% | 341.6 | 2.93ms | ⚡ Fastest |
-| medium_fp32 | 87.31% | 95.85% | 306.9 | 3.26ms | Balanced |
-| large_fp32 | 88.36% | 96.42% | 296.9 | 3.37ms | 🏆 Best accuracy |
+| pico_fp32 | 97.27% | 99.56% | 247.1 | 4.05ms | 📱 Smallest |
+| micro_fp32 | 98.11% | 99.71% | 253.0 | 3.95ms | Fast |
+| small_fp32 | 96.86% | 99.53% | 285.7 | 3.50ms | ⚡ Fastest |
+| medium_fp32 | 98.22% | 99.74% | 255.5 | 3.91ms | Balanced |
+| large_fp32 | 97.69% | 99.62% | 236.9 | 4.22ms | 🏆 Best accuracy |
 
 **China (china)**
 
 | Model | Exact Match | Char Accuracy | FPS (GPU) | Time | Recommendation |
 |-------|-------------|---------------|-----------|------|----------------|
-| pico_fp32 | 96.52% | 98.93% | 284.3 | 3.52ms | 📱 Smallest |
-| micro_fp32 | 96.23% | 98.86% | 280.0 | 3.57ms | Fast |
-| small_fp32 | 95.90% | 98.78% | 332.5 | 3.01ms | ⚡ Fastest |
-| medium_fp32 | 96.27% | 98.83% | 301.2 | 3.32ms | Balanced |
-| large_fp32 | 96.44% | 98.92% | 292.4 | 3.42ms | 🏆 Best accuracy |
+| pico_fp32 | 99.83% | 99.98% | 250.5 | 3.99ms | 📱 Smallest |
+| micro_fp32 | 99.83% | 99.98% | 250.5 | 3.99ms | Fast |
+| small_fp32 | 99.87% | 99.98% | 279.6 | 3.58ms | ⚡ Fastest |
+| medium_fp32 | 99.91% | 99.99% | 257.4 | 3.88ms | Balanced |
+| large_fp32 | 99.91% | 99.99% | 251.0 | 3.98ms | 🏆 Best accuracy |
 
 #### V15 Model Averages (All Regions)
 
@@ -148,21 +148,21 @@ The V15 OCR series delivers improved accuracy and better multi-line plate handli
 
 | Model | Exact Match | Char Accuracy | Avg FPS | Avg Time | Size |
 |-------|-------------|---------------|---------|----------|------|
-| pico_fp32 | 95.31% | 98.24% | 278.2 | 3.59ms | 20 MB |
-| micro_fp32 | 94.93% | 98.12% | 280.8 | 3.56ms | 71 MB |
-| small_fp32 | 94.16% | 97.85% | **334.6** | 2.99ms | 112 MB |
-| medium_fp32 | 94.88% | 98.13% | 302.3 | 3.31ms | 164 MB |
-| large_fp32 | 95.26% | 98.32% | 291.6 | 3.43ms | 179 MB |
+| pico_fp32 | 98.66% | 99.74% | 235.1 | 4.32ms | 20 MB |
+| micro_fp32 | 99.01% | 99.80% | 245.8 | 4.07ms | 71 MB |
+| small_fp32 | 98.66% | 99.75% | **280.2** | 3.57ms | 112 MB |
+| medium_fp32 | 99.13% | 99.83% | 254.5 | 3.92ms | 164 MB |
+| large_fp32 | 98.99% | 99.81% | 241.5 | 4.14ms | 179 MB |
 
 **INT8 Models:**
 
 | Model | Exact Match | Char Accuracy | Avg FPS | Avg Time | Size |
 |-------|-------------|---------------|---------|----------|------|
-| pico_int8 | 91.72% | 96.74% | 55.3 | 18.15ms | ~15 MB |
-| micro_int8 | 94.80% | 98.08% | 38.3 | 26.13ms | ~18 MB |
-| small_int8 | 94.18% | 97.85% | 53.5 | 18.70ms | ~28 MB |
-| medium_int8 | 94.88% | 98.12% | 38.8 | 25.84ms | ~41 MB |
-| large_int8 | 95.33% | 98.35% | 31.9 | 31.28ms | ~45 MB |
+| pico_int8 | 95.56% | 98.78% | 52.7 | 18.96ms | ~15 MB |
+| micro_int8 | 98.92% | 99.79% | 35.9 | 27.82ms | ~18 MB |
+| small_int8 | 98.63% | 99.74% | 47.1 | 21.29ms | ~28 MB |
+| medium_int8 | 99.14% | 99.83% | 36.0 | 27.82ms | ~41 MB |
+| large_int8 | 98.96% | 99.80% | 30.2 | 33.07ms | ~45 MB |
 
 **Note:** INT8 models are 75% smaller with similar accuracy. FP32 models are faster on GPU.
 
@@ -190,9 +190,9 @@ The V15 OCR series delivers improved accuracy and better multi-line plate handli
 
 V14 OCR models remain fully supported for existing projects.
 
-📊 [View V14 OCR Benchmarks](benchmarks/v14_ocr_evaluation_report_cuda_50pct_20260204_101220.txt) *(Feb 4, 2026)*
+📊 [View V14 OCR Benchmarks](benchmarks/v14_ocr_evaluation_report_cuda_20260204_101220.txt) *(Feb 4, 2026)*
 
-**Recommendation:** New projects should use V15 OCR for improved accuracy. [Compare V14 vs V15 →](v14-vs-v15-comparison.md)
+**Recommendation:** New projects should use V15 OCR for improved accuracy and better regional robustness. [Compare V14 vs V15 →](v14-vs-v15-comparison.md)
 
 ---
 
@@ -287,10 +287,10 @@ ocr = ma_anpr_ocr_v15('large_fp32', 'kor', user_name, serial_key, signature)
 ## Performance Notes
 
 - All benchmarks performed with GPU (CUDA) acceleration
-- CPU speeds typically 3-5× slower than GPU
+- GPU delivers the highest throughput; CPU remains fully supported across platforms
 - FP32 models are faster on GPU than INT8
 - INT8 models are 75% smaller files with similar accuracy
-- FP16 detector models: 50% smaller size, same detection rate, ~50% slower
+- FP16 detector models: 50% smaller size with the same detection rate
 - All V14 and V15 models require V2 license with signature for authentication
 - **V15 OCR recommended** for new projects (improved accuracy)
 

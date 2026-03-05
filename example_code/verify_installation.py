@@ -26,8 +26,8 @@ def check_installation():
     if sys.version_info < (3, 9):
         print("   ❌ Python 3.9+ required")
         issues.append("Python version too old")
-    elif sys.version_info >= (3, 13):
-        print("   ⚠️  Python 3.13+ not officially supported")
+    elif sys.version_info >= (3, 15):
+        print("   ⚠️  Python 3.15+ support not yet verified")
     else:
         print("   ✅ Compatible")
     
@@ -38,14 +38,24 @@ def check_installation():
         numpy_version = numpy.__version__
         print(f"   Version: {numpy_version}")
         
-        # Check if NumPy 1.x (required for current builds)
-        if numpy_version.startswith('2.'):
-            print("   ⚠️  NumPy 2.x detected")
-            print("   Current builds require NumPy 1.x")
-            print("   Install: pip install 'numpy>=1.26,<2.0'")
-            issues.append("NumPy 2.x incompatible with current build")
+        # NumPy policy:
+        # - Python 3.9-3.12: NumPy 1.x
+        # - Python 3.13-3.14: NumPy 2.x
+        py_minor = sys.version_info.minor
+        if py_minor >= 13:
+            if numpy_version.startswith('2.'):
+                print("   ✅ NumPy 2.x (compatible for Python 3.13+)")
+            else:
+                print("   ⚠️  NumPy 2.x required for Python 3.13+")
+                print("   Install: pip install 'numpy>=2.0,<3.0'")
+                issues.append("NumPy 2.x required for Python 3.13+")
         else:
-            print("   ✅ NumPy 1.x (compatible)")
+            if numpy_version.startswith('1.'):
+                print("   ✅ NumPy 1.x (compatible for Python 3.9-3.12)")
+            else:
+                print("   ⚠️  NumPy 1.x required for Python 3.9-3.12")
+                print("   Install: pip install 'numpy>=1.26,<2.0'")
+                issues.append("NumPy 1.x required for Python 3.9-3.12")
     except ImportError:
         print("   ❌ NumPy not installed")
         issues.append("NumPy missing")

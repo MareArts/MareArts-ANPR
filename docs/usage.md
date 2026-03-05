@@ -441,7 +441,7 @@ except Exception as e:
 3. **Choose appropriate models** based on your needs:
    - **V14 Detector - 320p** models (fast): `micro_320p_fp32` (recommended), `small_320p_fp32`
    - **V14 Detector - 640p** models (accurate): `micro_640p_fp32`, `medium_640p_fp32`
-   - **V14 Detector - FP16** models: 50% smaller, same accuracy, slower inference
+   - **V14 Detector - FP16** models: 50% smaller with the same accuracy
    - **V15 OCR - FP32** models: Best performance (pico/micro/small/medium/large_fp32)
    - **V15 OCR - INT8** models: Smaller files (pico/micro/small/medium/large_int8)
 4. **Reuse detector/OCR instances** instead of recreating them

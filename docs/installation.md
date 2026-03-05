@@ -2,7 +2,7 @@
 
 ## System Requirements
 
-- **Python**: 3.9, 3.10, 3.11, or 3.12
+- **Python**: 3.9, 3.10, 3.11, 3.12, 3.13, or 3.14
 - **Operating System**: Linux (x86_64, ARM64), macOS, Windows
 - **Memory**: Minimum 4GB RAM (8GB recommended for GPU)
 - **Storage**: ~500MB for model files (SDK wheels are ~650&nbsp;KB)
