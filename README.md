@@ -77,7 +77,7 @@ python server.py                 # Start server
 
 <br>
 
-## 🎉 MareArts SDK v3.8.0
+## 🎉 MareArts SDK v3.8.x
 
 **V15 OCR - Next Generation Recognition** ⭐
 
