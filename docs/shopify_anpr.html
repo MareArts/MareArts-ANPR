@@ -99,9 +99,34 @@
 <div class="video-container"><iframe src="https://www.youtube.com/embed/6gVQOJvNBNE?si=oJS7cbPr2m8sMOZ_" title="MareArts ANPR App Demo"></iframe></div>
 
 <h2>&#x1F4F1; App Overview</h2>
-<p>MareArts ANPR is a professional license plate recognition app for parking management, security checkpoints, and vehicle tracking. All AI processing happens on-device for privacy and speed.</p>
+<p>MareArts ANPR is a professional license plate recognition solution — SDK + Mobile App + Web Dashboard. Use for parking management, security checkpoints, fleet tracking, and more. All AI processing happens on-device for privacy and speed.</p>
 
-<h2>&#x1F195; What's New (v2.0.4)</h2>
+<h3>SDK Highlights (v3.8.3)</h3>
+<ul>
+<li><strong>V15 OCR Engine</strong> - 98–99% accuracy across all regions</li>
+<li><strong>V14 Detector</strong> - Up to 99.3% detection rate, 128+ FPS</li>
+<li><strong>5 Model Sizes</strong> - pico (smallest) → micro → small → medium → large (most accurate)</li>
+<li><strong>FP32 + INT8</strong> - Full precision or 75% smaller quantized models</li>
+<li><strong>GPU Acceleration</strong> - CUDA, DirectML support</li>
+<li><strong>Multi-Region</strong> - Korea, Europe+, N. America, China, Universal</li>
+<li><strong>Dynamic Region Switching</strong> - Change region without reloading the model</li>
+<li><strong>Batch Processing</strong> - Process multiple plates simultaneously</li>
+<li><strong>Docker Ready</strong> - Production-ready container deployment</li>
+</ul>
+
+<h2>&#x1F195; What's New</h2>
+
+<h3>SDK v3.8.3 — V15 OCR Engine &#x2B50;</h3>
+<ul>
+<li><strong>&#x1F3AF; +6.7–7.4% Better Accuracy</strong> - V15 OCR achieves 98–99% exact match across all regions</li>
+<li><strong>&#x1F30E; North America +26%</strong> - Massive improvement from 70% → 97% for NA plates</li>
+<li><strong>&#x1F4F1; INT8 Models</strong> - 75% smaller files for mobile/edge deployment with similar accuracy</li>
+<li><strong>&#x1F4DD; Better Multi-line Handling</strong> - Improved recognition for plates with multiple text lines</li>
+<li><strong>&#x26A1; 235–280 FPS (GPU)</strong> - Strong real-time throughput across all model sizes</li>
+<li><strong>&#x1F504; Drop-in Upgrade</strong> - Change one line: <code>ma_anpr_ocr_v14</code> → <code>ma_anpr_ocr_v15</code></li>
+</ul>
+
+<h3>App v2.0.4</h3>
 <ul>
 <li><strong>&#x1F465; Team Work</strong> - Create teams with leader/member roles, share detections and rules across your organization</li>
 <li><strong>Webhook Integration</strong> - Send detections to Discord, Slack, or your own server in real-time</li>
@@ -321,6 +346,19 @@
 <li>North America - USA, Canada, Mexico</li>
 <li>China - &#x4E2D;&#x56FD;&#x8F66;&#x724C;&#x8BC6;&#x522B;</li>
 </ul>
+
+<h4>V15 OCR Accuracy by Region</h4>
+<table>
+<thead><tr><th>Region</th><th>Exact Match</th><th>Char Accuracy</th><th>Speed (GPU)</th></tr></thead>
+<tbody>
+<tr><td><strong>Korea</strong></td><td>99.56%</td><td>99.91%</td><td>251 FPS</td></tr>
+<tr><td><strong>China</strong></td><td>99.91%</td><td>99.99%</td><td>257 FPS</td></tr>
+<tr><td><strong>Universal</strong></td><td>99.29%</td><td>99.83%</td><td>250 FPS</td></tr>
+<tr><td><strong>Europe+</strong></td><td>98.67%</td><td>99.70%</td><td>258 FPS</td></tr>
+<tr><td><strong>N. America</strong></td><td>98.22%</td><td>99.74%</td><td>255 FPS</td></tr>
+</tbody>
+</table>
+<p style="font-size:0.9em; color:#666;">Benchmarked with medium_fp32 model on NVIDIA GPU (March 2026)</p>
 
 <h3>Storage</h3>
 <ul>
