@@ -18,7 +18,9 @@ MareArts ANPR is a professional license plate recognition app for parking manage
 
 ## 🆕 Latest Release
 
-**Version 1.9.4 (Build 194)** - February 2026
+**Version 2.0.4 (Build 204)** - March 2026
+
+**👥 Team Work** - Create teams with leader/member roles, share detections and rules across your organization
 
 **🔗 Webhook Integration** - Send detection results to Discord, Slack, or any external service in real-time
 
@@ -532,6 +534,54 @@ python webhook_receiver.py
 - Support email: hello@marearts.com
 - **Report Bug / Request Feature** - Opens GitHub Issues
 - Build number (for troubleshooting)
+
+---
+
+## 👥 6. Team Work
+
+**Purpose**: Collaborate with your team — share detections and rules across multiple users
+
+### How It Works
+
+A **Team Leader** creates a team and shares a password. **Team Members** join using that password. All team data syncs to the cloud and is accessible from the web dashboard.
+
+### Team Leader
+
+<div align="center">
+  <img src="mobile_teamleader.png" alt="Team Leader Mobile" width="300"/>
+</div>
+
+- **Create Team**: Automatically becomes the team leader
+- **Share Password**: Give the team password to members (tap to reveal)
+- **View All Data**: See every member's detections and rules on the web dashboard
+- **Switch Members**: Web dashboard dropdown lets you view any member's data
+- **Break Team**: Disband the team and release all members
+
+<div align="center">
+  <img src="web_teamleader.png" alt="Team Leader Web Dashboard" width="600"/>
+</div>
+
+### Team Member
+
+<div align="center">
+  <img src="mobile_teammember.png" alt="Team Member Mobile" width="300"/>
+</div>
+
+- **Join Team**: Enter the leader's password to join
+- **Contribute Data**: Your detections and rules sync to the team
+- **See Leader Info**: Shows who your team leader is
+- **Leave Team**: Leave anytime and return to normal (solo) mode
+
+<div align="center">
+  <img src="web_teammember.png" alt="Team Member Web Dashboard" width="600"/>
+</div>
+
+### Use Cases:
+- **Parking management**: Multiple guards scanning, one supervisor monitoring all data
+- **Security teams**: Distributed checkpoints reporting to a central dashboard
+- **Fleet management**: Multiple drivers, one operations manager
+
+💡 **Tip:** The team leader can view all members' detections on [marearts.com](https://www.marearts.com) — great for monitoring without being on-site!
 
 ---
 

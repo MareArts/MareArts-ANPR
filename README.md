@@ -23,7 +23,7 @@ Automatic Number Plate Recognition (ANPR) SDK for multiple regions with GPU acce
 
 ---
 
-## 🎉 MareArts ANPR Mobile App - v1.9.4
+## 🎉 MareArts ANPR Mobile App - v2.0.4
 
 **📱 Now available on iOS! Android coming soon.**
 
@@ -31,8 +31,30 @@ Fast, accurate, on-device license plate recognition for parking management, secu
 
 [![Download on App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/us/app/marearts-anpr/id6753904859)
 
-✨ **Key Features:**
+### 🆕 Team Work (v2.0)
+
+Collaborate with your team in real-time. One leader, multiple members — shared detections, shared rules, one dashboard.
+
+<div align="center">
+
+| Mobile — Team Leader | Mobile — Team Member |
+|:---:|:---:|
+| <img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/mobile_app/mobile_teamleader.png" alt="Team Leader" width="300"/> | <img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/mobile_app/mobile_teammember.png" alt="Team Member" width="300"/> |
+
+| Web — Team Leader | Web — Team Member |
+|:---:|:---:|
+| <img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/mobile_app/web_teamleader.png" alt="Web Team Leader" width="400"/> | <img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/mobile_app/web_teammember.png" alt="Web Team Member" width="400"/> |
+
+</div>
+
+- **Team Leader**: Create a team, share password with members, view all members' data on web dashboard
+- **Team Member**: Join with leader's password, contribute detections, leave anytime
+- **Web Dashboard**: Leader can switch between members' data; members see their leader info
+- **Cloud Sync**: All team data syncs automatically across devices
+
+### ✨ All Features:
 - 🚀 Fast on-device AI processing (~100-160ms)
+- 👥 **Team Work** - Leader/member collaboration with shared data
 - 🔗 Webhook integration - Send detections to Discord, Slack, or your own server
 - 📊 CSV export with bounding box, notes, reporter, auto-detected device info
 - 🔄 Cloud sync - Two-way background sync across devices
@@ -304,7 +326,7 @@ Explore our AI toolkit:
 
 ## License
 
-© 2024 MareArts. All rights reserved.
+© 2025 MareArts. All rights reserved.
 
 This software requires a valid license key. Visit [MareArts ANPR Solution](https://www.marearts.com/products/anpr) for licensing options.
 
