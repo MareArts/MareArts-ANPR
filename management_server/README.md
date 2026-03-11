@@ -1,6 +1,6 @@
 # MareArts ANPR Management Server
 
-Professional ANPR server with REST API and Web Dashboard.
+Professional ANPR server with REST API, Web Dashboard, and live model switching.
 
 ![Dashboard](screenshots/dashboard.png)
 
@@ -10,11 +10,15 @@ Professional ANPR server with REST API and Web Dashboard.
 
 | Dashboard | Upload & Detect |
 |:---------:|:---------------:|
-| ![Dashboard](screenshots/dashboard.png) | ![Upload](screenshots/upload_detect.png) |
+| ![Dashboard](screenshots/dashboard.png) | ![Upload](screenshots/upload_detection.png) |
 
 | Detection History | Settings |
 |:-----------------:|:--------:|
-| ![History](screenshots/detections_history.png) | ![Settings](screenshots/settings.png) |
+| ![History](screenshots/detection_history.png) | ![Settings](screenshots/setting1.png) |
+
+| Settings (Model Lists) |
+|:-----------------------:|
+| ![Settings2](screenshots/setting2.png) |
 
 </div>
 
@@ -24,12 +28,11 @@ Professional ANPR server with REST API and Web Dashboard.
 # 1. Install
 pip install -r requirements.txt
 
-# 2. Configure (one time)
+# 2. Configure credentials (one time)
 ma-anpr config
 
 # 3. Start server
 python server.py
-# Or use: ./start_server.sh
 
 # 4. Open browser
 http://localhost:8000/
@@ -42,7 +45,7 @@ http://localhost:8000/
 1. **Dashboard** - Statistics, charts & real-time server logs
 2. **Upload & Detect** - Drag & drop images
 3. **Detection History** - Browse by date
-4. **Settings** - Models & configuration
+4. **Settings** - Models, OCR version, region & configuration
 
 ### Dashboard Features
 
@@ -54,13 +57,58 @@ http://localhost:8000/
   - Color-coded: Info (gray), Success (green), Error (red), Warning (orange)
   - Clear button to reset logs
 
+### Settings Features
+
+- **System Information** - Detector (V14), OCR (V14/V15), region, backend at a glance
+- **Live Model Switching** - Change detector, OCR model, OCR version, region without restart
+- **Model Download Status** - See which models are cached locally (V14 & V15 OCR listed separately)
+- **Credential Management** - Edit credentials from the web UI
+
 ### History Filters
 
 - Today | This Week | This Month | Last 3 Months | Custom Range | All Time
 
-## REST API Usage
+## Models
 
-### Send Image - 3 Methods
+### Detector (V14 only)
+
+| Model | Resolution |
+|-------|-----------|
+| `pico_320p_fp32` | 320p |
+| `pico_640p_fp32` | 640p |
+| `micro_320p_fp32` | 320p |
+| `micro_320p_fp16` | 320p (half precision) |
+| `micro_640p_fp32` | 640p |
+| `small_320p_fp32` | 320p |
+| `small_640p_fp32` | 640p |
+| `medium_320p_fp32` | 320p |
+| `medium_640p_fp32` | 640p |
+| `large_320p_fp32` | 320p |
+| `large_640p_fp32` | 640p |
+
+### OCR (V14 and V15)
+
+| Model | Versions |
+|-------|----------|
+| `pico_fp32` | V14, V15 |
+| `micro_fp32` | V14, V15 |
+| `small_fp32` | V14, V15 |
+| `medium_fp32` | V14, V15 |
+| `large_fp32` | V14, V15 |
+
+### Regions
+
+| Code | Region |
+|------|--------|
+| `kr` | Korea |
+| `eup` | Europe+ (EU, UK, CH, NO) |
+| `na` | North America (US, CA, MX) |
+| `cn` | China |
+| `univ` | Universal (all regions) |
+
+## REST API
+
+### Detect Plates - 3 Methods
 
 **Method 1: File Upload**
 ```bash
@@ -82,19 +130,59 @@ curl -X POST http://localhost:8000/api/detect/base64 \
   -d "{\"image\": \"$BASE64\"}"
 ```
 
+### Switch Models via API
+
+Change detector, OCR model, OCR version, and region on the fly:
+
+```bash
+curl -X POST http://localhost:8000/api/models/update \
+  -H "Content-Type: application/json" \
+  -d '{
+    "detector_model": "micro_320p_fp32",
+    "ocr_model": "small_fp32",
+    "ocr_version": "v15",
+    "region": "eup"
+  }'
+```
+
+Switch OCR to V14:
+```bash
+curl -X POST http://localhost:8000/api/models/update \
+  -H "Content-Type: application/json" \
+  -d '{
+    "detector_model": "micro_320p_fp32",
+    "ocr_model": "large_fp32",
+    "ocr_version": "v14",
+    "region": "kr"
+  }'
+```
+
+> Models download automatically if not already cached. Switching takes ~20-30 seconds.
+
 ### Python Client
 
 ```python
 import requests
 
-with open('plate.jpg', 'rb') as f:
+SERVER = "http://localhost:8000"
+
+# Switch to V15 OCR, Europe region
+requests.post(f"{SERVER}/api/models/update", json={
+    "detector_model": "micro_320p_fp32",
+    "ocr_model": "small_fp32",
+    "ocr_version": "v15",
+    "region": "eup"
+})
+
+# Detect plate
+with open("plate.jpg", "rb") as f:
     response = requests.post(
-        'http://localhost:8000/api/detect',
-        files={'image': f}
+        f"{SERVER}/api/detect",
+        files={"image": f}
     )
 
 result = response.json()
-for plate in result['results']:
+for plate in result["results"]:
     print(f"{plate['plate_text']} - {plate['confidence']}%")
 ```
 
@@ -110,7 +198,6 @@ Tests all API endpoints (file, binary, base64 upload) with sample images.
 ```bash
 python test_client.py path/to/image.jpg
 ```
-Shows health, stats, detection results, and history.
 
 ## API Response
 
@@ -122,24 +209,30 @@ Shows health, stats, detection results, and history.
     {
       "plate_text": "ABC-123",
       "confidence": 98.5,
-      "bbox": [120, 230, 380, 290]
+      "bbox": [120, 230, 380, 290],
+      "detection_confidence": 95.0
     }
   ],
-  "processing_time": 0.025
+  "processing_time": 0.148,
+  "detector_time": 0.10,
+  "ocr_time": 0.04,
+  "image_url": "/results/detection_20260311_194440_505426.jpg"
 }
 ```
 
-## API Endpoints
+## All API Endpoints
 
-```
-POST /api/detect              # Upload file
-POST /api/detect/binary       # Raw bytes
-POST /api/detect/base64       # Base64 image
-GET  /api/stats               # Statistics
-GET  /api/history             # Detection history
-GET  /api/health              # Health check
-GET  /docs                    # Swagger UI
-```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/detect` | Upload file for detection |
+| `POST` | `/api/detect/binary` | Raw bytes detection |
+| `POST` | `/api/detect/base64` | Base64 image detection |
+| `POST` | `/api/models/update` | Switch models/version/region |
+| `GET` | `/api/models/status` | Model info & download status |
+| `GET` | `/api/stats` | Detection statistics |
+| `GET` | `/api/history` | Detection history |
+| `GET` | `/api/health` | Health check & SDK version |
+| `GET` | `/docs` | Swagger UI (auto-generated) |
 
 ## Configuration
 
@@ -147,8 +240,8 @@ GET  /docs                    # Swagger UI
 
 **Option 1: ma-anpr config (Recommended)**
 ```bash
-ma-anpr config  # Configure credentials once
-python server.py  # Auto-loads
+ma-anpr config    # Configure credentials once
+python server.py  # Auto-loads from ~/.marearts/.marearts_env
 ```
 
 **Option 2: Web UI**
@@ -156,16 +249,19 @@ python server.py  # Auto-loads
 
 ### Server Settings (Optional)
 
-**Option 1: Config file**
-```bash
-# Edit server_config.yaml
-python server.py
+**Config file** (`server_config.yaml`):
+```yaml
+models:
+  detector: micro_320p_fp32
+  ocr: small_fp32
+  ocr_version: v15        # v14 or v15
+  region: eup             # kr, eup, na, cn, univ
+  backend: cpu            # cpu, cuda, directml
 ```
 
-**Option 2: Settings tab**
-- Change models, region, backend via web UI
-- No restart needed
+**Settings tab** - Change models, OCR version, region via web UI (no restart needed)
 
+**API** - `POST /api/models/update` to switch programmatically
 
 ## Docker
 
@@ -184,8 +280,12 @@ ma-anpr config  # Or use Settings tab
 ```
 
 **No plates detected?**
-- Settings tab → Try different models
-- Check correct region selected
+- Settings tab → Try different models or region
+- Try V15 OCR for improved accuracy
+
+**Model switch slow?**
+- First switch downloads the model (~60-180MB depending on size)
+- Subsequent switches are fast (loads from cache)
 
 **History shows 0?**
 - Click "All Time" button

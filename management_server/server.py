@@ -116,7 +116,7 @@ def init_models():
         
         # Load OCR (unified interface - supports v14 and v15)
         state.ocr = ma_anpr_ocr(
-            model=config.OCR_MODEL,
+            model_name=config.OCR_MODEL,
             region=config.REGION,
             user_name=config.MAREARTS_USERNAME,
             serial_key=config.MAREARTS_SERIAL_KEY,
@@ -278,12 +278,19 @@ def health_check():
     serial_key = config.MAREARTS_SERIAL_KEY or ""
     signature = config.MAREARTS_SIGNATURE or ""
     
+    try:
+        import marearts_anpr as _ma
+        sdk_ver = getattr(_ma, '__version__', None) or getattr(_ma, 'VERSION', 'unknown')
+    except Exception:
+        sdk_ver = "unknown"
+
     return {
         "status": "ok",
         "credentials_configured": state.credentials_valid,
         "models_loaded": state.detector is not None,
         "uptime": round(time.time() - state.start_time, 2),
         "version": "1.0.0",
+        "sdk_version": sdk_ver,
         "credentials": {
             "username": username if username else None,
             "serial_key_masked": serial_key[:4] + "***" + serial_key[-4:] if len(serial_key) > 8 else "***" if serial_key else None,
@@ -592,7 +599,7 @@ async def configure_credentials(request: Request):
             
             # Load OCR (unified interface)
             test_ocr = ma_anpr_ocr(
-                model=config.OCR_MODEL,
+                model_name=config.OCR_MODEL,
                 region=config.REGION,
                 user_name=username,
                 serial_key=serial_key,
@@ -637,27 +644,15 @@ def get_models_status():
     """Get available models and their status"""
     models_dir = Path.home() / ".marearts" / "marearts_anpr_data"
     
-    detector_models = [
-        {"name": "pico_320p_fp32", "description": "Smallest & Fast (96% acc, 129 FPS)"},
-        {"name": "pico_640p_fp32", "description": "Balanced (98.5% acc, 66 FPS)"},
-        {"name": "micro_320p_fp32", "description": "⭐ Best Overall (97% acc, 128 FPS)"},
-        {"name": "micro_320p_fp16", "description": "Best Mobile (97% acc, 56 FPS, 42MB)"},
-        {"name": "micro_640p_fp32", "description": "Highest Detection (99% acc, 68 FPS)"},
-        {"name": "small_320p_fp32", "description": "⚡ Fastest (98% acc, 142 FPS)"},
-        {"name": "small_640p_fp32", "description": "High Detection (99% acc, 70 FPS)"},
-        {"name": "medium_320p_fp32", "description": "High Detection (98% acc, 136 FPS)"},
-        {"name": "medium_640p_fp32", "description": "Very High (99% acc, 66 FPS)"},
-        {"name": "large_320p_fp32", "description": "Strong (98% acc, 131 FPS)"},
-        {"name": "large_640p_fp32", "description": "🎯 Highest Accuracy (99.3% acc, 60 FPS)"}
+    detector_model_names = [
+        "pico_320p_fp32", "pico_640p_fp32",
+        "micro_320p_fp32", "micro_320p_fp16", "micro_640p_fp32",
+        "small_320p_fp32", "small_640p_fp32",
+        "medium_320p_fp32", "medium_640p_fp32",
+        "large_320p_fp32", "large_640p_fp32"
     ]
     
-    ocr_models = [
-        {"name": "pico_fp32", "description": "📱 Edge/Mobile (92% acc, 270 FPS, 20MB)"},
-        {"name": "micro_fp32", "description": "Fast (92% acc, 262 FPS, 71MB)"},
-        {"name": "small_fp32", "description": "⚡ Fastest (92% acc, 300 FPS, 112MB)"},
-        {"name": "medium_fp32", "description": "Balanced (90% acc, 270 FPS, 164MB)"},
-        {"name": "large_fp32", "description": "🎯 Best Accuracy (92% acc, 262 FPS, 179MB)"}
-    ]
+    ocr_model_names = ["pico_fp32", "micro_fp32", "small_fp32", "medium_fp32", "large_fp32"]
     
     regions = [
         {"code": "kr", "name": "Korea", "description": "🇰🇷 Korean plates (한국)"},
@@ -668,54 +663,79 @@ def get_models_status():
     ]
     
     detector_status = []
-    for model_info in detector_models:
-        model = model_info["name"]
+    for model in detector_model_names:
         model_file = models_dir / f"marearts_anpr_d_v14_{model}.dat"
         detector_status.append({
             "name": model,
-            "description": model_info["description"],
             "downloaded": model_file.exists(),
             "size": model_file.stat().st_size if model_file.exists() else 0,
             "current": model == config.DETECTOR_MODEL
         })
     
-    ocr_status = []
-    for model_info in ocr_models:
-        model = model_info["name"]
+    ocr_v14_status = []
+    for model in ocr_model_names:
         model_file = models_dir / f"marearts_anpr_r_v14_{model}.dat"
         config_file = models_dir / f"marearts_anpr_r_v14_{model}_config.dat"
-        ocr_status.append({
+        ocr_v14_status.append({
             "name": model,
-            "description": model_info["description"],
             "downloaded": model_file.exists() and config_file.exists(),
-            "size": (model_file.stat().st_size if model_file.exists() else 0),
-            "current": model == config.OCR_MODEL
+            "size": model_file.stat().st_size if model_file.exists() else 0,
+            "current": model == config.OCR_MODEL and config.OCR_VERSION == "v14"
         })
     
+    ocr_v15_status = []
+    v15_dir = models_dir / "v15"
+    for model in ocr_model_names:
+        model_file = v15_dir / f"marearts_anpr_r_v15_{model}.dat"
+        config_file = v15_dir / f"marearts_anpr_r_v15_{model}_config.dat"
+        ocr_v15_status.append({
+            "name": model,
+            "downloaded": model_file.exists() and config_file.exists(),
+            "size": model_file.stat().st_size if model_file.exists() else 0,
+            "current": model == config.OCR_MODEL and config.OCR_VERSION == "v15"
+        })
+    
+    try:
+        from marearts_anpr import normalize_region_alias
+        normalized_region = normalize_region_alias(config.REGION)
+    except Exception:
+        normalized_region = config.REGION
+
     return {
         "detector_models": detector_status,
-        "ocr_models": ocr_status,
+        "ocr_models": ocr_model_names,
+        "ocr_v14_models": ocr_v14_status,
+        "ocr_v15_models": ocr_v15_status,
         "regions": regions,
         "models_directory": str(models_dir),
         "current_detector": config.DETECTOR_MODEL,
         "current_ocr": config.OCR_MODEL,
-        "current_region": config.REGION,
-        "current_backend": config.BACKEND
+        "current_region": normalized_region,
+        "current_backend": config.BACKEND,
+        "detector_version": "V14",
+        "ocr_version": config.OCR_VERSION.upper()
     }
 
 @app.post("/api/models/update")
 async def update_models(request: Request):
-    """Update detector, OCR model, and region"""
+    """Update detector, OCR model, OCR version, and region"""
     try:
         data = await request.json()
         detector_model = data.get('detector_model')
         ocr_model = data.get('ocr_model')
+        ocr_version = data.get('ocr_version', config.OCR_VERSION)
         region = data.get('region')
         
         if not all([detector_model, ocr_model, region]):
             return JSONResponse(
                 status_code=400,
                 content={"success": False, "error": "All fields are required"}
+            )
+        
+        if ocr_version not in ('v14', 'v15'):
+            return JSONResponse(
+                status_code=400,
+                content={"success": False, "error": "OCR version must be 'v14' or 'v15'"}
             )
         
         if not state.credentials_valid:
@@ -728,7 +748,7 @@ async def update_models(request: Request):
             print(f"\n{'='*70}")
             print("Reloading models with new configuration...")
             print(f"  Detector: {detector_model}")
-            print(f"  OCR: {ocr_model}")
+            print(f"  OCR: {ocr_model} ({ocr_version})")
             print(f"  Region: {region}")
             print(f"{'='*70}")
             
@@ -745,12 +765,12 @@ async def update_models(request: Request):
             
             # Load new OCR (unified interface)
             new_ocr = ma_anpr_ocr(
-                model=ocr_model,
+                model_name=ocr_model,
                 region=region,
                 user_name=config.MAREARTS_USERNAME,
                 serial_key=config.MAREARTS_SERIAL_KEY,
                 signature=config.MAREARTS_SIGNATURE,
-                version=config.OCR_VERSION,
+                version=ocr_version,
                 backend=config.BACKEND
             )
             
@@ -761,14 +781,15 @@ async def update_models(request: Request):
             # Update config
             config.DETECTOR_MODEL = detector_model
             config.OCR_MODEL = ocr_model
+            config.OCR_VERSION = ocr_version
             config.REGION = region
             
             print("✅ Models updated successfully!")
-            add_server_log(f"Models updated: {detector_model} + {ocr_model} ({region})", "success")
+            add_server_log(f"Models updated: {detector_model} + {ocr_model} {ocr_version} ({region})", "success")
             
             return {
                 "success": True,
-                "message": f"Models updated: {detector_model} + {ocr_model} ({region})"
+                "message": f"Models updated: {detector_model} + {ocr_model} {ocr_version} ({region})"
             }
             
         except Exception as e:
