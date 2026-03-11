@@ -216,7 +216,7 @@ detector = ma_anpr_detector_v14(
 
 # V15 OCR with regional vocabulary (Latest - Improved accuracy)
 ocr = ma_anpr_ocr_v15(
-    model='small_fp32',       # Model: pico/micro/small/medium/large_fp32 or _int8
+    model_name='small_fp32',  # Model: pico/micro/small/medium/large_fp32 or _int8
     region='univ',            # Region: kor/euplus/na/china/univ (default: univ)
     user_name=user_name,
     serial_key=serial_key,

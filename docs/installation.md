@@ -117,7 +117,7 @@ detector = ma_anpr_detector_v14(
 
 # V15 OCR (Recommended - Latest)
 ocr = ma_anpr_ocr(
-    model='small_fp32',               # pico/micro/small/medium/large_fp32 or _int8
+    model_name='small_fp32',          # pico/micro/small/medium/large_fp32 or _int8
     region='univ',                    # kor/kr, euplus/eup, na, china/cn, univ
     user_name="your-email",
     serial_key="your-serial-key",
