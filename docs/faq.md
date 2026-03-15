@@ -161,7 +161,7 @@ More SNS integrations (Slack, etc.) will be added in future updates.
 ### Q: Where can I download the app?
 **A:** Search **"marearts anpr"** in the App Store or Google Play, or download directly:
 
-<a href="https://apps.apple.com/app/marearts-anpr/id6753904859"><img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on App Store" height="44"></a>&nbsp;&nbsp;<a href="https://play.google.com/store/apps/details?id=com.marearts.anpr"><img src="https://raw.githubusercontent.com/steverichey/google-play-badge-svg/master/img/en_get.svg" alt="Get it on Google Play" height="44"></a>
+[![Download on App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/app/marearts-anpr/id6753904859) [![Get it on Google Play](../promotion_image/google_play_badge.svg)](https://play.google.com/store/apps/details?id=com.marearts.anpr)
 
 [Read the full Mobile App Guide →](https://github.com/MareArts/MareArts-ANPR/blob/main/mobile_app/README.md)
 

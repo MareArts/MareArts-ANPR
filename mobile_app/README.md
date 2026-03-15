@@ -37,11 +37,7 @@ MareArts ANPR is a professional license plate recognition app for parking manage
 ---
 ## 📲 Download
 
-<div align="center">
-
-<a href="https://apps.apple.com/us/app/marearts-anpr/id6753904859"><img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on App Store" height="44"></a>&nbsp;&nbsp;<a href="https://play.google.com/store/apps/details?id=com.marearts.anpr"><img src="https://raw.githubusercontent.com/steverichey/google-play-badge-svg/master/img/en_get.svg" alt="Get it on Google Play" height="44"></a>
-
-</div>
+[![Download on App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/us/app/marearts-anpr/id6753904859) [![Get it on Google Play](../promotion_image/google_play_badge.svg)](https://play.google.com/store/apps/details?id=com.marearts.anpr)
 
 ---
 ## 🧭 Navigation
