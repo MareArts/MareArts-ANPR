@@ -29,7 +29,7 @@ Automatic Number Plate Recognition (ANPR) SDK for multiple regions with GPU acce
 
 Fast, accurate, on-device license plate recognition for parking management, security, and vehicle tracking.
 
-[![Download on App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/us/app/marearts-anpr/id6753904859) [![Get it on Google Play](https://raw.githubusercontent.com/steverichey/google-play-badge-svg/master/img/en_get.svg)](https://play.google.com/store/apps/details?id=com.marearts.anpr)
+[![Download on App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/us/app/marearts-anpr/id6753904859) [![Get it on Google Play](promotion_image/google_play_badge.svg)](https://play.google.com/store/apps/details?id=com.marearts.anpr)
 
 ### 🆕 Team Work (v2.0)
 
