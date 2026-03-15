@@ -25,11 +25,11 @@ Automatic Number Plate Recognition (ANPR) SDK for multiple regions with GPU acce
 
 ## 🎉 MareArts ANPR Mobile App - v2.0.4
 
-**📱 Now available on iOS! Android coming soon.**
+**📱 Now available on iOS & Android!**
 
 Fast, accurate, on-device license plate recognition for parking management, security, and vehicle tracking.
 
-[![Download on App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/us/app/marearts-anpr/id6753904859)
+[![Download on App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/us/app/marearts-anpr/id6753904859) [![Get it on Google Play](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=com.marearts.anpr)
 
 ### 🆕 Team Work (v2.0)
 
@@ -283,7 +283,7 @@ MareArts ANPR supports license plates from multiple regions with specialized voc
 Explore our AI toolkit:
 
 - **marearts-anpr** - Automatic Number Plate Recognition ([GitHub](https://github.com/MareArts/MareArts-ANPR))
-- **🎉 marearts-anpr Mobile App** - ANPR on iOS & Android ([App Store](https://apps.apple.com/us/app/marearts-anpr/id6753904859) | [Guide](https://github.com/MareArts/MareArts-ANPR/blob/main/mobile_app/README.md))
+- **🎉 marearts-anpr Mobile App** - ANPR on iOS & Android ([App Store](https://apps.apple.com/us/app/marearts-anpr/id6753904859) | [Google Play](https://play.google.com/store/apps/details?id=com.marearts.anpr) | [Guide](https://github.com/MareArts/MareArts-ANPR/blob/main/mobile_app/README.md))
 - **marearts-road-objects** - Road object detection for persons, vehicles, and 2-wheelers ([GitHub](https://github.com/MareArts/MareArts-Road-Objects))
 - **marearts-xcolor** - Color extraction and similarity analysis ([GitHub](https://github.com/MareArts/MareArts-Xcolor))
 - **marearts-mast** - Real-time panoramic stitching ([GitHub](https://github.com/MareArts/MareArts-MAST))
