@@ -24,18 +24,48 @@ Professional ANPR server with REST API, Web Dashboard, and live model switching.
 
 ## Quick Start
 
+### Option A: Docker (Easiest)
+
 ```bash
-# 1. Install
+# 1. Configure credentials (one time)
+pip install marearts-anpr
+ma-anpr config
+
+# 2. Pull and run
+docker pull public.ecr.aws/d1q9r5q2/marearts-anpr-server:latest
+docker run -d -p 8000:8000 -v ~/.marearts:/root/.marearts \
+  public.ecr.aws/d1q9r5q2/marearts-anpr-server:latest
+
+# 3. Use it
+# Web Dashboard: http://localhost:8000/
+# REST API:
+curl -X POST http://localhost:8000/api/detect -F "image=@plate.jpg"
+```
+
+Or with Docker Compose (if you cloned this repo):
+
+```bash
+ma-anpr config
+docker compose up -d
+```
+
+### Option B: Direct Install
+
+```bash
+# 1. Install dependencies
 pip install -r requirements.txt
 
 # 2. Configure credentials (one time)
 ma-anpr config
 
 # 3. Start server
-python server.py
+./start_server.sh
+# or: python server.py
 
-# 4. Open browser
-http://localhost:8000/
+# 4. Use it
+# Web Dashboard: http://localhost:8000/
+# REST API:
+curl -X POST http://localhost:8000/api/detect -F "image=@plate.jpg"
 ```
 
 ## Web Dashboard
@@ -265,11 +295,47 @@ models:
 
 ## Docker
 
+### Pull from public registry
+
+```bash
+docker pull public.ecr.aws/d1q9r5q2/marearts-anpr-server:latest
+```
+
+### Run with credentials
+
+The container needs access to `~/.marearts/` on the host, which contains your credentials and cached model files.
+
+```bash
+docker run -d -p 8000:8000 \
+  -v ~/.marearts:/root/.marearts \
+  public.ecr.aws/d1q9r5q2/marearts-anpr-server:latest
+```
+
+### Run with environment overrides
+
+```bash
+docker run -d -p 8000:8000 \
+  -v ~/.marearts:/root/.marearts \
+  -e ANPR_DETECTOR=small_320p_fp32 \
+  -e ANPR_OCR=medium_fp32 \
+  -e ANPR_REGION=kr \
+  -e ANPR_OCR_VERSION=v15 \
+  public.ecr.aws/d1q9r5q2/marearts-anpr-server:latest
+```
+
+### Docker Compose
+
+```bash
+docker compose up -d      # start
+docker compose logs -f    # view logs
+docker compose down       # stop
+```
+
+### Build locally (optional)
+
 ```bash
 docker build -t anpr-server .
-docker run -d -p 8000:8000 \
-  -e ANPR_MAX_LOGS=1000 \
-  anpr-server
+docker run -d -p 8000:8000 -v ~/.marearts:/root/.marearts anpr-server
 ```
 
 ## Troubleshooting
