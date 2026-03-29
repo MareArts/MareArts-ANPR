@@ -16,7 +16,7 @@ The Universal model is designed to handle license plates from all supported regi
 
 ### Region Code
 - **Code**: `univ` (Universal - default)
-- **Usage**: `ma_anpr_ocr(model='large_fp32', region='univ', ..., version='v15')`
+- **Usage**: `ma_anpr_ocr('large_fp32', 'univ', ..., version='v15')`
 - **Recommendation**: Use specific region codes for best accuracy when region is known
 
 ---
@@ -84,7 +84,7 @@ characters = [
 
 ### Region Code
 - **Code**: `euplus` or `eup` (Europe Plus)
-- **Usage**: `ma_anpr_ocr(model='large_fp32', region='euplus', ..., version='v15')`
+- **Usage**: `ma_anpr_ocr('large_fp32', 'euplus', ..., version='v15')`
 
 ## Korea Support
 
@@ -119,7 +119,7 @@ korean_chars = [
 
 ### Region Code
 - **Code**: `kor` or `kr` (Korea)
-- **Usage**: `ma_anpr_ocr(model='large_fp32', region='kor', ..., version='v15')`
+- **Usage**: `ma_anpr_ocr('large_fp32', 'kor', ..., version='v15')`
 
 ## China Support
 
@@ -147,7 +147,7 @@ chinese_chars = [
 
 ### Region Code
 - **Code**: `china` or `cn` (China)
-- **Usage**: `ma_anpr_ocr(model='large_fp32', region='china', ..., version='v15')`
+- **Usage**: `ma_anpr_ocr('large_fp32', 'china', ..., version='v15')`
 
 ## North America Support
 
@@ -162,7 +162,7 @@ alphanumeric = ['0-9', 'A-Z', '#', '-', '.', '@']
 
 ### Region Code
 - **Code**: `na` (North America)
-- **Usage**: `ma_anpr_ocr(model='large_fp32', region='na', ..., version='v15')`
+- **Usage**: `ma_anpr_ocr('large_fp32', 'na', ..., version='v15')`
 
 ---
 

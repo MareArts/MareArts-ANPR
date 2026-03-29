@@ -87,7 +87,7 @@ detector = ma_anpr_detector_v14("micro_320p_fp32", user_name, serial_key, signat
 
 # Initialize V15 OCR with all parameters (Recommended - Latest)
 ocr = ma_anpr_ocr_v15(
-    model="large_fp32",             # Required: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
+    model_name="large_fp32",        # Required: pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
                                     #           pico_int8, micro_int8, small_int8, medium_int8, large_int8
     region="univ",                  # Required: univ, kor (or kr), euplus (or eup), na, china (or cn)
     user_name=user_name,            # Required: Your email

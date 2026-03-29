@@ -1443,12 +1443,13 @@ ${debug.recent_entries.map(e => `\nID ${e.id}: ${e.plates} - ${e.timestamp}`).jo
         async function updateModels() {
             const detectorModel = document.getElementById('select-detector').value;
             const ocrModel = document.getElementById('select-ocr').value;
+            const ocrVersion = document.getElementById('select-ocr-version').value;
             const region = document.getElementById('select-region').value;
 
             document.getElementById('model-update-status').innerHTML = `
                 <div class="alert alert-warning">
                     <strong>Updating models...</strong><br>
-                    Loading ${detectorModel} + ${ocrModel} (${region}). This may take a few moments.
+                    Loading ${detectorModel} + ${ocrModel} ${ocrVersion.toUpperCase()} (${region}). This may take a few moments.
                 </div>
             `;
 
@@ -1461,6 +1462,7 @@ ${debug.recent_entries.map(e => `\nID ${e.id}: ${e.plates} - ${e.timestamp}`).jo
                     body: JSON.stringify({
                         detector_model: detectorModel,
                         ocr_model: ocrModel,
+                        ocr_version: ocrVersion,
                         region: region
                     })
                 });
@@ -1502,6 +1504,10 @@ ${debug.recent_entries.map(e => `\nID ${e.id}: ${e.plates} - ${e.timestamp}`).jo
                 const modelsRes = await fetch('/api/models/status');
                 const models = await modelsRes.json();
 
+                const detVer = models.detector_version || 'V14';
+                const ocrVer = models.ocr_version || 'V15';
+                const verBadge = (v, color) => `<span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:0.75em;font-weight:600;color:#fff;background:${color};margin-left:6px;vertical-align:middle;">${v}</span>`;
+
                 let settingsHTML = `
                     <div class="info-box">
                         <h3>System Information</h3>
@@ -1509,12 +1515,12 @@ ${debug.recent_entries.map(e => `\nID ${e.id}: ${e.plates} - ${e.timestamp}`).jo
                             <div>
                                 <p><strong>Credentials:</strong> ${health.credentials_configured ? 'Yes' : 'No'}</p>
                                 <p><strong>Models:</strong> ${health.models_loaded ? 'Yes' : 'No'}</p>
-                                <p><strong>Version:</strong> ${health.version}</p>
+                                <p><strong>Server:</strong> ${health.version}${health.sdk_version ? ' &nbsp;|&nbsp; SDK ' + health.sdk_version : ''}</p>
                                 <p><strong>Uptime:</strong> ${Math.floor(health.uptime / 60)} minutes</p>
                             </div>
                             <div>
-                                <p><strong>Detector:</strong> ${models.current_detector}</p>
-                                <p><strong>OCR:</strong> ${models.current_ocr}</p>
+                                <p><strong>Detector:</strong> ${models.current_detector} ${verBadge(detVer, '#3498db')}</p>
+                                <p><strong>OCR:</strong> ${models.current_ocr} ${verBadge(ocrVer, '#9b59b6')}</p>
                                 <p><strong>Region:</strong> ${models.current_region}</p>
                                 <p><strong>Backend:</strong> ${models.current_backend}</p>
                             </div>
@@ -1579,37 +1585,68 @@ ${debug.recent_entries.map(e => `\nID ${e.id}: ${e.plates} - ${e.timestamp}`).jo
                     </div>
                 `;
 
+                const modelItem = (m) => `
+                    <div style="padding:8px 12px;background:${m.current ? '#e8f4f8' : '#fafbfc'};border:1px solid ${m.current ? '#3498db' : '#e1e8ed'};border-radius:4px;font-size:0.85em;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <strong style="font-size:0.95em;">${m.name}</strong>
+                            ${m.current ? '<span class="badge badge-success" style="font-size:0.7em;">ACTIVE</span>' : ''}
+                        </div>
+                        <div style="font-size:0.85em;color:#7f8c8d;margin-top:3px;">
+                            ${m.downloaded ? '✓ ' + (m.size / 1024 / 1024).toFixed(1) + ' MB' : '✗ Not downloaded'}
+                        </div>
+                    </div>`;
+
+                const ocrModelNames = models.ocr_models || [];
+                const currentOcrName = models.current_ocr;
+
                 settingsHTML += `
                     ${health.models_loaded ? `
                     <div class="info-box" style="border-left: 4px solid #3498db;">
                         <h3>Change Models & Region</h3>
                         <p style="margin-bottom: 20px;">Select different models or region without restarting the server:</p>
-                        
-                        <div class="filter-group" style="margin-bottom: 15px;">
-                            <label>Detector Model</label>
-                            <select id="select-detector" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+
+                        <div style="background:#f0f7ff;border:1px solid #c5ddf5;border-radius:6px;padding:15px;margin-bottom:18px;">
+                            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                                <strong style="font-size:0.95em;">Detector</strong>
+                                ${verBadge('V14', '#3498db')}
+                                <span style="font-size:0.8em;color:#7f8c8d;">(V14 only)</span>
+                            </div>
+                            <select id="select-detector" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:4px;">
                                 ${models.detector_models.map(m => `
-                                    <option value="${m.name}" ${m.current ? 'selected' : ''}>
-                                        ${m.name} - ${m.description}
-                                    </option>
+                                    <option value="${m.name}" ${m.current ? 'selected' : ''}>${m.name}</option>
                                 `).join('')}
                             </select>
                         </div>
-                        
-                        <div class="filter-group" style="margin-bottom: 15px;">
-                            <label>OCR Model</label>
-                            <select id="select-ocr" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
-                                ${models.ocr_models.map(m => `
-                                    <option value="${m.name}" ${m.current ? 'selected' : ''}>
-                                        ${m.name} - ${m.description}
-                                    </option>
-                                `).join('')}
-                            </select>
+
+                        <div style="background:#f5f0ff;border:1px solid #d5c5f5;border-radius:6px;padding:15px;margin-bottom:18px;">
+                            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                                <strong style="font-size:0.95em;">OCR</strong>
+                                ${verBadge(ocrVer, '#9b59b6')}
+                                <span style="font-size:0.8em;color:#7f8c8d;">V14 or V15 available</span>
+                            </div>
+                            <div style="display:flex;gap:12px;">
+                                <div style="flex:1;">
+                                    <label style="display:block;margin-bottom:4px;font-size:0.8em;color:#7f8c8d;font-weight:600;">MODEL</label>
+                                    <select id="select-ocr" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:4px;">
+                                        ${(Array.isArray(ocrModelNames) ? ocrModelNames : []).map(name => {
+                                            const n = typeof name === 'string' ? name : name.name;
+                                            return '<option value="' + n + '"' + (n === currentOcrName ? ' selected' : '') + '>' + n + '</option>';
+                                        }).join('')}
+                                    </select>
+                                </div>
+                                <div style="width:130px;">
+                                    <label style="display:block;margin-bottom:4px;font-size:0.8em;color:#7f8c8d;font-weight:600;">VERSION</label>
+                                    <select id="select-ocr-version" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:4px;">
+                                        <option value="v15" ${ocrVer === 'V15' ? 'selected' : ''}>V15</option>
+                                        <option value="v14" ${ocrVer === 'V14' ? 'selected' : ''}>V14</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         
-                        <div class="filter-group" style="margin-bottom: 15px;">
-                            <label>Region</label>
-                            <select id="select-region" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                        <div style="margin-bottom:18px;">
+                            <label style="display:block;margin-bottom:4px;font-size:0.8em;color:#7f8c8d;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">Region</label>
+                            <select id="select-region" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:4px;">
                                 ${models.regions.map(r => `
                                     <option value="${r.code}" ${r.code === models.current_region ? 'selected' : ''}>
                                         ${r.name} - ${r.description}
@@ -1618,58 +1655,32 @@ ${debug.recent_entries.map(e => `\nID ${e.id}: ${e.plates} - ${e.timestamp}`).jo
                             </select>
                         </div>
                         
-                        <button class="btn btn-primary" onclick="updateModels()">
-                            Update Models
-                        </button>
-                        
-                        <div id="model-update-status" style="margin-top: 15px;"></div>
-                        
-                        <p style="margin-top: 15px; color: #7f8c8d; font-size: 0.9em;">
-                            <strong>Note:</strong> Models will download automatically if not already cached. This may take a few moments.
+                        <button class="btn btn-primary" onclick="updateModels()">Update Models</button>
+                        <div id="model-update-status" style="margin-top:15px;"></div>
+                        <p style="margin-top:15px;color:#7f8c8d;font-size:0.9em;">
+                            <strong>Note:</strong> Models will download automatically if not already cached.
                         </p>
                     </div>
                     ` : ''}
 
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                    <div class="info-box">
+                        <h3>Detector Models ${verBadge('V14', '#3498db')}</h3>
+                        <div style="display:grid;gap:8px;margin-top:12px;">
+                            ${models.detector_models.map(m => modelItem(m)).join('')}
+                        </div>
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;">
                         <div class="info-box">
-                            <h3>Detector Models</h3>
-                            <p style="margin-bottom: 15px; font-size: 0.9em;">Available detector models and download status:</p>
-                            <div style="display: grid; gap: 8px;">
-                                ${models.detector_models.map(m => `
-                                    <div style="padding: 8px 12px; background: ${m.current ? '#e8f4f8' : '#fafbfc'}; border: 1px solid ${m.current ? '#3498db' : '#e1e8ed'}; border-radius: 4px; font-size: 0.85em;">
-                                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                                            <strong style="font-size: 0.95em;">${m.name}</strong>
-                                            ${m.current ? '<span class="badge badge-success" style="font-size: 0.7em;">NOW</span>' : ''}
-                                        </div>
-                                        <div style="font-size: 0.85em; color: #7f8c8d; margin-top: 3px;">
-                                            ${m.downloaded 
-                                                ? `✓ ${(m.size / 1024 / 1024).toFixed(1)} MB`
-                                                : '✗ Not downloaded'
-                                            }
-                                        </div>
-                                    </div>
-                                `).join('')}
+                            <h3>OCR Models ${verBadge('V15', '#9b59b6')}</h3>
+                            <div style="display:grid;gap:8px;margin-top:12px;">
+                                ${(models.ocr_v15_models || []).map(m => modelItem(m)).join('')}
                             </div>
                         </div>
-
                         <div class="info-box">
-                            <h3>OCR Models</h3>
-                            <p style="margin-bottom: 15px; font-size: 0.9em;">Available OCR models and download status:</p>
-                            <div style="display: grid; gap: 8px;">
-                                ${models.ocr_models.map(m => `
-                                    <div style="padding: 8px 12px; background: ${m.current ? '#e8f4f8' : '#fafbfc'}; border: 1px solid ${m.current ? '#3498db' : '#e1e8ed'}; border-radius: 4px; font-size: 0.85em;">
-                                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                                            <strong style="font-size: 0.95em;">${m.name}</strong>
-                                            ${m.current ? '<span class="badge badge-success" style="font-size: 0.7em;">NOW</span>' : ''}
-                                        </div>
-                                        <div style="font-size: 0.85em; color: #7f8c8d; margin-top: 3px;">
-                                            ${m.downloaded 
-                                                ? `✓ ${(m.size / 1024 / 1024).toFixed(1)} MB`
-                                                : '✗ Not downloaded'
-                                            }
-                                        </div>
-                                    </div>
-                                `).join('')}
+                            <h3>OCR Models ${verBadge('V14', '#7f8c8d')}</h3>
+                            <div style="display:grid;gap:8px;margin-top:12px;">
+                                ${(models.ocr_v14_models || []).map(m => modelItem(m)).join('')}
                             </div>
                         </div>
                     </div>
@@ -1738,6 +1749,12 @@ ${debug.recent_entries.map(e => `\nID ${e.id}: ${e.plates} - ${e.timestamp}`).jo
                 loadDashboard(today, today, 1);
             }
         }, 30000);
+    </script>
+    <div id="version-footer" style="position:fixed;bottom:8px;right:12px;font-size:11px;color:#aab;z-index:1;pointer-events:none;"></div>
+    <script>
+        fetch('/api/health').then(r=>r.json()).then(h=>{
+            document.getElementById('version-footer').textContent='Server v'+h.version+' | SDK v'+(h.sdk_version||'?');
+        }).catch(()=>{});
     </script>
 </body>
 </html>

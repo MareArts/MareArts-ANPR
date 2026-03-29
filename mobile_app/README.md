@@ -6,7 +6,7 @@
 > This app can be used as an ANPR license without any additional purchase.  
 > Get your license at: [MareArts ANPR Solution](https://www.marearts.com/products/anpr)
 > 
-> 🔍 **Find the app by searching "marearts anpr" in the App Store**
+> 🔍 **Find the app by searching "marearts anpr" in the App Store or Google Play**
 
 ---
 
@@ -37,13 +37,7 @@ MareArts ANPR is a professional license plate recognition app for parking manage
 ---
 ## 📲 Download
 
-<div align="center">
-
-[![Download on App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/us/app/marearts-anpr/id6753904859)
-
-**Android** - Coming Soon! 🚀
-
-</div>
+[![Download on App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/us/app/marearts-anpr/id6753904859) [![Get it on Google Play](../promotion_image/google_play_badge.svg)](https://play.google.com/store/apps/details?id=com.marearts.anpr)
 
 ---
 ## 🧭 Navigation
@@ -664,7 +658,7 @@ A **Team Leader** creates a team and shares a password. **Team Members** join us
 > This app can be used as an ANPR license without any additional purchase.  
 > Get your license at: [MareArts ANPR Solution](https://www.marearts.com/products/anpr)
 > 
-> 🔍 **Find the app by searching "marearts anpr" in the App Store**
+> 🔍 **Find the app by searching "marearts anpr" in the App Store or Google Play**
 
 ---
 

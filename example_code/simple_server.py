@@ -76,7 +76,7 @@ detector = ma_anpr_detector_v14(
 
 # Load OCR (unified interface - easily switch v14/v15)
 ocr = ma_anpr_ocr(
-    model=OCR_MODEL, 
+    model_name=OCR_MODEL, 
     region=REGION, 
     user_name=USER, 
     serial_key=KEY, 

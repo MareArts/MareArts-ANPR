@@ -135,7 +135,7 @@ ocr = ma_anpr_ocr("v13_kr", user_name, serial_key)
 
 # NEW (V14)
 ocr = ma_anpr_ocr_v14(
-    model='small_fp32',
+    model_name='small_fp32',
     region='kr',  # kr, eup, na, cn, univ
     user_name=user_name,
     serial_key=serial_key,

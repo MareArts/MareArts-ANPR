@@ -69,7 +69,7 @@ if __name__ == '__main__':
     # Initialize V15 OCR with regional vocabulary (Latest - Recommended)
     # Regions: kor (or kr), euplus (or eup), na, china (or cn), univ (Universal)
     anpr_r = ma_anpr_ocr_v15(
-        model=ocr_model,              # pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
+        model_name=ocr_model,         # pico_fp32, micro_fp32, small_fp32, medium_fp32, large_fp32
                                       # pico_int8, micro_int8, small_int8, medium_int8, large_int8
         region=region,                # kor/kr, euplus/eup, na, china/cn, univ
         user_name=user_name,

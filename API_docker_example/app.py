@@ -105,7 +105,7 @@ def initialize_anpr(user_name, serial_key, detection_model_version, ocr_model_ve
         # First initialization
         logger.info(f"Initializing {ocr_version.upper()} OCR: {ocr_model_version} (region: {region})")
         anpr_r = ma_anpr_ocr(
-            model=ocr_model_version, 
+            model_name=ocr_model_version, 
             region=region, 
             user_name=user_name, 
             serial_key=serial_key, 
@@ -119,7 +119,7 @@ def initialize_anpr(user_name, serial_key, detection_model_version, ocr_model_ve
         # Different OCR model requested - reinitialize
         logger.info(f"Switching {ocr_version.upper()} OCR from {current_ocr_version} to {ocr_model_version} (region: {region})")
         anpr_r = ma_anpr_ocr(
-            model=ocr_model_version, 
+            model_name=ocr_model_version, 
             region=region, 
             user_name=user_name, 
             serial_key=serial_key, 
