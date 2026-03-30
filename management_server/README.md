@@ -49,7 +49,7 @@ ma-anpr config
 docker compose up -d
 ```
 
-### Option B: Direct Install
+### Option B: Direct Install (Linux/Mac)
 
 ```bash
 # 1. Install dependencies
@@ -67,6 +67,32 @@ ma-anpr config
 # REST API:
 curl -X POST http://localhost:8000/api/detect -F "image=@plate.jpg"
 ```
+
+### Option C: Direct Install (Windows)
+
+```powershell
+# 1. Create and activate virtual environment
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Configure credentials (one time)
+ma-anpr config
+
+# 4. Start server
+.\start_server.ps1
+# or: $env:PYTHONIOENCODING="utf-8"; python server.py
+
+# 5. Use it
+# Web Dashboard: http://127.0.0.1:8000/
+```
+
+> **Windows Notes:**
+> - Use `start_server.ps1` instead of `start_server.sh`
+> - If emoji characters appear garbled, set `$env:PYTHONIOENCODING='utf-8'` before running
+> - Access via `127.0.0.1` or your LAN IP instead of `localhost` if needed
 
 ## Web Dashboard
 
@@ -339,6 +365,18 @@ docker run -d -p 8000:8000 -v ~/.marearts:/root/.marearts anpr-server
 ```
 
 ## Troubleshooting
+
+**Windows: Garbled emoji output?**
+```powershell
+$env:PYTHONIOENCODING = 'utf-8'
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+```
+
+**Windows: Port already in use?**
+```powershell
+netstat -ano | findstr :8000     # Find the PID
+taskkill /PID <pid> /F           # Kill it
+```
 
 **Credentials not found?**
 ```bash
