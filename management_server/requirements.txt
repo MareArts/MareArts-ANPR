@@ -3,7 +3,7 @@ fastapi==0.135.2
 uvicorn[standard]==0.42.0
 python-multipart==0.0.22
 pydantic==2.12.5
-jinja2==3.1.6
+jinja2==3.1.5
 aiofiles==25.1.0
 pillow>=10.0.0
 opencv-python>=4.8.0

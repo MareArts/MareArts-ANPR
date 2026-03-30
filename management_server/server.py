@@ -268,7 +268,7 @@ def process_image_bytes(image_bytes: bytes, client_ip: str = "unknown") -> dict:
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
     """Redirect to dashboard"""
-    return templates.TemplateResponse("dashboard.html", {"request": request})
+    return templates.TemplateResponse(request, "dashboard.html")
 
 @app.get("/api/health")
 def health_check():
