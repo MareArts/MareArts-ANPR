@@ -92,14 +92,13 @@
 <div class="video-container"><iframe title="MareArts ANPR App Demo" src="https://www.youtube.com/embed/6gVQOJvNBNE?si=oJS7cbPr2m8sMOZ_"></iframe></div>
 <h2>📱 App Overview</h2>
 <p>MareArts ANPR is a professional license plate recognition app for parking management, security checkpoints, and vehicle tracking. All AI processing happens on-device for privacy and speed.</p>
-<h2>🆕 What's New (v2.0.4)</h2>
+<h2>🆕 What's New (v2.3.0)</h2>
 <ul>
+<li><strong>📱 Landscape Camera</strong> - Scan plates in landscape mode — detection, cropping, and bounding boxes all work correctly. UI icons rotate smoothly to stay upright.</li>
+<li><strong>🚗 Vehicle Info (Beta)</strong> - Get vehicle make, model, color, and type from cloud AI. Syncs incrementally — only new data downloaded each time.</li>
+<li><strong>🔄 MareArts MMC Sync</strong> - Seamless synchronization with MareArts Management Cloud for enterprise deployments.</li>
 <li><strong>👥 Team Work</strong> - Create teams with leader/member roles, share detections and rules across your organization</li>
-<li><strong>Webhook Integration</strong> - Send detections to Discord, Slack, or your own server in real-time</li>
-<li><strong>Enhanced CSV Export</strong> - Includes bounding box, notes, reporter, auto-detected device info</li>
-<li><strong>Improved Sync</strong> - Orphaned deleted records auto-cleaned, more reliable synchronization</li>
-<li><strong>Faster Detection</strong> - Optimized AI pipeline (~20-30ms faster), baked model normalization</li>
-<li><strong>Account Renewal</strong> - Expired signatures seamlessly renewed without re-login</li>
+<li><strong>🔗 Webhook Integration</strong> - Send detections to Discord, Slack, or your own server in real-time</li>
 </ul>
 <h2>🧭 Navigation</h2>
 <p>The app has 5 main tabs:</p>
@@ -156,9 +155,16 @@
 <li><strong>720p</strong> - Balanced, recommended (~100-130ms)</li>
 <li><strong>480p</strong> - Fastest (~80-110ms)</li>
 </ul>
+<h3>Landscape Mode</h3>
+<ul>
+<li>Hold phone sideways for landscape scanning</li>
+<li>Detection, cropping, bounding boxes work correctly</li>
+<li>UI icons rotate smoothly to stay upright</li>
+<li>Guide box adapts to landscape orientation</li>
+</ul>
 <h3>Trial Mode</h3>
 <ul>
-<li>100 scans per day (free), resets at midnight</li>
+<li>50 scans per day (free), resets at midnight</li>
 <li>Login for unlimited scans</li>
 </ul>
 <hr>
@@ -187,6 +193,20 @@
 <li>All plates shown on interactive map</li>
 <li>Clusters nearby detections</li>
 <li>Satellite/Road toggle, search by plate</li>
+</ul>
+<h3>🚗 Vehicle Info (Beta)</h3>
+<p>Get vehicle make, model, color, and type from our cloud AI service.</p>
+<div class="screenshot"><img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/mobile_app/detection_list_vehicleinfo_mobile_ui.png" alt="Vehicle Info in List" width="300"></div>
+<ul>
+<li>Vehicle info badge appears below each detection</li>
+<li>Shows: Make, Model, Color, Vehicle Type</li>
+<li>Data syncs incrementally — only new info downloaded</li>
+</ul>
+<div class="screenshot"><img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/mobile_app/detection_detail_vehicleinfo_mobile_ui.png" alt="Vehicle Info Detail" width="300"></div>
+<ul>
+<li>Detailed vehicle information in detection preview</li>
+<li>Information retrieved from cloud AI analysis</li>
+<li>Syncs automatically with "Sync Now" in Settings</li>
 </ul>
 <h3>Export Data (CSV)</h3>
 <p>Tap <strong>⋮ menu</strong> → Export All Data</p>
@@ -260,7 +280,7 @@
 <h3>Account</h3>
 <ul>
 <li><strong>Login</strong> - Email + signature for unlimited scans</li>
-<li><strong>Trial Mode</strong> - 100 scans/day (resets at midnight)</li>
+<li><strong>Trial Mode</strong> - 50 scans/day (resets at midnight)</li>
 <li>Expired accounts automatically renewed on login</li>
 </ul>
 <h3>Cloud Sync</h3>
