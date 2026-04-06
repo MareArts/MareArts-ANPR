@@ -23,7 +23,7 @@ Automatic Number Plate Recognition (ANPR) SDK for multiple regions with GPU acce
 
 ---
 
-## 🎉 MareArts ANPR Mobile App - v2.0.4
+## 🎉 MareArts ANPR Mobile App - v2.3.0
 
 **📱 Now available on iOS & Android!**
 
@@ -31,9 +31,11 @@ Fast, accurate, on-device license plate recognition for parking management, secu
 
 [![Download on App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/us/app/marearts-anpr/id6753904859) [![Get it on Google Play](promotion_image/google_play_badge.svg)](https://play.google.com/store/apps/details?id=com.marearts.anpr)
 
-### 🆕 Team Work (v2.0)
+### 🆕 What's New (v2.3.0)
 
-One leader, multiple members — shared detections, shared rules, one web dashboard.
+**📱 Landscape Camera** - Scan plates in landscape mode with full pipeline support
+
+**🚗 Vehicle Info (Beta)** - Get make, model, color, and type from cloud AI
 
 ✨ **Key Features:**
 - 👥 **Team Work** - Leader/member collaboration with shared data

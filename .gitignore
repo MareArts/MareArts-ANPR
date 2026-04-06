@@ -213,3 +213,6 @@ test/
 
 # Webhook receiver saved plates
 example_code/received_plates/
+
+# Shopify liquid templates (contains payment integration code)
+shopify/liquid_templates/

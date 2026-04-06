@@ -18,19 +18,13 @@ MareArts ANPR is a professional license plate recognition app for parking manage
 
 ## 🆕 Latest Release
 
-**Version 2.0.4 (Build 204)** - March 2026
+**Version 2.3.0 (Build 230)** - April 2026
 
-**👥 Team Work** - Create teams with leader/member roles, share detections and rules across your organization
+**📱 Landscape Camera Support** - Scan license plates in landscape mode — detection, cropping, and bounding boxes all work correctly when holding your phone sideways. Camera UI icons smoothly rotate to stay upright.
 
-**🔗 Webhook Integration** - Send detection results to Discord, Slack, or any external service in real-time
+**🚗 Vehicle Info (Beta)** - Get vehicle make, model, color, and type data from our cloud AI. Information syncs incrementally — only new data is downloaded each time.
 
-**📊 Enhanced CSV Export** - Now includes bounding box coordinates, notes, reporter, and auto-detected device info
-
-**🔄 Improved Sync** - Orphaned deleted records automatically cleaned up, more reliable cloud synchronization
-
-**⚡ Faster Detection** - Optimized AI pipeline (~20-30ms faster) with baked model normalization
-
-**🔐 Seamless Account Renewal** - Expired signatures automatically renewed without re-login
+**🔄 MareArts MMC Sync** - Seamless synchronization with MareArts Management Cloud for enterprise deployments.
 
 [📖 View Release Notes](https://github.com/MareArts/MareArts-ANPR/releases/latest)
 
@@ -62,6 +56,14 @@ The app has 5 main tabs at the bottom:
 
 **Purpose**: Fast and accurate on-device license plate detection and recognition
 
+### Landscape Mode Support (NEW! 📱)
+
+Hold your phone sideways for landscape scanning:
+- Detection, cropping, and bounding boxes work correctly in landscape
+- Camera UI icons (capture, zoom, settings, flash) smoothly rotate to stay upright
+- Guide box adapts to landscape orientation
+- Bottom tab bar icons rotate to match device orientation
+
 ### Features:
 
 **Camera View** (middle 50% of screen)
@@ -88,8 +90,8 @@ The app has 5 main tabs at the bottom:
 - Tap to view full details
 
 **Free Trial Mode:**
-- 100 scans per day
-- Counter shows: "Today: X/100"
+- 50 scans per day
+- Counter shows: "Today: X/50"
 - Resets daily at midnight
 - **Login for unlimited scans** (infinite usage)
 
@@ -165,6 +167,55 @@ Tap the **⚙️ icon** next to the mode buttons to adjust:
   - 🏷️ **Show Labels** - Display all plate numbers
 - **Search bar**: Filter by plate number
 - **Header**: Shows total locations count
+
+### 🚗 Vehicle Info (Beta)
+
+Get vehicle make, model, color, and type information from our cloud AI service.
+
+#### Detection List View
+
+<div align="center">
+  <img src="detection_list_vehicleinfo_mobile_ui.png" alt="Vehicle Info in Detection List" width="300"/>
+</div>
+
+- Vehicle info badge appears below each detection
+- Shows: Make, Model, Color, Vehicle Type
+- Data syncs incrementally — only new info downloaded each sync
+
+#### Detection Detail View
+
+<div align="center">
+  <img src="detection_detail_vehicleinfo_mobile_ui.png" alt="Vehicle Info in Detection Detail" width="300"/>
+</div>
+
+- Detailed vehicle information section in detection preview
+- Tap any detection to see full vehicle details
+- Information retrieved from cloud AI analysis
+
+#### Web Dashboard
+
+View vehicle information on the web at marearts.com:
+
+<div align="center">
+  <img src="detection_list_vehicleinfo_web_ui.png" alt="Vehicle Info List on Web" width="600"/>
+</div>
+
+<div align="center">
+  <img src="detection_detail_vehicleinfo_web_ui.png" alt="Vehicle Info Detail on Web" width="600"/>
+</div>
+
+#### Filter by Vehicle Info
+
+<div align="center">
+  <img src="Vehicle_info_filter_web_ui.png" alt="Vehicle Info Filter on Web" width="600"/>
+</div>
+
+- Filter detections by vehicle make, model, color, or type
+- Available on web dashboard
+
+💡 **Tip:** Vehicle Info syncs automatically when you tap "Sync Now" in Settings. The sync is non-blocking — if vehicle data pull fails, your main sync still completes!
+
+---
 
 ### Export Data:
 
@@ -345,7 +396,7 @@ Tap **⋮ menu** in top-right corner for more options:
 - **Logout** button when logged in
 
 **Free Trial Mode**
-- Shows daily limit: X/100 scans
+- Shows daily limit: X/50 scans
 - Resets at midnight
 - **Login for infinite scans**
 
