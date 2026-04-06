@@ -60,7 +60,16 @@ Fast, accurate, on-device license plate recognition for parking management, secu
 Deploy a complete ANPR management system with real-time monitoring, detection history, and visual analytics.
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/management_server/screenshots/dashboard.png" alt="Management Server Dashboard" width="800"/>
+<table>
+<tr>
+<td><img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/management_server/screenshots/dashboard.png" alt="Dashboard" width="400"/></td>
+<td><img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/management_server/screenshots/detection_history.png" alt="Detection History" width="400"/></td>
+</tr>
+<tr>
+<td><img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/management_server/screenshots/upload_detection.png" alt="Upload Detection" width="400"/></td>
+<td><img src="https://raw.githubusercontent.com/MareArts/MareArts-ANPR/main/management_server/screenshots/setting1.png" alt="Settings" width="400"/></td>
+</tr>
+</table>
 </div>
 
 **Quick Start:**
