@@ -1,6 +1,0 @@
-fastapi
-uvicorn
-python-multipart
-opencv-python-headless
-pillow
-marearts-anpr

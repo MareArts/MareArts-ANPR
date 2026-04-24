@@ -1,0 +1,38 @@
+# MareArts ANPR Server Configuration
+# Copy this file to ~/.marearts/server_config.yaml and edit as needed.
+#
+# Usage:
+#   ma-anpr server start --config /path/to/server_config.yaml
+
+server:
+  host: 0.0.0.0
+  port: 8000
+  threads: 4
+
+models:
+  detector_version: v16
+  detector_model: 640p_fp32       # 640p_fp32, 640p_int8, 320p_fp32, 320p_int8
+  ocr_version: v16
+  ocr_model: fp32                 # fp32, int8
+  region: univ                    # univ, eup, na, kr, cn, jp
+  backend: cpu                    # cpu, cuda, directml  (run: ma-anpr gpu-setup cuda)
+  confidence: 0.25
+
+storage:
+  save_images: true
+  max_history: 1000
+  max_logs: 500
+  # database: ~/.marearts/server_history.db   # default, auto-created
+
+health:
+  enabled: true
+  interval: 30
+  max_failures: 3
+
+mmc:
+  enabled: false
+  api_secret: ""
+
+logging:
+  level: info                     # info, debug, warning, error
+  # file: ~/.marearts/logs/server.log   # default, auto-created
