@@ -47,12 +47,14 @@ Zero arguments needed — just run and get a full report.
 ## Folder Structure
 
 ```
-marearts-anpr-test/
+tests/
 ├── README.md
 ├── test_sdk.py
-├── test_server.py
-└── sample/
-    ├── eu-a.jpg, eu-b.jpg
-    ├── kr-a.jpg, kr-b.jpg
-    └── 1–18.jpg
+└── test_server.py
+
+sample_images/          ← shared at repo root
+├── eu-a.jpg, eu-b.jpg
+├── kr-a.jpg, kr-b.jpg
+├── none.png
+└── plate_01–11.jpg
 ```

@@ -17,7 +17,7 @@ except ImportError:
 
 # ── config ──────────────────────────────────────────────────────────
 BASE = "http://localhost:8000"
-SAMPLE = Path(__file__).resolve().parent / "sample"
+SAMPLE = Path(__file__).resolve().parent.parent / "sample_images"
 EU_IMG = SAMPLE / "eu-a.jpg"
 KR_IMG = SAMPLE / "kr-a.jpg"
 TIMEOUT = 30

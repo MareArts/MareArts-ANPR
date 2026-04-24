@@ -36,7 +36,7 @@ def _load_creds():
 USER, KEY, SIG = _load_creds()
 
 # ── images ──────────────────────────────────────────────────────────
-SAMPLE = Path(__file__).resolve().parent / "sample"
+SAMPLE = Path(__file__).resolve().parent.parent / "sample_images"
 EU_IMG = str(SAMPLE / "eu-a.jpg")
 KR_IMG = str(SAMPLE / "kr-a.jpg")
 
