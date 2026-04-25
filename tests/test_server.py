@@ -9,6 +9,10 @@ import sys
 import time
 from pathlib import Path
 
+if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+
 try:
     import requests
 except ImportError:
@@ -64,7 +68,8 @@ def _delete(path, **kw):
 
 
 def _plates(d):
-    return [det["plate_text"] for det in d.get("detections", [])]
+    dets = d.get("results", d.get("detections", []))
+    return [det.get("plate_text", det.get("ocr", "?")) for det in dets]
 
 
 # ====================================================================
@@ -83,7 +88,10 @@ def test_health():
     _run("GET  /api/threads", lambda: f"threads={_get('/api/threads').json().get('threads', '?')}")
     _run("GET  /api/logs", lambda: f"entries={len(_get('/api/logs', params={'limit': 10}).json())}")
     _run("GET  /api/regions", lambda: f"count={len(_get('/api/regions').json())}")
-    _run("GET  /api/region", lambda: f"region={_get('/api/region').json().get('region', '?')}")
+    def _check_region():
+        j = _get('/api/region').json()
+        return f"region={j.get('active_region', j.get('region', '?'))}"
+    _run("GET  /api/region", _check_region)
     _run("GET  /api/mmc/status", lambda: f"available={_get('/api/mmc/status').json().get('available', '?')}")
 
 
@@ -160,7 +168,7 @@ def test_detection_mmc():
     def _mmc_file():
         with open(EU_IMG, "rb") as f:
             d = _post("/api/anpr/mmc", files={"image": f}).json()
-        dets = d.get("detections", [])
+        dets = d.get("results", d.get("detections", []))
         if dets:
             det0 = dets[0]
             make = det0.get("mmc_make", "?")
@@ -263,9 +271,11 @@ def test_config():
     print("=" * 64)
 
     def _set_get_region():
-        orig = _get("/api/region").json().get("region", "univ")
+        j = _get("/api/region").json()
+        orig = j.get("active_region", j.get("region", "univ"))
         _put("/api/region", json={"region": "eu"})
-        cur = _get("/api/region").json().get("region")
+        j2 = _get("/api/region").json()
+        cur = j2.get("active_region", j2.get("region"))
         _put("/api/region", json={"region": orig})
         return f"set eu → got {cur} → restored {orig}"
     _run("PUT  /api/region  (round-trip)", _set_get_region)
