@@ -128,7 +128,7 @@ print(info["make"], info["model"], info["color"])
 # Toyota Camry White
 ```
 
-Works in the REST API server too — enable with `ma-anpr server start --mmc` or set `ANPR_MMC_ENABLED=true`.
+Also available via the REST API server — just call the `/api/anpr/mmc` endpoint.
 
 ---
 
