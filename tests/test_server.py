@@ -82,7 +82,7 @@ def test_health():
 
     _run("GET  /api/health", lambda: f"status={_get('/api/health').json().get('status')}")
     _run("GET  /api/health/check", lambda: _get("/api/health/check") and "OK")
-    _run("GET  /api/config", lambda: f"version={_get('/api/config').json().get('version', '?')}")
+    _run("GET  /api/config", lambda: f"version={_get('/api/config').json().get('models', {}).get('detector_version', '?')}")
     _run("GET  /api/stats", lambda: f"total={_get('/api/stats').json().get('total_detections', '?')}")
     _run("GET  /api/stats/chart", lambda: f"buckets={len(_get('/api/stats/chart', params={'period': 24}).json())}")
     _run("GET  /api/threads", lambda: f"threads={_get('/api/threads').json().get('threads', '?')}")
@@ -258,7 +258,7 @@ def test_watchlist():
              lambda: _delete(f"/api/watchlist/{wl_id}") and "OK")
 
     _run("GET  /api/alerts", lambda: f"count={len(_get('/api/alerts', params={'limit': 5}).json())}")
-    _run("GET  /api/alerts/count", lambda: f"unread={_get('/api/alerts/count').json().get('unread', '?')}")
+    _run("GET  /api/alerts/count", lambda: f"unread={_get('/api/alerts/count').json().get('count', '?')}")
     _run("POST /api/alerts/read  (mark read)", lambda: _post("/api/alerts/read") and "OK")
 
 
