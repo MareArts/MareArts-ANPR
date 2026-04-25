@@ -585,8 +585,46 @@ ocr = ma_anpr_ocr("small_fp32", "univ", user_name, serial_key, signature, versio
 ## Examples
 
 See [examples/](examples/) for complete working code:
-- [basic.py](examples/basic.py) — All 6 combinations (det/ocr/mmc) with output
-- [advanced.py](examples/advanced.py) — Manual pipeline, input formats, region switching, backends
+
+| File | What it shows |
+|------|---------------|
+| [basic.py](examples/basic.py) | All 6 combinations (det/ocr/mmc) with output |
+| [advanced.py](examples/advanced.py) | Manual pipeline, input formats, region switching, backends |
+| [server_api.py](examples/server_api.py) | Server REST API — detect, batch, MMC, history, watchlist, export |
+| [batch_folder.py](examples/batch_folder.py) | Scan a folder of images, detect plates, export to CSV/JSON |
+| [mmc_vehicle_info.py](examples/mmc_vehicle_info.py) | All 7 MMC features with cloud OCR cross-check |
+| [multi_region.py](examples/multi_region.py) | Compare OCR results across regions on the same image |
+
+```bash
+# SDK examples (no server needed)
+cd examples
+python basic.py
+python advanced.py
+python batch_folder.py ../../sample_images --output results.csv
+python mmc_vehicle_info.py
+python multi_region.py
+
+# Server example (start server first)
+ma-anpr server start
+python server_api.py
+```
+
+---
+
+## Testing
+
+Full test suite in [tests/](../tests/):
+
+```bash
+# SDK test — validates all models, inference, MMC (no server needed)
+python ../tests/test_sdk.py
+
+# Server test — validates all REST API endpoints (server must be running)
+ma-anpr server start
+python ../tests/test_server.py
+```
+
+See [tests/README.md](../tests/README.md) for details on what each test covers.
 
 ---
 

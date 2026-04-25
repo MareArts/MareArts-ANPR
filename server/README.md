@@ -41,7 +41,7 @@ Manage the server and interact with the API directly from the command line:
 ma-anpr server start              # foreground
 ma-anpr server start --daemon     # background
 ma-anpr server stop               # stop current config server
-ma-anpr server stop --force       # force kill (SIGKILL)
+ma-anpr server stop --force       # force kill
 ma-anpr server stop --port 8001   # stop specific instance by port
 ma-anpr server stop --pid 12345   # stop specific instance by PID
 ma-anpr server stop --all         # stop all running ANPR servers
@@ -62,6 +62,19 @@ ma-anpr server mmc                        # show MMC status and quota
 ma-anpr server region                     # show current default region
 ma-anpr server region kr                  # change default region
 ```
+
+### Server Stop — Safety
+
+All `stop` commands verify the target is a MareArts ANPR server before killing it. The server exposes a unique `server_id: "marearts-anpr"` in its health endpoint — only processes that respond with this ID are considered ANPR servers.
+
+| Command | Behavior |
+|---------|----------|
+| `ma-anpr server stop` | Stops the server matching your current config. Checks `server_id`. |
+| `ma-anpr server stop --port 8001` | Stops the server on port 8001. Checks `server_id`. Refuses to kill non-ANPR processes. |
+| `ma-anpr server stop --all` | Stops all MareArts ANPR servers. Checks `server_id` on every port. Will never kill other applications. |
+| `ma-anpr server stop --pid 12345` | Stops the process by PID. Warns if it's not an ANPR server. Requires `--force` to override. |
+
+> **The only way to kill a non-ANPR process is `--pid` + `--force`, which requires you to explicitly choose to do it.**
 
 ---
 
@@ -188,12 +201,12 @@ curl -X POST http://127.0.0.1:8000/api/anpr/mmc/batch \
       "mmc_color_conf": 0.95,
       "mmc_type": "sedan",
       "mmc_type_conf": 0.91,
-      "mmc_vehicle_side": "front",
-      "mmc_vehicle_side_conf": 0.97,
+      "mmc_plate": "ABC1234",
+      "mmc_plate_conf": 0.88,
       "mmc_plate_nation": "US",
       "mmc_plate_nation_conf": 0.85,
-      "mmc_plate": "ABC1234",
-      "mmc_plate_conf": 0.88
+      "mmc_vehicle_side": "front",
+      "mmc_vehicle_side_conf": 0.97
     }
   ],
   "processing_sec": 0.35,
@@ -208,11 +221,24 @@ curl -X POST http://127.0.0.1:8000/api/anpr/mmc/batch \
 ```
 
 **Notes:**
-- All times are in **seconds**, rounded to 2 decimal places.
+- All times are in **seconds**, rounded to 3 decimal places.
 - `processing_sec` is the total time including detection, OCR, and MMC.
 - MMC fields (`mmc_*`) only appear when using `/api/anpr/mmc` endpoints and enrichment succeeds. When using `/api/anpr` endpoints, these fields are never present.
 - `mmc_error` appears if enrichment fails (quota exhausted, timeout, no internet). Local ANPR results are still returned — only MMC fields are missing.
 - `mmc_plate` / `mmc_plate_conf` is **cloud AI OCR** — a separate plate reading performed by the MMC server. It differs from the local `plate_text` produced by on-device ANPR. In some cases the cloud OCR is more accurate; you can compare both and choose the better result.
+- `mmc_plate_nation` / `mmc_plate_nation_conf` identifies the plate's country of origin.
+- `mmc_vehicle_side` / `mmc_vehicle_side_conf` indicates whether the image shows the front or rear of the vehicle.
+
+### Model Selection
+
+Change detector and OCR models at runtime (no restart required):
+
+```bash
+# Change detector and/or OCR model
+curl -X PUT http://127.0.0.1:8000/api/models \
+  -H "Content-Type: application/json" \
+  -d '{"detector_model": "640p_fp32", "ocr_model": "fp32"}'
+```
 
 ### Region Management
 
@@ -257,7 +283,7 @@ curl http://127.0.0.1:8000/api/stats/chart
 curl "http://127.0.0.1:8000/api/history?limit=20&offset=0"
 
 # Single detection detail (includes watchlist alerts)
-curl http://127.0.0.1:8000/api/history/3
+curl http://127.0.0.1:8000/api/history/42
 
 # Search plates
 curl "http://127.0.0.1:8000/api/history/search?q=BG2417&min_confidence=90"
@@ -278,7 +304,7 @@ curl http://127.0.0.1:8000/api/history/export/json -o history.json
 curl "http://127.0.0.1:8000/api/history/export/csv?limit=100" -o recent.csv
 
 # Delete a detection
-curl -X DELETE http://127.0.0.1:8000/api/history/3
+curl -X DELETE http://127.0.0.1:8000/api/history/42
 
 # Batch delete detections
 curl -X POST http://127.0.0.1:8000/api/history/batch-delete \
@@ -353,6 +379,7 @@ curl http://127.0.0.1:8000/api/events
 | GET | `/api/regions` | Supported OCR regions |
 | GET | `/api/region` | Current default region |
 | PUT | `/api/region` | Change default region |
+| PUT | `/api/models` | Change detector/OCR models at runtime |
 | GET | `/api/config` | Server config (credentials/secrets masked) |
 | **Detection** | | |
 | POST | `/api/anpr` | Detect from file upload |
@@ -370,15 +397,15 @@ curl http://127.0.0.1:8000/api/events
 | GET | `/api/stats` | Detection statistics |
 | GET | `/api/stats/chart` | Hourly chart and top plates |
 | GET | `/api/history` | Detection history (paginated) |
-| GET | `/api/history/{id}` | Single detection detail |
+| GET | `/api/history/{detection_id}` | Single detection detail |
 | GET | `/api/history/search` | Search plates with filters |
 | GET | `/api/history/export/{fmt}` | Export as CSV or JSON (all records by default) |
-| DELETE | `/api/history/{id}` | Delete a detection |
+| DELETE | `/api/history/{detection_id}` | Delete a detection |
 | POST | `/api/history/batch-delete` | Batch delete (JSON: `{ids:[…]}`) |
 | **Watchlist and Alerts** | | |
 | GET | `/api/watchlist` | List watchlist entries |
 | POST | `/api/watchlist` | Add to watchlist (plate + label) |
-| DELETE | `/api/watchlist/{id}` | Remove from watchlist |
+| DELETE | `/api/watchlist/{watchlist_id}` | Remove from watchlist |
 | GET | `/api/alerts` | View watchlist hit alerts |
 | GET | `/api/alerts/count` | Unacknowledged alert count |
 | POST | `/api/alerts/read` | Mark all alerts as read |
@@ -391,6 +418,8 @@ curl http://127.0.0.1:8000/api/events
 | PUT | `/api/threads` | Resize thread pool |
 | GET | `/api/logs` | Recent logs |
 | GET | `/api/events` | SSE live log stream |
+| **Images** | | |
+| GET | `/api/images/{filename}` | Serve saved detection image |
 | **Web UI** | | |
 | GET | `/` | Web dashboard |
 | GET | `/docs` | Swagger UI |
@@ -400,17 +429,55 @@ curl http://127.0.0.1:8000/api/events
 
 ## Web Dashboard
 
-The built-in dashboard at `http://127.0.0.1:8000` provides:
+The built-in dashboard at `http://127.0.0.1:8000` provides a full-featured UI for detection, monitoring, and administration. Stats refresh every 5 seconds.
 
-- **Detect** — Upload images and see real-time results with bounding boxes and MMC vehicle info
-- **Batch** — Process multiple images at once
-- **History** — Browse all detections with search, filtering by plate text, date, confidence, and vehicle attributes (make, model, color, type, nation, side). Export as CSV/JSON.
-- **Alerts** — Live feed of watchlist matches with acknowledge (mark as read)
-- **Live** — Real-time log stream
-- **Logs** — Server log viewer
-- **System** — License info (masked credentials, plan, validity dates), model info, MMC status/quota, thread pool, region control, model selection
+### Overview
 
-Dashboard stats refresh every 5 seconds.
+Live KPIs (uptime, requests, plates found, avg response time, threads, alert count), plates-per-hour chart, success rate ring, top-5 plates, recent detections feed, and a live log mirror.
+
+![Overview](server_screenshot/server_overview.png)
+
+### Detect
+
+Upload a single image via drag-and-drop, paste, or file picker. Results show annotated bounding boxes on the image with per-plate OCR confidence, detection confidence, and full MMC enrichment (make, model, color, type, side, nation, cloud OCR cross-check). Region selector and MMC toggle at the top.
+
+![Detect](server_screenshot/server_detect.png)
+
+### Batch
+
+Drop up to 50 images for sequential processing. Progress bar tracks completion, and results are summarized per file with detected plates and timing.
+
+![Batch](server_screenshot/server_batch.png)
+
+### History
+
+Browse all detections with search by plate text, date range, and vehicle filters (make, model, color, type, nation, side). Inline thumbnails expand to show the full image with MMC details. Export as CSV or JSON.
+
+![History](server_screenshot/server_history.png)
+
+### Detection Detail
+
+Click any detection to open a full detail view with zoomable annotated image, plate crops, and complete MMC breakdown: color, make, model, type, nation, front/rear side, plus local vs cloud OCR comparison.
+
+![Detail View](server_screenshot/server_detail_veiw.png)
+
+### Alerts & Watchlist
+
+Manage a watchlist of plates (plate number + label). When a detected plate matches, an alert is created in the live alert feed with thumbnail, confidence, and timestamp. Alerts also apply retroactively.
+
+![Alerts](server_screenshot/server_alert.png)
+
+### Live Logs
+
+Real-time server log stream via SSE with auto-scroll. Shows detection events, model loading, region changes, thread pool resizes, and watchlist activity.
+
+![Live Logs](server_screenshot/server_logs.png)
+
+### System
+
+Server & license info (masked credentials, validity dates), engine details (version, models, region, backend, threads, health, memory, PID), services (MCP availability, database path), model selectors (detector, OCR, region — changeable at runtime), MMC cloud quota status, and a full API endpoint reference table.
+
+![System](server_screenshot/server_systems.png)
 
 ---
 
@@ -492,6 +559,8 @@ requests.put(f"{SERVER}/api/region",
 | `ANPR_REGION` | Default region code | `univ` |
 | `ANPR_BACKEND` | `cpu`, `cuda`, `directml` | `cpu` |
 | `ANPR_CONFIDENCE` | Detection threshold | `0.25` |
+| `ANPR_MMC_ENABLED` | Enable MMC cloud enrichment | `true` |
+| `ANPR_MMC_SECRET` | MMC API secret (if required) | `""` |
 
 ### Config File
 
@@ -515,11 +584,18 @@ models:
 storage:
   save_images: true
   max_history: 1000
+  max_logs: 500
 
 health:
   enabled: true
   interval: 30
   max_failures: 3
+
+mmc:
+  enabled: true
+
+logging:
+  level: info
 ```
 
 > **Note:** `ma-anpr config` automatically hot-reloads credentials into a running server (no restart needed). You can also trigger a manual reload:
@@ -538,6 +614,20 @@ Supports **80+ countries** across 12 regional groups. Unknown regions fall back 
 See **[Full Region & Country Reference](../python-sdk/README.md#regions)** for the complete table with all country codes and flags.
 
 Use `curl http://127.0.0.1:8000/api/regions` for the runtime list of supported codes.
+
+---
+
+## Testing
+
+Full server API test suite in [tests/](../tests/):
+
+```bash
+# Start the server, then run the test
+ma-anpr server start
+python ../tests/test_server.py
+```
+
+Covers all endpoints: health, detection (file/base64/binary/batch), MMC, history, search, export, watchlist, alerts, region config, and thread control. See [tests/README.md](../tests/README.md) for details.
 
 ---
 

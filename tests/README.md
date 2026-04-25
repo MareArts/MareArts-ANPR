@@ -20,11 +20,11 @@ Zero arguments needed — just run and get a full report.
 
 | Section | What it tests |
 |---------|---------------|
-| **Package & License** | `import`, `validate_user_key`, `validate_user_key_with_signature`, `validate_user_key_with_dates` |
+| **Package & License** | `import`, `validate_user_key`, `validate_user_key_with_signature`, `validate_user_key_with_dates`, MMC cloud status |
 | **Detector V16** | `ma_anpr_detector_v16` — 640p_fp32, 640p_int8, 320p_fp32, 320p_int8 |
 | **OCR V16** | `ma_anpr_ocr_v16` — fp32 & int8 × eu, kr, univ |
 | **Inference** | `from_image_file`, `from_cv2`, `from_pil` × EU & KR images |
-| **MMC** | `ma_anpr_mmc` init + `enrich()` |
+| **MMC** | `ma_anpr_mmc` init + full inference pipeline with MMC enrichment |
 | **Region Aliases** | `normalize_region_alias` |
 
 ---
@@ -37,10 +37,10 @@ Zero arguments needed — just run and get a full report.
 | **Dashboard** | `GET /` serves HTML |
 | **Detection** | `/api/anpr` (file EU, file KR), `/api/anpr/base64`, `/api/anpr/binary`, `/api/anpr/batch` |
 | **Detection + MMC** | `/api/anpr/mmc` (file), `/api/anpr/mmc/base64`, `/api/anpr/mmc/binary`, `/api/anpr/mmc/batch` |
-| **History** | `/api/history`, `/api/history/search`, `/api/history/{id}`, `/api/history/export/json`, `/api/history/export/csv` |
+| **History** | `/api/history`, `/api/history/search`, `/api/history/{detection_id}`, `/api/history/export/json`, `/api/history/export/csv` |
 | **Watchlist & Alerts** | `/api/watchlist` (list, add, delete), `/api/alerts`, `/api/alerts/count`, `/api/alerts/read` |
-| **Config** | `PUT /api/region` round-trip |
-| **Threads** | `PUT /api/threads` round-trip |
+| **Region & Model Config** | `PUT /api/region` round-trip (set → verify → restore) |
+| **Thread Control** | `PUT /api/threads` round-trip (set → verify → restore) |
 
 ---
 
@@ -58,3 +58,11 @@ sample_images/          ← shared at repo root
 ├── none.png
 └── plate_01–11.jpg
 ```
+
+---
+
+## See Also
+
+- [Python SDK docs](../python-sdk/README.md) — Full SDK reference, all model combinations, output fields
+- [Examples](../python-sdk/examples/) — Working code: basic, advanced, server API, batch, MMC, multi-region
+- [Server docs](../server/README.md) — REST API reference, endpoints, config, web dashboard
