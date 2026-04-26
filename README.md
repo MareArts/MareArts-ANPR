@@ -145,10 +145,13 @@ Go beyond plate text — identify the vehicle itself with a single API call.
 from marearts_anpr import ma_anpr_mmc
 
 mmc = ma_anpr_mmc(user_name, serial_key, signature)
-info = mmc.enrich(image, plate_ltrb)
+info = mmc.enrich(image, anpr_results)
 print(info["make"], info["model"], info["color"])
 # Toyota Camry White
 ```
+
+> Run local ANPR first, then pass the results to `mmc.enrich()` for cloud enrichment.
+> See the **[full MMC example →](python-sdk/examples/mmc_vehicle_info.py)**
 
 Also available via the REST API server — just call the `/api/anpr/mmc` endpoint.
 
