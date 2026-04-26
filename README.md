@@ -105,6 +105,28 @@ curl -X POST http://localhost:8000/api/anpr -F "image=@car.jpg"
 
 ---
 
+## Docker
+
+Deploy the ANPR server as a Docker container with GPU support — no setup, no dependencies.
+
+```bash
+docker run -d --gpus all -p 8000:8000 \
+  -e MAREARTS_ANPR_USERNAME="your@email.com" \
+  -e MAREARTS_ANPR_SERIAL_KEY="your_serial_key" \
+  -e MAREARTS_ANPR_SIGNATURE="your_signature" \
+  marearts-anpr-server:latest
+```
+
+```bash
+curl -X POST http://localhost:8000/api/anpr -F "image=@car.jpg"
+```
+
+Includes CUDA acceleration, automatic CPU fallback, web dashboard, and all 20+ API endpoints.
+
+**[Docker Guide →](docker/)**
+
+---
+
 ## Vehicle Intelligence (Cloud AI)
 
 Go beyond plate text — identify the vehicle itself with a single API call.
