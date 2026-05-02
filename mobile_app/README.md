@@ -127,22 +127,16 @@ Tap the **⚙️ icon** next to the mode buttons to adjust:
 - **Status badges**: Green (whitelist), Red (blacklist), Orange (unknown)
 - **Filter tabs**: All / Latest
 
-<div align="center">
-  <img src="mobile_app_screenshot/detection_list2.png" alt="Detection List Page 2" width="300"/>
-</div>
-
 ### Detection Preview (tap any detection)
 
 <div align="center">
-  <img src="mobile_app_screenshot/detection_detail_1.png" alt="Detection Preview - Full Image" width="300"/>
+  <img src="mobile_app_screenshot/detection_detail_1.png" alt="Detection Preview" width="300"/>
 </div>
 
 - Full captured image with plate highlighted
 - Cropped plate image for close-up view
 - Plate number displayed prominently
-- "Scroll for details" hint for more information
 - Swipe left/right to browse between detections
-- Navigation counter (e.g. "2 / 876")
 
 ### Detection Details & Vehicle Info
 
