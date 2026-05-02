@@ -22,8 +22,6 @@ MareArts ANPR is a professional license plate recognition app for parking manage
 
 **🚗 Vehicle Info — Now Official** - Vehicle Info (make, model, colour, type, side, nation) is out of beta and fully supported. Reliable cloud-based vehicle identification for all subscribers.
 
-**📱 Smart Rotation** - Icons rotate only on the Scan page; other pages stay fixed in portrait. Respects your phone's rotation lock setting.
-
 **☁️ Cloud Recognition API** - Enabled by default for all users. Cloud scan uses Gemini AI for OCR + vehicle info in one call.
 
 **⚙️ Settings Improvements** - Plate Region selector always visible. Cleaner trial-mode experience with consistent default settings.
