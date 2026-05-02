@@ -28,8 +28,6 @@ MareArts ANPR is a professional license plate recognition app for parking manage
 
 **⚙️ Settings Improvements** - Plate Region selector always visible. Cleaner trial-mode experience with consistent default settings.
 
-[📖 View Release Notes](https://github.com/MareArts/MareArts-ANPR/releases/latest)
-
 ---
 ## 📲 Download
 
