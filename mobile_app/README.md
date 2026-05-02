@@ -22,7 +22,7 @@ MareArts ANPR is a professional license plate recognition app for parking manage
 
 **🚗 Vehicle Info — Now Official** - Vehicle Info (make, model, colour, type, side, nation) is out of beta and fully supported. Reliable cloud-based vehicle identification for all subscribers.
 
-**☁️ Cloud Recognition API** - Enabled by default for all users. Cloud scan uses Gemini AI for OCR + vehicle info in one call.
+**☁️ Cloud Recognition API** - Enabled by default for all users. Cloud scan provides plate text and vehicle info in one step.
 
 ---
 ## 📲 Download
@@ -76,7 +76,7 @@ Hold your phone sideways for landscape scanning:
 **Bottom Controls:**
 - **Single Capture** (⭕) - Capture one plate
 - **Continuous Mode** (🔄) - Auto-scan continuously
-- **Cloud Mode** (☁️) - Send to cloud API for processing (Gemini OCR + Vehicle Info)
+- **Cloud Mode** (☁️) - Send to cloud for OCR + Vehicle Info
 - **Swipe left/right** - Quick switch between modes
 
 **Status Display:**
@@ -96,9 +96,9 @@ Hold your phone sideways for landscape scanning:
 Tap the **⚙️ icon** next to the mode buttons to adjust:
 
 **Resolution:**
-- **1080p (1920×1080)** - Highest quality, best for detail (~140-160ms)
-- **720p (1280×720)** - Balanced quality and speed (~100-130ms) ⭐ Recommended
-- **480p (640×480)** - Fastest processing, good for high-volume (~80-110ms)
+- **1080p** - Highest quality, best for detail
+- **720p** - Balanced quality and speed ⭐ Recommended
+- **480p** - Fastest processing, good for high-volume
 
 **Frame Rate:**
 - **60 FPS** - Smooth preview (default)
@@ -137,7 +137,7 @@ Tap the **⚙️ icon** next to the mode buttons to adjust:
   <img src="mobile_app_screenshot/detection_detail_1.png" alt="Detection Preview - Full Image" width="300"/>
 </div>
 
-- Full-resolution captured image with green bounding box overlay
+- Full captured image with plate highlighted
 - Cropped plate image for close-up view
 - Plate number displayed prominently
 - "Scroll for details" hint for more information
@@ -167,7 +167,6 @@ Tap the **⚙️ icon** next to the mode buttons to adjust:
   <img src="mobile_app_screenshot/detection_detail_3.png" alt="Detection Detail - Map & History" width="300"/>
 </div>
 
-- **Bounding Box** coordinates in LTRB format (Left, Top, Right, Bottom)
 - **GPS Coordinates** with embedded Google Maps view
 - **Detection History** — all past detections of the same plate number:
   - Date, time, confidence for each sighting
@@ -232,9 +231,8 @@ Tap **⋮ menu** in top-right corner:
 
 **Export All Data (CSV)**
 - Downloads all your detections as a CSV file
-- Includes: Plate number, date, time, GPS coordinates, confidence scores, bounding box (LTRB), rule note, reporter email
+- Includes: Plate number, date, time, GPS coordinates, confidence scores, rule note
 - **Vehicle Info columns**: Make, Model, Color, Type, Side, Nation
-- Device model and app version auto-detected per export
 - Compatible with Excel, Google Sheets, and marearts.com
 - Share via AirDrop, Files app, or email
 
@@ -399,7 +397,7 @@ Tap **⋮ menu** in top-right corner for more options:
 **Account Section:**
 - Login with email + signature for unlimited scans
 - Shows subscription status with badge: **Active until [date]** (green)
-- **MMC quota badge**: Shows daily Vehicle Info usage (e.g. **MMC 100/100** in blue)
+- **Vehicle Info quota**: Shows daily usage (e.g. **100/100**)
 - Update Signature to renew without logout
 - Trial mode: 10 scans/day, resets at midnight
 
@@ -419,8 +417,6 @@ Tap **⋮ menu** in top-right corner for more options:
 <div align="center">
   <img src="mobile_app_screenshot/setting_2_detection.png" alt="Settings - Detection Settings" width="300"/>
 </div>
-
-Collapsible section with one-line summary (e.g. "Det 90% · OCR 90% · Max 1 · Dup 5s"):
 
 **Sync Thresholds** 🔄
 - Toggle to sync detection + OCR thresholds together
@@ -459,12 +455,10 @@ Collapsible section with one-line summary (e.g. "Det 90% · OCR 90% · Max 1 · 
 - **Show Rule Notes** - Display rule notes on detection cards
 - **Show Detection Details** - Display confidence, GPS, and technical info
 - **Show Vehicle Info** - Display make, model, color, type, side, nation
-- Trial users see these as locked (login required)
 
 **Use Cloud Recognition API** ☁️
 - Cloud API for better accuracy (requires internet)
 - Enabled by default for all users
-- Uses Gemini AI for OCR + Vehicle Info in one call
 
 **Integrations (Webhook)** 🔗
 - Send real-time plate detections to external services
@@ -513,7 +507,7 @@ python webhook_receiver.py
 
 **Storage:**
 - **Save Images** 📷 - Save full-resolution images with detections
-- **Clear All Data** 🗑️ - Delete all detections AND rules (syncs deletion to cloud if logged in)
+- **Clear All Data** 🗑️ - Delete all detections and rules
 - **Factory Reset** 🔄 - Fresh start, keeps cloud backup safe for restore
 - **Data Retention** (7-365 days) - Auto-delete old detections
 
@@ -625,9 +619,8 @@ A **Team Leader** creates a team and shares a password. **Team Members** join us
 ✅ **Your Control**: Cloud sync only when you choose  
 
 **Cloud Mode** (Optional):
-- Sends image to API for processing via Gemini AI
-- Used when Cloud Recognition API is enabled
-- Returns OCR + Vehicle Info in one call
+- Sends image to cloud for processing
+- Returns plate text + Vehicle Info
 - Requires internet connection
 
 **Cloud Sync** (Optional):
