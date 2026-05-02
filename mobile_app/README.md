@@ -62,7 +62,7 @@ Hold your phone sideways for landscape scanning:
 
 ### Features:
 
-**Camera View** (middle 50% of screen)
+**Camera View**
 - Live camera preview
 - Tap anywhere to focus
 - Automatic plate detection
