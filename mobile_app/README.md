@@ -58,7 +58,7 @@ Hold your phone sideways for landscape scanning:
 - Detection, cropping, and bounding boxes work correctly in landscape
 - Camera UI icons (capture, zoom, settings, flash) smoothly rotate to stay upright
 - Guide box adapts to landscape orientation
-- Bottom tab bar icons rotate to match device orientation (Scan page only)
+- Bottom tab bar icons rotate to match device orientation
 
 ### Features:
 
