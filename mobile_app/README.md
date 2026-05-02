@@ -18,13 +18,15 @@ MareArts ANPR is a professional license plate recognition app for parking manage
 
 ## 🆕 Latest Release
 
-**Version 2.3.0 (Build 230)** - April 2026
+**Version 2.4.2 (Build 242)** - May 2026
 
-**📱 Landscape Camera Support** - Scan license plates in landscape mode — detection, cropping, and bounding boxes all work correctly when holding your phone sideways. Camera UI icons smoothly rotate to stay upright.
+**🚗 Vehicle Info — Now Official** - Vehicle Info (make, model, colour, type, side, nation) is out of beta and fully supported. Reliable cloud-based vehicle identification for all subscribers.
 
-**🚗 Vehicle Info (Beta)** - Get vehicle make, model, color, and type data from our cloud AI. Information syncs incrementally — only new data is downloaded each time.
+**📱 Smart Rotation** - Icons rotate only on the Scan page; other pages stay fixed in portrait. Respects your phone's rotation lock setting.
 
-**🔄 MareArts MMC Sync** - Seamless synchronization with MareArts Management Cloud for enterprise deployments.
+**☁️ Cloud Recognition API** - Enabled by default for all users. Cloud scan uses Gemini AI for OCR + vehicle info in one call.
+
+**⚙️ Settings Improvements** - Plate Region selector always visible. Cleaner trial-mode experience with consistent default settings.
 
 [📖 View Release Notes](https://github.com/MareArts/MareArts-ANPR/releases/latest)
 
@@ -56,13 +58,13 @@ The app has 5 main tabs at the bottom:
 
 **Purpose**: Fast and accurate on-device license plate detection and recognition
 
-### Landscape Mode Support (NEW! 📱)
+### Landscape Mode Support 📱
 
 Hold your phone sideways for landscape scanning:
 - Detection, cropping, and bounding boxes work correctly in landscape
 - Camera UI icons (capture, zoom, settings, flash) smoothly rotate to stay upright
 - Guide box adapts to landscape orientation
-- Bottom tab bar icons rotate to match device orientation
+- Bottom tab bar icons rotate to match device orientation (Scan page only)
 
 ### Features:
 
@@ -80,7 +82,7 @@ Hold your phone sideways for landscape scanning:
 **Bottom Controls:**
 - **Single Capture** (⭕) - Capture one plate
 - **Continuous Mode** (🔄) - Auto-scan continuously
-- **Cloud Mode** (☁️) - Send to cloud API for processing
+- **Cloud Mode** (☁️) - Send to cloud API for processing (Gemini OCR + Vehicle Info)
 - **Swipe left/right** - Quick switch between modes
 
 **Status Display:**
@@ -90,8 +92,8 @@ Hold your phone sideways for landscape scanning:
 - Tap to view full details
 
 **Free Trial Mode:**
-- 50 scans per day
-- Counter shows: "Today: X/50"
+- 10 scans per day
+- Counter shows: "Today: X/10"
 - Resets daily at midnight
 - **Login for unlimited scans** (infinite usage)
 
@@ -116,48 +118,74 @@ Tap the **⚙️ icon** next to the mode buttons to adjust:
 
 **Purpose**: View all captured license plates
 
-### Three View Modes:
+### Detection List
 
-#### **📋 List View** (Default)
+<div align="center">
+  <img src="mobile_app_screenshot/detection_list.png" alt="Detection List with Vehicle Info" width="300"/>
+</div>
+
 - All captured plates in chronological order
 - Grouped by date (Today, Yesterday, This Week, etc.)
-- Shows: Plate number, time, location, thumbnail
+- Shows: Plate number, time, thumbnail
+- **Vehicle Info** shown inline: make, model, colour (e.g. "Volvo XC60 · black...", "Toyota Corolla · sil...")
 - **Swipe left to right** - Opens side menu to quickly change status (whitelist/blacklist/unknown)
 - **Tap** to view full details
 - **Status badges**: Green (whitelist), Red (blacklist), Orange (unknown)
+- **Filter tabs**: All / Latest
 
 <div align="center">
-  <img src="mobile_app_screenshot/preview_page.png" alt="Full Preview Screenshot" width="300"/>
+  <img src="mobile_app_screenshot/detection_list2.png" alt="Detection List Page 2" width="300"/>
 </div>
 
-#### **📸 Full Preview** (tap any detection)
+### Detection Preview (tap any detection)
 
 <div align="center">
-  <img src="mobile_app_screenshot/detail_preview_infomation_map.png" alt="Detection Detail Screenshot" width="300"/>
+  <img src="mobile_app_screenshot/detection_detail_1.png" alt="Detection Preview - Full Image" width="300"/>
 </div>
 
-- **Plate summary** at top: Total Seen count, Average Confidence, Days Active
-- Large plate image with bounding box overlay
-- Plate number (tap ✏️ to edit)
-- Status badge (whitelist/blacklist/unknown)
-- **Details section:**
-  - Time (date and time of detection)
-  - Overall Confidence with breakdown (Detection % + OCR %)
-  - Bounding Box in LTRB format (Left, Top, Right, Bottom)
-  - GPS Coordinates with embedded map
-- **Buttons**:
-  - 📋 **Copy** - Copy plate number
-  - 🗑️ **Delete** - Remove from history
-  - ➕ **Add to Whitelist**
-  - ➖ **Add to Blacklist**
-  - 📤 **Share** - Share detection details in machine-readable format
-- **Navigation**: Swipe left/right or use arrow buttons to browse between detections
+- Full-resolution captured image with green bounding box overlay
+- Cropped plate image for close-up view
+- Plate number displayed prominently
+- "Scroll for details" hint for more information
+- Swipe left/right to browse between detections
+- Navigation counter (e.g. "2 / 876")
+
+### Detection Details & Vehicle Info
+
+<div align="center">
+  <img src="mobile_app_screenshot/detection_detail_2.png" alt="Detection Detail - Vehicle Info & Statistics" width="300"/>
+</div>
+
+- **Statistics**: Total Seen count, Average Confidence %, First Seen date
+- **Vehicle Info** card with detailed identification:
+  - **Make** with confidence (e.g. Volvo 93%)
+  - **Model** with confidence (e.g. XC40 89%)
+  - **Color** with swatch and confidence (e.g. black 99%)
+  - **Type** with confidence (e.g. SUV 98%)
+  - **Side** — front or rear of vehicle (e.g. front 99%)
+  - **Nation** — country flag + name (e.g. 🇫🇮 Finland 99%)
+- **Status badge**: Whitelist / Blacklist / Unknown
+- **Action buttons**: Edit ✏️, Add to Rule ⚠️
+
+### Map & Detection History
+
+<div align="center">
+  <img src="mobile_app_screenshot/detection_detail_3.png" alt="Detection Detail - Map & History" width="300"/>
+</div>
+
+- **Bounding Box** coordinates in LTRB format (Left, Top, Right, Bottom)
+- **GPS Coordinates** with embedded Google Maps view
+- **Detection History** — all past detections of the same plate number:
+  - Date, time, confidence for each sighting
+  - "Current" badge on the active detection
+  - Tap any history entry to jump to that detection
+
+### Map View
 
 <div align="center">
   <img src="mobile_app_screenshot/map_page.png" alt="Map View Screenshot" width="300"/>
 </div>
 
-#### **🗺️ Map View**
 - Shows all plates on a map
 - **Clusters** nearby detections (shows count)
 - **Tap cluster** to zoom in
@@ -166,35 +194,22 @@ Tap the **⚙️ icon** next to the mode buttons to adjust:
   - 🛰️ **Satellite/Road** toggle
   - 🏷️ **Show Labels** - Display all plate numbers
 - **Search bar**: Filter by plate number
-- **Header**: Shows total locations count
 
-### 🚗 Vehicle Info (Beta)
+### 🚗 Vehicle Info
 
-Get vehicle make, model, color, and type information from our cloud AI service.
+Vehicle Info is a cloud-based AI service that identifies vehicle make, model, colour, type, side, and nation for each detection.
 
-#### Detection List View
+**In Detection List:**
+- Vehicle info line shown below each detection (e.g. "Toyota Corolla · silver · Sedan")
+- Data enriched automatically by cloud AI after sync
 
-<div align="center">
-  <img src="mobile_app_screenshot/detection_list_vehicleinfo_mobile_ui.png" alt="Vehicle Info in Detection List" width="300"/>
-</div>
+**In Detection Detail:**
+- Full Vehicle Info card with 6 fields and confidence scores
+- Side (front/rear) and Nation (country flag + name) identification
 
-- Vehicle info badge appears below each detection
-- Shows: Make, Model, Color, Vehicle Type
-- Data syncs incrementally — only new info downloaded each sync
+**On Web Dashboard:**
 
-#### Detection Detail View
-
-<div align="center">
-  <img src="mobile_app_screenshot/detection_detail_vehicleinfo_mobile_ui.png" alt="Vehicle Info in Detection Detail" width="300"/>
-</div>
-
-- Detailed vehicle information section in detection preview
-- Tap any detection to see full vehicle details
-- Information retrieved from cloud AI analysis
-
-#### Web Dashboard
-
-View vehicle information on the web at marearts.com:
+View and filter vehicle information on marearts.com:
 
 <div align="center">
   <img src="mobile_app_screenshot/detection_list_vehicleinfo_web_ui.png" alt="Vehicle Info List on Web" width="600"/>
@@ -204,7 +219,7 @@ View vehicle information on the web at marearts.com:
   <img src="mobile_app_screenshot/detection_detail_vehicleinfo_web_ui.png" alt="Vehicle Info Detail on Web" width="600"/>
 </div>
 
-#### Filter by Vehicle Info
+**Filter by Vehicle Info:**
 
 <div align="center">
   <img src="mobile_app_screenshot/Vehicle_info_filter_web_ui.png" alt="Vehicle Info Filter on Web" width="600"/>
@@ -213,7 +228,7 @@ View vehicle information on the web at marearts.com:
 - Filter detections by vehicle make, model, color, or type
 - Available on web dashboard
 
-💡 **Tip:** Vehicle Info syncs automatically when you tap "Sync Now" in Settings. The sync is non-blocking — if vehicle data pull fails, your main sync still completes!
+💡 **Tip:** Vehicle Info syncs automatically when you tap "Sync Now" in Settings. In Cloud scan mode, Vehicle Info is included instantly with each scan!
 
 ---
 
@@ -224,9 +239,9 @@ Tap **⋮ menu** in top-right corner:
 **Export All Data (CSV)**
 - Downloads all your detections as a CSV file
 - Includes: Plate number, date, time, GPS coordinates, confidence scores, bounding box (LTRB), rule note, reporter email
+- **Vehicle Info columns**: Make, Model, Color, Type, Side, Nation
 - Device model and app version auto-detected per export
 - Compatible with Excel, Google Sheets, and marearts.com
-- Use for backup, analysis, or reporting
 - Share via AirDrop, Files app, or email
 
 💡 **Tip:** Export regularly to keep backups of your detection history!
@@ -253,7 +268,7 @@ Tap **⋮ menu** in top-right corner:
 - Shows red badge on scan
 - Plays "alert" sound
 
-**Smart Grouping** (NEW! 📋)
+**Smart Grouping** 📋
 - Rules organized by letter (A, B, C... sections)
 - Tap section header to expand/collapse
 - Easy to navigate with hundreds or thousands of rules
@@ -297,7 +312,7 @@ Tap **⋮ menu** in top-right corner for more options:
 
 ---
 
-### Download Rules from Web (NEW! 🌐)
+### Download Rules from Web 🌐
 
 <div align="center">
   <img src="mobile_app_screenshot/rules_page_package_ready.PNG" alt="Rules Package Ready" width="300"/>
@@ -381,76 +396,86 @@ Tap **⋮ menu** in top-right corner for more options:
 
 ## ⚙️ 5. Settings Page
 
-<div align="center">
-  <img src="mobile_app_screenshot/setting_page.png" alt="Settings Page Screenshot" width="300"/>
-</div>
-
-**Purpose**: Configure app behavior
-
-### Account Section:
-
-**Login** (Business/Enterprise accounts)
-- Enter email + signature
-- **Infinite scans** (unlimited usage)
-- Shows expiry date
-- **Logout** button when logged in
-
-**Free Trial Mode**
-- Shows daily limit: X/50 scans
-- Resets at midnight
-- **Login for infinite scans**
-
-### Cloud Sync:
+### Account & Cloud Sync
 
 <div align="center">
-  <img src="mobile_app_screenshot/setting_page_sync_backround.PNG" alt="Background Sync" width="300"/>
+  <img src="mobile_app_screenshot/setting_1.png" alt="Settings - Account, Team & Sync" width="300"/>
 </div>
 
-**Sync to Cloud** (Login required)
-- **Two-way sync** - Keeps data in sync across all devices
-- Tap **"Sync Now"** button to synchronize
-- **Runs in background** - Keep using the app while syncing
-- **Step 1:** Upload your device changes to cloud
-- **Step 2:** Download data from cloud (other devices/web)
-- **Step 3:** Merge changes automatically
-- **Progress shown** - See sync status in real-time
+**Account Section:**
+- Login with email + signature for unlimited scans
+- Shows subscription status with badge: **Active until [date]** (green)
+- **MMC quota badge**: Shows daily Vehicle Info usage (e.g. **MMC 100/100** in blue)
+- Update Signature to renew without logout
+- Trial mode: 10 scans/day, resets at midnight
 
-**What Gets Synced:**
-- ✅ All detections (plate numbers, timestamps, GPS)
-- ✅ All rules (whitelist & blacklist)
-- ✅ Detection images from all devices
-- ✅ Changes from marearts.com web
+**Team Work:**
+- **Team Leader**: Create team, share password, view all member data
+- **Team Member**: Join with password, contribute data
+- Break Team / Leave Team options
 
-**Benefits:**
-- 📱 Use multiple devices with same account
-- 🌐 View all data on marearts.com web dashboard
-- 🔄 Rules added on web appear on all devices
-- 💾 Cloud backup of all your data
-- ⚡ Keep using app while syncing (NEW!)
+**Cloud Sync:**
+- **Sync to Cloud** — Two-way sync across all devices
+- **Auto Sync** — Automatically syncs when app goes to background
+- Runs in background with real-time progress
+- Syncs detections, rules, images, and vehicle info
+
+### Detection Settings
 
 <div align="center">
-  <img src="mobile_app_screenshot/setting_page_sync_data.PNG" alt="Sync Statistics" width="300"/>
-  <p><i>See what's synced and when</i></p>
+  <img src="mobile_app_screenshot/setting_2_detection.png" alt="Settings - Detection Settings" width="300"/>
 </div>
 
-💡 **Tip:** Sync runs in background - no need to wait!
+Collapsible section with one-line summary (e.g. "Det 90% · OCR 90% · Max 1 · Dup 5s"):
 
-### Integrations (Webhook):
+**Sync Thresholds** 🔄
+- Toggle to sync detection + OCR thresholds together
+
+**Detection Threshold** (60-95%)
+- Minimum confidence to detect plate
+- **Recommended**: 90%
+
+**OCR Threshold** (60-95%)
+- Minimum confidence for text recognition
+- **Recommended**: 90%
+
+**Max Detections** (1-10)
+- Maximum plates to capture per scan
+- **Recommended**: 1 (parking/security)
+
+**Ignore Duplicate Plate** (0-60 seconds)
+- Prevents saving same plate multiple times
+- 5s = Default
+
+**Plate Region** 🌍
+- 🌍 **Universal (Default)** - All regions, multi-language support
+- 🇪🇺 **Europe+** - EU countries + UK, Norway, Switzerland, Serbia, Indonesia
+- 🇰🇷 **Korea** - South Korea (한국 자동차 번호판)
+- 🇺🇸🇨🇦🇲🇽 **North America** - USA, Canada, Mexico
+- 🇨🇳 **China** - China (中国车牌识别)
+- Always visible for quick access
+
+### Advanced Settings
 
 <div align="center">
-  <img src="mobile_app_screenshot/settings_webhook.png" alt="Webhook Settings Screenshot" width="300"/>
+  <img src="mobile_app_screenshot/setting_3_advanced.png" alt="Settings - Advanced" width="300"/>
 </div>
 
-**Send Detection Result to Webhook** 🔗
+**Appearance:**
+- **Show Rule Notes** - Display rule notes on detection cards
+- **Show Detection Details** - Display confidence, GPS, and technical info
+- **Show Vehicle Info** - Display make, model, color, type, side, nation
+- Trial users see these as locked (login required)
+
+**Use Cloud Recognition API** ☁️
+- Cloud API for better accuracy (requires internet)
+- Enabled by default for all users
+- Uses Gemini AI for OCR + Vehicle Info in one call
+
+**Integrations (Webhook)** 🔗
 - Send real-time plate detections to external services
 - Works with **Discord**, **Slack**, **Zapier**, **Make**, or any custom server
-- Only sent during Scan mode (Single or Continuous)
-- Toggle on/off in Settings → Advanced → Integrations
-
-**Setup:**
-1. Enter your Webhook URL (e.g., Discord webhook URL)
-2. Tap **Send Test** to verify connection
-3. Start scanning - detections are sent automatically
+- Enter Webhook URL and tap **Send Test** to verify
 
 **Webhook Payload (JSON):**
 - `plate_number` - Detected plate text
@@ -486,99 +511,26 @@ python webhook_receiver.py
 - Discord-compatible format (multipart/form-data)
 - Runs on port 9000 - set `http://YOUR_IP:9000/webhook` in the app
 
-### Notifications:
+### Other Settings:
 
-**Sound** 🔊
-- Play audio alerts for detections
-- Green plates: "Success" sound
-- Red plates: "Alert" sound
-- Orange plates: "Unknown" sound
+**Notifications:**
+- **Sound** 🔊 - Audio alerts for detections (different for whitelist/blacklist)
+- **Vibration** 📳 - Haptic feedback on detection
 
-**Vibration** 📳
-- Haptic feedback on detection
-- Different patterns for whitelist/blacklist
+**Storage:**
+- **Save Images** 📷 - Save full-resolution images with detections
+- **Clear All Data** 🗑️ - Delete all detections AND rules (syncs deletion to cloud if logged in)
+- **Factory Reset** 🔄 - Fresh start, keeps cloud backup safe for restore
+- **Data Retention** (7-365 days) - Auto-delete old detections
 
-### Detection Settings:
+**Location:**
+- **Enable GPS** 📍 - Save location with each detection (required for Map view)
 
-**Sync Thresholds** 🔄
-- Toggle to sync detection + OCR thresholds together
-- Simplifies tuning
-
-**Detection Threshold** (60-95%)
-- Minimum confidence to detect plate
-- Higher = fewer false positives
-- Lower = more detections
-- **Recommended**: 90%
-
-**OCR Threshold** (60-95%)
-- Minimum confidence for text recognition
-- Higher = more accurate text
-- Lower = read more plates
-- **Recommended**: 90%
-
-**Max Detections** (1-10)
-- Maximum plates to capture per scan
-- **Recommended**: 1 (parking/security)
-- Higher for busy intersections
-
-**Ignore Duplicate Plate** (0-60 seconds)
-- Prevents saving same plate multiple times
-- 0 = Save all (no filtering)
-- 5s = Default (ignore if seen within 5 seconds)
-- 60s = Maximum (ignore for 1 minute)
-
-**Plate Region** 🌍
-
-<div align="center">
-  <img src="mobile_app_screenshot/settings_region_selectoin.png" alt="Plate Region Selection" width="300"/>
-</div>
-
-- 🌍 **Universal (Default)** - All regions, multi-language support
-- 🇪🇺 **Europe+** - EU countries + UK, Norway, Switzerland, Serbia, Indonesia
-- 🇰🇷 **Korea** - South Korea (한국 자동차 번호판)
-- 🇺🇸🇨🇦🇲🇽 **North America** - USA, Canada, Mexico
-- 🇨🇳 **China** - China (中国车牌识别)
-- Selecting specific region improves accuracy
-
-### Storage:
-
-**Save Images** 📷
-- Save full-resolution images with detections
-- Viewable in Detections page
-- Uses device storage
-
-**Clear All Data** 🗑️
-- Delete all detections AND rules
-- Shows count before deletion
-- **Warning**: Cannot be undone unless logged in (syncs deletion to cloud)
-
-**Factory Reset** 🔄 (NEW!)
-- Fresh start - deletes all local data
-- **Cloud backup stays safe** - can sync to restore
-- Resets settings to defaults
-- Keeps login credentials
-- Located in Advanced section at bottom
-- **Use when:** Corrupted data, want fresh start, or troubleshooting
-
-**Data Retention** (7-365 days)
-- Auto-delete old detections
-- **Default**: 30 days
-- Applies to detections only (rules kept)
-
-### Location:
-
-**Enable GPS** 📍
-- Save location with each detection
-- Required for Map view
-- Shows address in details
-
-### About:
-
+**About:**
 - App name & version
 - Website: www.marearts.com
 - Support email: hello@marearts.com
 - **Report Bug / Request Feature** - Opens GitHub Issues
-- Build number (for troubleshooting)
 
 ---
 
@@ -679,13 +631,13 @@ A **Team Leader** creates a team and shares a password. **Team Members** join us
 ✅ **Your Control**: Cloud sync only when you choose  
 
 **Cloud Mode** (Optional):
-- Sends image to API for processing
-- Used only when you tap cloud button
-- More accurate (server-side AI)
+- Sends image to API for processing via Gemini AI
+- Used when Cloud Recognition API is enabled
+- Returns OCR + Vehicle Info in one call
 - Requires internet connection
 
 **Cloud Sync** (Optional):
-- Only syncs when you tap "Sync Now"
+- Manual "Sync Now" or Auto Sync in background
 - Images uploaded only if you enable sync
 - Can work 100% offline if preferred
 
@@ -714,4 +666,3 @@ A **Team Leader** creates a team and shares a password. **Team Members** join us
 ---
 
 **Need help?** Contact hello@marearts.com
-
