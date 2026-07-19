@@ -94,6 +94,37 @@ No toggle or global setting — the endpoint you call determines whether MMC is 
 
 In all error cases the response still contains full local ANPR detection results — plates, OCR text, bounding boxes, confidence scores. Only the 7 MMC fields are missing, and `mmc_error` explains why.
 
+## MMC Backends (Cloud vs Local On-Device)
+
+MMC enrichment can run through two interchangeable backends, selected by the
+`mmc.backend` config key (`cloud` is the default):
+
+| Backend | Engine | Internet | Notes |
+|---------|--------|----------|-------|
+| `cloud` | MareArts MMC cloud API | Required | Daily quota, no local model, fastest to enable. |
+| `local` | On-device Qwen3-VL-2B (GGUF) via a managed `llama-server` | Not required | Runs fully offline, no quota; uses GPU/CPU. VRAM is released automatically when the server stops or the backend is switched away. |
+
+The request-time contract is unchanged: `/api/anpr` stays local-only detection,
+and `/api/anpr/mmc` performs enrichment through whichever backend is active. The
+`mmc_*` response fields are identical across backends.
+
+**One-time local setup** (downloads the ~1.5 GB model + a prebuilt
+`llama-server` for your platform):
+
+```bash
+ma-anpr mmc-setup
+```
+
+**Switch backends** — via CLI, REST, or the dashboard System page:
+
+```bash
+ma-anpr mmc-backend local     # or: cloud  (also flips a running server live)
+```
+
+The model is downloaded on first use of the `local` backend and cached in
+`~/.marearts/models/vlm`; the `llama-server` binary is installed to
+`~/.marearts/bin`. Both are released from memory when the server shuts down.
+
 ---
 
 ## API Reference
@@ -255,6 +286,24 @@ curl -X PUT http://127.0.0.1:8000/api/region \
 ```
 
 The region can also be set per-request via the `region` parameter on detection endpoints, without changing the server default.
+
+### MMC Backend Selection
+
+Inspect and switch the active MMC backend at runtime (no restart required):
+
+```bash
+# Current backend, availability, and (for local) model / llama-server paths
+curl http://127.0.0.1:8000/api/mmc/status
+
+# Switch backend live — "cloud" or "local"
+curl -X PUT http://127.0.0.1:8000/api/mmc/backend \
+  -H "Content-Type: application/json" \
+  -d '{"backend": "local"}'
+```
+
+Switching to `local` loads the on-device VLM (downloading the model on first
+use); switching away releases it and frees VRAM. The choice is persisted to the
+server config, so it survives restarts.
 
 ### Credential Hot-Reload
 
