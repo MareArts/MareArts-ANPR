@@ -125,6 +125,16 @@ The model is downloaded on first use of the `local` backend and cached in
 `~/.marearts/models/vlm`; the `llama-server` binary is installed to
 `~/.marearts/bin`. Both are released from memory when the server shuts down.
 
+**Clean removal** — delete the on-device binary and/or model files:
+
+```bash
+ma-anpr mmc-uninstall              # remove the llama-server binary
+ma-anpr mmc-uninstall --all        # also remove the downloaded VLM model
+ma-anpr mmc-uninstall --models-only  # remove only the model, keep the binary
+```
+
+Python dependencies are left intact; reinstall anytime with `ma-anpr mmc-setup`.
+
 ---
 
 ## API Reference
