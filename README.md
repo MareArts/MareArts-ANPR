@@ -155,6 +155,32 @@ print(info["make"], info["model"], info["color"])
 
 Also available via the REST API server — just call the `/api/anpr/mmc` endpoint.
 
+### On-Device (Offline) Vehicle Intelligence
+
+Prefer to run enrichment locally with **no internet and no quota**? Switch to
+the on-device backend, powered by a compact vision-language model
+(Qwen3-VL-2B) that runs on your GPU or CPU.
+
+```bash
+ma-anpr mmc-setup                  # download model + prebuilt engine (~1.5 GB)
+ma-anpr mmc-backend local          # switch enrichment to on-device (or: cloud)
+ma-anpr mmc-uninstall --all        # cleanly remove the engine + model when done
+```
+
+In the SDK, only the import line changes from the cloud path:
+
+```python
+from marearts_anpr import ma_anpr_mmc_local   # on-device backend
+
+mmc = ma_anpr_mmc_local()          # loads the local model
+# ... use mmc.enrich(...) exactly like the cloud client ...
+mmc.close()                        # releases the model and frees VRAM
+```
+
+The REST server exposes the same choice via `GET /api/mmc/status`,
+`PUT /api/mmc/backend`, and the dashboard System page — the `/api/anpr/mmc`
+response fields are identical for both backends.
+
 ---
 
 ## Road Object Detection
