@@ -49,6 +49,8 @@ On-device ANPR for iOS and Android — parking, security, fleet management.
 
 > No additional license required — the app works as your ANPR license.
 
+> 🖥️ **Desktop companion:** a free read-only **Desktop Viewer** for macOS / Windows / Linux syncs the same account for big-screen review — [download](https://www.marearts.com/pages/anpr-desktop-download) · [details in the guide](mobile_app/).
+
 **[Mobile App Guide →](mobile_app/)**
 
 ---

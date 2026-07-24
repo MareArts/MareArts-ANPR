@@ -636,6 +636,38 @@ A **Team Leader** creates a team and shares a password. **Team Members** join us
 
 ---
 
+## 🖥️ Desktop Viewer (Companion App)
+
+Prefer a big screen? **MareArts ANPR Desktop** is a free companion viewer for **macOS, Windows, and Linux** that signs in with the same account and syncs your cloud data for comfortable review on a large display.
+
+> **Read-only viewer** — it downloads and displays your cloud data (detections, rules, stats) but never edits or deletes it. Scanning, editing, and uploading are still done in the mobile app.
+
+**What you can do:**
+- **Detections** — browse your full history with vehicle info, confidence, and location
+- **Map** — see all detections on a satellite/road map with clustering
+- **Rules** — view your whitelist / blacklist
+- **Statistics** — charts for scans, match breakdown, activity by hour, vehicle types
+- **Local ANPR** — drag & drop an image to run recognition via the MareArts ANPR cloud API
+- **Sync** — one-click download of the latest cloud snapshot, with auto-sync options
+
+📥 **Download:** [marearts.com/pages/anpr-desktop-download](https://www.marearts.com/pages/anpr-desktop-download)
+
+| Detections | Map | Rules |
+| --- | --- | --- |
+| ![Desktop Detections](../desktop_app/desktop_app_screenshot/desktop_detections.png) | ![Desktop Map](../desktop_app/desktop_app_screenshot/desktop_map.png) | ![Desktop Rules](../desktop_app/desktop_app_screenshot/desktop_rules.png) |
+
+| Statistics | Local ANPR | Sync |
+| --- | --- | --- |
+| ![Desktop Statistics](../desktop_app/desktop_app_screenshot/desktop_statistics.png) | ![Desktop Local ANPR](../desktop_app/desktop_app_screenshot/desktop_local_anpr.png) | ![Desktop Sync](../desktop_app/desktop_app_screenshot/desktop_sync.png) |
+
+| Settings |
+| --- |
+| ![Desktop Settings](../desktop_app/desktop_app_screenshot/desktop_settings.png) |
+
+💡 **Tip:** Sign in on the desktop app with the same email + signature you use on the phone, then hit **Sync now** to pull everything in.
+
+---
+
 ## ⭐ Remember
 
 > **✅ No Additional License Required!**  
