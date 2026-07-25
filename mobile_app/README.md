@@ -477,7 +477,7 @@ Tap **⋮ menu** in top-right corner for more options:
 
 We provide a ready-to-use Python server you can run on your own machine or cloud:
 
-👉 [**webhook_receiver.py**](https://github.com/MareArts/MareArts-ANPR/blob/main/example_code/webhook_receiver.py)
+👉 [**webhook_receiver.py**](https://github.com/MareArts/MareArts-ANPR/blob/main/mobile_app/example_code/webhook_receiver.py)
 
 ```bash
 # Install
