@@ -487,7 +487,7 @@ pip install fastapi uvicorn python-multipart
 python webhook_receiver.py
 ```
 
-- Saves plate images + JSON metadata to `received_plates/` folder
+- Saves JSON to `received_plates/` on every POST; saves the image only when the request includes a file
 - Prints detected plates to console in real-time
 - Optional forwarding to **Slack** and **Telegram** (with images)
 - Discord-compatible format (multipart/form-data)

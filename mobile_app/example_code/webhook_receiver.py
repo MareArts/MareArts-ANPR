@@ -5,8 +5,9 @@ MareArts ANPR Webhook Receiver
 Receives plate detection results from MareArts ANPR Mobile App.
 Same multipart format as Discord webhooks - works as a drop-in replacement.
 
-The mobile app sends: image file + payload_json (metadata)
-This server receives both, saves them, and optionally forwards to Slack/Telegram.
+The mobile app sends payload_json (metadata) and, when Attach photo is on
+and a file exists on the phone, an image. JSON is always saved. The image
+is saved only when the POST includes a file.
 
 Requirements:
     pip install fastapi uvicorn python-multipart
@@ -36,7 +37,7 @@ from starlette.datastructures import UploadFile as StarletteUploadFile
 # CONFIGURATION
 # ============================================================================
 
-# Where to save received images
+# Where to save received JSON (always) and images (when present)
 SAVE_DIR = "received_plates"
 
 # Optional: Forward to Slack (set your Slack webhook URL or leave empty)
@@ -212,29 +213,25 @@ async def receive_webhook(request: Request):
         print(f"  GPS: {lat:.4f}, {lon:.4f}")
     print(f"{'='*50}")
 
-    # Save image if provided
+    save_dir = Path(SAVE_DIR)
+    save_dir.mkdir(parents=True, exist_ok=True)
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    safe_plate = plate_number.replace("/", "_").replace("\\", "_").replace(" ", "_")
+    stem = f"{safe_plate}_{ts}"
+
     saved_path = None
     if file_data and len(file_data) > 0:
-        save_dir = Path(SAVE_DIR)
-        save_dir.mkdir(parents=True, exist_ok=True)
-
-        # Filename: PLATE_TIMESTAMP.jpg
-        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-        safe_plate = plate_number.replace("/", "_").replace("\\", "_").replace(" ", "_")
         ext = Path(file_name).suffix or ".jpg"
-        filename = f"{safe_plate}_{ts}{ext}"
-        saved_path = save_dir / filename
-
+        saved_path = save_dir / f"{stem}{ext}"
         with open(saved_path, "wb") as f:
             f.write(file_data)
         print(f"  Saved: {saved_path} ({len(file_data)} bytes)")
 
-    # Save metadata JSON alongside image
-    if saved_path:
-        json_path = saved_path.with_suffix(".json")
-        metadata_clean = round_floats(metadata, precision=4)
-        with open(json_path, "w") as f:
-            json.dump(metadata_clean, f, indent=2)
+    json_path = saved_path.with_suffix(".json") if saved_path else save_dir / f"{stem}.json"
+    metadata_clean = round_floats(metadata, precision=4)
+    with open(json_path, "w") as f:
+        json.dump(metadata_clean, f, indent=2)
+    print(f"  Saved: {json_path}")
 
     # Optional: Forward to Slack
     if SLACK_WEBHOOK_URL:
@@ -247,7 +244,8 @@ async def receive_webhook(request: Request):
     return {
         "status": "ok",
         "plate": plate_number,
-        "saved": str(saved_path) if saved_path else None
+        "saved": str(saved_path) if saved_path else None,
+        "saved_json": str(json_path),
     }
 
 
