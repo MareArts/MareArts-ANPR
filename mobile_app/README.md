@@ -1,5 +1,7 @@
 # MareArts ANPR — App Guide
 
+<img src="mobile_app_screenshot/appicon-anpr-mobile.png" width="88" height="88" alt="MareArts ANPR app icon">
+
 On-device license-plate recognition for iOS and Android. White List, Black List, Overstay, vehicle info, team sync, a web viewer, and a desktop viewer share one account.
 
 **App 2.6.5.** No extra license: a subscription from [marearts.com/products/anpr](https://www.marearts.com/products/anpr) covers the app. Search **marearts anpr** on the App Store or Google Play. Trial is 10 scans per day without login.
