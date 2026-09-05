@@ -1,656 +1,235 @@
-# MareArts ANPR - App Guide
+# MareArts ANPR — App Guide
 
-## ⭐ Important Notice
+On-device license-plate recognition for iOS and Android. White List, Black List, Overstay, vehicle info, team sync, a web viewer, and a desktop viewer share one account.
 
-> **✅ No Additional License Required!**  
-> This app can be used as an ANPR license without any additional purchase.  
-> Get your license at: [MareArts ANPR Solution](https://www.marearts.com/products/anpr)
-> 
-> 🔍 **Find the app by searching "marearts anpr" in the App Store or Google Play**
-
----
-
-## 📱 App Overview
-
-MareArts ANPR is a professional license plate recognition app for parking management, security checkpoints, and vehicle tracking. All AI processing happens on-device for privacy and speed.
-
----
-
-## 🆕 Latest Release
-
-**Version 2.4.2 (Build 242)** - May 2026
-
-**🚗 Vehicle Info — Now Official** - Vehicle Info (make, model, colour, type, side, nation) is out of beta and fully supported. Reliable cloud-based vehicle identification for all subscribers.
-
-**☁️ Cloud Recognition API** - Enabled by default for all users. Cloud scan provides plate text and vehicle info in one step.
-
----
-## 📲 Download
+**App 2.6.5.** No extra license: a subscription from [marearts.com/products/anpr](https://www.marearts.com/products/anpr) covers the app. Search **marearts anpr** on the App Store or Google Play. Trial is 10 scans per day without login.
 
 [![Download on App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/us/app/marearts-anpr/id6753904859) [![Get it on Google Play](../promotion_image/google_play_badge.svg)](https://play.google.com/store/apps/details?id=com.marearts.anpr)
 
----
-## 🧭 Navigation
-
-The app has 5 main tabs at the bottom:
-
-| Icon | Tab | Purpose |
-|------|-----|---------|
-| 📷 | **Scan** | Fast on-device plate scanning |
-| 🕐 | **Detections** | View history and saved plates |
-| ✅ | **Rules** | Manage whitelists/blacklists |
-| 📊 | **Stats** | View statistics and charts |
-| ⚙️ | **Settings** | Configure app behavior |
+Same guide on the site: [marearts.com/pages/marearts-anpr-mobile-app](https://www.marearts.com/pages/marearts-anpr-mobile-app)
 
 ---
 
-## 📷 1. Scan Page
+## Contents
 
-<div align="center">
-  <img src="mobile_app_screenshot/scan_page.png" alt="Scan Page Screenshot" width="300"/>
-</div>
-
-**Purpose**: Fast and accurate on-device license plate detection and recognition
-
-### Landscape Mode Support 📱
-
-Hold your phone sideways for landscape scanning:
-- Detection, cropping, and bounding boxes work correctly in landscape
-- Camera UI icons (capture, zoom, settings, flash) smoothly rotate to stay upright
-- Guide box adapts to landscape orientation
-- Bottom tab bar icons rotate to match device orientation
-
-### Features:
-
-**Camera View**
-- Live camera preview
-- Tap anywhere to focus
-- Automatic plate detection
-- Green/red bounding boxes show detected plates
-
-**Top Bar:**
-- **Flash** 🔦 - Toggle camera flash
-- **Zoom** - Pinch or tap to zoom (1x-5x)
-- **Camera Switch** - Front/back camera toggle
-
-**Bottom Controls:**
-- **Single Capture** (⭕) - Capture one plate
-- **Continuous Mode** (🔄) - Auto-scan continuously
-- **Cloud Mode** (☁️) - Send to cloud for OCR + Vehicle Info
-- **Swipe left/right** - Quick switch between modes
-
-**Status Display:**
-- Shows last detected plate number
-- Green/Red/Orange indicator for whitelist/blacklist status
-- Confidence percentage
-- Tap to view full details
-
-**Free Trial Mode:**
-- 10 scans per day
-- Counter shows: "Today: X/10"
-- Resets daily at midnight
-- **Login for unlimited scans** (infinite usage)
-
-### Camera Settings:
-
-Tap the **⚙️ icon** next to the mode buttons to adjust:
-
-**Resolution:**
-- **1080p** - Highest quality, best for detail
-- **720p** - Balanced quality and speed ⭐ Recommended
-- **480p** - Fastest processing, good for high-volume
-
-**Frame Rate:**
-- **60 FPS** - Smooth preview (default)
-- **30 FPS** - Battery saver mode
-
-💡 **Tip:** Lower resolution = faster processing and less storage space!
+| | |
+|---|---|
+| [01 Overview](#01-overview) | Account, trial, demo |
+| [02 What’s new](#02-whats-new) | Add unknowns, Overstay, Send history |
+| [03 Scan](#03-scan) | Single, Continuous, Cloud |
+| [04 Detections](#04-detections) | List, detail, map, CSV |
+| [05 Rules](#05-rules) | White / Black, Add unknowns, Overstay |
+| [06 Settings](#06-settings) | Account, thresholds, webhook |
+| [07 Web viewer](#07-web-viewer) | Browser review |
+| [08 Desktop](#08-desktop) | Read-only companion |
+| [09 Support](#09-support) | Start, keys, contact |
 
 ---
 
-## 🕐 2. Detections Page
+## 01 Overview
 
-**Purpose**: View all captured license plates
+License-plate recognition on the phone. The camera finds the plate, reads the characters, and stores time plus GPS when location is on.
 
-### Detection List
+[Demo video](https://www.youtube.com/watch?v=6gVQOJvNBNE)
 
-<div align="center">
-  <img src="mobile_app_screenshot/detection_list.png" alt="Detection List with Vehicle Info" width="300"/>
-</div>
-
-- All captured plates in chronological order
-- Grouped by date (Today, Yesterday, This Week, etc.)
-- Shows: Plate number, time, thumbnail
-- **Vehicle Info** shown inline: make, model, colour (e.g. "Volvo XC60 · black...", "Toyota Corolla · sil...")
-- **Swipe left to right** - Opens side menu to quickly change status (whitelist/blacklist/unknown)
-- **Tap** to view full details
-- **Status badges**: Green (whitelist), Red (blacklist), Orange (unknown)
-- **Filter tabs**: All / Latest
-
-### Detection Preview (tap any detection)
-
-<div align="center">
-  <img src="mobile_app_screenshot/detection_detail_1.png" alt="Detection Preview" width="300"/>
-</div>
-
-- Full captured image with plate highlighted
-- Cropped plate image for close-up view
-- Plate number displayed prominently
-- Swipe left/right to browse between detections
-
-### Detection Details & Vehicle Info
-
-<div align="center">
-  <img src="mobile_app_screenshot/detection_detail_2.png" alt="Detection Detail - Vehicle Info & Statistics" width="300"/>
-</div>
-
-- **Statistics**: Total Seen count, Average Confidence %, First Seen date
-- **Vehicle Info** card with detailed identification:
-  - **Make** with confidence (e.g. Volvo 93%)
-  - **Model** with confidence (e.g. XC40 89%)
-  - **Color** with swatch and confidence (e.g. black 99%)
-  - **Type** with confidence (e.g. SUV 98%)
-  - **Side** — front or rear of vehicle (e.g. front 99%)
-  - **Nation** — country flag + name (e.g. 🇫🇮 Finland 99%)
-- **Status badge**: Whitelist / Blacklist / Unknown
-- **Action buttons**: Edit ✏️, Add to Rule ⚠️
-
-### Map & Detection History
-
-<div align="center">
-  <img src="mobile_app_screenshot/detection_detail_3.png" alt="Detection Detail - Map & History" width="300"/>
-</div>
-
-- **GPS Coordinates** with embedded Google Maps view
-- **Detection History** — all past detections of the same plate number:
-  - Date, time, confidence for each sighting
-  - "Current" badge on the active detection
-  - Tap any history entry to jump to that detection
-
-### Map View
-
-<div align="center">
-  <img src="mobile_app_screenshot/map_page.png" alt="Map View Screenshot" width="300"/>
-</div>
-
-- Shows all plates on a map
-- **Clusters** nearby detections (shows count)
-- **Tap cluster** to zoom in
-- **Tap marker** to see plate details
-- **Top buttons**:
-  - 🛰️ **Satellite/Road** toggle
-  - 🏷️ **Show Labels** - Display all plate numbers
-- **Search bar**: Filter by plate number
-
-### 🚗 Vehicle Info
-
-Vehicle Info is a cloud-based AI service that identifies vehicle make, model, colour, type, side, and nation for each detection.
-
-**In Detection List:**
-- Vehicle info line shown below each detection (e.g. "Toyota Corolla · silver · Sedan")
-- Data enriched automatically by cloud AI after sync
-
-**In Detection Detail:**
-- Full Vehicle Info card with 6 fields and confidence scores
-- Side (front/rear) and Nation (country flag + name) identification
-
-**On Web Dashboard:**
-
-View and filter vehicle information on marearts.com:
-
-<div align="center">
-  <img src="mobile_app_screenshot/detection_list_vehicleinfo_web_ui.png" alt="Vehicle Info List on Web" width="600"/>
-</div>
-
-<div align="center">
-  <img src="mobile_app_screenshot/detection_detail_vehicleinfo_web_ui.png" alt="Vehicle Info Detail on Web" width="600"/>
-</div>
-
-**Filter by Vehicle Info:**
-
-<div align="center">
-  <img src="mobile_app_screenshot/Vehicle_info_filter_web_ui.png" alt="Vehicle Info Filter on Web" width="600"/>
-</div>
-
-- Filter detections by vehicle make, model, color, or type
-- Available on web dashboard
-
-💡 **Tip:** Vehicle Info syncs automatically when you tap "Sync Now" in Settings. In Cloud scan mode, Vehicle Info is included instantly with each scan!
+| Tab | Does |
+|---|---|
+| Scan | Camera. Single, Continuous, or Cloud. |
+| Detections | History, detail, map, CSV export. |
+| Rules | White List, Black List, Add unknowns, Overstay, import/export. |
+| Stats | Counts and charts by period and list status. |
+| Settings | Account, sync, thresholds, region, webhook. |
 
 ---
 
-### Export Data:
+## 02 What’s new
 
-Tap **⋮ menu** in top-right corner:
+Features in **2.6.5** (landed 2.5.3–2.5.9):
 
-**Export All Data (CSV)**
-- Downloads all your detections as a CSV file
-- Includes: Plate number, date, time, GPS coordinates, confidence scores, rule note
-- **Vehicle Info columns**: Make, Model, Color, Type, Side, Nation
-- Compatible with Excel, Google Sheets, and marearts.com
-- Share via AirDrop, Files app, or email
-
-💡 **Tip:** Export regularly to keep backups of your detection history!
+| Where | What |
+|---|---|
+| Rules ⋮ | **Add unknowns…** — unique plates from detections that are on neither list, for All / Today / a date range, onto White or Black. Existing rules stay. |
+| Rules ⋮ | **Overstay…** — same plate, same place, longer than the time you set. GPS required. Not a White/Black row and not in CSV. |
+| Settings → Integrations | Webhook URL first. Live Scan and Continuous. Auto-send after vehicle info. **Send history** for detections already on this phone. |
 
 ---
 
-## ✅ 3. Rules Page
+## 03 Scan
+
+Hold the phone at the lane. No extra camera box.
 
 <div align="center">
-  <img src="mobile_app_screenshot/rules_page_grouping.PNG" alt="Rules Page Screenshot" width="300"/>
+  <img src="mobile_app_screenshot/scan_page.png" alt="Live scan with plate box, crop, and confidence" width="300"/>
 </div>
 
-**Purpose**: Manage plate whitelists and blacklists
+| Mode | Does |
+|---|---|
+| Single | One capture. |
+| Continuous | Keeps scanning. A duplicate window (default 5 s) skips the same plate. |
+| Cloud | Sends the frame for OCR plus vehicle info in one step. |
 
-### Features:
+Camera: 1080p, **720p recommended**, or 480p. Preview 60 or 30 fps. Zoom 1× / 2×, flash, front or rear. Landscape keeps boxes and controls upright.
 
-**Whitelist** (Green)
-- Allowed/approved vehicles
-- Shows green badge on scan
-- Plays "success" sound
-
-**Blacklist** (Red)
-- Blocked/unwanted vehicles
-- Shows red badge on scan
-- Plays "alert" sound
-
-**Smart Grouping** 📋
-- Rules organized by letter (A, B, C... sections)
-- Tap section header to expand/collapse
-- Easy to navigate with hundreds or thousands of rules
-- Quick scroll to any letter
-
-**Management:**
-- **Search Bar** - Type to filter plates (real-time)
-- **Tab Counter** - Shows total: "White List (200)"
-- **+ Button** (bottom center) - Add new plate
-- **Swipe left** to delete
-- **Group Sections** - Tap to expand/collapse
-- Type full plate number or partial (e.g., "ABC" matches "ABC-123")
-- Auto-uppercase
-- Tap "X" to clear search, "Done" to dismiss keyboard
-
-**Use Cases:**
-- Parking: Whitelist residents, blacklist violators
-- Security: Whitelist staff, blacklist banned vehicles
-- Delivery: Track known vehicles
-
-### Bulk Management:
-
-Tap **⋮ menu** in top-right corner for more options:
-
-**Export All Rules**
-- Downloads all your whitelist and blacklist plates as CSV
-- Compatible with Excel, Google Sheets, and marearts.com
-- Perfect for backup or editing in spreadsheet
-
-**Import Rules**
-- Upload a CSV file to add rules to your phone
-- Download sample template first to see the format
-- Great for bulk adding plates (e.g., 100+ employee vehicles)
-
-**Download Sample CSV**
-- Get a template file with instructions
-- Fill in: Plate Number, Type (whitelist/blacklist), Note
-- Import when ready
-
-💡 **Workflow:** Export → Edit in Excel → Import back for bulk updates!
+- Tap the plate to focus.
+- Distance about 2–3 m, square to the plate, outdoor light when you can.
 
 ---
 
-### Download Rules from Web 🌐
+## 04 Detections
 
 <div align="center">
-  <img src="mobile_app_screenshot/rules_page_package_ready.PNG" alt="Rules Package Ready" width="300"/>
+  <img src="mobile_app_screenshot/detection_list.png" alt="Detections list with mosaicked plates and vehicle info" width="300"/>
+  <img src="mobile_app_screenshot/detection_detail_2.png" alt="Detection detail with vehicle make model colour" width="300"/>
 </div>
 
-**Upload rules on marearts.com, download on your phone:**
-
-**Step 1: Upload on Web**
+- Grouped by day. Swipe a row to White, Black, or Unknown.
+- Detail: full frame, crop, confidence, first/last seen, GPS, history of that plate.
+- Overstay detections show a yellow chip and the time at that place.
+- CSV export includes plate, time, GPS, confidences, note, and vehicle-info columns.
 
 <div align="center">
-  <img src="mobile_app_screenshot/webpage_upload_rule_package_button.png" alt="Web Upload Button" width="600"/>
+  <img src="mobile_app_screenshot/map_page.png" alt="Map of detections with clusters" width="300"/>
 </div>
 
-1. Go to marearts.com/my-account
-2. Click "Upload Rule Package" button
-3. Choose your CSV file
-4. Click upload
+Map: clusters, satellite or road, search by plate.
+
+### Vehicle info (MMC)
+
+Cloud vehicle identity: make, model, colour, type, side, nation. Cloud scan writes it immediately. On-device scans pick it up on sync. Daily usage is in Settings. Included with the subscription.
+
+Web filters:
 
 <div align="center">
-  <img src="mobile_app_screenshot/webpage_upload_rule_package_uploaded.png" alt="Upload Complete" width="600"/>
+  <img src="mobile_app_screenshot/detection_list_vehicleinfo_web_ui.png" alt="Web viewer detections with vehicle info columns" width="600"/>
 </div>
 
-**Step 2: Download on Phone**
-1. Open Rules page in app
-2. See blue banner: "Rules package ready"
-3. Tap to download
-4. Choose "Replace All" or "Add to Existing"
-5. Done! Rules imported automatically
-
-**Benefits:**
-- Upload large CSV files on computer (easier than phone)
-- Share rules between team members
-- Bulk import thousands of rules at once
-- Works across all your devices
-
-💡 **Tip:** Great for importing company vehicle lists or large databases!
+<div align="center">
+  <img src="mobile_app_screenshot/Vehicle_info_filter_web_ui.png" alt="Web viewer filters for make model colour type" width="600"/>
+</div>
 
 ---
 
-## 📊 4. Stats Page
+## 05 Rules
+
+A rule marks a plate as allowed (green) or blocked (red) on the next scan, with sound and vibration. Notes stay on the card. `FSA 200` and `FSA200` are the same plate: spaces and hyphens are ignored.
 
 <div align="center">
-  <img src="mobile_app_screenshot/stat_page.png" alt="Stats Page Screenshot" width="300"/>
+  <img src="mobile_app_screenshot/rule_menu_bulk_overstay.png" alt="Rules overflow menu with Add unknowns and Overstay" width="300"/>
 </div>
 
-**Purpose**: View scanning statistics and trends
+| Menu | Does |
+|---|---|
+| Export All Rules | CSV of White and Black on this phone. |
+| Import Rules | Load a CSV. Sample CSV is in the same menu. |
+| Clear All Rules | Removes list rows. Overstay settings are not a list row. |
+| Add unknowns… | Bulk-add plates from detections that are on neither list. |
+| Overstay… | Same plate, same place, too long. See below. |
 
-### Overview Section:
-- **Total Scans** - All-time count
-- **Today** - Scans captured today
-- **This Week** - Last 7 days
-- **This Month** - Current month
-- **This Year** - Year-to-date
+Large lists can be uploaded on [the web viewer](https://www.marearts.com/pages/my-anpr-data), then pulled on the phone (replace or merge). Team members cannot edit rules.
 
-### Top 10 Vehicles:
-- Most frequently detected plates
-- Shows scan count for each
-- **Tap** to view all scans for that plate
+### Add unknowns to a list
 
-### Time Period Selector:
-- **Today** - Hourly breakdown
-- **This Week** - Monday to today (calendar week)
-- **This Month** - First day to today
-- **Year** - Full year with year selector (2024, 2025, 2026...)
-- **Custom Range** - Pick any start and end dates
+Rules ⋮ → **Add unknowns…**. Choose White or Black, then All, Today, or a date range. The count is unique plates not already on either list. Existing rules are not overwritten.
 
-### Charts:
-- Automatic layout based on period selected
-- **Date range displayed** below selector (e.g., "Dec 1, 2025 - Jan 7, 2026")
-- Scrollable for year view (12 months)
+<div align="center">
+  <img src="mobile_app_screenshot/rule_bulk_edit.png" alt="Add unknowns dialog" width="300"/>
+</div>
 
-### Status Filter:
-- **All** - Show everything
-- **Whitelist** - Green plates only
-- **Blacklist** - Red plates only
-- **Unknown** - Orange plates only
+### Overstay alert
 
-**Pull down** to refresh data
+Same plate still at the same place longer than the time you set. This is not a third list. It is not written into CSV. Midnight does not reset the clock.
+
+<div align="center">
+  <img src="mobile_app_screenshot/rule_overstay_setting.png" alt="Overstay alert settings" width="300"/>
+</div>
+
+| Setting | Meaning |
+|---|---|
+| Overstay alert | On or off. Off: Overstay does not run. |
+| Longer than | 30m, 1h, 2h, 4h, 8h, or Custom. Time at this place, not time since the last photo. |
+| Reset after | No sighting for this long at the same place starts over. Default 48h. |
+| Skip white list | On: plates on White List do not alert. |
+
+Same place is about 50 m. GPS off: Overstay does not run. Changing place ends the stay. A team member sees a read-only card; the camera uses the leader’s values.
+
+### Stats
+
+Today / week / month / year / custom. Filter by White, Black, or Unknown.
+
+<div align="center">
+  <img src="mobile_app_screenshot/stat_page.png" alt="Statistics charts" width="300"/>
+</div>
 
 ---
 
-## ⚙️ 5. Settings Page
+## 06 Settings
 
-### Account & Cloud Sync
-
-<div align="center">
-  <img src="mobile_app_screenshot/setting_1.png" alt="Settings - Account, Team & Sync" width="300"/>
-</div>
-
-**Account Section:**
-- Login with email + signature for unlimited scans
-- Shows subscription status with badge: **Active until [date]** (green)
-- **Vehicle Info quota**: Shows daily usage (e.g. **100/100**)
-- Update Signature to renew without logout
-- Trial mode: 10 scans/day, resets at midnight
-
-**Team Work:**
-- **Team Leader**: Create team, share password, view all member data
-- **Team Member**: Join with password, contribute data
-- Break Team / Leave Team options
-
-**Cloud Sync:**
-- **Sync to Cloud** — Two-way sync across all devices
-- **Auto Sync** — Automatically syncs when app goes to background
-- Runs in background with real-time progress
-- Syncs detections, rules, images, and vehicle info
-
-### Detection Settings
+| Block | Does |
+|---|---|
+| Account | Login (email + signature). Subscription and vehicle-info quota. |
+| Cloud Sync / Auto Sync | Two-way sync. Auto Sync can run when the app goes to the background. |
+| Detection | Thresholds 60–95% (90% recommended). Max plates per frame 1–10. Ignore duplicate 0–60 s (default 5 s). |
+| Plate Region | Region presets plus country list. |
+| GPS | Required for map and for Overstay. |
 
 <div align="center">
-  <img src="mobile_app_screenshot/setting_2_detection.png" alt="Settings - Detection Settings" width="300"/>
+  <img src="mobile_app_screenshot/setting_1.png" alt="Settings account" width="300"/>
+  <img src="mobile_app_screenshot/setting_2_detection.png" alt="Settings detection" width="300"/>
 </div>
 
-**Sync Thresholds** 🔄
-- Toggle to sync detection + OCR thresholds together
+### Webhook
 
-**Detection Threshold** (60-95%)
-- Minimum confidence to detect plate
-- **Recommended**: 90%
-
-**OCR Threshold** (60-95%)
-- Minimum confidence for text recognition
-- **Recommended**: 90%
-
-**Max Detections** (1-10)
-- Maximum plates to capture per scan
-- **Recommended**: 1 (parking/security)
-
-**Ignore Duplicate Plate** (0-60 seconds)
-- Prevents saving same plate multiple times
-- 5s = Default
-
-**Plate Region** 🌍
-- 🌍 **Universal (Default)** - All regions, multi-language support
-- 🇪🇺 **Europe+** - EU countries + UK, Norway, Switzerland, Serbia, Indonesia
-- 🇰🇷 **Korea** - South Korea (한국 자동차 번호판)
-- 🇺🇸🇨🇦🇲🇽 **North America** - USA, Canada, Mexico
-- 🇨🇳 **China** - China (中国车牌识别)
-- Always visible for quick access
-
-### Advanced Settings
+Settings → Integrations. Paste an `https://` URL first. Until the URL is valid, Send Test, live send, Auto-send, and Send history stay locked.
 
 <div align="center">
-  <img src="mobile_app_screenshot/setting_3_advanced.png" alt="Settings - Advanced" width="300"/>
+  <img src="mobile_app_screenshot/setting_webhook_menu.png" alt="Integrations webhook" width="300"/>
+  <img src="mobile_app_screenshot/setting_webhook_send_history.png" alt="Send history" width="300"/>
 </div>
 
-**Appearance:**
-- **Show Rule Notes** - Display rule notes on detection cards
-- **Show Detection Details** - Display confidence, GPS, and technical info
-- **Show Vehicle Info** - Display make, model, color, type, side, nation
+| Control | Does |
+|---|---|
+| Send Test | One test POST to the URL. Does not unlock the rest by itself. |
+| Send detection to webhook | Live Scan and Continuous. What is on the row now. Photo attached when the file is on the phone. |
+| Auto-send unsent | After vehicle info updates, leftover rows that were not sent yet. |
+| Send history | Detections already stored on this phone. Already sent can be sent again. Live sending waits until this finishes or is stopped. |
 
-**Use Cloud Recognition API** ☁️
-- Cloud API for better accuracy (requires internet)
-- Enabled by default for all users
+History and live webhooks send what is on this device. Cloud-only rows on another device are not in this queue.
 
-**Integrations (Webhook)** 🔗
-- Send real-time plate detections to external services
-- Works with **Discord**, **Slack**, **Zapier**, **Make**, or any custom server
-- Enter Webhook URL and tap **Send Test** to verify
-
-**Webhook Payload (JSON):**
-- `plate_number` - Detected plate text
-- `timestamp` - ISO 8601 detection time
-- `detection_confidence` / `ocr_confidence` - AI confidence scores
-- `bbox` - Bounding box coordinates (left, top, right, bottom)
-- `gps` - Latitude, longitude, address
-- `rule_status` - whitelist / blacklist / unknown
-- `note` - Rule note (if any)
-- `reporter` - Account email or "trial"
-- `scan_mode` - single / continuous
-- `image` - Base64-encoded plate image (if available)
-
-💡 **Tip:** Use Discord webhooks for instant notifications on your phone or desktop!
-
-**Build Your Own Webhook Receiver:**
-
-We provide a ready-to-use Python server you can run on your own machine or cloud:
-
-👉 [**webhook_receiver.py**](https://github.com/MareArts/MareArts-ANPR/blob/main/mobile_app/example_code/webhook_receiver.py)
+Receiver example: [`webhook_receiver.py`](https://github.com/MareArts/MareArts-ANPR/blob/main/mobile_app/example_code/webhook_receiver.py)
 
 ```bash
-# Install
 pip install fastapi uvicorn python-multipart
-
-# Run
 python webhook_receiver.py
 ```
 
-- Saves JSON to `received_plates/` on every POST; saves the image only when the request includes a file
-- Prints detected plates to console in real-time
-- Optional forwarding to **Slack** and **Telegram** (with images)
-- Discord-compatible format (multipart/form-data)
-- Runs on port 9000 - set `http://YOUR_IP:9000/webhook` in the app
+Runs on port 9000. Set `http://YOUR_IP:9000/webhook` in the app. Saves JSON to `received_plates/`; saves the image only when the request includes a file. Optional Slack / Telegram forward.
 
-### Other Settings:
+Overstay detections keep `rule.status` and add `overstay` / `stay_seconds` only on those rows.
 
-**Notifications:**
-- **Sound** 🔊 - Audio alerts for detections (different for whitelist/blacklist)
-- **Vibration** 📳 - Haptic feedback on detection
+Typical payload fields: `plate_number`, `timestamp`, `detection_confidence`, `ocr_confidence`, `bbox`, `gps`, `rule_status`, `note`, `reporter`, `scan_mode`, `image` (when present).
 
-**Storage:**
-- **Save Images** 📷 - Save full-resolution images with detections
-- **Clear All Data** 🗑️ - Delete all detections and rules
-- **Factory Reset** 🔄 - Fresh start, keeps cloud backup safe for restore
-- **Data Retention** (7-365 days) - Auto-delete old detections
+### Team
 
-**Location:**
-- **Enable GPS** 📍 - Save location with each detection (required for Map view)
-
-**About:**
-- App name & version
-- Website: www.marearts.com
-- Support email: hello@marearts.com
-- **Report Bug / Request Feature** - Opens GitHub Issues
-
----
-
-## 👥 6. Team Work
-
-**Purpose**: Collaborate with your team — share detections and rules across multiple users
-
-### How It Works
-
-A **Team Leader** creates a team and shares a password. **Team Members** join using that password. All team data syncs to the cloud and is accessible from the web dashboard.
-
-### Team Leader
+The leader creates a team and shares a password. Members join and contribute detections. White/Black and Overstay settings follow the leader. Members cannot edit rules.
 
 <div align="center">
-  <img src="mobile_app_screenshot/mobile_teamleader.png" alt="Team Leader Mobile" width="300"/>
+  <img src="mobile_app_screenshot/mobile_teamleader.png" alt="Team leader" width="300"/>
+  <img src="mobile_app_screenshot/mobile_teammember.png" alt="Team member" width="300"/>
 </div>
 
-- **Create Team**: Automatically becomes the team leader
-- **Share Password**: Give the team password to members (tap to reveal)
-- **View All Data**: See every member's detections and rules on the web dashboard
-- **Switch Members**: Web dashboard dropdown lets you view any member's data
-- **Break Team**: Disband the team and release all members
-
-<div align="center">
-  <img src="mobile_app_screenshot/web_teamleader.png" alt="Team Leader Web Dashboard" width="600"/>
-</div>
-
-### Team Member
-
-<div align="center">
-  <img src="mobile_app_screenshot/mobile_teammember.png" alt="Team Member Mobile" width="300"/>
-</div>
-
-- **Join Team**: Enter the leader's password to join
-- **Contribute Data**: Your detections and rules sync to the team
-- **See Leader Info**: Shows who your team leader is
-- **Leave Team**: Leave anytime and return to normal (solo) mode
-
-<div align="center">
-  <img src="mobile_app_screenshot/web_teammember.png" alt="Team Member Web Dashboard" width="600"/>
-</div>
-
-### Use Cases:
-- **Parking management**: Multiple guards scanning, one supervisor monitoring all data
-- **Security teams**: Distributed checkpoints reporting to a central dashboard
-- **Fleet management**: Multiple drivers, one operations manager
-
-💡 **Tip:** The team leader can view all members' detections on [marearts.com](https://www.marearts.com) — great for monitoring without being on-site!
+The leader reviews every member on [the web viewer](https://www.marearts.com/pages/my-anpr-data) and on the desktop viewer.
 
 ---
 
-## 🎯 Common Workflows
+## 07 Web viewer
 
-### Parking Management:
-1. **Add residents** to Whitelist (Rules page)
-2. **Scan** vehicles entering (Scan page)
-3. **Check status** - Green = Allowed, Red = Blocked
-4. **Review** violations (Detections page)
-
-### Security Checkpoint:
-1. **Add approved** vehicles to Whitelist
-2. **Add banned** vehicles to Blacklist
-3. **Continuous scan** at entrance
-4. **Audio/vibration** alerts for blacklist
-
-### Vehicle Tracking:
-1. **Scan** vehicles continuously
-2. **View history** in Detections
-3. **Use Map** to see locations
-4. **Export** data (via share button)
+After login, [My ANPR Data](https://www.marearts.com/pages/my-anpr-data) is detections, vehicle-info filters, rule packages, and team member switch. The phone captures. The browser reviews.
 
 ---
 
-## 💡 Tips & Best Practices
+## 08 Desktop
 
-### For Best Detection:
-
-✅ **Distance**: 2-3 meters from vehicle  
-✅ **Angle**: Perpendicular to plate (not tilted)  
-✅ **Lighting**: Good outdoor light (daytime)  
-✅ **Focus**: Tap plate area to focus  
-✅ **Stability**: Hold steady while capturing  
-
-❌ **Avoid**:
-- Too far (>5 meters)
-- Extreme angles
-- Low light conditions
-- Motion blur
-- Dirty/damaged plates
-
----
-
-## 🔒 Privacy & Security
-
-✅ **100% On-Device**: All AI processing on your device  
-✅ **Local Database**: All data stored locally  
-✅ **GPS Optional**: Can disable location tracking  
-✅ **Your Control**: Cloud sync only when you choose  
-
-**Cloud Mode** (Optional):
-- Sends image to cloud for processing
-- Returns plate text + Vehicle Info
-- Requires internet connection
-
-**Cloud Sync** (Optional):
-- Manual "Sync Now" or Auto Sync in background
-- Images uploaded only if you enable sync
-- Can work 100% offline if preferred
-
----
-
-## 📞 Support
-
-**Email**: hello@marearts.com  
-**Website**: https://www.marearts.com  
-
-**For Issues**:
-- Include app version (Settings page)
-- Describe the problem
-- Include screenshot if possible 
-
----
-
-## 🖥️ Desktop Viewer (Companion App)
-
-Prefer a big screen? **MareArts ANPR Desktop** is a free companion viewer for **macOS, Windows, and Linux** that signs in with the same account and syncs your cloud data for comfortable review on a large display.
-
-> **Read-only viewer** — it downloads and displays your cloud data (detections, rules, stats) but never edits or deletes it. Scanning, editing, and uploading are still done in the mobile app.
-
-**What you can do:**
-- **Detections** — browse your full history with vehicle info, confidence, and location
-- **Map** — see all detections on a satellite/road map with clustering
-- **Rules** — view your whitelist / blacklist
-- **Statistics** — charts for scans, match breakdown, activity by hour, vehicle types
-- **Local ANPR** — drag & drop an image to run recognition via the MareArts ANPR cloud API
-- **Sync** — one-click download of the latest cloud snapshot, with auto-sync options
-
-📥 **Download:** [marearts.com/pages/anpr-desktop-download](https://www.marearts.com/pages/anpr-desktop-download)
+[MareArts ANPR Desktop](https://www.marearts.com/pages/anpr-desktop-download) for Windows, macOS, and Linux. Same login. It downloads cloud data and does not edit or delete it. Capture and rule changes stay on the phone.
 
 | Detections | Map | Rules |
 | --- | --- | --- |
@@ -660,22 +239,34 @@ Prefer a big screen? **MareArts ANPR Desktop** is a free companion viewer for **
 | --- | --- | --- |
 | ![Desktop Statistics](../desktop_app/desktop_app_screenshot/desktop_statistics.png) | ![Desktop Local ANPR](../desktop_app/desktop_app_screenshot/desktop_local_anpr.png) | ![Desktop Sync](../desktop_app/desktop_app_screenshot/desktop_sync.png) |
 
-| Settings |
-| --- |
-| ![Desktop Settings](../desktop_app/desktop_app_screenshot/desktop_settings.png) |
+---
 
-💡 **Tip:** Sign in on the desktop app with the same email + signature you use on the phone, then hit **Sync now** to pull everything in.
+## Workflows
+
+| Job | Steps |
+|---|---|
+| Parking | Residents on White. Scan at the gate. Green allowed, red blocked. Review the rest in Detections. Optionally Add unknowns after a day of captures. |
+| Checkpoint | Approved on White, banned on Black. Continuous at the entrance. Sound on Black. Overstay if a vehicle must not linger. |
+| Own server | Integrations URL → Send Test → live send on. Send history for what is already on this phone. |
 
 ---
 
-## ⭐ Remember
+## Tips and privacy
 
-> **✅ No Additional License Required!**  
-> This app can be used as an ANPR license without any additional purchase.  
-> Get your license at: [MareArts ANPR Solution](https://www.marearts.com/products/anpr)
-> 
-> 🔍 **Find the app by searching "marearts anpr" in the App Store or Google Play**
+- 2–3 m, square to the plate, tap to focus. 720p unless you need 1080p crops.
+- Detection and OCR run on the phone after models are installed.
+- Data stays on the device until you sync, export, or send a webhook.
+- GPS is optional, except Overstay and the map need it.
 
 ---
 
-**Need help?** Contact hello@marearts.com
+## 09 Support
+
+1. Install MareArts ANPR.
+2. Use the daily trial on Scan.
+3. Subscribe on [the product page](https://www.marearts.com/products/anpr). The serial key is emailed to the PayPal address and also appears after login.
+4. Sign in under Settings. Sync fills the web viewer and the desktop viewer.
+
+Keys are bound to the PayPal email and cannot be moved.
+
+Email [hello@marearts.com](mailto:hello@marearts.com) · [GitHub issues](https://github.com/MareArts/MareArts-ANPR/issues)
