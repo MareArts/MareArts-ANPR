@@ -18,7 +18,7 @@ Automatic Number Plate Recognition — detection + OCR for **80+ countries**, GP
 
 **One license covers everything:** Python SDK · REST API Server · Mobile App · Road Object Detection
 
-> Get your license at [marearts.com/products/anpr](https://www.marearts.com/products/anpr)
+> Get your license at [marearts.com/products/anpr](https://www.marearts.com/products/anpr). Same intro on the site: [marearts.com/pages/marearts-anpr-sdk](https://www.marearts.com/pages/marearts-anpr-sdk).
 
 ---
 
@@ -49,7 +49,7 @@ On-device ANPR for iOS and Android — parking, security, fleet management.
 
 > No additional license required — the app works as your ANPR license.
 
-> 🖥️ **Desktop companion:** a free read-only **Desktop Viewer** for macOS / Windows / Linux syncs the same account for big-screen review — [download](https://www.marearts.com/pages/anpr-desktop-download) · [details in the guide](mobile_app/).
+> A free read-only **Desktop Viewer** for macOS / Windows / Linux syncs the same account for big-screen review — [download](https://www.marearts.com/pages/anpr-desktop-download) · [details in the guide](mobile_app/).
 
 **[Mobile App Guide →](mobile_app/)**
 
@@ -61,6 +61,8 @@ Detect and read license plates in 5 lines of Python.
 
 ```bash
 pip install marearts-anpr
+ma-anpr gpu-setup cuda              # NVIDIA
+ma-anpr gpu-setup directml          # Windows AMD / Intel / NVIDIA
 ```
 
 ```python
@@ -109,21 +111,21 @@ curl -X POST http://localhost:8000/api/anpr -F "image=@car.jpg"
 
 ## Docker
 
-Deploy the ANPR server as a Docker container with GPU support — no setup, no dependencies.
+Build the server image from [`docker/`](docker/), then run it. GPU needs the NVIDIA Container Toolkit. The CPU image does not use `--gpus`.
 
 ```bash
-docker run -d --gpus all -p 8000:8000 \
+git clone https://github.com/MareArts/MareArts-ANPR.git
+cd MareArts-ANPR/docker
+docker build -t marearts-anpr-server:latest .
+docker run -d --gpus all --name marearts-anpr-server -p 8000:8000 \
   -e MAREARTS_ANPR_USERNAME="your@email.com" \
   -e MAREARTS_ANPR_SERIAL_KEY="your_serial_key" \
   -e MAREARTS_ANPR_SIGNATURE="your_signature" \
+  -v ~/.marearts:/root/.marearts \
   marearts-anpr-server:latest
 ```
 
-```bash
-curl -X POST http://localhost:8000/api/anpr -F "image=@car.jpg"
-```
-
-Includes CUDA acceleration, automatic CPU fallback, web dashboard, and all 20+ API endpoints.
+CPU: `docker build -t marearts-anpr-server-cpu:latest -f Dockerfile.cpu .` then run without `--gpus`.
 
 **[Docker Guide →](docker/)**
 
@@ -207,20 +209,21 @@ Use it alongside ANPR for complete traffic scene understanding — plate reading
 
 **80+ countries** across 12 regional groups with per-country character sets for maximum accuracy.
 
-| Region | Countries | Code |
-|--------|-----------|------|
-| 🇪🇺 Europe+ | 37 countries (EU + Balkans + Indonesia) | `eu` |
-| 🇷🇺 Ex-USSR | 15 countries (Russia, Ukraine, Kazakhstan, …) | `ru` |
-| 🌏 Asia | 17 countries (Japan, Thailand, Vietnam, …) | `asia` |
-| 🇺🇸 North America | USA, Canada, Mexico | `na` |
-| 🇧🇷 South America | Brazil, Argentina | `sa` |
-| 🇿🇦 Africa | South Africa, Nigeria | `af` |
-| 🇦🇺 Oceania | Australia, New Zealand | `oc` |
-| 🇬🇧 UK | England, Scotland, Wales, N. Ireland | `uk` |
-| 🇨🇳 China | All provinces | `cn` |
-| 🇰🇷 Korea | All plate types | `kr` |
-| 🇯🇵 Japan | All prefectures | `jp` |
-| 🌍 Universal | All of the above | `univ` |
+| Region | Code |
+|--------|------|
+| Europe (37) | `eu` |
+| Ex-USSR (15) | `exussr` |
+| Europe+ | `eup` |
+| Asia (17) | `asia` |
+| North America | `na` |
+| South America | `southamerica` |
+| Africa | `africa` |
+| Oceania | `oceania` |
+| UK | `uk` / `gb` |
+| China | `cn` |
+| Korea | `kr` |
+| Japan | `jp` |
+| Universal | `univ` |
 
 Pass a 2-letter country code (e.g. `de`, `au`, `th`) for best accuracy, or use a group code. Unknown codes fall back to `univ`.
 
@@ -232,13 +235,30 @@ Pass a 2-letter country code (e.g. `de`, `au`, `th`) for best accuracy, or use a
 
 V16 ships one unified model for detection and one for OCR — no model-size selection needed.
 
-| Component | Model | Precision | Notes |
-|-----------|-------|-----------|-------|
-| **Detector** | `320p_fp32` | fp32 / int8 | Fast — ~2× speed of 640p |
-| **Detector** | `640p_fp32` | fp32 / int8 | High detection — best for distant/small plates |
-| **OCR** | `fp32` | fp32 / int8 | Single model, all regions, dynamic switching |
+| Component | Model | Notes |
+|-----------|-------|-------|
+| **Detector** | `640p_fp32` | High detection — best for distant/small plates. Recommended. |
+| **Detector** | `320p_fp32` | Faster, when every millisecond counts |
+| **OCR** | `fp32` | Single model, all regions, dynamic switching |
 
-int8 variants available for smaller footprint and faster inference on edge devices.
+Measured end-to-end (detection + OCR), one process on an RTX 4090:
+
+| Input resolution | `640p_fp32` + OCR | `320p_fp32` + OCR |
+|------------------|-------------------|-------------------|
+| 640×480 | 22 ms · 46 fps | 16 ms · 64 fps |
+| 960×540 | 24 ms · 42 fps | 17 ms · 59 fps |
+| 1280×720 | 26 ms · 38 fps | 19 ms · 53 fps |
+| 1920×1080 | 33 ms · 31 fps | 25 ms · 40 fps |
+
+The two detectors are close on a GPU, so prefer `640p_fp32` for its accuracy.
+Feed the smallest frame that still shows the plate clearly: 4K input costs about
+twice as much per frame as 1080p and buys nothing once the plate is legible.
+
+Throughput scales with worker processes rather than with a bigger GPU: one
+RTX 4090 running 8 processes reaches 103 fps with `640p_fp32`, which covers
+roughly 20 cameras at 5 analysed frames per second each.
+
+**[Full measured figures, hardware sizing and multi-camera guidance →](python-sdk/README.md#measured-performance)**
 
 ---
 
@@ -269,6 +289,8 @@ python test_server.py    # Server API integration tests
 |---|---|
 | Homepage | [marearts.com](https://marearts.com) |
 | License | [marearts.com/products/anpr](https://www.marearts.com/products/anpr) |
+| SDK page | [marearts.com/pages/marearts-anpr-sdk](https://www.marearts.com/pages/marearts-anpr-sdk) |
+| Mobile guide | [marearts.com/pages/marearts-anpr-mobile-app](https://www.marearts.com/pages/marearts-anpr-mobile-app) |
 | Live Demo | [live.marearts.com](http://live.marearts.com) |
 | Contact | [hello@marearts.com](mailto:hello@marearts.com) |
 | YouTube | [Video Examples](https://www.youtube.com/playlist?list=PLvX6vpRszMkxJBJf4EjQ5VCnmkjfE59-J) |
