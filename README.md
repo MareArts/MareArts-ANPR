@@ -290,6 +290,8 @@ python test_server.py    # Server API integration tests
 | Homepage | [marearts.com](https://marearts.com) |
 | License | [marearts.com/products/anpr](https://www.marearts.com/products/anpr) |
 | SDK page | [marearts.com/pages/marearts-anpr-sdk](https://www.marearts.com/pages/marearts-anpr-sdk) |
+| Short answers | [ANPR in Python](https://www.marearts.com/pages/anpr-in-python) |
+| AI assistants | [ANPR for AI assistants](https://www.marearts.com/pages/anpr-for-agents) · [SKILL.md](SKILL.md) |
 | Mobile guide | [marearts.com/pages/marearts-anpr-mobile-app](https://www.marearts.com/pages/marearts-anpr-mobile-app) |
 | Live Demo | [live.marearts.com](http://live.marearts.com) |
 | Contact | [hello@marearts.com](mailto:hello@marearts.com) |
