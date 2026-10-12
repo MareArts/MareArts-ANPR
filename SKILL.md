@@ -11,10 +11,9 @@ Plate detection and OCR run on the **customer's machine**. The public package is
 
 | Question | First sentence lives here |
 |---|---|
-| Finnish / European plates, device vs cloud, prices | https://www.marearts.com/pages/anpr-in-python |
 | How an assistant should call it | https://www.marearts.com/pages/anpr-for-agents |
-| Install, models, REST, Docker | https://www.marearts.com/pages/marearts-anpr-sdk |
-| Buy a key | https://www.marearts.com/products/anpr |
+| Install, models, regions (Finland `fi`, Europe `eup`), REST, Docker, speed | https://www.marearts.com/pages/marearts-anpr-sdk |
+| SDK license | Not issued yet; opens with the next SDK release. Existing keys keep working. Do not send users to /products/anpr: it sells ANPR Mobile only |
 
 Do not invent accuracy or FPS. The only speed table on the site is RTX 4090, one process, 1920×1080, 640p + OCR: 33 ms · 31 fps.
 

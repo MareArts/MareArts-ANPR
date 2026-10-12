@@ -3,7 +3,7 @@
 [![PyPI version](https://badge.fury.io/py/marearts-anpr.svg)](https://badge.fury.io/py/marearts-anpr)
 [![Python versions](https://img.shields.io/pypi/pyversions/marearts-anpr.svg)](https://pypi.org/project/marearts-anpr/)
 [![Downloads](https://pepy.tech/badge/marearts-anpr)](https://pepy.tech/project/marearts-anpr)
-[![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](https://www.marearts.com/products/anpr)
+[![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](https://www.marearts.com/pages/marearts-anpr-sdk)
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen.svg)](http://live.marearts.com)
 
 <div align="center">
@@ -16,19 +16,19 @@
 
 Automatic Number Plate Recognition — detection + OCR for **80+ countries**, GPU acceleration, ARM/Windows support, and **cloud Vehicle Intelligence** (make, model, color, type, face, plate nation, and server-side OCR).
 
-**One license covers everything:** Python SDK · REST API Server · Mobile App · Road Object Detection
+**The ANPR SDK license covers:** Python SDK · REST API Server · [MASS](https://www.marearts.com/pages/mass-marearts-anpr-sdk-server) · Road Object Detection. The Mobile App has its own license.
 
-> Get your license at [marearts.com/products/anpr](https://www.marearts.com/products/anpr). Same intro on the site: [marearts.com/pages/marearts-anpr-sdk](https://www.marearts.com/pages/marearts-anpr-sdk).
+> New SDK licenses are not issued yet; they open with the next SDK release. Existing MareArts ANPR (SDK + Mobile) subscriptions keep working. Same intro on the site: [marearts.com/pages/marearts-anpr-sdk](https://www.marearts.com/pages/marearts-anpr-sdk).
 
 ---
 
-## What's Included in One License
+## What the SDK License Covers
 
 | Component | What It Does |
 |-----------|-------------|
 | **Python SDK** | Detect & read plates in your own code — CPU, CUDA, DirectML |
 | **REST API Server** | Production server with web dashboard, history, alerts, watchlist |
-| **Mobile App** | On-device ANPR for iOS & Android (~100-160 ms per scan) |
+| **MASS** | The same REST server and dashboard as a desktop app, no Python setup ([ANPR SDK Server](https://www.marearts.com/pages/mass-marearts-anpr-sdk-server)) |
 | **Road Object Detection** | Detect persons, vehicles, and 2-wheelers ([MareArts Road Objects](https://github.com/MareArts/MareArts-Road-Objects)) |
 | **Vehicle Intelligence** | Cloud AI: make, model, color, type, face, plate nation, server-side OCR |
 
@@ -47,7 +47,7 @@ On-device ANPR for iOS and Android — parking, security, fleet management.
 - **Vehicle Intelligence** — make, model, color, type, face, plate nation, server-side OCR
 - **Map View, CSV Export, Whitelist/Blacklist, Stats**
 
-> No additional license required — the app works as your ANPR license.
+> The app has its own license, ANPR Mobile: [marearts.com/products/anpr](https://www.marearts.com/products/anpr). Buying for a team? [Team purchase](https://www.marearts.com/pages/buy-team-licenses).
 
 > A free read-only **Desktop Viewer** for macOS / Windows / Linux syncs the same account for big-screen review — [download](https://www.marearts.com/pages/anpr-desktop-download) · [details in the guide](mobile_app/).
 
@@ -288,9 +288,8 @@ python test_server.py    # Server API integration tests
 | | |
 |---|---|
 | Homepage | [marearts.com](https://marearts.com) |
-| License | [marearts.com/products/anpr](https://www.marearts.com/products/anpr) |
+| ANPR Mobile license | [marearts.com/products/anpr](https://www.marearts.com/products/anpr) |
 | SDK page | [marearts.com/pages/marearts-anpr-sdk](https://www.marearts.com/pages/marearts-anpr-sdk) |
-| Short answers | [ANPR in Python](https://www.marearts.com/pages/anpr-in-python) |
 | AI assistants | [ANPR for AI assistants](https://www.marearts.com/pages/anpr-for-agents) · [SKILL.md](SKILL.md) |
 | Mobile guide | [marearts.com/pages/marearts-anpr-mobile-app](https://www.marearts.com/pages/marearts-anpr-mobile-app) |
 | Live Demo | [live.marearts.com](http://live.marearts.com) |
