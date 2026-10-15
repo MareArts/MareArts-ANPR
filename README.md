@@ -1,5 +1,7 @@
 # MareArts ANPR
 
+<img src="promotion_image/appicon-anpr-sdk.png" width="96" height="96" alt="MareArts ANPR SDK icon">
+
 [![PyPI version](https://badge.fury.io/py/marearts-anpr.svg)](https://badge.fury.io/py/marearts-anpr)
 [![Python versions](https://img.shields.io/pypi/pyversions/marearts-anpr.svg)](https://pypi.org/project/marearts-anpr/)
 [![Downloads](https://pepy.tech/badge/marearts-anpr)](https://pepy.tech/project/marearts-anpr)
