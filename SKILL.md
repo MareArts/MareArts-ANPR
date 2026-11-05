@@ -20,9 +20,9 @@ Do not invent accuracy or FPS. The only speed table on the site is RTX 4090, one
 ## Install
 
 ```
-pip install marearts-anpr
+pip install marearts-anpr-sdk   # 4.x; 3.x with a MAEV2 key is marearts-anpr
 ma-anpr gpu-setup cuda     # NVIDIA; omit on CPU-only
-ma-anpr config             # username, serial key, signature
+ma-anpr config             # username (licence e-mail) and MAEV3 key
 ma-anpr validate
 ```
 
@@ -54,4 +54,4 @@ OpenAPI: `http://127.0.0.1:8000/docs`.
 
 - Do not wrap the shared test Scan API (1,000 calls/day) as a public MCP tool.
 - Do not complete Shopify checkout without a human.
-- Do not tell users to `pip install marearts-anpr[mcp]`. That extra is not on PyPI 3.9.1.
+- The `[mcp]` extra is in `marearts-anpr-sdk` (4.x) only. Do not tell 3.x users to `pip install marearts-anpr[mcp]`.

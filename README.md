@@ -2,9 +2,9 @@
 
 <img src="promotion_image/appicon-anpr-sdk.png" width="96" height="96" alt="MareArts ANPR SDK icon">
 
-[![PyPI version](https://badge.fury.io/py/marearts-anpr.svg)](https://badge.fury.io/py/marearts-anpr)
-[![Python versions](https://img.shields.io/pypi/pyversions/marearts-anpr.svg)](https://pypi.org/project/marearts-anpr/)
-[![Downloads](https://pepy.tech/badge/marearts-anpr)](https://pepy.tech/project/marearts-anpr)
+[![PyPI version](https://badge.fury.io/py/marearts-anpr-sdk.svg)](https://pypi.org/project/marearts-anpr-sdk/)
+[![Python versions](https://img.shields.io/pypi/pyversions/marearts-anpr-sdk.svg)](https://pypi.org/project/marearts-anpr-sdk/)
+[![Downloads](https://pepy.tech/badge/marearts-anpr-sdk)](https://pepy.tech/project/marearts-anpr-sdk)
 [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](https://www.marearts.com/pages/marearts-anpr-sdk)
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen.svg)](http://live.marearts.com)
 
@@ -62,25 +62,30 @@ On-device ANPR for iOS and Android — parking, security, fleet management.
 Detect and read license plates in 5 lines of Python.
 
 ```bash
-pip install marearts-anpr
+pip install marearts-anpr-sdk
 ma-anpr gpu-setup cuda              # NVIDIA
 ma-anpr gpu-setup directml          # Windows AMD / Intel / NVIDIA
 ```
 
+> **4.x is `marearts-anpr-sdk`** (v17 models, MAEV3 key). The 3.x SDK stays on PyPI as `marearts-anpr`
+> (v14–v16 models, MAEV2 key + signature). Both install the `marearts_anpr` module, so remove one before
+> installing the other: `pip uninstall marearts-anpr && pip install marearts-anpr-sdk`.
+
 ```python
 from marearts_anpr import (
-    ma_anpr_detector_v16, ma_anpr_ocr_v16, marearts_anpr_from_image_file
+    ma_anpr_detector_v17, ma_anpr_ocr_v17, marearts_anpr_from_image_file
 )
 
-detector = ma_anpr_detector_v16("640p_fp32", user_name, serial_key, signature)
-ocr = ma_anpr_ocr_v16("fp32", "univ", user_name, serial_key, signature)
+# user_name: the e-mail your licence was issued to; serial_key: your MAEV3 key (My licenses)
+detector = ma_anpr_detector_v17("640p_fp32", user_name, serial_key)
+ocr = ma_anpr_ocr_v17("fp32", "univ", user_name, serial_key)
 
 result = marearts_anpr_from_image_file(detector, ocr, "car.jpg")
 print(result)
 # {'results': [{'ocr': 'ABC1234', 'ocr_conf': 99, 'ltrb': [...], ...}], ...}
 ```
 
-**[Full SDK Documentation & Examples →](python-sdk/)**
+**[Full SDK Documentation & Examples →](python-sdk/)** (written for 3.x; 4.x uses the v17 calls above)
 
 ---
 

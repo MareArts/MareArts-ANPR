@@ -1,5 +1,9 @@
 # MareArts ANPR — Python SDK
 
+> **This page documents 3.x** (`pip install marearts-anpr`: v14–v16 models, MAEV2 key + signature).
+> 4.x is `pip install marearts-anpr-sdk`: v17 models and a MAEV3 key, no signature — see the
+> [main README](../README.md#python-sdk) and the [PyPI page](https://pypi.org/project/marearts-anpr-sdk/).
+
 ## Installation
 
 ```bash

@@ -5,7 +5,7 @@ Built-in REST API server with web dashboard, detection history, watchlist alerts
 ## Quick Start
 
 ```bash
-pip install marearts-anpr           # server included in base install
+pip install marearts-anpr-sdk       # server included in base install (3.x: marearts-anpr)
 ma-anpr config                     # one-time credential setup
 ma-anpr validate                   # verify everything works
 ma-anpr server start               # starts on http://127.0.0.1:8000
