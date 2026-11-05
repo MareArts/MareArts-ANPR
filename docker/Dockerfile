@@ -21,7 +21,7 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.13 1 &
     python -m ensurepip --upgrade && \
     pip install --upgrade pip
 
-RUN pip install --no-cache-dir marearts-anpr
+RUN pip install --no-cache-dir marearts-anpr-sdk
 RUN pip install --no-cache-dir onnxruntime-gpu
 
 WORKDIR /app

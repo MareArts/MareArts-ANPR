@@ -48,8 +48,7 @@ docker run -d \
   --name marearts-anpr-server \
   -p 8000:8000 \
   -e MAREARTS_ANPR_USERNAME="your@email.com" \
-  -e MAREARTS_ANPR_SERIAL_KEY="your_serial_key" \
-  -e MAREARTS_ANPR_SIGNATURE="your_signature" \
+  -e MAREARTS_ANPR_SERIAL_KEY="your_MAEV3_key" \
   -v ~/.marearts:/root/.marearts \
   marearts-anpr-server:latest
 ```
@@ -65,8 +64,7 @@ docker run -d \
   --name marearts-anpr-server-cpu \
   -p 8000:8000 \
   -e MAREARTS_ANPR_USERNAME="your@email.com" \
-  -e MAREARTS_ANPR_SERIAL_KEY="your_serial_key" \
-  -e MAREARTS_ANPR_SIGNATURE="your_signature" \
+  -e MAREARTS_ANPR_SERIAL_KEY="your_MAEV3_key" \
   -v ~/.marearts:/root/.marearts \
   marearts-anpr-server-cpu:latest
 ```
@@ -117,8 +115,7 @@ The server needs your MareArts license credentials. Three options:
 ```bash
 docker run -d \
   -e MAREARTS_ANPR_USERNAME="your@email.com" \
-  -e MAREARTS_ANPR_SERIAL_KEY="your_serial_key" \
-  -e MAREARTS_ANPR_SIGNATURE="your_signature" \
+  -e MAREARTS_ANPR_SERIAL_KEY="your_MAEV3_key" \
   ...
 ```
 
@@ -128,8 +125,7 @@ Create `~/.marearts/.marearts_env`:
 
 ```bash
 export MAREARTS_ANPR_USERNAME="your@email.com"
-export MAREARTS_ANPR_SERIAL_KEY="your_serial_key"
-export MAREARTS_ANPR_SIGNATURE="your_signature"
+export MAREARTS_ANPR_SERIAL_KEY="your_MAEV3_key"
 ```
 
 Then mount the directory:
@@ -159,7 +155,7 @@ This saves credentials to `~/.marearts/` for future use.
 |----------|---------|---------|
 | `MAREARTS_ANPR_USERNAME` | License email | (required) |
 | `MAREARTS_ANPR_SERIAL_KEY` | License serial key | (required) |
-| `MAREARTS_ANPR_SIGNATURE` | License signature | (required) |
+| `MAREARTS_ANPR_SIGNATURE` | 3.x only — not needed with a MAEV3 key | — |
 | `ANPR_BACKEND` | Inference backend: `auto`, `cuda`, `cpu` | `auto` (GPU) / `cpu` (CPU image) |
 | `ANPR_HOST` | Server bind address | `0.0.0.0` |
 | `ANPR_PORT` | Server port | `8000` |
@@ -203,8 +199,7 @@ services:
       - "8000:8000"
     environment:
       - MAREARTS_ANPR_USERNAME=your@email.com
-      - MAREARTS_ANPR_SERIAL_KEY=your_serial_key
-      - MAREARTS_ANPR_SIGNATURE=your_signature
+      - MAREARTS_ANPR_SERIAL_KEY=your_MAEV3_key
       - ANPR_BACKEND=auto
     volumes:
       - ~/.marearts:/root/.marearts
@@ -234,8 +229,7 @@ services:
       - "8000:8000"
     environment:
       - MAREARTS_ANPR_USERNAME=your@email.com
-      - MAREARTS_ANPR_SERIAL_KEY=your_serial_key
-      - MAREARTS_ANPR_SIGNATURE=your_signature
+      - MAREARTS_ANPR_SERIAL_KEY=your_MAEV3_key
       - ANPR_BACKEND=cpu
     volumes:
       - ~/.marearts:/root/.marearts
