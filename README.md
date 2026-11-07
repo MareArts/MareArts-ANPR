@@ -67,9 +67,14 @@ ma-anpr gpu-setup cuda              # NVIDIA
 ma-anpr gpu-setup directml          # Windows AMD / Intel / NVIDIA
 ```
 
-> **4.x is `marearts-anpr-sdk`** (v17 models, MAEV3 key). The 3.x SDK stays on PyPI as `marearts-anpr`
-> (v14–v16 models, MAEV2 key + signature). Both install the `marearts_anpr` module, so remove one before
-> installing the other: `pip uninstall marearts-anpr && pip install marearts-anpr-sdk`.
+**Which SDK do you have?**
+
+| Your licence key | Package | Models | Docs |
+|---|---|---|---|
+| **MAEV3** (new licences, My licenses page) | `pip install marearts-anpr-sdk` (4.x) | v17 | this page |
+| **MAEV2** + signature (existing subscriptions) | `pip install marearts-anpr` (3.x) — nothing changes, `pip install -U` stays on 3.9 | v14–v16 | [3.x Quick Start](#3x-quick-start) · [python-sdk/](python-sdk/) · [site manual](https://www.marearts.com/pages/marearts-anpr-sdk-3) |
+
+Both install the `marearts_anpr` module, so keep one per environment (`pip uninstall marearts-anpr` before installing 4.x).
 
 ```python
 from marearts_anpr import (
@@ -85,7 +90,20 @@ print(result)
 # {'results': [{'ocr': 'ABC1234', 'ocr_conf': 99, 'ltrb': [...], ...}], ...}
 ```
 
-**[Full SDK Documentation & Examples →](python-sdk/)** (written for 3.x; 4.x uses the v17 calls above)
+<a id="3x-quick-start"></a>
+**3.x Quick Start** (`marearts-anpr`, MAEV2 key + signature — existing subscriptions, unchanged):
+
+```python
+from marearts_anpr import (
+    ma_anpr_detector_v16, ma_anpr_ocr_v16, marearts_anpr_from_image_file
+)
+
+detector = ma_anpr_detector_v16("640p_fp32", user_name, serial_key, signature)
+ocr = ma_anpr_ocr_v16("fp32", "univ", user_name, serial_key, signature)
+result = marearts_anpr_from_image_file(detector, ocr, "car.jpg")
+```
+
+**[Full SDK Documentation & Examples →](python-sdk/)** (the full reference is written for 3.x; 4.x uses the v17 calls above)
 
 ---
 
@@ -123,6 +141,15 @@ Build the server image from [`docker/`](docker/), then run it. GPU needs the NVI
 ```bash
 git clone https://github.com/MareArts/MareArts-ANPR.git
 cd MareArts-ANPR/docker
+# 4.x (MAEV3 key)
+docker build --build-arg ANPR_PACKAGE=marearts-anpr-sdk -t marearts-anpr-server:latest .
+docker run -d --gpus all --name marearts-anpr-server -p 8000:8000 \
+  -e MAREARTS_ANPR_USERNAME="your@email.com" \
+  -e MAREARTS_ANPR_SERIAL_KEY="your_MAEV3_key" \
+  -v ~/.marearts:/root/.marearts \
+  marearts-anpr-server:latest
+
+# 3.x (MAEV2 key + signature, existing subscriptions): the same commands as before
 docker build -t marearts-anpr-server:latest .
 docker run -d --gpus all --name marearts-anpr-server -p 8000:8000 \
   -e MAREARTS_ANPR_USERNAME="your@email.com" \
@@ -132,7 +159,7 @@ docker run -d --gpus all --name marearts-anpr-server -p 8000:8000 \
   marearts-anpr-server:latest
 ```
 
-CPU: `docker build -t marearts-anpr-server-cpu:latest -f Dockerfile.cpu .` then run without `--gpus`.
+CPU: `docker build -t marearts-anpr-server-cpu:latest -f Dockerfile.cpu .` (add `--build-arg ANPR_PACKAGE=marearts-anpr-sdk` for 4.x) then run without `--gpus`.
 
 **[Docker Guide →](docker/)**
 

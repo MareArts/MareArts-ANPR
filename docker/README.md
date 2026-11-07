@@ -34,12 +34,17 @@ The Docker image includes the complete ANPR server with 20+ REST API endpoints, 
 - **NVIDIA Container Toolkit** (GPU image only) — [Install Guide](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html)
 - **MareArts License** — [Get one here](https://www.marearts.com/products/anpr)
 
+> **Which SDK?** The commands below are for **4.x** (`marearts-anpr-sdk`, MAEV3 key).
+> **3.x** (`marearts-anpr`, MAEV2 key + signature, existing subscriptions): nothing changes. Build without
+> `--build-arg` (the images install 3.x by default) and run with `MAREARTS_ANPR_SERIAL_KEY` and
+> `MAREARTS_ANPR_SIGNATURE` as before.
+
 ---
 
 ## Quick Start — GPU
 
 ```bash
-docker build -t marearts-anpr-server:latest .
+docker build --build-arg ANPR_PACKAGE=marearts-anpr-sdk -t marearts-anpr-server:latest .
 ```
 
 ```bash
@@ -56,7 +61,7 @@ docker run -d \
 ## Quick Start — CPU
 
 ```bash
-docker build -t marearts-anpr-server-cpu:latest -f Dockerfile.cpu .
+docker build --build-arg ANPR_PACKAGE=marearts-anpr-sdk -t marearts-anpr-server-cpu:latest -f Dockerfile.cpu .
 ```
 
 ```bash
@@ -98,10 +103,10 @@ git clone https://github.com/MareArts/MareArts-ANPR.git
 cd MareArts-ANPR/docker
 
 # GPU image
-docker build -t marearts-anpr-server:latest .
+docker build --build-arg ANPR_PACKAGE=marearts-anpr-sdk -t marearts-anpr-server:latest .
 
 # CPU image
-docker build -t marearts-anpr-server-cpu:latest -f Dockerfile.cpu .
+docker build --build-arg ANPR_PACKAGE=marearts-anpr-sdk -t marearts-anpr-server-cpu:latest -f Dockerfile.cpu .
 ```
 
 ---

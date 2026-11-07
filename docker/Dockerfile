@@ -21,7 +21,10 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.13 1 &
     python -m ensurepip --upgrade && \
     pip install --upgrade pip
 
-RUN pip install --no-cache-dir marearts-anpr-sdk
+# 3.x (MAEV2 key + signature) by default, so existing setups rebuild unchanged.
+# 4.x (MAEV3 key): docker build --build-arg ANPR_PACKAGE=marearts-anpr-sdk ...
+ARG ANPR_PACKAGE=marearts-anpr
+RUN pip install --no-cache-dir ${ANPR_PACKAGE}
 RUN pip install --no-cache-dir onnxruntime-gpu
 
 WORKDIR /app
