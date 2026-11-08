@@ -18,17 +18,18 @@
 
 Automatic Number Plate Recognition — detection + OCR for **80+ countries**, GPU acceleration, ARM/Windows support, and **cloud Vehicle Intelligence** (make, model, color, type, face, plate nation, and server-side OCR).
 
-**Licenses — new purchases:** the **ANPR SDK + MASS** license and the **ANPR Mobile** license are separate. ANPR SDK + MASS plans: **Developer** (Python SDK · REST API Server · Road Object Detection) · **Business** (+ [MASS](https://www.marearts.com/pages/mass-marearts-anpr-sdk-server)) · **Enterprise** (+ Vehicle Intelligence). The Mobile App has its own license.
+**Licenses — new purchases:** the **ANPR SDK + MASS** license and the **ANPR Mobile** license are separate. ANPR SDK + MASS plans: **Developer** (ANPR SDK · REST API Server · Road Object Detection) · **Business** (+ [MASS](https://www.marearts.com/pages/mass-marearts-anpr-sdk-server)) · **Enterprise** (+ Vehicle Intelligence). The Mobile App has its own license.
 
-> **Existing MareArts ANPR subscriptions (SDK + Mobile) stay as they are:** the same key keeps covering everything it covered before. New ANPR SDK + MASS licenses: beta testers now ([join the beta](https://www.marearts.com/pages/mass-beta)); sales open with SDK 4.0.0. Same intro on the site: [marearts.com/pages/marearts-anpr-sdk](https://www.marearts.com/pages/marearts-anpr-sdk).
+> **Existing MareArts ANPR (SDK + Mobile) subscriptions stay as they are:** the same key keeps covering everything it covered before. New ANPR SDK + MASS licenses: beta testers now ([join the beta](https://www.marearts.com/pages/mass-beta)); sales open with ANPR SDK 4.0.0. Same intro on the site: [marearts.com/pages/marearts-anpr-sdk](https://www.marearts.com/pages/marearts-anpr-sdk).
 
 ---
 
-## What the SDK + MASS License Covers
+<a id="what-the-sdk--mass-license-covers"></a>
+## What the ANPR SDK + MASS License Covers
 
 | Component | What It Does |
 |-----------|-------------|
-| **Python SDK** | Detect & read plates in your own code — CPU, CUDA, DirectML |
+| **ANPR SDK** (Python) | Detect & read plates in your own code — CPU, CUDA, DirectML |
 | **REST API Server** | Production server with web dashboard, history, alerts, watchlist |
 | **MASS** | The same REST server and dashboard as a desktop app, no Python setup ([ANPR SDK Server](https://www.marearts.com/pages/mass-marearts-anpr-sdk-server)) — Business and Enterprise |
 | **Road Object Detection** | Detect persons, vehicles, and 2-wheelers ([MareArts Road Objects](https://github.com/MareArts/MareArts-Road-Objects)) |
@@ -57,7 +58,8 @@ On-device ANPR for iOS and Android — parking, security, fleet management.
 
 ---
 
-## Python SDK
+<a id="python-sdk"></a>
+## ANPR SDK (Python)
 
 Detect and read license plates in 5 lines of Python.
 
@@ -67,7 +69,7 @@ ma-anpr gpu-setup cuda              # NVIDIA
 ma-anpr gpu-setup directml          # Windows AMD / Intel / NVIDIA
 ```
 
-**Which SDK do you have?**
+**Which ANPR SDK do you have?**
 
 | Your licence key | Package | Models | Docs |
 |---|---|---|---|
@@ -103,7 +105,7 @@ ocr = ma_anpr_ocr_v16("fp32", "univ", user_name, serial_key, signature)
 result = marearts_anpr_from_image_file(detector, ocr, "car.jpg")
 ```
 
-**[Full SDK Documentation & Examples →](python-sdk/)** (the full reference is written for 3.x; 4.x uses the v17 calls above)
+**[Full ANPR SDK Documentation & Examples →](python-sdk/)** (the full reference is written for 3.x; 4.x uses the v17 calls above)
 
 ---
 
@@ -205,7 +207,7 @@ ma-anpr mmc-backend local          # switch enrichment to on-device (or: cloud)
 ma-anpr mmc-uninstall --all        # cleanly remove the engine + model when done
 ```
 
-In the SDK, only the import line changes from the cloud path:
+In the ANPR SDK, only the import line changes from the cloud path:
 
 ```python
 from marearts_anpr import ma_anpr_mmc_local   # on-device backend
@@ -298,7 +300,7 @@ roughly 20 cameras at 5 analysed frames per second each.
 
 ## Testing
 
-We include a full test suite to verify SDK and server functionality.
+We include a full test suite to verify ANPR SDK and server functionality.
 
 ```bash
 cd tests/
@@ -323,7 +325,7 @@ python test_server.py    # Server API integration tests
 |---|---|
 | Homepage | [marearts.com](https://marearts.com) |
 | ANPR Mobile license | [marearts.com/products/anpr](https://www.marearts.com/products/anpr) |
-| SDK page | [marearts.com/pages/marearts-anpr-sdk](https://www.marearts.com/pages/marearts-anpr-sdk) |
+| ANPR SDK page | [marearts.com/pages/marearts-anpr-sdk](https://www.marearts.com/pages/marearts-anpr-sdk) |
 | AI assistants | [ANPR for AI assistants](https://www.marearts.com/pages/anpr-for-agents) · [SKILL.md](SKILL.md) |
 | Mobile guide | [marearts.com/pages/marearts-anpr-mobile-app](https://www.marearts.com/pages/marearts-anpr-mobile-app) |
 | Live Demo | [live.marearts.com](http://live.marearts.com) |
