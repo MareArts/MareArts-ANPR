@@ -401,7 +401,7 @@ When a detected plate matches a watchlist entry, an alert is created automatical
 
 Cloud AI enrichment adds 7 features per detected plate: **make, model, color, type, front/rear view, plate nation, and plate OCR** (cross-check).
 
-MMC comes with existing MareArts ANPR subscriptions (as before) and with the ANPR SDK Enterprise plan. Usage is tracked per day with a daily limit based on your plan.
+MMC comes with existing MareArts ANPR subscriptions (as before) and with the ANPR SDK + MASS Enterprise plan. Usage is tracked per day with a daily limit based on your plan.
 
 Use `/api/anpr/mmc` endpoints (see Detection + MMC above) to include MMC in results. Use `/api/anpr` for local-only detection.
 

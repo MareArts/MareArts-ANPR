@@ -18,13 +18,13 @@
 
 Automatic Number Plate Recognition — detection + OCR for **80+ countries**, GPU acceleration, ARM/Windows support, and **cloud Vehicle Intelligence** (make, model, color, type, face, plate nation, and server-side OCR).
 
-**Licenses — new purchases:** the **ANPR SDK** license and the **ANPR Mobile** license are separate. ANPR SDK plans: **Developer** (Python SDK · REST API Server · Road Object Detection) · **Business** (+ [MASS](https://www.marearts.com/pages/mass-marearts-anpr-sdk-server)) · **Enterprise** (+ Vehicle Intelligence). The Mobile App has its own license.
+**Licenses — new purchases:** the **ANPR SDK + MASS** license and the **ANPR Mobile** license are separate. ANPR SDK + MASS plans: **Developer** (Python SDK · REST API Server · Road Object Detection) · **Business** (+ [MASS](https://www.marearts.com/pages/mass-marearts-anpr-sdk-server)) · **Enterprise** (+ Vehicle Intelligence). The Mobile App has its own license.
 
-> **Existing MareArts ANPR subscriptions (SDK + Mobile) stay as they are:** the same key keeps covering everything it covered before. New ANPR SDK licenses: beta testers now ([join the beta](https://www.marearts.com/pages/mass-beta)); sales open with SDK 4.0.0. Same intro on the site: [marearts.com/pages/marearts-anpr-sdk](https://www.marearts.com/pages/marearts-anpr-sdk).
+> **Existing MareArts ANPR subscriptions (SDK + Mobile) stay as they are:** the same key keeps covering everything it covered before. New ANPR SDK + MASS licenses: beta testers now ([join the beta](https://www.marearts.com/pages/mass-beta)); sales open with SDK 4.0.0. Same intro on the site: [marearts.com/pages/marearts-anpr-sdk](https://www.marearts.com/pages/marearts-anpr-sdk).
 
 ---
 
-## What the SDK License Covers
+## What the SDK + MASS License Covers
 
 | Component | What It Does |
 |-----------|-------------|
@@ -223,7 +223,7 @@ response fields are identical for both backends.
 
 ## Road Object Detection
 
-Detect **persons, vehicles, and 2-wheelers** in real-time — included in the ANPR SDK license (and in existing MareArts ANPR subscriptions) at no extra cost.
+Detect **persons, vehicles, and 2-wheelers** in real-time — included in the ANPR SDK + MASS license (and in existing MareArts ANPR subscriptions) at no extra cost.
 
 ```python
 from marearts_road_objects import ma_road_object_detector
