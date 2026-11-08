@@ -32,7 +32,7 @@ The Docker image includes the complete ANPR server with 20+ REST API endpoints, 
 
 - **Docker** 20.10+
 - **NVIDIA Container Toolkit** (GPU image only) — [Install Guide](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html)
-- **MareArts License** — [Get one here](https://www.marearts.com/products/anpr)
+- **MareArts License** — an ANPR SDK license ([about](https://www.marearts.com/pages/marearts-anpr-sdk); separate from ANPR Mobile) or an existing MareArts ANPR subscription
 
 > **Which SDK?** The commands below are for **4.x** (`marearts-anpr-sdk`, MAEV3 key).
 > **3.x** (`marearts-anpr`, MAEV2 key + signature, existing subscriptions): nothing changes. Build without
@@ -283,7 +283,7 @@ docker rm marearts-anpr-server
 | | |
 |---|---|
 | Homepage | [marearts.com](https://marearts.com) |
-| License | [marearts.com/products/anpr](https://www.marearts.com/products/anpr) |
+| License | [ANPR SDK license](https://www.marearts.com/pages/marearts-anpr-sdk) (existing MareArts ANPR subscriptions keep working) |
 | Live Demo | [live.marearts.com](http://live.marearts.com) |
 | Contact | [hello@marearts.com](mailto:hello@marearts.com) |
 | Server Docs | [Server README](../server/) |

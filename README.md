@@ -18,9 +18,9 @@
 
 Automatic Number Plate Recognition — detection + OCR for **80+ countries**, GPU acceleration, ARM/Windows support, and **cloud Vehicle Intelligence** (make, model, color, type, face, plate nation, and server-side OCR).
 
-**The ANPR SDK license covers:** Python SDK · REST API Server · [MASS](https://www.marearts.com/pages/mass-marearts-anpr-sdk-server) · Road Object Detection. The Mobile App has its own license.
+**Licenses — new purchases:** the **ANPR SDK** license and the **ANPR Mobile** license are separate. ANPR SDK plans: **Developer** (Python SDK · REST API Server · Road Object Detection) · **Business** (+ [MASS](https://www.marearts.com/pages/mass-marearts-anpr-sdk-server)) · **Enterprise** (+ Vehicle Intelligence). The Mobile App has its own license.
 
-> New SDK licenses are not issued yet; they open with the next SDK release. Existing MareArts ANPR (SDK + Mobile) subscriptions keep working. Same intro on the site: [marearts.com/pages/marearts-anpr-sdk](https://www.marearts.com/pages/marearts-anpr-sdk).
+> **Existing MareArts ANPR subscriptions (SDK + Mobile) stay as they are:** the same key keeps covering everything it covered before. New ANPR SDK licenses: beta testers now ([join the beta](https://www.marearts.com/pages/mass-beta)); sales open with SDK 4.0.0. Same intro on the site: [marearts.com/pages/marearts-anpr-sdk](https://www.marearts.com/pages/marearts-anpr-sdk).
 
 ---
 
@@ -30,9 +30,9 @@ Automatic Number Plate Recognition — detection + OCR for **80+ countries**, GP
 |-----------|-------------|
 | **Python SDK** | Detect & read plates in your own code — CPU, CUDA, DirectML |
 | **REST API Server** | Production server with web dashboard, history, alerts, watchlist |
-| **MASS** | The same REST server and dashboard as a desktop app, no Python setup ([ANPR SDK Server](https://www.marearts.com/pages/mass-marearts-anpr-sdk-server)) |
+| **MASS** | The same REST server and dashboard as a desktop app, no Python setup ([ANPR SDK Server](https://www.marearts.com/pages/mass-marearts-anpr-sdk-server)) — Business and Enterprise |
 | **Road Object Detection** | Detect persons, vehicles, and 2-wheelers ([MareArts Road Objects](https://github.com/MareArts/MareArts-Road-Objects)) |
-| **Vehicle Intelligence** | Cloud AI: make, model, color, type, face, plate nation, server-side OCR |
+| **Vehicle Intelligence** | Cloud AI: make, model, color, type, face, plate nation, server-side OCR — Enterprise (existing subscriptions: as before) |
 
 ---
 
@@ -223,7 +223,7 @@ response fields are identical for both backends.
 
 ## Road Object Detection
 
-Detect **persons, vehicles, and 2-wheelers** in real-time — included in your ANPR license at no extra cost.
+Detect **persons, vehicles, and 2-wheelers** in real-time — included in the ANPR SDK license (and in existing MareArts ANPR subscriptions) at no extra cost.
 
 ```python
 from marearts_road_objects import ma_road_object_detector

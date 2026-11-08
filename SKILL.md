@@ -13,7 +13,7 @@ Plate detection and OCR run on the **customer's machine**. The public package is
 |---|---|
 | How an assistant should call it | https://www.marearts.com/pages/anpr-for-agents |
 | Install, models, regions (Finland `fi`, Europe `eup`), REST, Docker, speed | https://www.marearts.com/pages/marearts-anpr-sdk |
-| SDK license | Not issued yet; opens with the next SDK release. Existing keys keep working. Do not send users to /products/anpr: it sells ANPR Mobile only |
+| SDK license | Separate from ANPR Mobile for new purchases (plans Developer · Business with MASS · Enterprise with car details). New MAEV3 licences: beta testers now (https://www.marearts.com/pages/mass-beta), on sale with SDK 4.0.0. Existing MareArts ANPR subscriptions (SDK + Mobile) keep working unchanged. Do not send users to /products/anpr: it sells ANPR Mobile only |
 
 Do not invent accuracy or FPS. The only speed table on the site is RTX 4090, one process, 1920×1080, 640p + OCR: 33 ms · 31 fps.
 
